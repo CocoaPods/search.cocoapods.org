@@ -20,11 +20,19 @@ describe 'Integration Tests' do
 
   # Testing a specific order of result ids.
   #
-  it { pods.search('1.0.0 k').ids.should == [] }
+  it { pods.search('1.0* k').ids.should == ['Kiwi'] }
 
   # Testing an order of result categories.
   #
   it { pods.search('k* a').should have_categories(['name', 'author']) }
   it { pods.search('jsonkit').should have_categories(['name'], ['dependencies']) }
+
+  # Similarity on author.
+  #
+  it { pods.search('thompsen~').ids.should == ['FormatterKit', 'TTTAttributedLabel'] }
+
+  #
+  # TODO We need specs. Lots of specs.
+  #
 
 end
