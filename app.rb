@@ -9,60 +9,13 @@ require 'picky-client'
 $:.unshift File.expand_path('../../cocoapods/lib/', __FILE__)
 require 'cocoapods'
 
-module Pod
-  class Specification
+# Extend Pod::Specification::Set with a few needed methods for indexing.
+#
+require File.expand_path '../pod/specification/set', __FILE__
 
-    # Extend the pod sets with an id method.
-    #
-    class Set
-
-      def id
-        name
-      end
-
-      def mapped_authors
-        spec_authors = specification.authors
-        spec_authors && spec_authors.keys.join(' ') || ''
-      end
-
-      def mapped_versions
-        versions.reduce([]) { |combined, version| combined << version.version }.join ' '
-      end
-
-      def mapped_dependencies
-        specification.dependencies.map(&:name).join ' '
-      end
-
-      def mapped_platform
-        specification.platform || [:ios, :osx]
-      end
-
-    end
-
-  end
-
-  # "View" class to render results with.
-  #
-  class View
-
-    # Stub.
-    #
-    def self.find ids, options = {}
-      ids.map { |id| new id }
-    end
-
-    attr_reader :id
-
-    def initialize id
-      @id = id
-    end
-
-    def to_s
-      %Q{<div class="pod"><p>#{id}</p></div>}
-    end
-
-  end
-end
+# Load a view proxy for dealing with "rendering".
+#
+require File.expand_path '../pod/view', __FILE__
 
 # This app shows how to integrate the Picky server directly
 # inside a web app. However, if you really need performance
