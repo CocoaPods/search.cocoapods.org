@@ -34,7 +34,7 @@ module Pod
       end
 
       def mapped_platform
-        specification.platform
+        specification.platform || [:ios, :osx]
       end
 
     end
