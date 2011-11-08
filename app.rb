@@ -29,6 +29,10 @@ module Pod
         versions.reduce([]) { |combined, version| combined << version.version }.join ' '
       end
 
+      def mapped_dependencies
+        specification.dependencies.map(&:name).join ' '
+      end
+
     end
 
   end
@@ -107,10 +111,11 @@ class CocoapodSearch < Sinatra::Application
              partial: Partial::Substring.new(from: 1),
              qualifiers: [:version],
              :from => :mapped_versions
-    # category :dependencies,
-    #          similarity: Similarity::DoubleMetaphone.new(2),
-    #          partial: Partial::Substring.new(from: 1),
-    #          qualifiers: [:dependency, :dependencies, :depends, :using, :uses, :use, :needs]
+    category :dependencies,
+             similarity: Similarity::DoubleMetaphone.new(2),
+             partial: Partial::Substring.new(from: 1),
+             qualifiers: [:dependency, :dependencies, :depends, :using, :uses, :use, :needs],
+             :from => :mapped_dependencies
   end
 
   # Index and load on USR1 signal.

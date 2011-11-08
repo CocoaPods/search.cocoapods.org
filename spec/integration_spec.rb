@@ -25,6 +25,6 @@ describe 'Integration Tests' do
   # Testing an order of result categories.
   #
   it { pods.search('k* a').should have_categories(['name', 'author']) }
-  it { pods.search('afnetworking').should have_categories(['name']) }
+  it { pods.search('jsonkit').should have_categories(['name'], ['dependencies']) }
 
 end
