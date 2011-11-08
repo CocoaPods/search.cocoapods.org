@@ -91,7 +91,8 @@
                 writer: 'author',
                 using: 'dependencies',
                 depends: 'dependencies',
-                dependent: 'dependencies'
+                dependent: 'dependencies',
+                on: 'platform'
               }
             },
 
@@ -120,7 +121,9 @@
                 'summary,name': '%2$s with \"%1$s\" in summary',
                 'name,summary': '%1$s with \"%2$s\" in summary',
                 'summary,author': 'written by %2$s with \"%1$s\" in summary',
-                'author,summary': 'written by %1$s with \"%2$s\" in summary'
+                'author,summary': 'written by %1$s with \"%2$s\" in summary',
+                'name,platform': '%1$s running on %2$s',
+                'platform,name': '%2$s running on %1$s'
               }
             },
 
@@ -133,7 +136,8 @@
                 name: 'named',
                 author: 'written by',
                 versions: 'version',
-                dependencies: 'using'
+                dependencies: 'using',
+                platform: 'on'
               }
             }
           });

@@ -33,6 +33,10 @@ module Pod
         specification.dependencies.map(&:name).join ' '
       end
 
+      def mapped_platform
+        specification.platform
+      end
+
     end
 
   end
@@ -116,6 +120,10 @@ class CocoapodSearch < Sinatra::Application
              partial: Partial::Substring.new(from: 1),
              qualifiers: [:dependency, :dependencies, :depends, :using, :uses, :use, :needs],
              :from => :mapped_dependencies
+    category :platform,
+             partial: Partial::Substring.new(from: 1),
+             qualifiers: [:platform, :on],
+             :from => :mapped_platform
   end
 
   # Index and load on USR1 signal.
