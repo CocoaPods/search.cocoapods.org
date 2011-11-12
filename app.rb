@@ -146,7 +146,7 @@ class CocoapodSearch < Sinatra::Application
     results.to_json
   end
 
-  get "/post-receive-hook/#{ENV['HOOK_PATH']}" do
+  post_receive_hook = lambda do
     begin
       loader = Specs.new
       loader.get
@@ -160,6 +160,9 @@ class CocoapodSearch < Sinatra::Application
       body e.message
     end
   end
+
+  get  "/post-receive-hook/#{ENV['HOOK_PATH']}", &post_receive_hook
+  post "/post-receive-hook/#{ENV['HOOK_PATH']}", &post_receive_hook
 
   helpers do
 
