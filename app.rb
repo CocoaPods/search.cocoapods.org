@@ -3,19 +3,15 @@ require 'i18n'
 require 'haml'
 require 'picky'
 require 'picky-client'
-
-# Make autoloading work.
-#
-$:.unshift File.expand_path('../../cocoapods/lib/', __FILE__)
 require 'cocoapods'
 
 # Extend Pod::Specification::Set with a few needed methods for indexing.
 #
-require File.expand_path '../pod/specification/set', __FILE__
+require File.expand_path '../lib/pod/specification/set', __FILE__
 
 # Load a view proxy for dealing with "rendering".
 #
-require File.expand_path '../pod/view', __FILE__
+require File.expand_path '../lib/pod/view', __FILE__
 
 # This app shows how to integrate the Picky server directly
 # inside a web app. However, if you really need performance
@@ -39,11 +35,12 @@ class CocoapodSearch < Sinatra::Application
     # Use the cocoapods-specs repo for the data.
     #
     source do
-      path = Pathname.new '../cocoapods-specs'
+      path = Pathname.new ENV['COCOAPODS_SPECS_PATH'] || '../Specs'
       Pod::Source.new(path).pod_sets
     end
 
-    # As a test, we use the pod names as ids.
+    # As a test, we use the pod names as ids
+    # (symbols to enhance performance).
     #
     key_format :to_sym
 
@@ -77,12 +74,6 @@ class CocoapodSearch < Sinatra::Application
              partial: Partial::Substring.new(from: 1),
              qualifiers: [:platform, :on],
              :from => :mapped_platform
-  end
-
-  # Index and load on USR1 signal.
-  #
-  Signal.trap('USR1') do
-    books_index.reindex # kill -USR1 <pid>
   end
 
   # Define a search over the books index.
@@ -149,6 +140,16 @@ class CocoapodSearch < Sinatra::Application
   get '/search/live' do
     results = pods.search params[:query], params[:ids] || 20, params[:offset] || 0
     results.to_json
+  end
+
+  get "/post-update-hook/#{ENV['HOOK_PATH']}" do
+    require File.expand_path '../lib/spec_loader', __FILE__
+
+    loader = SpecLoader.new
+    loader.get
+    loader.prepare
+
+    # index.reindex
   end
 
   helpers do
