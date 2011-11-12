@@ -16,7 +16,7 @@ pre {
   padding: 10px;
   background-color: #efede5; }
 
-#picky ol.results li.pod {
+#picky .pod {
   background-color: #ffeeee;
   padding: 5px 25px;
   margin: 3px 0px; }
