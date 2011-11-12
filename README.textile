@@ -1,9 +1,11 @@
 h1. CocoaPods Search Engine
 
-* Running on 1.9.3
+* Running on Ruby 1.9.2/3
 * Using "Picky":http://florianhanke.com/picky
 
 h2. Developing
+
+It runs on Heroku.
 
 h3. Foreman
 
