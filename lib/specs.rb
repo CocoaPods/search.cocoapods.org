@@ -7,7 +7,7 @@ class CocoapodSearch
     # Are there any specs to index?
     #
     def empty?
-      Dir['specs/*'].empty?
+      Dir['./tmp/specs/*'].empty?
     end
 
     # Gets the latest master specs from the Specs repo.
@@ -15,16 +15,16 @@ class CocoapodSearch
     # Note: Overwrites the old specs.zip.
     #
     def get
-      `wget http://github.com/CocoaPods/Specs/zipball/master -O specs.zip`
+      `wget http://github.com/CocoaPods/Specs/zipball/master -O ./tmp/specs.zip`
     end
 
     # Prepares the specs for indexing.
     #
     def prepare
-      `rm -rf specs`
-      `unzip specs.zip -d specs`
-      `mv -f specs/CocoaPods-Specs-*/* specs/`
-      `rm -rf specs/CocoaPods-Specs-*`
+      `rm -rf ./tmp/specs`
+      `unzip ./tmp/specs.zip -d ./tmp/specs`
+      `mv -f ./tmp/specs/CocoaPods-Specs-*/* ./tmp/specs/`
+      `rm -rf ./tmp/specs/CocoaPods-Specs-*`
     end
 
   end

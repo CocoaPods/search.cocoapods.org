@@ -39,7 +39,7 @@ class CocoapodSearch < Sinatra::Application
     # Use the cocoapods-specs repo for the data.
     #
     source do
-      path = Pathname.new ENV['COCOAPODS_SPECS_PATH'] || 'specs'
+      path = Pathname.new ENV['COCOAPODS_SPECS_PATH'] || './tmp/specs'
       Pod::Source.new(path).pod_sets
     end
 
@@ -146,7 +146,7 @@ class CocoapodSearch < Sinatra::Application
     results.to_json
   end
 
-  get "/post-update-hook/#{ENV['HOOK_PATH']}" do
+  get "/post-receive-hook/#{ENV['HOOK_PATH']}" do
     begin
       loader = Specs.new
       loader.get
