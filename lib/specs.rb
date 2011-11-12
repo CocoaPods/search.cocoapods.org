@@ -15,16 +15,16 @@ class CocoapodSearch
     # Note: Overwrites the old specs.zip.
     #
     def get
-      `curl -L -o ./tmp/specs.zip http://github.com/CocoaPods/Specs/zipball/master`
+      `curl -L -o ./tmp/specs.tar.gz http://github.com/CocoaPods/Specs/tarball/master`
     end
 
     # Prepares the specs for indexing.
     #
     def prepare
       `rm -rf ./tmp/specs`
-      `unzip ./tmp/specs.zip -d ./tmp/specs`
-      `mv -f ./tmp/specs/CocoaPods-Specs-*/* ./tmp/specs/`
-      `rm -rf ./tmp/specs/CocoaPods-Specs-*`
+      `gunzip -f ./tmp/specs.tar.gz`
+      `cd tmp; tar xvf specs.tar`
+      `mv -f ./tmp/CocoaPods-Specs-* ./tmp/specs`
     end
 
   end
