@@ -17,6 +17,8 @@ gem 'rack_fast_escape', '2009.06.24' # Optional.
 gem 'text'
 gem 'yajl-ruby', :require => 'yajl'
 
+gem 'cocoapods'
+
 # Should be optional, but isn't yet.
 #
 gem 'activerecord',  '~> 3.0', :require => 'active_record'
