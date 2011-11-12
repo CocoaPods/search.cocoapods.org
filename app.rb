@@ -19,6 +19,10 @@ require File.expand_path '../lib/pod/view', __FILE__
 #
 class CocoapodSearch < Sinatra::Application
 
+  # Load the spec loader that gets the specs from github.
+  #
+  require File.expand_path '../lib/specs', __FILE__
+
   # We do this so we don't have to type
   # Picky:: in front of everything.
   #
@@ -35,7 +39,7 @@ class CocoapodSearch < Sinatra::Application
     # Use the cocoapods-specs repo for the data.
     #
     source do
-      path = Pathname.new ENV['COCOAPODS_SPECS_PATH'] || '../Specs'
+      path = Pathname.new ENV['COCOAPODS_SPECS_PATH'] || 'specs'
       Pod::Source.new(path).pod_sets
     end
 
@@ -75,6 +79,15 @@ class CocoapodSearch < Sinatra::Application
              qualifiers: [:platform, :on],
              :from => :mapped_platform
   end
+
+  # Index on startup.
+  #
+  specs = Specs.new
+  if specs.empty?
+    specs.get
+    specs.prepare
+  end
+  index.reindex
 
   # Define a search over the books index.
   #
@@ -134,13 +147,18 @@ class CocoapodSearch < Sinatra::Application
   end
 
   get "/post-update-hook/#{ENV['HOOK_PATH']}" do
-    require File.expand_path '../lib/specs', __FILE__
+    begin
+      loader = Specs.new
+      loader.get
+      loader.prepare
+      index.reindex
 
-    loader = Specs.new
-    loader.get
-    loader.prepare
-
-    # index.reindex
+      status 200
+      body "REINDEXED"
+    rescue StandardError => e
+      status 500
+      body e.message
+    end
   end
 
   helpers do

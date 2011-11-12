@@ -4,6 +4,12 @@ class CocoapodSearch
 
   class Specs
 
+    # Are there any specs to index?
+    #
+    def empty?
+      Dir['specs/*'].empty?
+    end
+
     # Gets the latest master specs from the Specs repo.
     #
     # Note: Overwrites the old specs.zip.
