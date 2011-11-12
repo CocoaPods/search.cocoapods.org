@@ -17,7 +17,7 @@ module Pod
     end
 
     def render
-      %Q{<div class="pod"><p>#{id}</p></div>}
+      %Q{<div class="pod"><p><a href="http://github.com/CocoaPods/Specs/tree/master/#{id}">#{id}</a></p></div>}
     end
 
   end
