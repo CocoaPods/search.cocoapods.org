@@ -121,17 +121,8 @@ class CocoapodSearch < Sinatra::Application
     results = results.to_hash
     results.extend Picky::Convenience
     results.populate_with Pod::View do |pod|
-      pod.to_s
+      pod.render
     end
-
-    #
-    # Or, to populate with the model instances, use:
-    #   results.populate_with Book
-    #
-    # Then to render:
-    #   rendered_entries = results.entries.map do |book| (render each book here) end
-    #
-
     ActiveSupport::JSON.encode results
   end
 
@@ -143,9 +134,9 @@ class CocoapodSearch < Sinatra::Application
   end
 
   get "/post-update-hook/#{ENV['HOOK_PATH']}" do
-    require File.expand_path '../lib/spec_loader', __FILE__
+    require File.expand_path '../lib/specs', __FILE__
 
-    loader = SpecLoader.new
+    loader = Specs.new
     loader.get
     loader.prepare
 

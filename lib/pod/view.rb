@@ -16,7 +16,7 @@ module Pod
       @id = id
     end
 
-    def to_s
+    def render
       %Q{<div class="pod"><p>#{id}</p></div>}
     end
 
