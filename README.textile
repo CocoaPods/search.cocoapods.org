@@ -1,0 +1,11 @@
+h1. CocoaPods Search Engine
+
+* Running on 1.9.3
+* Using "Picky":http://florianhanke.com/picky
+
+h2. Developing
+
+h3. Foreman
+
+* foreman check
+* foreman start
