@@ -25,7 +25,7 @@ gem 'activerecord',  '~> 3.0', :require => 'active_record'
 
 # Required by your project.
 #
-gem 'unicorn'
+gem 'thin'
 
 group :test do
   gem 'rspec'
