@@ -15,7 +15,7 @@ class CocoapodSearch
     # Note: Overwrites the old specs.zip.
     #
     def get
-      `wget http://github.com/CocoaPods/Specs/zipball/master -O ./tmp/specs.zip`
+      `curl -L -o ./tmp/specs.zip http://github.com/CocoaPods/Specs/zipball/master`
     end
 
     # Prepares the specs for indexing.
