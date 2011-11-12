@@ -9,3 +9,11 @@ h3. Foreman
 
 * foreman check
 * foreman start
+
+h3. Deploying
+
+* git push heroku master
+
+h3. Setting ENV variables
+
+* heroku config:add HOOK_PATH=some_gabled_hook_path
