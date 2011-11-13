@@ -78,6 +78,9 @@ class CocoapodSearch < Sinatra::Application
              partial: Partial::Substring.new(from: 1),
              qualifiers: [:platform, :on],
              :from => :mapped_platform
+    category :summary,
+             partial: Partial::Substring.new(from: 1),
+             :from => :mapped_summary
   end
 
   # Index on startup.

@@ -26,6 +26,10 @@ module Pod
         specification.platform || [:ios, :osx]
       end
 
+      def mapped_summary
+        specification.summary
+      end
+
     end
 
   end
