@@ -83,14 +83,18 @@ class CocoapodSearch < Sinatra::Application
              :from => :mapped_summary
   end
 
-  # Index on startup.
+  # Add class method to this class
+  # which gets the specs if they are
+  # not available and reindexes.
   #
-  specs = Specs.new
-  if specs.empty?
-    specs.get
-    specs.prepare
+  self.class.send :define_method, :prepare do
+    specs = Specs.new
+    if specs.empty?
+      specs.get
+      specs.prepare
+    end
+    index.reindex
   end
-  index.reindex
 
   # Define a search over the books index.
   #
