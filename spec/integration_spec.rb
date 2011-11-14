@@ -3,7 +3,7 @@
 require 'spec_helper'
 require 'picky-client/spec'
 
-# TODO Use a fixed set of pods.
+# Uses the fixed set of pods from the ./data directory.
 #
 describe 'Integration Tests' do
 
