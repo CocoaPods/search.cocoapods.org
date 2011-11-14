@@ -19,6 +19,8 @@ require File.expand_path '../lib/pod/view', __FILE__
 #
 class CocoapodSearch < Sinatra::Application
 
+  set :logging, false
+
   # Load the spec loader that gets the specs from github.
   #
   require File.expand_path '../lib/specs', __FILE__
@@ -153,23 +155,24 @@ class CocoapodSearch < Sinatra::Application
     results.to_json
   end
 
-  post_receive_hook = lambda do
-    begin
-      loader = Specs.new
-      loader.get
-      loader.prepare
-      index.reindex
+  # Install get and post hooks.
+  #
+  [:get, :post].each do |type|
+    send type, "/post-receive-hook/#{ENV['HOOK_PATH']}" do
+      begin
+        loader = Specs.new
+        loader.get
+        loader.prepare
+        index.reindex
 
-      status 200
-      body "REINDEXED"
-    rescue StandardError => e
-      status 500
-      body e.message
+        status 200
+        body "REINDEXED"
+      rescue StandardError => e
+        status 500
+        body e.message
+      end
     end
   end
-
-  get  "/post-receive-hook/#{ENV['HOOK_PATH']}", &post_receive_hook
-  post "/post-receive-hook/#{ENV['HOOK_PATH']}", &post_receive_hook
 
   helpers do
 
