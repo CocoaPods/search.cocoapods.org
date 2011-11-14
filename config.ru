@@ -10,7 +10,7 @@ rescue Exception => e
   #
   warn "There was a problem, possibly with an outdated version of cocoapods. Updating bundles and restarting."
   `bundle update`
-  Process.kill :KILL, Process.pid
+  raise "For glory!"
 end
 
 run CocoapodSearch
