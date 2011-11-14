@@ -1,5 +1,7 @@
 source :gemcutter
 
+gem 'bundler'
+
 # Gems required by the Picky client.
 #
 gem 'picky-client', '~> 3.0'

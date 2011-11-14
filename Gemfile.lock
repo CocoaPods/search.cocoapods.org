@@ -79,6 +79,7 @@ PLATFORMS
 DEPENDENCIES
   activerecord (~> 3.0)
   activesupport
+  bundler
   cocoapods
   haml
   i18n
