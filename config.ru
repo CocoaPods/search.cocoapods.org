@@ -9,7 +9,9 @@ rescue Exception => e
   # If it doesn't work, it will periodically try.
   #
   warn "There was a problem, possibly with an outdated version of cocoapods. Updating bundles and restarting."
-  `bundle update`
+  require 'bundler'
+  require 'bundler/cli'
+  Bundler::CLI.new.update
   raise "For glory!"
 end
 
