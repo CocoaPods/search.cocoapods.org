@@ -11,6 +11,7 @@ rescue Exception => e
   warn "There was a problem, possibly with an outdated version of cocoapods. Updating bundles and restarting."
   require 'bundler'
   require 'bundler/cli'
+  Bundler.settings[:frozen] = false
   Bundler::CLI.new.update
   raise "For glory!"
 end
