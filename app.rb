@@ -5,6 +5,10 @@ require 'picky'
 require 'picky-client'
 require 'cocoapods'
 
+# Extend Pod::Specification with the capability of ignoring bad specs.
+#
+require File.expand_path '../lib/pod/specification', __FILE__
+
 # Extend Pod::Specification::Set with a few needed methods for indexing.
 #
 require File.expand_path '../lib/pod/specification/set', __FILE__
