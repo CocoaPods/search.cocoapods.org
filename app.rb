@@ -149,14 +149,14 @@ class CocoapodSearch < Sinatra::Application
     results.populate_with Pod::View do |pod|
       pod.render
     end
-    ActiveSupport::JSON.encode results
+    Yajl::Encoder.encode results
   end
 
   # Updates the search count while the user is typing.
   #
   get '/search/live' do
     results = pods.search params[:query], params[:ids] || 20, params[:offset] || 0
-    results.to_json
+    Yajl::Encoder.encode results
   end
 
   # Install get and post hooks.
