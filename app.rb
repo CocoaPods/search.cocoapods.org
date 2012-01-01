@@ -19,7 +19,7 @@ require File.expand_path '../lib/pod/view', __FILE__
 
 # This app shows how to integrate the Picky server directly
 # inside a web app. However, if you really need performance
-# and easy caching, this is not recommended.
+# and easy caching this is not recommended.
 #
 class CocoapodSearch < Sinatra::Application
 
