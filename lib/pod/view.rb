@@ -32,9 +32,9 @@ module Pod
     end
 
     def render
-      rendered_authors = authors.map do |name, email|
+      rendered_authors = authors && authors.map do |name, email|
         %Q{<a href="mailto:#{email}">#{name}</a>}
-      end.join ' and '
+      end.join(' and ')
       %Q{<div><h3 class="name">#{id}</h3><div class="version">#{version}</div><div class="summary"><p>#{summary}</p></div><div class="authors">#{rendered_authors}</div><div class="homepage"><a href="http://github.com/CocoaPods/Specs/tree/master/#{id}">Homepage</a></div></div>}
     end
 
