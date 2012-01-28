@@ -37,6 +37,8 @@ class CocoapodSearch < Sinatra::Application
 
   # Server.
   #
+  
+  pods_path = Pathname.new ENV['COCOAPODS_SPECS_PATH'] || './tmp/specs'
 
   # Define an index.
   #
@@ -44,10 +46,7 @@ class CocoapodSearch < Sinatra::Application
 
     # Use the cocoapods-specs repo for the data.
     #
-    source do
-      path = Pathname.new ENV['COCOAPODS_SPECS_PATH'] || './tmp/specs'
-      Pod::Source.new(path).pod_sets
-    end
+    source { Pod::Source.new(pods_path).pod_sets }
 
     # As a test, we use the pod names as ids
     # (symbols to enhance performance).
@@ -94,12 +93,27 @@ class CocoapodSearch < Sinatra::Application
   # not available and reindexes.
   #
   self.class.send :define_method, :prepare do
+    
+    # Index.
+    #
     specs = Specs.new
     if specs.empty?
       specs.get
       specs.prepare
     end
     index.reindex
+    
+    # Content to render.
+    #
+    Pod::Source.new(pods_path).pod_sets.each do |set|
+      id      = set.name
+      version = set.versions.last
+      summary = set.specification.summary
+      authors = set.specification.authors
+      link    = set.name
+      Pod::View.content[set.name] = [version, summary, authors, link]
+    end
+    
   end
 
   # Define a search over the books index.

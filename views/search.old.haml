@@ -1,0 +1,116 @@
+!!!
+%html{ :lang => 'en' }
+  %head
+    %link{:href => "stylesheets/picky.css", :media => "screen", :rel => "stylesheet", :type => "text/css"}/
+    %link{:href => "stylesheets/application.css", :media => "screen", :rel => "stylesheet", :type => "text/css"}/
+
+    = js 'jquery-1.5.0.min'
+    = js 'history.min'
+    = js 'history.adapter.jquery.min'
+    = js 'picky.min'
+
+  %body
+    %img{:src => "images/picky.png"}/
+    %p
+      %a{:href => "http://florianhanke.com/picky"} To the Picky Homepage
+      \/
+      %a{:href => '/configure' } Configuring this app server
+    %p
+      %h1 CocoaPods Search
+    .content
+      = Picky::Helper.cached_interface
+      :javascript
+        $(window).load(function() {
+          pickyClient = new PickyClient({
+            // A full query displays the rendered results.
+            //
+            full: '/search/full',
+            // fullResults: 100, // Optional. Amount of ids to search for, default 20.
+
+            // A live query just updates the count and does not need
+            // to render (could go straight to the search server).
+            //
+            live: '/search/live',
+            // liveResults: 0, // Optional. Amount of ids to search for, default 0.
+
+            // showResultsLimit: 10, // Optional. Default is 10.
+
+            // Wrap each li group (like author-title, or title-isbn etc.) of results
+            // in this element.
+            // Optional. Default is '<ol class="results"></ol>'.
+            //
+            // wrapResults: '<div class="hello"><ol class="world"></ol></div>',
+
+            // before: function(params, query) {  }, // Optional. Before Picky sends any data.
+            // success: function(data, query) {  }, // Optional. Just after Picky receives data. (Get a PickyData object)
+            // after: function(data, query) {  }, // Optional. After Picky has handled the data and updated the view.
+
+            // This is used to generate the correct query strings, localized. E.g. "subject:war".
+            // Optional. If you don't give these, the field identifier given in the Picky server is used.
+            //
+            qualifiers: {
+              en:{
+                named: 'name',
+                written: 'author',
+                writer: 'author',
+                using: 'dependencies',
+                depends: 'dependencies',
+                dependent: 'dependencies',
+                on: 'platform'
+              }
+            },
+
+            // Use this to group the choices (those are used when Picky needs more feedback).
+            // If a category is missing, it is appended in a virtual group at the end.
+            // Optional. Default is [].
+            //
+            //groups: [['author', 'title', 'subjects']],
+            // This is used for formatting inside the choice groups.
+            //
+            // Use %n$s, where n is the position of the category in the key.
+            // Optional. Default is {}.
+            //
+            choices: {
+              en: {
+                'author,name': '%2$s, written by %1$s',
+                'name,author': '%1$s, written by %2$s',
+                'name,version': '%1$s, version %2$s',
+                'version,name': '%1$s of %2$s',
+                'name,dependencies': '%1$s, using %2$s',
+                'dependencies,name': '%1$s used by %2$s',
+                'author,dependencies': 'written by %1$s and using %2$s',
+                'dependencies,author': 'using %1$s, written by %2$s',
+                'dependencies,version': '%1$s used by version %2$s',
+                'version,dependencies': '%2$s used by version %1$s',
+                'summary,name': '%2$s with \"%1$s\" in summary',
+                'name,summary': '%1$s with \"%2$s\" in summary',
+                'summary,author': 'written by %2$s with \"%1$s\" in summary',
+                'author,summary': 'written by %1$s with \"%2$s\" in summary',
+                'name,platform': '%1$s running on %2$s',
+                'platform,name': '%2$s running on %1$s'
+              }
+            },
+
+            // This is used to explain the preceding word in the suggestion text (if it
+            // has not yet been defined by the choices above), localized. E.g. "Peter (author)".
+            // Optional. Default are the field identifiers from the Picky server.
+            //
+            explanations: {
+              en:{
+                name: 'named',
+                author: 'written by',
+                versions: 'version',
+                dependencies: 'using',
+                platform: 'on',
+                summary: 'with summary'
+              }
+            }
+          });
+
+          // An initial search text, prefilled
+          // this one is passed through the query param q.
+          //
+          // Example: www.mysearch.com/?q=example
+          //
+          pickyClient.insertFromURL('#{@query}');
+        });

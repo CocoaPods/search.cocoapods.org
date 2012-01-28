@@ -1,116 +1,319 @@
 !!!
-%html{ :lang => 'en' }
+%html{:lang => "en"}
   %head
-    %link{:href => "stylesheets/picky.css", :media => "screen", :rel => "stylesheet", :type => "text/css"}/
-    %link{:href => "stylesheets/application.css", :media => "screen", :rel => "stylesheet", :type => "text/css"}/
-
+    %meta{:charset => "utf-8"}/
+    %meta{:content => "width=768", :name => "viewport"}/
+    %link{:href => "stylesheets/thijs.css", :rel => "stylesheet"}/
+    %link{:href => "stylesheets/picky.css", :rel => "stylesheet"}/
+    %title CocoaPods: The Objective-C Library Manager
+    / TODO: Favicon and App icon
+    / %link{:href => "#todo", :rel => "alternate", :title => "Latest CocoaPods", :type => "application/atom+xml"}/
     = js 'jquery-1.5.0.min'
     = js 'history.min'
     = js 'history.adapter.jquery.min'
     = js 'picky.min'
+  %body.desktop
+    %div
+      %section#intro
+        %hgroup
+          %img{:alt => "", :src => "images/logo.png"}/
+          %h1 CocoaPods
+          %h2
+            The best way to manage library dependencies in Objective-C
+            / iOS or OS X
+            / your Xcode
+            projects
+        %p
+          Specify the libraries for your project in an easy to edit text file. Then use CocoaPods to resolve all dependencies, fetch the source, and set up
+          / and maintains
+          your Xcode workspace.
+      /
+        <pre><code>dependency 'CocoaLumberjack'
+        dependency 'ASIHTTPRequest', '&amp;gt;= 1,8,1'
+        </code></pre>
+      /
+        <ol>
+        <li>Resolves dependencies</li>
+        <li>Fetches source code</li>
+        <li>Manages build settings</li>
+        </ol>
+      #box
+        #picky
+          %section#search
+            .form
+              %div
+                %label.checked{"x-onclick" => ""}
+                  %input{:checked => "", :name => "platform", :type => "radio", :value => "ios"}/
+                  %span
+                    %b
+                    %span OS X and iOS
+                %label{"x-onclick" => ""}
+                  %input{:name => "platform", :type => "radio", :value => "osx"}/
+                  %span
+                    %b
+                    %span Only for iOS
+                %label{"x-onclick" => ""}
+                  %input{:name => "platform", :type => "radio", :value => "osx"}/
+                  %span
+                    %b
+                    %span Only for OS X
+              / class query makes picky use it
+              %input{:placeholder => "Search pods", :type => "search", "x-autofocus" => "", "x-value" => "XTesting", :class => "query"}/
+              / TODO: Should we use a search field? Which attributes?
+          / %section.results
+          .results
+          .no_results No Pods found
+          .allocations
+            %ol.shown
+            %ol.more more
+            %ol.hidden
+          
+            / %h2
+            /   %span Latest pods
+            /   %span Results
+            / #pods
+            /   %div
+            /     %h3.name Kiwi
+            /     .version 1.0.0
+            /     .summary
+            /       %p A Behavior Driven Development library for iPhone and iPad development.
+            /     .authors
+            /       %a{:href => "mailto:allen@allending.com"} Allen Ding
+            /       and
+            /       %a{:href => "mailto:luke@lukeredpath.co.uk"} Luke Redpath
+            /     .homepage
+            /       %a{:href => "http://kiwi-lib.info"} Homepage
+            /   %div
+            /     %h3.name ASIWebPageRequest
+            /     .version 1.8.1
+            /     .summary
+            /       %p The ASIWebPageRequest class included with ASIHTTPRequest lets you download complete webpages, including external resources like images and stylesheets.
+            /     .authors
+            /       %a{:href => "mailto:ben@allseeing-i.com"} Ben Copsey
+            /     .homepage
+            /       %a{:href => "http://allseeing-i.com/ASIHTTPRequest/ASIWebPageRequest"} Homepage
+            / TODO: Microformats? Should we include a link to the podspec? Any other fields? Dependencies?
+        %section#install
+          %h2 Install
+          %p It only takes a few minutes to get CocoaPods.
+          %p
+            CocoaPods runs on MacRuby. If you don’t have a recent version of MacRuby you will need to
+            %a{:href => "http://www.macruby.org/downloads.html"} download and install
+            the latest stable release.
+          /
+            <pre><code>$ curl -O http://www.macruby.org/files/MacRuby%200.10.zip
+            $ open MacRuby%200.10.zip
+            \# open MacRuby\ 0.10/MacRuby\ 0.10.pkg
+            </code></pre>
+          %p Once you’ve got MacRuby, install CocoaPods from the Terminal:
+          %pre
+            %code
+              :preserve
+                $ sudo macgem install cocoapods
+                $ pod setup
+          %p
+            Now that you’ve got CocoaPods installed it’s time to
+            = succeed "." do
+              %a{:href => "#get_started"} get started
+        %section#get_started
+          %h2 Get started
+          %p Search for pods by name and description:
+          %pre
+            %code
+              :preserve
+                $ pod search asi
+                ==&gt; ASIHTTPRequest (1.8.1)
+                    Easy to use CFNetwork wrapper for HTTP requests, Objective-C, Mac OS X and iPhone
+                
+                ==&gt; ASIWebPageRequest (1.8.1)
+                    The ASIWebPageRequest class included with ASIHTTPRequest lets you download
+                    complete webpages, including external resources like images and stylesheets.
+          %p
+            Then list the dependencies in a text file named
+            %tt Podfile
+            in your Xcode project directory:
+          %pre
+            %code
+              /
+                $ vim Podfile
+              dependency 'JSONKit',       '~&gt; 1.4'
+              dependency 'Reachability',  '~&gt; 2.0.4'
+          %p Now you can install the dependencies in your project:
+          %pre
+            %code
+              :preserve
+                $ pod install
+          %h3 Please note
+          %p Make sure to always open the Xcode workspace instead of the project file when building your project:
+          %pre
+            %code
+              :preserve
+                $ open App.xcworkspace
+          %h3 How to create a pod
+          %p Sometimes CocoaPods doesn’t yet have a pod for one of your dependencies. Fortunately, creating a pod is pretty easy:
+          %pre
+            %code
+              :preserve
+                $ pod spec create Peanut
+                $ edit Peanut.podspec
+                $ pod spec lint Peanut.podspec
+          / TODO: Peanuts might be a confusing example for a project name.
+          %p
+            When you’re done, please
+            %a{:href => "https://github.com/alloy/cocoapods/issues"} create a ticket
+            and upload the pod. You can also fork the
+            %a{:href => "https://github.com/alloy/cocoapods-specs"} CocoaPods specs
+            GitHub repository and send a pull request
+            / if you are familiar with Git
+            \. We really love contributions!
+          / TODO: Shouldn’t we highlight why it is handy and what other commands you might need to update your dependencies?
+        %section#contribute
+          %h2 Contribute
+          %p
+            We’re developing CocoaPods on GitHub. There’s a repository for the
+            %a{:href => "https://github.com/alloy/cocoapods"} CocoaPods tool
+            and one for the
+            = succeed "." do
+              %a{:href => "https://github.com/alloy/cocoapods-specs"} pods specs
+            It’s easy and really gratifying to contribute patches or pods,
+            you even get push access when one of your specs or patches is accepted.
+          %p
+            Follow
+            %a{:href => "http://twitter.com/CocoaPodsOrg"} CocoaPodsOrg
+            on Twitter to get up to date information about what’s going on
+            in the CocoaPods world.
+          %p
+            If you’re really oldschool, you can discuss CocoaPods development by joining
+            %a{:href => "irc:irc.freenode.net/cocoapods"} #cocoapods
+            on irc.freenode.net.
+      %footer
+        %p
+          CocoaPods is a project from
+          %a{:href => "twitter.com/alloy"} Eloy Durán
+          with contributions from TODO and many others. Website by
+          %a{:href => "http://twitter.com/thijs"} Thijs van der Vossen
+          and
+          = succeed "." do
+            %a{:href => "#TODO"} Manfred Stienstra
+          Search uses
+          %a{:href => "http://florianhanke.com/picky/"} Picky
+          by
+          = succeed "." do
+            %a{:href => "http://florianhanke.com/picky/"}
+              Florian Hanke
+          Logo by
+          = succeed "." do
+            %a{:href => "http://twitter.com/maxsteenbergen"} Max Steenbergen
+          Sponsored by
+          %a{:href => "http://www.fngtps.com/"} Fingertips
+          and
+          = succeed "." do
+            %a{:href => "https://www.sauspiel.de/"} Sauspiel
+          / TODO: Do we have more sponsors?
+    / %script{:src => "javascripts/zepto.js"}
+    :javascript
+      // $('body').addClass($.os.ios ? 'ios' : 'desktop');
+      $('#search input[type=radio]').click(function() {
+        $(this).parent().addClass('checked').siblings().removeClass('checked');
+      })
+      // $('input.query').keypress(function(event) {
+      //   if (event.which == 13) {
+      //     event.preventDefault();
+      //     // return false;
+      //   }
+      // });
+      // TODO Add tap gesture support to the cycle button?
+      $(window).load(function() {
+        pickyClient = new PickyClient({
+          // A full query displays the rendered results.
+          //
+          full: '/search/full',
+          // fullResults: 100, // Optional. Amount of ids to search for, default 20.
 
-  %body
-    %img{:src => "images/picky.png"}/
-    %p
-      %a{:href => "http://florianhanke.com/picky"} To the Picky Homepage
-      \/
-      %a{:href => '/configure' } Configuring this app server
-    %p
-      %h1 CocoaPods Search
-    .content
-      = Picky::Helper.cached_interface
-      :javascript
-        $(window).load(function() {
-          pickyClient = new PickyClient({
-            // A full query displays the rendered results.
-            //
-            full: '/search/full',
-            // fullResults: 100, // Optional. Amount of ids to search for, default 20.
+          // A live query just updates the count and does not need
+          // to render (could go straight to the search server).
+          //
+          live: '/search/live',
+          // liveResults: 0, // Optional. Amount of ids to search for, default 0.
 
-            // A live query just updates the count and does not need
-            // to render (could go straight to the search server).
-            //
-            live: '/search/live',
-            // liveResults: 0, // Optional. Amount of ids to search for, default 0.
+          // showResultsLimit: 10, // Optional. Default is 10.
 
-            // showResultsLimit: 10, // Optional. Default is 10.
+          // Wrap each li group (like author-title, or title-isbn etc.) of results
+          // in this element.
+          // Optional. Default is '<ol class="results"></ol>'.
+          //
+          //wrapResults: '<section class="results"></section>',
 
-            // Wrap each li group (like author-title, or title-isbn etc.) of results
-            // in this element.
-            // Optional. Default is '<ol class="results"></ol>'.
-            //
-            // wrapResults: '<div class="hello"><ol class="world"></ol></div>',
+          // before: function(params, query) {  }, // Optional. Before Picky sends any data.
+          // success: function(data, query) {  }, // Optional. Just after Picky receives data. (Get a PickyData object)
+          // after: function(data, query) {  }, // Optional. After Picky has handled the data and updated the view.
 
-            // before: function(params, query) {  }, // Optional. Before Picky sends any data.
-            // success: function(data, query) {  }, // Optional. Just after Picky receives data. (Get a PickyData object)
-            // after: function(data, query) {  }, // Optional. After Picky has handled the data and updated the view.
-
-            // This is used to generate the correct query strings, localized. E.g. "subject:war".
-            // Optional. If you don't give these, the field identifier given in the Picky server is used.
-            //
-            qualifiers: {
-              en:{
-                named: 'name',
-                written: 'author',
-                writer: 'author',
-                using: 'dependencies',
-                depends: 'dependencies',
-                dependent: 'dependencies',
-                on: 'platform'
-              }
-            },
-
-            // Use this to group the choices (those are used when Picky needs more feedback).
-            // If a category is missing, it is appended in a virtual group at the end.
-            // Optional. Default is [].
-            //
-            //groups: [['author', 'title', 'subjects']],
-            // This is used for formatting inside the choice groups.
-            //
-            // Use %n$s, where n is the position of the category in the key.
-            // Optional. Default is {}.
-            //
-            choices: {
-              en: {
-                'author,name': '%2$s, written by %1$s',
-                'name,author': '%1$s, written by %2$s',
-                'name,version': '%1$s, version %2$s',
-                'version,name': '%1$s of %2$s',
-                'name,dependencies': '%1$s, using %2$s',
-                'dependencies,name': '%1$s used by %2$s',
-                'author,dependencies': 'written by %1$s and using %2$s',
-                'dependencies,author': 'using %1$s, written by %2$s',
-                'dependencies,version': '%1$s used by version %2$s',
-                'version,dependencies': '%2$s used by version %1$s',
-                'summary,name': '%2$s with \"%1$s\" in summary',
-                'name,summary': '%1$s with \"%2$s\" in summary',
-                'summary,author': 'written by %2$s with \"%1$s\" in summary',
-                'author,summary': 'written by %1$s with \"%2$s\" in summary',
-                'name,platform': '%1$s running on %2$s',
-                'platform,name': '%2$s running on %1$s'
-              }
-            },
-
-            // This is used to explain the preceding word in the suggestion text (if it
-            // has not yet been defined by the choices above), localized. E.g. "Peter (author)".
-            // Optional. Default are the field identifiers from the Picky server.
-            //
-            explanations: {
-              en:{
-                name: 'named',
-                author: 'written by',
-                versions: 'version',
-                dependencies: 'using',
-                platform: 'on',
-                summary: 'with summary'
-              }
+          // This is used to generate the correct query strings, localized. E.g. "subject:war".
+          // Optional. If you don't give these, the field identifier given in the Picky server is used.
+          //
+          qualifiers: {
+            en:{
+              named: 'name',
+              written: 'author',
+              writer: 'author',
+              using: 'dependencies',
+              depends: 'dependencies',
+              dependent: 'dependencies',
+              on: 'platform'
             }
-          });
+          },
 
-          // An initial search text, prefilled
-          // this one is passed through the query param q.
+          // Use this to group the choices (those are used when Picky needs more feedback).
+          // If a category is missing, it is appended in a virtual group at the end.
+          // Optional. Default is [].
           //
-          // Example: www.mysearch.com/?q=example
+          //groups: [['author', 'title', 'subjects']],
+          // This is used for formatting inside the choice groups.
           //
-          pickyClient.insertFromURL('#{@query}');
+          // Use %n$s, where n is the position of the category in the key.
+          // Optional. Default is {}.
+          //
+          choices: {
+            en: {
+              'author,name': '%2$s, written by %1$s',
+              'name,author': '%1$s, written by %2$s',
+              'name,version': '%1$s, version %2$s',
+              'version,name': '%1$s of %2$s',
+              'name,dependencies': '%1$s, using %2$s',
+              'dependencies,name': '%1$s used by %2$s',
+              'author,dependencies': 'written by %1$s and using %2$s',
+              'dependencies,author': 'using %1$s, written by %2$s',
+              'dependencies,version': '%1$s used by version %2$s',
+              'version,dependencies': '%2$s used by version %1$s',
+              'summary,name': '%2$s with \"%1$s\" in summary',
+              'name,summary': '%1$s with \"%2$s\" in summary',
+              'summary,author': 'written by %2$s with \"%1$s\" in summary',
+              'author,summary': 'written by %1$s with \"%2$s\" in summary',
+              'name,platform': '%1$s running on %2$s',
+              'platform,name': '%2$s running on %1$s'
+            }
+          },
+
+          // This is used to explain the preceding word in the suggestion text (if it
+          // has not yet been defined by the choices above), localized. E.g. "Peter (author)".
+          // Optional. Default are the field identifiers from the Picky server.
+          //
+          explanations: {
+            en:{
+              name: 'named',
+              author: 'written by',
+              versions: 'version',
+              dependencies: 'using',
+              platform: 'on',
+              summary: 'with summary'
+            }
+          }
         });
+
+        // An initial search text, prefilled
+        // this one is passed through the query param q.
+        //
+        // Example: www.mysearch.com/?q=example
+        //
+        pickyClient.insertFromURL('#{@query}');
+      });
