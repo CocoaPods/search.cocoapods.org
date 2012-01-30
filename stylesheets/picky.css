@@ -71,7 +71,7 @@
     #picky div.results div.header, #picky div.results div.addination {
       color: #555555;
       background-color: #eeeeee;
-      padding: 6px 5px 5px 8px; }
+      padding: 0.5em; }
       #picky div.results div.header .tothetop, #picky div.results div.addination .tothetop {
         float: right; }
         #picky div.results div.header .tothetop a, #picky div.results div.addination .tothetop a {

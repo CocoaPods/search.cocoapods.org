@@ -249,7 +249,7 @@ footer a:hover
   color: #808088;
 }
 
-/* Added by Florian. */
+/* Added by Florian. Not proud of this, but ok for prototyping. */
 .more, .no_results, .results .header {
   font-size: 1.5em;
   padding: 0.5em 0em;
@@ -257,6 +257,24 @@ footer a:hover
 .more, .no_results {
   display: none;
 }
+#box #picky div.results {
+  margin: 0 1.5em;
+  padding: 0 0 1em 0;
+  background-color: rgba(0, 0, 0, 0.02);
+  border-bottom-left-radius: 1em;
+  border-bottom-right-radius: 1em;
+  border-bottom: solid 1px #b8b8ba;
+  box-shadow: inset 0 1px 3px rgba(255,255,255,0.4), 0 1px 3px rgba(0,0,0,0.16);
+}
+.results .pod {
+  margin: 0.5em 1em 0.8em;
+}
+.allocations {
+  margin: 0px 1.5em;
+}
 .allocations ol {
   list-style-type: none;
+}
+#picky .allocations .shown li, #picky .allocations .hidden li {
+  font-size: 1.2em;
 }
