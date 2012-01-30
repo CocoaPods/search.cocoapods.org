@@ -264,16 +264,23 @@ footer a:hover
   border-bottom-left-radius: 1em;
   border-bottom-right-radius: 1em;
   border-bottom: solid 1px #b8b8ba;
-  box-shadow: inset 0 1px 3px rgba(255,255,255,0.4), 0 1px 3px rgba(0,0,0,0.16);
+  box-shadow: inset 0 1px 3px rgba(255,255,255,0), 0 1px 3px rgba(0,0,0,0.16);
 }
 .results .pod {
   margin: 0.5em 1em 0.8em;
 }
-.allocations {
-  margin: 0px 1.5em;
+#box #picky .no_results {
+  margin: 0px 1em;
+  padding: 0.5em 1em 0;
+  background-color: rgba(0, 0, 0, 0.02);
 }
 .allocations ol {
   list-style-type: none;
+}
+#box #picky .allocations {
+  margin: 0px 1.5em;
+  padding-bottom: 0px;
+  background-color: rgba(0, 0, 0, 0.02);
 }
 #picky .allocations .shown li, #picky .allocations .hidden li {
   font-size: 1.2em;
