@@ -108,9 +108,11 @@ class CocoapodSearch < Sinatra::Application
     Pod::Source.new(pods_path).pod_sets.each do |set|
       id      = set.name
       version = set.versions.last
-      summary = set.specification.summary
-      authors = set.specification.authors
-      link    = set.name
+      
+      specification = set.specification
+      summary = specification.summary
+      authors = specification.authors
+      link    = specification.homepage
       Pod::View.content[set.name] = [version, summary, authors, link]
     end
     

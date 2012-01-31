@@ -13,7 +13,7 @@ describe 'Integration Tests' do
   end
 
   let(:pods) { Picky::TestClient.new(CocoapodSearch, :path => '/search/full') }
-
+  
   # Testing a count of results.
   #
   it { pods.search('1.0.0').total.should == 2 }
