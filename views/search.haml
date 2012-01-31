@@ -211,9 +211,12 @@
 
           // Before Picky sends any data.
           //
-          // Adds the platform modifier to it.
+          // Adds the platform modifier to it if it isn't there already.
           //
           before: function(query, params) {
+            if (query.match(/(platform|on)\:/)) {
+              return query;
+            }
             var platformModifier = $('#search label.checked input').val();
             return platformModifier + ' ' + query;
           },
@@ -247,20 +250,20 @@
           //
           choices: {
             en: {
-              'author,name': '%2$s, written by %1$s',
-              'name,author': '%1$s, written by %2$s',
-              'name,version': '%1$s, version %2$s',
-              'version,name': '%1$s of %2$s',
-              'name,dependencies': '%1$s, using %2$s',
-              'dependencies,name': '%1$s used by %2$s',
-              'author,dependencies': 'written by %1$s and using %2$s',
-              'dependencies,author': 'using %1$s, written by %2$s',
-              'dependencies,version': '%1$s used by version %2$s',
-              'version,dependencies': '%2$s used by version %1$s',
-              'summary,name': '%2$s with \"%1$s\" in summary',
-              'name,summary': '%1$s with \"%2$s\" in summary',
-              'summary,author': 'written by %2$s with \"%1$s\" in summary',
-              'author,summary': 'written by %1$s with \"%2$s\" in summary',
+              'platform,author,name': '%3$s, written by %2$s',
+              'platform,name,author': '%2$s, written by %3$s',
+              'platform,name,version': '%2$s, version %3$s',
+              'platform,version,name': '%2$s of %3$s',
+              'platform,name,dependencies': '%2$s, using %3$s',
+              'platform,dependencies,name': '%2$s used by %3$s',
+              'platform,author,dependencies': 'written by %2$s and using %3$s',
+              'platform,dependencies,author': 'using %2$s, written by %3$s',
+              'platform,dependencies,version': '%2$s used by version %3$s',
+              'platform,version,dependencies': '%3$s used by version %2$s',
+              'platform,summary,name': '%3$s with \"%2$s\" in summary',
+              'platform,name,summary': '%2$s with \"%3$s\" in summary',
+              'platform,summary,author': 'written by %3$s with \"%2$s\" in summary',
+              'platform,author,summary': 'written by %2$s with \"%3$s\" in summary',
               'name,platform': '%1$s running on %2$s',
               'platform,name': '%2$s running on %1$s'
             }
