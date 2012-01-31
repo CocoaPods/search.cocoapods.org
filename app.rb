@@ -127,7 +127,7 @@ class CocoapodSearch < Sinatra::Application
               splits_text_on:     /[\s\/\-\&]+/
 
     boost [:platform, :name, :author] => +3,
-          [:platform, :name]          => +1
+          [:platform, :name]          => +2
   end
 
 
