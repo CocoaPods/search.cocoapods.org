@@ -281,6 +281,7 @@ footer a:hover
   margin: 0px 1.5em;
   padding-bottom: 0px;
   background-color: rgba(0, 0, 0, 0.02);
+  box-shadow: -2px 0px rgba(0,0,0,0.05), 2px 0px rgba(0,0,0,0.05);
 }
 #picky .allocations .shown li, #picky .allocations .hidden li {
   font-size: 1.2em;
