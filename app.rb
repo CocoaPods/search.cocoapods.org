@@ -126,8 +126,10 @@ class CocoapodSearch < Sinatra::Application
               stopwords:          /\b(and|the|of|it|in|for)\b/i,
               splits_text_on:     /[\s\/\-\&]+/
 
-    boost [:platform, :name, :author] => +3,
-          [:platform, :name]          => +2
+    boost [:platform, :name, :author]  => +3,
+          [:platform, :name]           => +2,
+          [:platform, :name, :summary] => -3, # Summary is the least important.
+          [:platform, :summary]        => -3  #
   end
 
 
