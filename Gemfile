@@ -4,7 +4,7 @@ gem 'bundler'
 
 # Gems required by the Picky client.
 #
-gem 'picky-client', '~> 4.0'
+gem 'picky-client', '~> 4'
 gem 'i18n'
 gem 'activesupport', :require => 'active_support/core_ext'
 gem 'sinatra'
@@ -12,7 +12,7 @@ gem 'haml'
 
 # Gems required by the Picky server.
 #
-gem 'picky', '~> 4.0'
+gem 'picky', '~> 4'
 gem 'rake'
 gem 'rack'
 gem 'rack_fast_escape', '2009.06.24' # Optional.
