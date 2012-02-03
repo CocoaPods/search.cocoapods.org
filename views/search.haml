@@ -38,36 +38,32 @@
         <li>Manages build settings</li>
         </ol>
       #box
-        #picky
-          %section#search
-            .form
-              %div
-                %label.checked{"x-onclick" => ""}
-                  %input{:checked => "", :name => "platform", :type => "radio", :value => "platform:osx platform:ios"}/
-                  %span
-                    %b
-                    %span OS X and iOS
-                %label{"x-onclick" => ""}
-                  %input{:name => "platform", :type => "radio", :value => "platform:ios"}/
-                  %span
-                    %b
-                    %span For iOS
-                %label{"x-onclick" => ""}
-                  %input{:name => "platform", :type => "radio", :value => "platform:osx"}/
-                  %span
-                    %b
-                    %span For OS X
-              / class query makes picky use it
-              %input{:placeholder => "Search pods", :type => "search", "x-autofocus" => "", "x-value" => "XTesting", :class => "query"}/
-              / TODO: Should we use a search field? Which attributes?
-          / %section.results
+        %section#search
+          .form
+            %div
+              %label.checked{ "x-onclick" => "" }
+                %input{ :checked => "", :name => "platform", :type => "radio", :value => "platform:osx platform:ios" }/
+                %span
+                  %b
+                  %span OS X and iOS
+              %label{ "x-onclick" => "" }
+                %input{ :name => "platform", :type => "radio", :value => "platform:ios" }/
+                %span
+                  %b
+                  %span For iOS
+              %label{ "x-onclick" => "" }
+                %input{ :name => "platform", :type => "radio", :value => "platform:osx" }/
+                %span
+                  %b
+                  %span For OS X
+            %input{ :placeholder => "Search pods", :type => "search", "x-autofocus" => "", "x-value" => "XTesting", :class => 'query' }/
           .no_results No Pods found
           .allocations
             %ol.shown
             %ol.more more
             %ol.hidden
           .results
-            / TODO: Microformats? Should we include a link to the podspec? Any other fields? Dependencies?
+          / TODO: Microformats? Should we include a link to the podspec? Any other fields? Dependencies?
         %section#install
           %h2 Install
           %p It only takes a few minutes to get CocoaPods.
@@ -176,9 +172,10 @@
             %a{:href => "https://www.sauspiel.de/"} Sauspiel
           / TODO: Do we have more sponsors?
     / %script{:src => "javascripts/zepto.js"}
+    
     :javascript
       // TODO Add tap gesture support to the cycle button?
-      $(window).load(function() {
+      $(window).ready(function() {
         pickyClient = new PickyClient({
           // A full query displays the rendered results.
           //
@@ -198,6 +195,10 @@
           // Optional. Default is '<ol class="results"></ol>'.
           //
           //wrapResults: '<section class="results"></section>',
+          
+          // In this example, the Picky search is enclosed in #search.
+          //
+          enclosingSelector: '#search',
 
           // Before Picky sends any data.
           //
@@ -285,17 +286,8 @@
         // $('body').addClass($.os.ios ? 'ios' : 'desktop');
         $('#search input[type=radio]').click(function() {
           $(this).parent().addClass('checked').siblings().removeClass('checked');
-          // Run a query.
-          // Note: Bit of a hack to get Picky to repeat the query.
-          // TODO Redesign.
-          //
-          pickyClient.insertFromURL();
-          console.log(pickyClient);
+          // Repeat last query.
+          // 
+          pickyClient.resend();
         })
-        // $('input.query').keypress(function(event) {
-        //   if (event.which == 13) {
-        //     event.preventDefault();
-        //     // return false;
-        //   }
-        // });
       });
