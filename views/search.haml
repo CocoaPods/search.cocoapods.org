@@ -219,13 +219,8 @@
           //
           qualifiers: {
             en:{
-              named: 'name',
-              written: 'author',
-              writer: 'author',
-              using: 'dependencies',
-              depends: 'dependencies',
-              dependent: 'dependencies',
-              on: 'platform'
+              dependencies: 'uses',
+              platform: 'on'
             }
           },
 
@@ -241,6 +236,14 @@
           //
           choices: {
             en: {
+              'name,platform': 'named %1$s',
+              'platform,name': 'named %2$s',
+              'author,platform': 'written by %1$s',
+              'platform,author': 'written by %2$s',
+              'summary,platform': '%1$s in summary',
+              'platform,summary': '%2$s in summary',
+              'dependencies,platform': 'using %1$s',
+              'platform,dependencies': 'using %2$s',
               'platform,author,name': '%3$s, written by %2$s',
               'platform,name,author': '%2$s, written by %3$s',
               'platform,name,version': '%2$s, version %3$s',
@@ -254,9 +257,7 @@
               'platform,summary,name': '%3$s with \"%2$s\" in summary',
               'platform,name,summary': '%2$s with \"%3$s\" in summary',
               'platform,summary,author': 'written by %3$s with \"%2$s\" in summary',
-              'platform,author,summary': 'written by %2$s with \"%3$s\" in summary',
-              'name,platform': '%1$s running on %2$s',
-              'platform,name': '%2$s running on %1$s'
+              'platform,author,summary': 'written by %2$s with \"%3$s\" in summary'
             }
           },
 
