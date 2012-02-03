@@ -92,27 +92,19 @@
               %a{:href => "#get_started"} get started
         %section#get_started
           %h2 Get started
-          %p Search for pods by name and description:
-          %pre
-            %code
-              :preserve
-                $ pod search asi
-                ==&gt; ASIHTTPRequest (1.8.1)
-                    Easy to use CFNetwork wrapper for HTTP requests, Objective-C, Mac OS X and iPhone
-                
-                ==&gt; ASIWebPageRequest (1.8.1)
-                    The ASIWebPageRequest class included with ASIHTTPRequest lets you download
-                    complete webpages, including external resources like images and stylesheets.
+          %p
+            %a{:href => "#search"} Search
+            for pods by name and description.
           %p
             Then list the dependencies in a text file named
             %tt Podfile
             in your Xcode project directory:
           %pre
             %code
-              /
+              :preserve
                 $ vim Podfile
-              dependency 'JSONKit',       '~&gt; 1.4'
-              dependency 'Reachability',  '~&gt; 2.0.4'
+                dependency 'JSONKit',       '~&gt; 1.4'
+                dependency 'Reachability',  '~&gt; 3.0.0'
           %p Now you can install the dependencies in your project:
           %pre
             %code
