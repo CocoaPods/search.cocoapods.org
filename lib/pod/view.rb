@@ -34,7 +34,15 @@ module Pod
     def render
       rendered_authors = authors && authors.map do |name, email|
         %Q{<a href="mailto:#{email}">#{name}</a>}
-      end.join(' and ')
+      end
+      case rendered_authors.size
+      when 1
+        rendered_authors = rendered_authors.first
+      when 2
+        rendered_authors = rendered_authors.join(' and ')
+      else
+        rendered_authors = "#{rendered_authors[0..-2].join(', ')}, and #{rendered_authors.last}"
+      end
       %Q{<div class="pod"><h3 class="name">#{id}</h3><div class="version">#{version}</div><div class="summary"><p>#{summary}</p></div><div class="authors">#{rendered_authors}</div><div class="homepage"><a href="#{link}">#{link}</a></div></div>}
     end
 
