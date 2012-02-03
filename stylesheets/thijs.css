@@ -249,13 +249,16 @@ footer a:hover
   color: #808088;
 }
 
-/* Added by Florian. Not proud of this, but ok for prototyping. */
-.more, .no_results, .results .header {
+.more, .no_results {
   font-size: 1.5em;
   padding: 0.5em 0em;
 }
 .more, .no_results {
   display: none;
+}
+#box #search div.results div.header {
+  color: #eee;
+  padding: 0em;
 }
 #box #search div.results {
   margin: 0 1.5em;
