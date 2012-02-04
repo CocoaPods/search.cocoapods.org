@@ -41,18 +41,18 @@
         %section#search
           .form
             %div
-              %label.checked{ "x-onclick" => "" }
-                %input{ :checked => "", :name => "platform", :type => "radio", :value => "platform:osx platform:ios" }/
+              %label{ :class => (:checked if @platform == :both), "x-onclick" => "" }
+                %input{ :checked => (:checked if @platform == :both), :name => "platform", :type => "radio", :value => "on:osx on:ios" }/
                 %span
                   %b
                   %span OS X and iOS
-              %label{ "x-onclick" => "" }
-                %input{ :name => "platform", :type => "radio", :value => "platform:ios" }/
+              %label{ :class => (:checked if @platform == :ios), "x-onclick" => "" }
+                %input{ :checked => (:checked if @platform == :ios), :name => "platform", :type => "radio", :value => "on:ios" }/
                 %span
                   %b
                   %span For iOS
-              %label{ "x-onclick" => "" }
-                %input{ :name => "platform", :type => "radio", :value => "platform:osx" }/
+              %label{  :class => (:checked if @platform == :osx), "x-onclick" => "" }
+                %input{ :checked => (:checked if @platform == :osx), :name => "platform", :type => "radio", :value => "on:osx" }/
                 %span
                   %b
                   %span For OS X
@@ -292,5 +292,13 @@
           // Repeat last query.
           // 
           pickyClient.resend();
-        })
+        });
+
+        $('#search div.results').delegate('div.pod div.authors a', 'click', function(event) {
+          var platform = $('#search label.checked input').val();
+          var href = this.href + '+' + platform.replace(' ', '+').replace(/:/g, '%3A');
+          document.location.href = href;
+          return false;
+        });
+
       });

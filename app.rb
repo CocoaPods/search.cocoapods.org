@@ -141,10 +141,22 @@ class CocoapodSearch < Sinatra::Application
   set :views,         File.expand_path('../views', __FILE__)
   set :haml,          :format => :html5
 
+  ON_IOS = /(on|platform):ios/i
+  ON_OSX = /(on|platform):osx/i
+
   # Root, the search page.
   #
   get '/' do
     @query = params[:q]
+
+    # TODO: There is probably a query parser of Picky that could be used here.
+    if @query =~ ON_IOS && @query =~ ON_OSX
+      @platform = :both
+    elsif @query =~ ON_IOS
+      @platform = :ios
+    else
+      @platform = :osx
+    end
 
     haml :'/search'
   end

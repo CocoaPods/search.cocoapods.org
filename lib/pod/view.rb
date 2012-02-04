@@ -32,8 +32,8 @@ module Pod
     end
 
     def render
-      rendered_authors = authors && authors.map do |name, email|
-        %Q{<a href="mailto:#{email}">#{name}</a>}
+      rendered_authors = authors && authors.map do |name, _|
+        %{<a href="/?q=author%3A#{Rack::Utils.escape(name)}">#{name}</a>}
       end
       case rendered_authors.size
       when 1
