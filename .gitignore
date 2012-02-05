@@ -1,3 +1,5 @@
+.*.sw?
+.rbenv-version
 index
 specs
 specs.zip

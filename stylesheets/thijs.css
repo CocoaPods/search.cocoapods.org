@@ -280,6 +280,9 @@ footer a:hover
 .results .pod h3 a:hover {
   text-decoration: underline;
 }
+.results hr:last-child {
+  display: none;
+}
 #box #search .no_results {
   margin: 0px 1em;
   padding: 0.5em 1em 0;
