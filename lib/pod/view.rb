@@ -43,7 +43,7 @@ module Pod
       if words.size < 3
         words.join ' and '
       else
-        "#{words[0..-2].join(', ')}, and #{rendered_authors.last}"
+        "#{words[0..-2].join(', ')}, and #{words.last}"
       end
     end
 
