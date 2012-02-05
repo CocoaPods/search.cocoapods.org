@@ -162,12 +162,6 @@ class CocoapodSearch < Sinatra::Application
     haml :'/search'
   end
 
-  # Configure. The configuration info page.
-  #
-  get '/configure' do
-    haml :'/configure'
-  end
-
   # Renders the results into the json.
   #
   # You get the results from the (local) picky server and then
