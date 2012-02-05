@@ -249,28 +249,44 @@ footer a:hover
   color: #808088;
 }
 
-.more, .no_results {
-  font-size: 1.5em;
-  padding: 0.5em 0em;
+#box #search ol.more, #box #search ol.hidden {
+  margin-top: 3px;
 }
-.more, .no_results {
-  display: none;
+#box #search ol li:last-child {
+  margin-bottom: 0;
 }
 #box #search div.results div.header {
+  display: none;
   color: #eee;
   padding: 0em;
 }
-#box #search div.results {
+#box #search div.allocations,
+#box #search div.no_results,
+#box #search div.results:not(:empty) {
   margin: 0 1.5em;
-  padding: 0 0 1em 0;
+  padding: 0 0 0 0;
   background-color: rgba(0, 0, 0, 0.02);
   border-bottom-left-radius: 1em;
   border-bottom-right-radius: 1em;
   border-bottom: solid 1px #b8b8ba;
   box-shadow: inset 0 1px 3px rgba(255,255,255,0), 0 1px 3px rgba(0,0,0,0.16);
 }
+#box #search div.no_results {
+  padding: 0.5em 0;
+}
+#box #search ol.more, #box #search div.no_results {
+  display: none;
+}
+#box #search ol.more h3, #box #search div.no_results h3 {
+  margin: 0;
+  text-align: center;
+}
 .results .pod {
-  margin: 0.5em 1em 0.8em;
+  margin: 0 1em;
+  padding: 1.5em 0;
+}
+.results .pod h3 {
+  margin-top: 0;
 }
 .results .pod h3 a:link,
 .results .pod h3 a:visited {
@@ -279,6 +295,9 @@ footer a:hover
 }
 .results .pod h3 a:hover {
   text-decoration: underline;
+}
+.results hr {
+  margin: 0;
 }
 .results hr:last-child {
   display: none;

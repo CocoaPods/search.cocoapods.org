@@ -57,10 +57,12 @@
                   %b
                   %span For OS X
             %input{ :placeholder => "Search pods", :type => "search", "x-autofocus" => "", "x-value" => "XTesting", :class => 'query' }/
-          .no_results No Pods found
+          .no_results
+            %h3 No Pods found
           .allocations
             %ol.shown
-            %ol.more more
+            %ol.more
+              %h3 More
             %ol.hidden
           .results
           / TODO: Microformats? Should we include a link to the podspec? Any other fields? Dependencies?
