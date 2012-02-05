@@ -33,17 +33,18 @@ module Pod
 
     def render
       rendered_authors = authors && authors.map do |name, _|
-        %{<a href="/?q=author%3A#{Rack::Utils.escape(name)}">#{name}</a>}
+        %{<a href="javascript:pickyClient.insert('#{name}')">#{name}</a>}
       end
-      case rendered_authors.size
-      when 1
-        rendered_authors = rendered_authors.first
-      when 2
-        rendered_authors = rendered_authors.join(' and ')
-      else
-        rendered_authors = "#{rendered_authors[0..-2].join(', ')}, and #{rendered_authors.last}"
-      end
+      rendered_authors = oxfordify rendered_authors
       %Q{<div class="pod"><h3 class="name">#{id}</h3><div class="version">#{version}</div><div class="summary"><p>#{summary}</p></div><div class="authors">#{rendered_authors}</div><div class="homepage"><a href="#{link}">#{link}</a></div></div>}
+    end
+    
+    def oxfordify words
+      if words.size < 3
+        words.join ' and '
+      else
+        "#{words[0..-2].join(', ')}, and #{rendered_authors.last}"
+      end
     end
 
   end
