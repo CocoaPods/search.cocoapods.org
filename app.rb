@@ -107,7 +107,7 @@ class CocoapodSearch < Sinatra::Application
     #
     Pod::Source.new(pods_path).pod_sets.each do |set|
       id      = set.name
-      version = set.versions.last
+      version = set.versions.first
       
       specification = set.specification
       summary = specification.summary
