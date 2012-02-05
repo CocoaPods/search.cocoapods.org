@@ -150,6 +150,7 @@ class CocoapodSearch < Sinatra::Application
     @query = params[:q]
 
     # TODO: There is probably a query parser of Picky that could be used here.
+    #
     if @query =~ ON_IOS && @query =~ ON_OSX
       @platform = :both
     elsif @query =~ ON_IOS
@@ -172,20 +173,13 @@ class CocoapodSearch < Sinatra::Application
   # You get the results from the (local) picky server and then
   # populate the result hash with rendered models.
   #
-  get '/search/full' do
+  get '/search' do
     results = pods.search params[:query], params[:ids] || 20, params[:offset] || 0
     results = results.to_hash
     results.extend Picky::Convenience
     results.populate_with Pod::View do |pod|
       pod.render
     end
-    Yajl::Encoder.encode results
-  end
-
-  # Updates the search count while the user is typing.
-  #
-  get '/search/live' do
-    results = pods.search params[:query], params[:ids] || 20, params[:offset] || 0
     Yajl::Encoder.encode results
   end
 
