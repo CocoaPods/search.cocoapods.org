@@ -36,7 +36,7 @@ module Pod
         %{<a href="javascript:pickyClient.insert('#{name}')">#{name}</a>}
       end
       rendered_authors = oxfordify rendered_authors
-      %Q{<div class="pod"><h3 class="name">#{id}</h3><div class="version">#{version}</div><div class="summary"><p>#{summary}</p></div><div class="authors">#{rendered_authors}</div><div class="homepage"><a href="#{link}">#{link}</a></div></div>}
+      %Q{<div class="pod"><h3 class="name"><a href="#{link}">#{id}</a></h3><div class="version">#{version}</div><div class="summary"><p>#{summary}</p></div><div class="authors">#{rendered_authors}</div></div>}
     end
     
     def oxfordify words
