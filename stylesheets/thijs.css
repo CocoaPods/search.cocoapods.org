@@ -272,6 +272,14 @@ footer a:hover
 .results .pod {
   margin: 0.5em 1em 0.8em;
 }
+.results .pod h3 a:link,
+.results .pod h3 a:visited {
+  color: black;
+  text-decoration: none;
+}
+.results .pod h3 a:hover {
+  text-decoration: underline;
+}
 #box #search .no_results {
   margin: 0px 1em;
   padding: 0.5em 1em 0;
