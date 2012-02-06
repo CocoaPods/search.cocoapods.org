@@ -28,6 +28,11 @@ describe 'Integration Tests' do
   it { pods.search('on:osx k* a').should have_categories(['platform', 'name', 'author'], ['platform', 'name', 'summary']) }
   it { pods.search('on:osx jsonkit').should have_categories(['platform', 'name'], ['platform', 'dependencies']) }
 
+  it 'is fast enough' do
+    require 'benchmark'
+    Benchmark.realtime { pods.search('on:osx k* a') }.should < 0.002 # seconds
+  end
+
   # Category specific tests.
   #
 
