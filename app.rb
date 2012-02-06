@@ -93,6 +93,29 @@ class CocoapodSearch < Sinatra::Application
   #
   self.class.send :define_method, :prepare do
     
+    # Content to render.
+    #
+    Pod::Source.new(pods_path).pod_sets.each do |set|
+      id      = set.name.dup
+      version = set.versions.first
+      
+      specification = set.specification
+      summary = specification.summary
+      authors = specification.authors
+      link    = specification.homepage
+      
+      # Picky is destructive with the given data
+      # strings, which is why we dup the content
+      # to render.
+      #
+      Pod::View.content[set.name] = [
+        version && version.dup,
+        summary && summary.dup,
+        authors && authors.dup,
+        link    && link.dup
+      ]
+    end
+    
     # Index.
     #
     specs = Specs.new
@@ -101,19 +124,6 @@ class CocoapodSearch < Sinatra::Application
       specs.prepare
     end
     index.reindex
-    
-    # Content to render.
-    #
-    Pod::Source.new(pods_path).pod_sets.each do |set|
-      id      = set.name
-      version = set.versions.first
-      
-      specification = set.specification
-      summary = specification.summary
-      authors = specification.authors
-      link    = specification.homepage
-      Pod::View.content[set.name] = [version, summary, authors, link]
-    end
     
   end
 
