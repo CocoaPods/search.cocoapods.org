@@ -93,6 +93,14 @@ class CocoapodSearch < Sinatra::Application
   #
   self.class.send :define_method, :prepare do
     
+    # Getting the data.
+    #
+    specs = Specs.new
+    if specs.empty?
+      specs.get
+      specs.prepare
+    end
+    
     # Content to render.
     #
     Pod::Source.new(pods_path).pod_sets.each do |set|
@@ -116,13 +124,8 @@ class CocoapodSearch < Sinatra::Application
       ]
     end
     
-    # Index.
+    # Indexing the data.
     #
-    specs = Specs.new
-    if specs.empty?
-      specs.get
-      specs.prepare
-    end
     index.reindex
     
   end
