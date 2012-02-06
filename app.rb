@@ -72,7 +72,6 @@ class CocoapodSearch < Sinatra::Application
              :from => :mapped_authors
     category :version,
              partial: Partial::Substring.new(from: 1),
-             qualifiers: [:version],
              :from => :mapped_versions
     category :dependencies,
              similarity: Similarity::DoubleMetaphone.new(2),
@@ -80,7 +79,7 @@ class CocoapodSearch < Sinatra::Application
              qualifiers: [:dependency, :dependencies, :depends, :using, :uses, :use, :needs],
              :from => :mapped_dependencies
     category :platform,
-             partial: Partial::Substring.new(from: 1),
+             partial: Partial::None.new,
              qualifiers: [:platform, :on],
              :from => :mapped_platform
     category :summary,
