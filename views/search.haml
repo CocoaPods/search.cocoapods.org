@@ -197,11 +197,10 @@
           // Before Picky sends any data to the server.
           //
           // Adds the platform modifier to it if it isn't there already.
+          // Removes it if it is.
           //
           before: function(query, params) {
-            if (query.match(/(platform|on)\:/)) {
-              return query;
-            }
+            query = query.replace(/(platform|on\:\w+\s?)+/, '');
             var platformModifier = $('#search label.checked input').val();
             return platformModifier + ' ' + query;
           },
