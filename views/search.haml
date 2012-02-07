@@ -205,7 +205,37 @@
             var platformModifier = $('#search label.checked input').val();
             return platformModifier + ' ' + query;
           },
-          // success: function(data, query) {  }, // Just after Picky receives data.
+          // We filter duplicate ids here.
+          // (Not in the server as it might be
+          // used for APIs etc.)
+          //
+          success: function(data, query) {
+            var seen = {};
+            
+            var allocations = data.allocations;
+            allocations.each(function(i, allocation) {
+              var ids     = allocation.ids;
+              var entries = allocation.entries;
+              var remove = [];
+              
+              ids.each(function(j, id) {
+                if (seen[id]) {
+                  data.total -= 1;
+                  remove.push(j);
+                } else {
+                  seen[id] = true;
+                }
+              });
+              
+              for(var l = remove.length-1; 0 <= l; l--) {
+                entries.splice(remove[l], 1);
+              }
+              
+              allocation.entries = entries;
+            });
+            
+            return data;
+          },
           // after: function(data, query) {  }, // After Picky has handled the data and updated the view.
 
           // This is used to generate the correct query strings, localized. E.g. "subject:war".
