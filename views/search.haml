@@ -176,6 +176,7 @@
     / %script{:src => "javascripts/zepto.js"}
     
     :javascript
+      var platformRemoverRegexp = /(platform|on\:\w+\s?)+/;
       // TODO Add tap gesture support to the cycle button?
       $(window).ready(function() {
         pickyClient = new PickyClient({
@@ -193,14 +194,20 @@
           //
           enclosingSelector: '#search',
           maxSuggestions: 4,
-
+          
+          // Before a query is inserted into the search field
+          // we clean it of any platform terms.
+          //
+          beforeInsert: function(query) {
+            return query.replace(platformRemoverRegexp, '');
+          },
           // Before Picky sends any data to the server.
           //
           // Adds the platform modifier to it if it isn't there already.
           // Removes it if it is.
           //
           before: function(query, params) {
-            query = query.replace(/(platform|on\:\w+\s?)+/, '');
+            query = query.replace(platformRemoverRegexp, '');
             var platformModifier = $('#search label.checked input').val();
             return platformModifier + ' ' + query;
           },
