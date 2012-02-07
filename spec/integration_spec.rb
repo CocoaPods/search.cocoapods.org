@@ -21,7 +21,7 @@ describe 'Integration Tests' do
 
   # Testing a specific order of result ids.
   #
-  it { pods.search('on:osx k').ids.should == ['Kiwi', 'SSKeychain'] }
+  it { pods.search('on:osx ki').ids.should == ['BlocksKit', 'FormatterKit', 'JSONKit', 'Kiwi', 'RestKit', 'RestKit-JSON-JSONKit', 'RestKit-Network', 'RestKit-ObjectMapping', 'RestKit-XML-LibXML'] }
   
   # Speed.
   #
@@ -63,7 +63,7 @@ describe 'Integration Tests' do
   
   # Rendering.
   #
-  it { pods.search('kiwi').entries.should == ['<div class="pod"><h3 class="name"><a href="http://kiwi-lib.info">Kiwi</a></h3><div class="version">1.0.0</div><div class="summary"><p>A Behavior Driven Development library  iPhone  iPad development.</p></div><div class="authors"><a href="javascript:pickyClient.insert(\'Allen Ding\')">Allen Ding</a> and <a href="javascript:pickyClient.insert(\'Luke Redpath\')">Luke Redpath</a></div></div><hr>'] }
+  it { pods.search('kiwi').entries.should == ['<div class="pod"><h3 class="name"><a href="http://kiwi-lib.info">Kiwi</a></h3><div class="version">1.0.0</div><div class="summary"><p>A Behavior Driven Development library for iPhone and iPad development.</p></div><div class="authors"><a href="javascript:pickyClient.insert(\'Allen Ding\')">Allen Ding</a> and <a href="javascript:pickyClient.insert(\'Luke Redpath\')">Luke Redpath</a></div></div><hr>'] }
   
   # Qualifiers.
   #
