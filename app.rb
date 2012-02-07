@@ -64,7 +64,8 @@ class CocoapodSearch < Sinatra::Application
     category :name,
              similarity: Similarity::DoubleMetaphone.new(2),
              partial: Partial::Substring.new(from: 1),
-             qualifiers: [:name, :pod]
+             qualifiers: [:name, :pod],
+             :from => :mapped_name
     category :author,
              similarity: Similarity::DoubleMetaphone.new(2),
              partial: Partial::Substring.new(from: 1),
