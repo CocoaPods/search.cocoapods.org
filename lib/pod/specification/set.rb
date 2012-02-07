@@ -44,7 +44,7 @@ module Pod
       #
       def mapped_summary
         summary = specification.summary
-        summary.gsub %r{#{split_name.join('|')}}, ''
+        summary.gsub /#{split_name.join('|')}/i, ''
       end
 
     end
