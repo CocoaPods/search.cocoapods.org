@@ -53,7 +53,7 @@ class CocoapodSearch < Sinatra::Application
     #
     key_format :to_sym
 
-    # Note: We need to work on this.
+    # TODO We need to work on this. This is still the Picky standard.
     #
     indexing removes_characters: /[^a-z0-9\s\/\-\_\:\"\&\.]/i,
              stopwords:          /\b(and|the|of|it|in|for)\b/i,
@@ -109,20 +109,19 @@ class CocoapodSearch < Sinatra::Application
       version = set.versions.first
       
       specification = set.specification
-      summary = specification.summary
-      authors = specification.authors
-      link    = specification.homepage
+      summary       = specification.summary
+      authors       = specification.authors
+      link          = specification.homepage
       
       # Picky is destructive with the given data
       # strings, which is why we dup the content
       # to render.
       #
-      Pod::View.content[set.name] = [
-        version && version.dup,
-        summary && summary.dup,
-        authors && authors.dup,
-        link    && link.dup
-      ]
+      Pod::View.add(id,
+                    version && version.dup,
+                    summary && summary.dup,
+                    authors && authors.dup,
+                    link    && link.dup)
     end
     
     # Indexing the data.
@@ -195,10 +194,7 @@ class CocoapodSearch < Sinatra::Application
   [:get, :post].each do |type|
     send type, "/post-receive-hook/#{ENV['HOOK_PATH']}" do
       begin
-        loader = Specs.new
-        loader.get
-        loader.prepare
-        index.reindex
+        self.class.prepare
 
         status 200
         body "REINDEXED"
