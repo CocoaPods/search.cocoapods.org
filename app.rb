@@ -92,12 +92,12 @@ class CocoapodSearch < Sinatra::Application
   # which gets the specs if they are
   # not available and reindexes.
   #
-  self.class.send :define_method, :prepare do
+  self.class.send :define_method, :prepare do |force = false|
     
     # Getting the data.
     #
     specs = Specs.new
-    if specs.empty?
+    if force || specs.empty?
       specs.get
       specs.prepare
     end
@@ -194,7 +194,7 @@ class CocoapodSearch < Sinatra::Application
   [:get, :post].each do |type|
     send type, "/post-receive-hook/#{ENV['HOOK_PATH']}" do
       begin
-        self.class.prepare
+        self.class.prepare true
 
         status 200
         body "REINDEXED"
