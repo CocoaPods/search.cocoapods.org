@@ -1,6 +1,5 @@
 require 'sinatra/base'
 require 'i18n'
-require 'haml'
 require 'picky'
 require 'picky-client'
 require 'cocoapods'
@@ -151,7 +150,6 @@ class CocoapodSearch < Sinatra::Application
   set :static,        true
   set :public_folder, File.dirname(__FILE__)
   set :views,         File.expand_path('../views', __FILE__)
-  set :haml,          :format => :html5
 
   ON_IOS = /(on|platform):ios/i
   ON_OSX = /(on|platform):osx/i
@@ -171,7 +169,7 @@ class CocoapodSearch < Sinatra::Application
       @platform = :osx
     end
 
-    haml :'/search'
+    erb :'/search'
   end
 
   # Renders the results into the json.

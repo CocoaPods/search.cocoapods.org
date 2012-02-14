@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  	<title>CocoaPods: The Objective-C Library Manager</title>
+  	<link href="stylesheets/css/cocoapods.css" media="screen" rel="stylesheet" type="text/css">
+  	<link href="stylesheets/prettify.css" media="screen" rel="stylesheet" type="text/css">
+  	<!-- <link rel="stylesheet" href="stylesheets/picky.css"> -->
+  	<link rel="shortcut icon" href="favicon.ico">
+  </head>
+
+  <body>
+		<div class="container">
+			<div class="sidebar">
+				<div class="masthead">
+					<h1>Cocoa<em>Pods</em></h1>
+					<p>
+						The best way to manage library 
+						dependencies in Objective-C 
+						projects.
+					</p>
+				</div>
+				<div class="intro">
+					<p>
+						Specify the libraries for your project in an easy to edit text file. Then use 
+						CocoaPods to resolve all dependencies, fetch the source, and set up your 
+						Xcode workspace.
+					</p>
+				</div>
+				<nav>
+					<ul>
+						<li><a href="#">GitHub Repo</a></li>
+						<li><a href="#">Submit an issue</a></li>
+						<li><a href="#">Browse the wiki</a></li>
+					</ul>
+				</nav>
+			</div>
+
+			<article class="main-content">
+				<form class="search-form">
+					<fieldset>
+						<h2><label for="pod_search">Search pods</label></h2>
+						<input type="search" id="pod_search" placeholder="pod name, e.g. Nimbus">
+					</fieldset>
+					<ul class="results">
+						<li class="result">
+							<h3><a href="#">iRate</a> 1.3.2</h3>
+							<p>
+								A handy class that prompts users of your iPhone or Mac App Store app to 
+								rate your application after using it for a while. Similar to Appirater, but with a 
+								simpler, cleaner interface and automatic support for iOS fast application 
+								switching.
+							</p>
+							<p class="author">
+								<a href="#">Nick Lockqood</a>
+							</p>
+						</li>
+					</ul>
+				</form>
+
+				<section id="install">
+					<h2>Install</h2>
+					<p>
+						It only takes a few minutes to get CocoaPods.
+					</p>
+					<p>
+						CocoaPods runs on MacRuby. 
+						If you don’t have a recent version of MacRuby you will need to 
+						<a href="http://www.macruby.org/downloads.html">download and install</a> the latest stable release.
+					</p>
+					<p>
+						Once you’ve got MacRuby, install CocoaPods from the Terminal:
+					</p>
+<pre class="prettyprint">
+$ sudo macgem install cocoapods
+$ pod setup
+</pre>
+					<p>
+						Now that you’ve got CocoaPods installed it’s time to 
+						<a href="http://cocoapods.org/#get_started">get started</a>.
+					</p>
+				</section>
+
+				<section id="get_started">
+					<h2>Get started</h2>
+					<p>
+						Search for pods by name and description.
+					</p>
+					<p>
+						Then list the dependencies in a text file named Podfile in 
+						your Xcode project directory:
+					</p>
+<pre class="prettyprint">
+$ vim Podfile
+dependency 'JSONKit',       '~> 1.4'
+dependency 'Reachability',  '~> 3.0.0'
+</pre>
+					<p>
+						Now you can install the dependencies in your project:
+					</p>
+<pre class="prettyprint">
+$ pod install
+</pre>
+					<h3>Please note</h3>
+					<p>
+						Make sure to always open the Xcode workspace instead of the project 
+						file when building your project:
+					</p>
+<pre class="prettyprint">
+$ open App.xcworkspace
+</pre>
+					<h3>How to create a pod</h3>
+					<p>
+						Sometimes CocoaPods doesn’t yet have a pod for one of your dependencies. 
+						Fortunately, creating a pod is pretty easy:
+					</p>
+<pre class="prettyprint">
+$ pod spec create Peanut
+$ edit Peanut.podspec
+$ pod spec lint Peanut.podspec
+</pre>
+					<p>
+						When you’re done, please <a href="https://github.com/CocoaPods/CocoaPods/issues">create a ticket</a> 
+						and upload the pod. You can also fork the <a href="https://github.com/CocoaPods/Specs">CocoaPods specs</a> 
+						GitHub repository and send a pull request. We really love contributions!
+					</p>
+				</section>
+
+				<section id="contribute">
+					<h2>Contribute</h2>
+					<p>
+						We’re developing CocoaPods on GitHub. There’s a repository for the 
+						<a href="https://github.com/CocoaPods/CocoaPods">CocoaPods tool</a> and one for the 
+						<a href="https://github.com/CocoaPods/Specs">pods specs</a>. It’s easy and really gratifying 
+						to contribute patches or pods, you even get push access when one of your specs or patches is accepted.
+					</p>
+					<p>
+						Follow <a href="http://twitter.com/CocoaPodsOrg">CocoaPodsOrg</a> on Twitter to get up to date 
+						information about what’s going on in the CocoaPods world.
+					</p>
+				</section>
+
+				<footer>
+					
+				</foooter>
+			</article>
+		</div>
+
+  	<script type="text/javascript" src="javascripts/jquery-1.5.0.min.js"></script>
+  	<script type="text/javascript" src="javascripts/prettify.js"></script>
+  	<script type="text/javascript" src="javascripts/history.min.js"></script>
+  	<script type="text/javascript" src="javascripts/history.adapter.jquery.min.js"></script>
+  	<script type="text/javascript" src="javascripts/picky.min.js"></script>
+
+  	<script type="text/javascript">
+  		$(window).load(function() {
+  			prettyPrint();
+  		});
+  	</script>
+  </body>
+</html>

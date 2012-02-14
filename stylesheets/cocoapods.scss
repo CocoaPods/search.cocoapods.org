@@ -1,0 +1,184 @@
+@import "compass";
+@import "compass/reset";
+
+body {
+	font-family:Helvetica, Arial, sans-serif;
+	color:#452e00;
+	line-height:1.4;
+	background:#060100;
+}
+
+a {
+	color:#CA8A29;
+	font-weight:bold;
+	text-decoration:none;
+
+	&:hover {
+		color:darken(#CA8A29, 10%);
+	}
+}
+
+.container {
+	width:1024px;
+	margin:0 auto;
+	position:relative;
+}
+
+.sidebar {
+	width:360px;
+	background:#FCF3E5;
+	position:fixed;
+	top:0;
+	left:50%;
+	margin-left:-512px;
+	height:100%;
+
+	.masthead {
+		background:url(../../images/logo-sidebar.png) center 20px no-repeat;
+		border-bottom:1px solid #F5DAB0;
+		padding:205px 45px 24px 45px;
+
+		h1 {
+			font-size:50px;
+			font-weight:bold;
+			color:#723D2A;
+			em {
+				color:#E6A33C;
+			}
+		}
+		p {
+			font-size:18px;
+			font-weight:bold;
+		}
+	}
+	nav, .intro {
+		padding:24px 45px;
+	}
+	.intro {
+		font-size:14px;
+		border-bottom:1px solid #F5DAB0;
+	}
+}
+
+.main-content {
+	width:664px;
+	top:0;
+	right:0;
+	position:absolute;
+	background:#fff;
+
+	h2, h3 {
+		font-weight:bold;
+	}
+
+	h2 {
+		font-size:18px;
+		margin-bottom:18px;
+	}
+
+	h3 {
+		font-size:16px;
+	}
+
+	p {
+		margin-bottom:18px;
+	}
+
+	pre {
+		font-family:Monaco, "Courier New", monospace;
+
+		&.prettyprint {
+			@include border-radius(5px);
+			border:none;
+			background:#FDF9F1;
+			margin-bottom:18px;
+			padding:5px 8px;
+			font-size:14px;
+		}
+	}
+
+	.search-form {
+		background:url(../../images/search-decorator.png) left bottom repeat-x;
+		padding-bottom:25px;
+
+		fieldset,
+		.result {
+			padding:24px;
+			background:#FDFAF2;
+			border-bottom:1px solid #F0E7DD;
+		}
+
+		.result {
+			h3, p {
+				font-size:18px;
+			}
+			p {
+				margin:5px 0 0 0;
+
+				&.author {
+					font-size:12px;
+
+					a {
+						font-weight:normal;
+					}
+				}
+			}
+		}
+
+		h2 {
+			font-size:24px;
+			margin-bottom:0;
+		}
+
+		input[type="search"] {
+			background:#fff url(../../images/searchlens.png) 8px 7px no-repeat;
+			border:3px solid #E6A33C;
+			width:100%;
+			font-size:24px;
+			font-family:inherit;
+			font-weight:bold;
+			padding:6px 24px 6px 36px;
+			margin:8px 0 0 0;
+			@include border-radius(23px);
+			-webkit-appearance:none;
+
+			&:focus {
+				outline:none;
+				@include box-shadow(0 0 10px #e6a532);
+			}
+		}
+	}
+
+	section {
+		margin:18px 24px;
+		padding:0 0 18px 0;
+		border-bottom:3px solid #F6DDD1;
+
+		:last-child {
+			margin-bottom:0;
+		}
+
+		&#install { margin-top:0; }
+	}
+}
+
+::-webkit-input-placeholder {
+	color:#d3d0d0;
+}
+
+@media screen and (max-width: 1024px) {
+	.container {
+		width:100%;
+	}
+	.sidebar,
+	.main-content {
+		position:static;
+		top:0; left:0;
+		margin:0;
+		width:100%;
+	}
+	.masthead {
+		text-align:center;
+	}
+}
+

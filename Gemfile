@@ -8,7 +8,6 @@ gem 'picky-client', '~> 4'
 gem 'i18n'
 gem 'activesupport', :require => 'active_support/core_ext'
 gem 'sinatra'
-gem 'haml'
 
 # Gems required by the Picky server.
 #

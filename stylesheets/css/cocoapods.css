@@ -1,0 +1,231 @@
+/* line 17, ../../../../../../../Applications/CodeKit.app/Contents/Resources/engines/compass/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline; }
+
+/* line 20, ../../../../../../../Applications/CodeKit.app/Contents/Resources/engines/compass/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+body {
+  line-height: 1; }
+
+/* line 22, ../../../../../../../Applications/CodeKit.app/Contents/Resources/engines/compass/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+ol, ul {
+  list-style: none; }
+
+/* line 24, ../../../../../../../Applications/CodeKit.app/Contents/Resources/engines/compass/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+table {
+  border-collapse: collapse;
+  border-spacing: 0; }
+
+/* line 26, ../../../../../../../Applications/CodeKit.app/Contents/Resources/engines/compass/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+caption, th, td {
+  text-align: left;
+  font-weight: normal;
+  vertical-align: middle; }
+
+/* line 28, ../../../../../../../Applications/CodeKit.app/Contents/Resources/engines/compass/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+q, blockquote {
+  quotes: none; }
+  /* line 101, ../../../../../../../Applications/CodeKit.app/Contents/Resources/engines/compass/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+  q:before, q:after, blockquote:before, blockquote:after {
+    content: "";
+    content: none; }
+
+/* line 30, ../../../../../../../Applications/CodeKit.app/Contents/Resources/engines/compass/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+a img {
+  border: none; }
+
+/* line 114, ../../../../../../../Applications/CodeKit.app/Contents/Resources/engines/compass/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section, summary {
+  display: block; }
+
+/* line 4, ../cocoapods.scss */
+body {
+  font-family: Helvetica, Arial, sans-serif;
+  color: #452e00;
+  line-height: 1.4;
+  background: #060100; }
+
+/* line 11, ../cocoapods.scss */
+a {
+  color: #CA8A29;
+  font-weight: bold;
+  text-decoration: none; }
+  /* line 16, ../cocoapods.scss */
+  a:hover {
+    color: #a06d20; }
+
+/* line 21, ../cocoapods.scss */
+.container {
+  width: 1024px;
+  margin: 0 auto;
+  position: relative; }
+
+/* line 27, ../cocoapods.scss */
+.sidebar {
+  width: 360px;
+  background: #FCF3E5;
+  position: fixed;
+  top: 0;
+  left: 50%;
+  margin-left: -512px;
+  height: 100%; }
+  /* line 36, ../cocoapods.scss */
+  .sidebar .masthead {
+    background: url(../../images/logo-sidebar.png) center 20px no-repeat;
+    border-bottom: 1px solid #F5DAB0;
+    padding: 205px 45px 24px 45px; }
+    /* line 41, ../cocoapods.scss */
+    .sidebar .masthead h1 {
+      font-size: 50px;
+      font-weight: bold;
+      color: #723D2A; }
+      /* line 45, ../cocoapods.scss */
+      .sidebar .masthead h1 em {
+        color: #E6A33C; }
+    /* line 49, ../cocoapods.scss */
+    .sidebar .masthead p {
+      font-size: 18px;
+      font-weight: bold; }
+  /* line 54, ../cocoapods.scss */
+  .sidebar nav, .sidebar .intro {
+    padding: 24px 45px; }
+  /* line 57, ../cocoapods.scss */
+  .sidebar .intro {
+    font-size: 14px;
+    border-bottom: 1px solid #F5DAB0; }
+
+/* line 63, ../cocoapods.scss */
+.main-content {
+  width: 664px;
+  top: 0;
+  right: 0;
+  position: absolute;
+  background: #fff; }
+  /* line 70, ../cocoapods.scss */
+  .main-content h2, .main-content h3 {
+    font-weight: bold; }
+  /* line 74, ../cocoapods.scss */
+  .main-content h2 {
+    font-size: 18px;
+    margin-bottom: 18px; }
+  /* line 79, ../cocoapods.scss */
+  .main-content h3 {
+    font-size: 16px; }
+  /* line 83, ../cocoapods.scss */
+  .main-content p {
+    margin-bottom: 18px; }
+  /* line 87, ../cocoapods.scss */
+  .main-content pre {
+    font-family: Monaco, "Courier New", monospace; }
+    /* line 90, ../cocoapods.scss */
+    .main-content pre.prettyprint {
+      -moz-border-radius: 5px;
+      -webkit-border-radius: 5px;
+      -o-border-radius: 5px;
+      -ms-border-radius: 5px;
+      -khtml-border-radius: 5px;
+      border-radius: 5px;
+      border: none;
+      background: #FDF9F1;
+      margin-bottom: 18px;
+      padding: 5px 8px;
+      font-size: 14px; }
+  /* line 100, ../cocoapods.scss */
+  .main-content .search-form {
+    background: url(../../images/search-decorator.png) left bottom repeat-x;
+    padding-bottom: 25px; }
+    /* line 105, ../cocoapods.scss */
+    .main-content .search-form fieldset,
+    .main-content .search-form .result {
+      padding: 24px;
+      background: #FDFAF2;
+      border-bottom: 1px solid #F0E7DD; }
+    /* line 112, ../cocoapods.scss */
+    .main-content .search-form .result h3, .main-content .search-form .result p {
+      font-size: 18px; }
+    /* line 115, ../cocoapods.scss */
+    .main-content .search-form .result p {
+      margin: 5px 0 0 0; }
+      /* line 118, ../cocoapods.scss */
+      .main-content .search-form .result p.author {
+        font-size: 12px; }
+        /* line 121, ../cocoapods.scss */
+        .main-content .search-form .result p.author a {
+          font-weight: normal; }
+    /* line 128, ../cocoapods.scss */
+    .main-content .search-form h2 {
+      font-size: 24px;
+      margin-bottom: 0; }
+    /* line 133, ../cocoapods.scss */
+    .main-content .search-form input[type="search"] {
+      background: white url(../../images/searchlens.png) 8px 7px no-repeat;
+      border: 3px solid #E6A33C;
+      width: 100%;
+      font-size: 24px;
+      font-family: inherit;
+      font-weight: bold;
+      padding: 6px 24px 6px 36px;
+      margin: 8px 0 0 0;
+      -moz-border-radius: 23px;
+      -webkit-border-radius: 23px;
+      -o-border-radius: 23px;
+      -ms-border-radius: 23px;
+      -khtml-border-radius: 23px;
+      border-radius: 23px;
+      -webkit-appearance: none; }
+      /* line 145, ../cocoapods.scss */
+      .main-content .search-form input[type="search"]:focus {
+        outline: none;
+        -moz-box-shadow: 0 0 10px #e6a532;
+        -webkit-box-shadow: 0 0 10px #e6a532;
+        -o-box-shadow: 0 0 10px #e6a532;
+        box-shadow: 0 0 10px #e6a532; }
+  /* line 152, ../cocoapods.scss */
+  .main-content section {
+    margin: 18px 24px;
+    padding: 0 0 18px 0;
+    border-bottom: 3px solid #F6DDD1; }
+    /* line 157, ../cocoapods.scss */
+    .main-content section :last-child {
+      margin-bottom: 0; }
+    /* line 161, ../cocoapods.scss */
+    .main-content section#install {
+      margin-top: 0; }
+
+/* line 165, ../cocoapods.scss */
+::-webkit-input-placeholder {
+  color: #d3d0d0; }
+
+@media screen and (max-width: 1024px) {
+  /* line 170, ../cocoapods.scss */
+  .container {
+    width: 100%; }
+
+  /* line 174, ../cocoapods.scss */
+  .sidebar,
+  .main-content {
+    position: static;
+    top: 0;
+    left: 0;
+    margin: 0;
+    width: 100%; }
+
+  /* line 180, ../cocoapods.scss */
+  .masthead {
+    text-align: center; } }
