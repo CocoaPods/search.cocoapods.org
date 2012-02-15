@@ -36,25 +36,28 @@
 			</div>
 
 			<article class="main-content">
-				<form class="search-form">
+				<form class="search-form" id="search">
 					<fieldset>
 						<h2><label for="pod_search">Search pods</label></h2>
-						<input type="search" id="pod_search" placeholder="pod name, e.g. Nimbus">
+						<div class="search-modes">
+							<input type="radio" name="platform" value="on:osx on:ios" id="search_mode_both" checked="<%= @platform == :both %>">
+							<label for="search_mode_both">OS X and iOS</label>
+							<input type="radio" name="platform" value="on:ios" id="search_mode_ios" checked="<%= @platform == :ios %>">
+							<label for="search_mode_ios">iOS</label>
+							<input type="radio" name="platform" value="on:osx" id="search_mode_osx" checked="<%= @platform == :osx %>">
+							<label for="search_mode_osx">OS X</label>
+						</div>
+						<input type="search" id="pod_search" placeholder="pod name, e.g. Nimbus" class="query" autofocus>
 					</fieldset>
-					<ul class="results">
-						<li class="result">
-							<h3><a href="#">iRate</a> 1.3.2</h3>
-							<p>
-								A handy class that prompts users of your iPhone or Mac App Store app to 
-								rate your application after using it for a while. Similar to Appirater, but with a 
-								simpler, cleaner interface and automatic support for iOS fast application 
-								switching.
-							</p>
-							<p class="author">
-								<a href="#">Nick Lockqood</a>
-							</p>
-						</li>
-					</ul>
+					<div class="no_results">
+						No pods found.
+					</div>
+					<div class="allocations">
+						<ol class="shown"></ol>
+						<ol class="mode"></ol>
+						<ol class="hidden"></ol>
+					</div>
+					<ul class="results"></ul>
 				</form>
 
 				<section id="install">
@@ -140,7 +143,18 @@ $ pod spec lint Peanut.podspec
 				</section>
 
 				<footer>
-					
+					<p>
+            CocoaPods is a project from <a href="http://twitter.com/alloy">Eloy Durán</a>
+            with contributions from <a href="https://github.com/CocoaPods/CocoaPods/contributors">many others</a>.
+          </p>
+          <p>
+            Website by <a href="http://markovics.com/">Philipp Markovics</a>. 
+            Search uses <a href="http://florianhanke.com/picky/">Picky</a> by Florian Hanke. 
+            Logo by <a href="http://twitter.com/maxsteenbergen">Max Steenbergen</a>. 
+          </p>
+          <p>
+            Sponsored by <a href="http://www.fngtps.com/">Fingertips</a> and <a href="http://www.sauspiel.de/">Sauspiel</a>.
+          </p>
 				</foooter>
 			</article>
 		</div>
@@ -152,6 +166,183 @@ $ pod spec lint Peanut.podspec
   	<script type="text/javascript" src="javascripts/picky.min.js"></script>
 
   	<script type="text/javascript">
+  		var platformRemoverRegexp = /(platform|on\:\w+\s?)+/;
+      // TODO Add tap gesture support to the cycle button?
+      $(window).ready(function() {
+        pickyClient = new PickyClient({
+          full: '/search',
+		  
+          // The live query does a full query.
+          //
+          live: '/search',
+          liveResults: 20,
+          liveRendered: true, // Experimental: Render live results as if they were full ones.
+          liveSearchInterval: 60, // Time between keystrokes before it sends the query.
+
+          // Instead of enclosing the search in #picky,
+          // in the CocoaPods search we use #search.
+          //
+          enclosingSelector: '#search',
+          maxSuggestions: 4,
+          
+          // Before a query is inserted into the search field
+          // we clean it of any platform terms.
+          //
+          beforeInsert: function(query) {
+            return query.replace(platformRemoverRegexp, '');
+          },
+          // Before Picky sends any data to the server.
+          //
+          // Adds the platform modifier to it if it isn't there already.
+          // Removes it if it is.
+          //
+          before: function(query, params) {
+            query = query.replace(platformRemoverRegexp, '');
+            var platformModifier = $('#search label.checked input').val();
+            return platformModifier + ' ' + query;
+          },
+          // We filter duplicate ids here.
+          // (Not in the server as it might be
+          // used for APIs etc.)
+          //
+          success: function(data, query) {
+            var seen = {};
+            
+            var allocations = data.allocations;
+            allocations.each(function(i, allocation) {
+              var ids     = allocation.ids;
+              var entries = allocation.entries;
+              var remove = [];
+              
+              ids.each(function(j, id) {
+                if (seen[id]) {
+                  data.total -= 1;
+                  remove.push(j);
+                } else {
+                  seen[id] = true;
+                }
+              });
+              
+              for(var l = remove.length-1; 0 <= l; l--) {
+                entries.splice(remove[l], 1);
+              }
+              
+              allocation.entries = entries;
+            });
+            
+            return data;
+          },
+          // after: function(data, query) {  }, // After Picky has handled the data and updated the view.
+
+          // This is used to generate the correct query strings, localized. E.g. "subject:war".
+          // Note: If you don't give these, the field identifier given in the Picky server is used.
+          //
+          qualifiers: {
+            en:{
+              dependencies: 'uses',
+              platform: 'on'
+            }
+          },
+
+          // Use this to group the choices (those are used when Picky needs more feedback).
+          // If a category is missing, it is appended in a virtual group at the end.
+          // Optional. Default is [].
+          //
+          //groups: [['author', 'title', 'subjects']],
+          // This is used for formatting inside the choice groups.
+          //
+          // Use %n$s, where n is the position of the category in the key.
+          // Optional. Default is {}.
+          //
+          choices: {
+            en: {
+              'name,platform': 'named %1$s', // platform is not shown.
+              'platform,name': 'named %2$s',
+              'author,platform': 'written by %1$s',
+              'platform,author': 'written by %2$s',
+              'summary,platform': '%1$s in summary',
+              'platform,summary': '%2$s in summary',
+              'dependencies,platform': 'using %1$s',
+              'platform,dependencies': 'using %2$s',
+              'platform,author,name': '%3$s, written by %2$s',
+              'platform,name,author': '%2$s, written by %3$s',
+              'platform,name,version': '%2$s, version %3$s',
+              'platform,version,name': '%2$s of %3$s',
+              'platform,name,dependencies': '%2$s, using %3$s',
+              'platform,dependencies,name': '%2$s used by %3$s',
+              'platform,author,dependencies': 'written by %2$s and using %3$s',
+              'platform,dependencies,author': 'using %2$s, written by %3$s',
+              'platform,dependencies,version': '%2$s used by version %3$s',
+              'platform,version,dependencies': '%3$s used by version %2$s',
+              'platform,summary,name': '%3$s with \"%2$s\" in summary',
+              'platform,name,summary': '%2$s with \"%3$s\" in summary',
+              'platform,summary,author': 'written by %3$s with \"%2$s\" in summary',
+              'platform,author,summary': 'written by %2$s with \"%3$s\" in summary'
+            }
+          },
+
+          // This is used to explain the preceding word in the suggestion text (if it
+          // has not yet been defined by the choices above), localized. E.g. "Peter (author)".
+          // Optional. Default are the field identifiers from the Picky server.
+          //
+          explanations: {
+            en:{
+              name: 'named',
+              author: 'written by',
+              versions: 'version',
+              dependencies: 'using',
+              summary: 'with summary'
+            }
+          }
+        });
+
+        // An initial search text, prefilled
+        // this one is passed through the query param q.
+        //
+        // Example: www.mysearch.com/?q=example
+        //
+        pickyClient.insertFromURL('#{@query}');
+
+        $searchModes = $(".search-modes");
+        $activeSearchMode = $('<div class="active-search-mode"></div>');
+        $searchModeSelector = $('<ul class="search-modes-selector"></ul>').hide();
+        $searchModes.append($activeSearchMode);
+        $searchModes.append($searchModeSelector);
+
+        $searchModes.find("input[type='radio']").each(function() {
+        	$input = $(this);
+        	$option = $('<li></li>').html($input.next("label").html());
+        	$searchModeSelector.append($option);
+        	if ($input.attr("checked") === true)
+        		$option.addClass("active");
+          $option.data("input", $input);
+        });
+
+        $searchModeSelector.delegate("li", "click", function() {
+          $option = $(this);
+          $input = $option.data("input");
+          $searchModeSelector.find("li").removeClass("active");
+          $option.addClass("active");
+          $activeSearchMode.html($option.html());
+          $input.attr("checked", true);
+          $searchModeSelector.hide();
+          pickyClient.resend();
+        });
+
+        $(document).click(function(event) {
+          $target = $(event.target);
+          if ($target.hasClass("active-search-mode")) {
+            $searchModeSelector.show();
+          }
+          else {
+            $searchModeSelector.hide();
+          }
+        });
+		
+				$activeSearchMode.html($searchModes.find("input[checked=true]").next("label").html());
+
+        // $('body').addClass($.os.ios ? 'ios' : 'desktop');
+      });
   		$(window).load(function() {
   			prettyPrint();
   		});
