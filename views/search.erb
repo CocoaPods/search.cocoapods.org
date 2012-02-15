@@ -169,6 +169,44 @@ $ pod spec lint Peanut.podspec
   		var platformRemoverRegexp = /(platform|on\:\w+\s?)+/;
       // TODO Add tap gesture support to the cycle button?
       $(window).ready(function() {
+        $searchModes = $(".search-modes");
+        $activeSearchMode = $('<div class="active-search-mode"></div>');
+        $searchModeSelector = $('<ul class="search-modes-selector"></ul>').hide();
+        $searchModes.append($activeSearchMode);
+        $searchModes.append($searchModeSelector);
+
+        $searchModes.find("input[type='radio']").each(function() {
+          $input = $(this);
+          $option = $('<li></li>').html($input.next("label").html());
+          $searchModeSelector.append($option);
+          if ($input.attr("checked") === true)
+            $option.addClass("active");
+          $option.data("input", $input);
+        });
+
+        $searchModeSelector.delegate("li", "click", function() {
+          $option = $(this);
+          $input = $option.data("input");
+          $searchModeSelector.find("li").removeClass("active");
+          $option.addClass("active");
+          $activeSearchMode.html($option.html());
+          $input.attr("checked", true);
+          $searchModeSelector.hide();
+          pickyClient.resend();
+        });
+
+        $(document).click(function(event) {
+          $target = $(event.target);
+          if ($target.hasClass("active-search-mode")) {
+            $searchModeSelector.show();
+          }
+          else {
+            $searchModeSelector.hide();
+          }
+        });
+    
+        $activeSearchMode.html($searchModes.find("input[checked=true]").next("label").html());
+
         pickyClient = new PickyClient({
           full: '/search',
 		  
@@ -198,7 +236,7 @@ $ pod spec lint Peanut.podspec
           //
           before: function(query, params) {
             query = query.replace(platformRemoverRegexp, '');
-            var platformModifier = $('#search label.checked input').val();
+            var platformModifier = $('#search .search-modes-selector .active').data("input").val();
             return platformModifier + ' ' + query;
           },
           // We filter duplicate ids here.
@@ -301,45 +339,10 @@ $ pod spec lint Peanut.podspec
         //
         // Example: www.mysearch.com/?q=example
         //
-        pickyClient.insertFromURL('#{@query}');
-
-        $searchModes = $(".search-modes");
-        $activeSearchMode = $('<div class="active-search-mode"></div>');
-        $searchModeSelector = $('<ul class="search-modes-selector"></ul>').hide();
-        $searchModes.append($activeSearchMode);
-        $searchModes.append($searchModeSelector);
-
-        $searchModes.find("input[type='radio']").each(function() {
-        	$input = $(this);
-        	$option = $('<li></li>').html($input.next("label").html());
-        	$searchModeSelector.append($option);
-        	if ($input.attr("checked") === true)
-        		$option.addClass("active");
-          $option.data("input", $input);
-        });
-
-        $searchModeSelector.delegate("li", "click", function() {
-          $option = $(this);
-          $input = $option.data("input");
-          $searchModeSelector.find("li").removeClass("active");
-          $option.addClass("active");
-          $activeSearchMode.html($option.html());
-          $input.attr("checked", true);
-          $searchModeSelector.hide();
-          pickyClient.resend();
-        });
-
-        $(document).click(function(event) {
-          $target = $(event.target);
-          if ($target.hasClass("active-search-mode")) {
-            $searchModeSelector.show();
-          }
-          else {
-            $searchModeSelector.hide();
-          }
-        });
-		
-				$activeSearchMode.html($searchModes.find("input[checked=true]").next("label").html());
+        var query = decodeURIComponent(location.search);
+        query = query.replace(platformRemoverRegexp, '');
+        query = query.replace("?q=", '');
+        pickyClient.insertFromURL(query);
 
         // $('body').addClass($.os.ios ? 'ios' : 'desktop');
       });
