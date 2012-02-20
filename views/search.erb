@@ -175,11 +175,11 @@ $ pod spec lint Peanut.podspec
           $searchModeSelector.append($option);
           if ($input.attr("checked") === true)
             $option.addClass("active");
+          $option.attr("rel", $input.attr("id"));
           $option.data("input", $input);
         });
 
-        $searchModeSelector.delegate("li", "click", function() {
-          $option = $(this);
+        var selectSearchOption = function($option) {
           $input = $option.data("input");
           $searchModeSelector.find("li").removeClass("active");
           $option.addClass("active");
@@ -187,6 +187,10 @@ $ pod spec lint Peanut.podspec
           $input.attr("checked", true);
           $searchModeSelector.hide();
           pickyClient.resend();
+        }
+
+        $searchModeSelector.delegate("li", "click", function() {
+          selectSearchOption($(this));
         });
 
         $(document).click(function(event) {
@@ -360,6 +364,9 @@ $ pod spec lint Peanut.podspec
         // Example: www.mysearch.com/?q=example
         //
         var query = decodeURIComponent(location.search);
+        if (query.indexOf("on:") === -1) {
+          selectSearchOption($(".search-modes-selector li[rel='search_mode_both']"));
+        }
         query = query.replace(platformRemoverRegexp, '');
         query = query.replace("?q=", '');
         pickyClient.insertFromURL(query);
