@@ -102,13 +102,23 @@ a {
 	.search-form {
 		background:url(../../images/search-decorator.png) left bottom repeat-x;
 		padding-bottom:25px;
+		position:relative;
 
 		fieldset,
 		.result,
-		.no_results {
+		.no_results,
+		.allocations ol li {
 			padding:24px;
 			background:#FDFAF2;
 			border-bottom:1px solid #F0E7DD;
+		}
+
+		.result,
+		.allocations ol li {
+			&:hover {
+				background:darken(#FDFAF2, 5%);
+				cursor:pointer;
+			}
 		}
 
 		.result {
@@ -123,6 +133,38 @@ a {
 
 					a {
 						font-weight:normal;
+					}
+				}
+			}
+		}
+
+		.results {
+			.header {
+				display:none;
+			}
+		}
+
+		.allocations {
+			ol {
+				li {
+					overflow:hidden;
+					font-size:18px;
+					font-weight:bold;
+					.text {
+						float:left;
+						width:520px;
+					}
+					.count {
+						font-size:14px;
+						float:right;
+						background:darken(#FDFAF2, 10%);
+						padding:3px 14px;
+						@include border-radius(15px);
+					}	
+					&:hover {
+						.count {
+							background:darken(#FDFAF2, 15%);
+						}
 					}
 				}
 			}
@@ -212,6 +254,20 @@ a {
 			&:focus {
 				outline:none;
 				@include box-shadow(0 0 10px #e6a532);
+			}
+		}
+
+		.reset-search {
+			width:28px;
+			height:28px;
+			text-indent:-999em;
+			position:absolute;
+			top:74px;
+			right:33px;
+			background:url(../../images/cancel.png) left top no-repeat;
+
+			&:hover {
+				background-position:left bottom;
 			}
 		}
 	}

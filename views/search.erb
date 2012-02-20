@@ -48,6 +48,7 @@
 							<label for="search_mode_osx">OS X</label>
 						</div>
 						<input type="search" id="pod_search" placeholder="pod name, e.g. Nimbus" class="query" autofocus>
+            <a href="#" class="reset-search" id="reset_search" style="display:none">Reset search</a>
 					</fieldset>
 					<div class="no_results">
 						No pods found.
@@ -57,7 +58,7 @@
 						<ol class="mode"></ol>
 						<ol class="hidden"></ol>
 					</div>
-					<ul class="results"></ul>
+					<div class="results"></div>
 				</form>
 
 				<section id="install">
@@ -204,8 +205,34 @@ $ pod spec lint Peanut.podspec
             $searchModeSelector.hide();
           }
         });
+
+        $("#pod_search").keyup(function(event) {
+          $reset = $("#reset_search");
+          if ($(this).val().length > 0)
+            $reset.show();
+          else
+            $reset.hide();
+        });
+
+        $("#reset_search").click(function(event) {
+          event.preventDefault();
+          $input = $("#pod_search");
+          $input.val("");
+          $(this).hide();
+          $("#search .results, #search .allocations, #search .no_results").hide();
+          $input.focus();
+        });
     
         $activeSearchMode.html($searchModes.find("input[checked=true]").next("label").html());
+
+        $(document).delegate(".results .result", "click", function(event) {
+          if (event.target && $(event.target).parent(".author").length > 0) {
+            return;
+          }
+          event.preventDefault();
+          $result = $(this);
+          location.href = $result.find("h3 a").attr("href");
+        });
 
         pickyClient = new PickyClient({
           full: '/search',
@@ -345,7 +372,12 @@ $ pod spec lint Peanut.podspec
         pickyClient.insertFromURL(query);
 
         // $('body').addClass($.os.ios ? 'ios' : 'desktop');
+
+        if ($("#pod_search").val().length > 0) {
+          $("#reset_search").show();
+        }
       });
+
   		$(window).load(function() {
   			prettyPrint();
   		});
