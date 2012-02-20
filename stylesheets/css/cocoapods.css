@@ -153,44 +153,51 @@ a {
     background: url(../../images/search-decorator.png) left bottom repeat-x;
     padding-bottom: 25px;
     position: relative; }
-    /* line 110, ../cocoapods.scss */
+    /* line 111, ../cocoapods.scss */
     .main-content .search-form fieldset,
+    .main-content .search-form .addination,
     .main-content .search-form .result,
     .main-content .search-form .no_results,
     .main-content .search-form .allocations ol li {
       padding: 24px;
       background: #FDFAF2;
       border-bottom: 1px solid #F0E7DD; }
-    /* line 118, ../cocoapods.scss */
+    /* line 120, ../cocoapods.scss */
     .main-content .search-form .result:hover,
+    .main-content .search-form .addination:hover,
     .main-content .search-form .allocations ol li:hover {
       background: #faf2dc;
       cursor: pointer; }
-    /* line 125, ../cocoapods.scss */
+    /* line 127, ../cocoapods.scss */
     .main-content .search-form .result h3, .main-content .search-form .result p {
       font-size: 18px; }
-    /* line 128, ../cocoapods.scss */
+    /* line 130, ../cocoapods.scss */
     .main-content .search-form .result p {
       margin: 5px 0 0 0; }
-      /* line 131, ../cocoapods.scss */
+      /* line 133, ../cocoapods.scss */
       .main-content .search-form .result p.author {
         font-size: 12px; }
-        /* line 134, ../cocoapods.scss */
+        /* line 136, ../cocoapods.scss */
         .main-content .search-form .result p.author a {
           font-weight: normal; }
-    /* line 142, ../cocoapods.scss */
+    /* line 144, ../cocoapods.scss */
     .main-content .search-form .results .header {
       display: none; }
     /* line 149, ../cocoapods.scss */
+    .main-content .search-form .addination {
+      font-size: 18px;
+      font-weight: bold;
+      color: #C98903; }
+    /* line 157, ../cocoapods.scss */
     .main-content .search-form .allocations ol li {
       overflow: hidden;
       font-size: 18px;
       font-weight: bold; }
-      /* line 153, ../cocoapods.scss */
+      /* line 161, ../cocoapods.scss */
       .main-content .search-form .allocations ol li .text {
         float: left;
         width: 520px; }
-      /* line 157, ../cocoapods.scss */
+      /* line 165, ../cocoapods.scss */
       .main-content .search-form .allocations ol li .count {
         font-size: 14px;
         float: right;
@@ -202,28 +209,28 @@ a {
         -ms-border-radius: 15px;
         -khtml-border-radius: 15px;
         border-radius: 15px; }
-      /* line 165, ../cocoapods.scss */
+      /* line 173, ../cocoapods.scss */
       .main-content .search-form .allocations ol li:hover .count {
         background: #f3e0b0; }
-    /* line 173, ../cocoapods.scss */
+    /* line 181, ../cocoapods.scss */
     .main-content .search-form .no_results {
       font-size: 18px;
       font-weight: bold;
       color: #a51801; }
-    /* line 179, ../cocoapods.scss */
+    /* line 187, ../cocoapods.scss */
     .main-content .search-form h2 {
       font-size: 24px;
       margin-bottom: 0;
       float: left; }
-    /* line 185, ../cocoapods.scss */
+    /* line 193, ../cocoapods.scss */
     .main-content .search-form .search-modes {
       float: left;
       margin: 5px 0 0 10px;
       position: relative; }
-      /* line 190, ../cocoapods.scss */
+      /* line 198, ../cocoapods.scss */
       .main-content .search-form .search-modes input, .main-content .search-form .search-modes label {
         display: none; }
-      /* line 193, ../cocoapods.scss */
+      /* line 201, ../cocoapods.scss */
       .main-content .search-form .search-modes .active-search-mode {
         background: #e5a222 url(../../images/dropdown-arrow.png) right center no-repeat;
         -moz-border-radius: 14px;
@@ -238,10 +245,10 @@ a {
         width: auto;
         float: left;
         cursor: pointer; }
-        /* line 203, ../cocoapods.scss */
+        /* line 211, ../cocoapods.scss */
         .main-content .search-form .search-modes .active-search-mode:hover {
           background-color: #eab550; }
-      /* line 207, ../cocoapods.scss */
+      /* line 215, ../cocoapods.scss */
       .main-content .search-form .search-modes .search-modes-selector {
         position: absolute;
         top: 2px;
@@ -256,7 +263,7 @@ a {
         -webkit-box-shadow: 0 0 10px rgba(0, 0, 0, 0.7);
         -o-box-shadow: 0 0 10px rgba(0, 0, 0, 0.7);
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.7); }
-        /* line 214, ../cocoapods.scss */
+        /* line 222, ../cocoapods.scss */
         .main-content .search-form .search-modes .search-modes-selector li {
           cursor: pointer;
           background: #FEDB9C;
@@ -264,10 +271,10 @@ a {
           border-bottom: none;
           padding: 5px 10px 5px 30px;
           white-space: nowrap; }
-          /* line 222, ../cocoapods.scss */
+          /* line 230, ../cocoapods.scss */
           .main-content .search-form .search-modes .search-modes-selector li:hover {
             background: #ffedce; }
-          /* line 225, ../cocoapods.scss */
+          /* line 233, ../cocoapods.scss */
           .main-content .search-form .search-modes .search-modes-selector li:first-child {
             -moz-border-radius-topleft: 12px;
             -webkit-border-top-left-radius: 12px;
@@ -281,7 +288,7 @@ a {
             -ms-border-top-right-radius: 12px;
             -khtml-border-top-right-radius: 12px;
             border-top-right-radius: 12px; }
-          /* line 228, ../cocoapods.scss */
+          /* line 236, ../cocoapods.scss */
           .main-content .search-form .search-modes .search-modes-selector li:last-child {
             -moz-border-radius-bottomleft: 12px;
             -webkit-border-bottom-left-radius: 12px;
@@ -296,12 +303,12 @@ a {
             -khtml-border-bottom-right-radius: 12px;
             border-bottom-right-radius: 12px;
             border-bottom: 2px solid #E5A222; }
-          /* line 232, ../cocoapods.scss */
+          /* line 240, ../cocoapods.scss */
           .main-content .search-form .search-modes .search-modes-selector li.active {
             background-image: url(../../images/check.png);
             background-repeat: no-repeat;
             background-position: 8px center; }
-    /* line 241, ../cocoapods.scss */
+    /* line 249, ../cocoapods.scss */
     .main-content .search-form input[type="search"] {
       clear: both;
       background: white url(../../images/searchlens.png) 8px 7px no-repeat;
@@ -319,14 +326,14 @@ a {
       -khtml-border-radius: 23px;
       border-radius: 23px;
       -webkit-appearance: none; }
-      /* line 254, ../cocoapods.scss */
+      /* line 262, ../cocoapods.scss */
       .main-content .search-form input[type="search"]:focus {
         outline: none;
         -moz-box-shadow: 0 0 10px #e6a532;
         -webkit-box-shadow: 0 0 10px #e6a532;
         -o-box-shadow: 0 0 10px #e6a532;
         box-shadow: 0 0 10px #e6a532; }
-    /* line 260, ../cocoapods.scss */
+    /* line 268, ../cocoapods.scss */
     .main-content .search-form .reset-search {
       width: 28px;
       height: 28px;
@@ -335,39 +342,39 @@ a {
       top: 74px;
       right: 33px;
       background: url(../../images/cancel.png) left top no-repeat; }
-      /* line 269, ../cocoapods.scss */
+      /* line 277, ../cocoapods.scss */
       .main-content .search-form .reset-search:hover {
         background-position: left bottom; }
-  /* line 275, ../cocoapods.scss */
+  /* line 283, ../cocoapods.scss */
   .main-content footer {
     padding: 0 24px 18px 24px; }
-    /* line 277, ../cocoapods.scss */
+    /* line 285, ../cocoapods.scss */
     .main-content footer p {
       font-size: 12px;
       margin-bottom: 0;
       color: #9b8372; }
-  /* line 284, ../cocoapods.scss */
+  /* line 292, ../cocoapods.scss */
   .main-content section {
     margin: 18px 24px;
     padding: 0 0 18px 0;
     border-bottom: 3px solid #F6DDD1; }
-    /* line 289, ../cocoapods.scss */
+    /* line 297, ../cocoapods.scss */
     .main-content section :last-child {
       margin-bottom: 0; }
-    /* line 293, ../cocoapods.scss */
+    /* line 301, ../cocoapods.scss */
     .main-content section#install {
       margin-top: 0; }
 
-/* line 297, ../cocoapods.scss */
+/* line 305, ../cocoapods.scss */
 ::-webkit-input-placeholder {
   color: #d3d0d0; }
 
 @media screen and (max-width: 1024px) {
-  /* line 302, ../cocoapods.scss */
+  /* line 310, ../cocoapods.scss */
   .container {
     width: 100%; }
 
-  /* line 306, ../cocoapods.scss */
+  /* line 314, ../cocoapods.scss */
   .sidebar,
   .main-content {
     position: static;
@@ -376,6 +383,6 @@ a {
     margin: 0;
     width: 100%; }
 
-  /* line 312, ../cocoapods.scss */
+  /* line 320, ../cocoapods.scss */
   .masthead {
     text-align: center; } }

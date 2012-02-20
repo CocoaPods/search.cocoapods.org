@@ -105,6 +105,7 @@ a {
 		position:relative;
 
 		fieldset,
+		.addination,
 		.result,
 		.no_results,
 		.allocations ol li {
@@ -114,6 +115,7 @@ a {
 		}
 
 		.result,
+		.addination,
 		.allocations ol li {
 			&:hover {
 				background:darken(#FDFAF2, 5%);
@@ -142,6 +144,12 @@ a {
 			.header {
 				display:none;
 			}
+		}
+
+		.addination {
+			font-size:18px;
+			font-weight:bold;
+			color:#C98903;
 		}
 
 		.allocations {
