@@ -3,7 +3,8 @@
   <head>
   	<title>CocoaPods: The Objective-C Library Manager</title>
   	<link href="stylesheets/css/cocoapods.css" media="screen" rel="stylesheet" type="text/css">
-  	<link href="stylesheets/prettify.css" media="screen" rel="stylesheet" type="text/css">
+  	<link href="stylesheets/select.css" media="screen" rel="stylesheet" type="text/css">
+    <link href="stylesheets/prettify.css" media="screen" rel="stylesheet" type="text/css">
   	<!-- <link rel="stylesheet" href="stylesheets/picky.css"> -->
   	<link rel="shortcut icon" href="favicon.ico">
   </head>
@@ -37,7 +38,7 @@
 			</div>
 
 			<article class="main-content">
-				<form class="search-form" id="search">
+				<form class="search-form" id="search" onkeypress="return event.keyCode != 13;">
 					<fieldset>
 						<h2><label for="pod_search">Search pods</label></h2>
             <select class="platform">
@@ -54,7 +55,7 @@
 						              <label for="search_mode_osx">OS X</label>
 						            </div> -->
 						<input type="search" id="pod_search" placeholder="pod name, e.g. Kiwi" class="query" autofocus autocomplete="off">
-            <a href="#" class="reset-search" id="reset_search" style="display:none">Reset search</a>
+            <a href="#" class="reset-search" style="display:none">Reset search</a>
 					</fieldset>
 					<div class="no_results" style="display:none">
 						No pods found.
@@ -352,7 +353,12 @@ $ pod spec lint Peanut.podspec
           }
         });
         
-        platformSelect.bind('change', pickyClient.resend);
+        // Resend query on platform selection.
+        //
+        platformSelect.bind('change', function() {
+          $("#pod_search").focus();
+          pickyClient.resend();
+        });
 
         // An initial search text, prefilled
         // this one is passed through the query param q.
@@ -376,9 +382,9 @@ $ pod spec lint Peanut.podspec
         // }
       });
 
-  		$(window).load(function() {
-  			prettyPrint();
-  		});
+      // $(window).load(function() {
+      //   prettyPrint();
+      // });
   	</script>
   </body>
 </html>
