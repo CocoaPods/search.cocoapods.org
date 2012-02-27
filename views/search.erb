@@ -165,72 +165,55 @@ $ pod spec lint Peanut.podspec
   		var platformRemoverRegexp = /(platform|on\:\w+\s?)+/;
       // TODO Add tap gesture support to the cycle button?
       $(window).ready(function() {
-        $searchModes = $(".search-modes");
-        $activeSearchMode = $('<div class="active-search-mode"></div>');
-        $searchModeSelector = $('<ul class="search-modes-selector"></ul>').hide();
-        $searchModes.append($activeSearchMode);
-        $searchModes.append($searchModeSelector);
+        var searchModes = $(".search-modes");
+        var activeSearchMode = $('<div class="active-search-mode"></div>');
+        var searchModeSelector = $('<ul class="search-modes-selector"></ul>').hide();
+		
+        searchModes.append(activeSearchMode);
+        searchModes.append(searchModeSelector);
 
-        $searchModes.find("input[type='radio']").each(function() {
-          $input = $(this);
-          $option = $('<li></li>').html($input.next("label").html());
-          $searchModeSelector.append($option);
-          if ($input.attr("checked") === true)
-            $option.addClass("active");
-          $option.attr("rel", $input.attr("id"));
-          $option.data("input", $input);
+        searchModes.find("input[type='radio']").each(function() {
+          var input = $(this);
+          var option = $('<li></li>').html(input.next("label").html());
+          searchModeSelector.append(option);
+          if (input.attr("checked") === true)
+            option.addClass("active");
+          option.attr("rel", input.attr("id"));
+          option.data("input", input);
         });
 
-        var selectSearchOption = function($option) {
-          $input = $option.data("input");
-          $searchModeSelector.find("li").removeClass("active");
-          $option.addClass("active");
-          $activeSearchMode.html($option.html());
-          $input.attr("checked", true);
-          $searchModeSelector.hide();
+        var selectSearchOption = function(option) {
+          var input = option.data("input");
+          searchModeSelector.find("li").removeClass("active");
+          option.addClass("active");
+          activeSearchMode.html(option.html());
+          input.attr("checked", true);
+          searchModeSelector.hide();
           pickyClient.resend();
         }
 
-        $searchModeSelector.delegate("li", "click", function() {
+        searchModeSelector.delegate("li", "click", function() {
           selectSearchOption($(this));
         });
 
         $(document).click(function(event) {
-          $target = $(event.target);
-          if ($target.hasClass("active-search-mode")) {
-            $searchModeSelector.show();
+          var target = $(event.target);
+          if (target.hasClass("active-search-mode")) {
+            searchModeSelector.show();
+          } else {
+            searchModeSelector.hide();
           }
-          else {
-            $searchModeSelector.hide();
-          }
-        });
-
-        $("#pod_search").keyup(function(event) {
-          $reset = $("#reset_search");
-          if ($(this).val().length > 0)
-            $reset.show();
-          else
-            $reset.hide();
-        });
-
-        $("#reset_search").click(function(event) {
-          event.preventDefault();
-          $input = $("#pod_search");
-          $input.val("");
-          $(this).hide();
-          $("#search .results, #search .allocations, #search .no_results").hide();
-          $input.focus();
         });
     
-        $activeSearchMode.html($searchModes.find("input[checked=true]").next("label").html());
+        activeSearchMode.html(searchModes.find("input[checked=true]").next("label").html());
 
         $(document).delegate(".results .result", "click", function(event) {
           if (event.target && $(event.target).parent(".author").length > 0) {
             return;
           }
           event.preventDefault();
-          $result = $(this);
-          location.href = $result.find("h3 a").attr("href");
+          var result = $(this);
+          location.href = result.find("h3 a").attr("href");
         });
 
         pickyClient = new PickyClient({
@@ -247,6 +230,7 @@ $ pod spec lint Peanut.podspec
           // in the CocoaPods search we use #search.
           //
           enclosingSelector: '#search',
+          resetSelector: 'a.reset-search',
           maxSuggestions: 4,
           
           // Before a query is inserted into the search field
