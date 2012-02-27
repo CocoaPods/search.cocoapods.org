@@ -40,14 +40,19 @@
 				<form class="search-form" id="search">
 					<fieldset>
 						<h2><label for="pod_search">Search pods</label></h2>
-						<div class="search-modes">
-							<input type="radio" name="platform" value="on:osx on:ios" id="search_mode_both" checked="<%= @platform == :both %>">
-							<label for="search_mode_both">OS X and iOS</label>
-							<input type="radio" name="platform" value="on:ios" id="search_mode_ios" checked="<%= @platform == :ios %>">
-							<label for="search_mode_ios">iOS</label>
-							<input type="radio" name="platform" value="on:osx" id="search_mode_osx" checked="<%= @platform == :osx %>">
-							<label for="search_mode_osx">OS X</label>
-						</div>
+            <select class="platform">
+              <option value="on:osx on:ios" <%= 'selected' if @platform == :both %>>OS X and iOS</option>
+              <option value="on:ios"        <%= 'selected' if @platform == :ios  %>>iOS</option>
+              <option value="on:osx"        <%= 'selected' if @platform == :osx  %>>OS X</option>
+            </select>
+						<!-- <div class="search-modes">
+						              <input type="radio" name="platform" value="on:osx on:ios" id="search_mode_both" checked="<%= @platform == :both %>">
+						              <label for="search_mode_both">OS X and iOS</label>
+						              <input type="radio" name="platform" value="on:ios" id="search_mode_ios" checked="<%= @platform == :ios %>">
+						              <label for="search_mode_ios">iOS</label>
+						              <input type="radio" name="platform" value="on:osx" id="search_mode_osx" checked="<%= @platform == :osx %>">
+						              <label for="search_mode_osx">OS X</label>
+						            </div> -->
 						<input type="search" id="pod_search" placeholder="pod name, e.g. Kiwi" class="query" autofocus autocomplete="off">
             <a href="#" class="reset-search" id="reset_search" style="display:none">Reset search</a>
 					</fieldset>
@@ -163,58 +168,60 @@ $ pod spec lint Peanut.podspec
 
   	<script type="text/javascript">
   		var platformRemoverRegexp = /(platform|on\:\w+\s?)+/;
+      var platformSelect = $("select.platform");
+      
       // TODO Add tap gesture support to the cycle button?
       $(window).ready(function() {
-        var searchModes = $(".search-modes");
-        var activeSearchMode = $('<div class="active-search-mode"></div>');
-        var searchModeSelector = $('<ul class="search-modes-selector"></ul>').hide();
-		
-        searchModes.append(activeSearchMode);
-        searchModes.append(searchModeSelector);
-
-        searchModes.find("input[type='radio']").each(function() {
-          var input = $(this);
-          var option = $('<li></li>').html(input.next("label").html());
-          searchModeSelector.append(option);
-          if (input.attr("checked") === true)
-            option.addClass("active");
-          option.attr("rel", input.attr("id"));
-          option.data("input", input);
-        });
-
-        var selectSearchOption = function(option) {
-          var input = option.data("input");
-          searchModeSelector.find("li").removeClass("active");
-          option.addClass("active");
-          activeSearchMode.html(option.html());
-          input.attr("checked", true);
-          searchModeSelector.hide();
-          pickyClient.resend();
-        }
-
-        searchModeSelector.delegate("li", "click", function() {
-          selectSearchOption($(this));
-        });
-
-        $(document).click(function(event) {
-          var target = $(event.target);
-          if (target.hasClass("active-search-mode")) {
-            searchModeSelector.show();
-          } else {
-            searchModeSelector.hide();
-          }
-        });
-    
-        activeSearchMode.html(searchModes.find("input[checked=true]").next("label").html());
-
-        $(document).delegate(".results .result", "click", function(event) {
-          if (event.target && $(event.target).parent(".author").length > 0) {
-            return;
-          }
-          event.preventDefault();
-          var result = $(this);
-          location.href = result.find("h3 a").attr("href");
-        });
+        // var searchModes = $(".search-modes");
+        //         var activeSearchMode = $('<div class="active-search-mode"></div>');
+        //         var searchModeSelector = $('<ul class="search-modes-selector"></ul>').hide();
+        //     
+        //         searchModes.append(activeSearchMode);
+        //         searchModes.append(searchModeSelector);
+        // 
+        //         searchModes.find("input[type='radio']").each(function() {
+        //           var input = $(this);
+        //           var option = $('<li></li>').html(input.next("label").html());
+        //           searchModeSelector.append(option);
+        //           if (input.attr("checked") === true)
+        //             option.addClass("active");
+        //           option.attr("rel", input.attr("id"));
+        //           option.data("input", input);
+        //         });
+        // 
+        //         var selectSearchOption = function(option) {
+        //           var input = option.data("input");
+        //           searchModeSelector.find("li").removeClass("active");
+        //           option.addClass("active");
+        //           activeSearchMode.html(option.html());
+        //           input.attr("checked", true);
+        //           searchModeSelector.hide();
+        //           pickyClient.resend();
+        //         }
+        // 
+        //         searchModeSelector.delegate("li", "click", function() {
+        //           selectSearchOption($(this));
+        //         });
+        // 
+        //         $(document).click(function(event) {
+        //           var target = $(event.target);
+        //           if (target.hasClass("active-search-mode")) {
+        //             searchModeSelector.show();
+        //           } else {
+        //             searchModeSelector.hide();
+        //           }
+        //         });
+        //     
+        //         activeSearchMode.html(searchModes.find("input[checked=true]").next("label").html());
+        // 
+        //         $(document).delegate(".results .result", "click", function(event) {
+        //           if (event.target && $(event.target).parent(".author").length > 0) {
+        //             return;
+        //           }
+        //           event.preventDefault();
+        //           var result = $(this);
+        //           location.href = result.find("h3 a").attr("href");
+        //         });
 
         pickyClient = new PickyClient({
           full: '/search',
@@ -246,7 +253,8 @@ $ pod spec lint Peanut.podspec
           //
           before: function(query, params) {
             query = query.replace(platformRemoverRegexp, '');
-            var platformModifier = $('#search .search-modes-selector .active').data("input").val();
+            // var platformModifier = $('#search .search-modes-selector .active').data("input").val();
+            var platformModifier = platformSelect.val();
             return platformModifier + ' ' + query;
           },
           // We filter duplicate ids here.
@@ -343,25 +351,29 @@ $ pod spec lint Peanut.podspec
             }
           }
         });
+        
+        platformSelect.bind('change', pickyClient.resend);
 
         // An initial search text, prefilled
         // this one is passed through the query param q.
         //
         // Example: www.mysearch.com/?q=example
         //
-        var query = decodeURIComponent(location.search);
-        if (query.indexOf("on:") === -1) {
-          selectSearchOption($(".search-modes-selector li[rel='search_mode_both']"));
-        }
-        query = query.replace(platformRemoverRegexp, '');
-        query = query.replace("?q=", '');
-        pickyClient.insertFromURL(query);
+        
+        // var query = decodeURIComponent(location.search);
+        // if (query.indexOf("on:") === -1) {
+        //   selectSearchOption($(".search-modes-selector li[rel='search_mode_both']"));
+        // }
+        // query = query.replace(platformRemoverRegexp, '');
+        // query = query.replace("?q=", '');
+        
+        pickyClient.insertFromURL("<%= @query %>");
 
         // $('body').addClass($.os.ios ? 'ios' : 'desktop');
 
-        if ($("#pod_search").val().length > 0) {
-          $("#reset_search").show();
-        }
+        // if ($("#pod_search").val().length > 0) {
+        //   $("#reset_search").show();
+        // }
       });
 
   		$(window).load(function() {
