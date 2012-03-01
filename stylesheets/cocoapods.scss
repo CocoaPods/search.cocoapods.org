@@ -160,7 +160,7 @@ a {
 					font-weight:bold;
 					.text {
 						float:left;
-						width:520px;
+						width:450px;
 					}
 					.count {
 						font-size:14px;
@@ -198,16 +198,19 @@ a {
 			font-size:24px;
 			font-family:inherit;
 			font-weight:bold;
-			padding:6px 0px;
+			padding: 6px 0px;
       text-indent: 36px;
 			margin:8px 0 0 0;
 			@include border-radius(23px);
-			-webkit-appearance:none;
+      -moz-appearance:none;
+      -webkit-appearance:none;
 
 			&:focus {
 				outline:none;
 				@include box-shadow(0 0 10px #e6a532);
 			}
+      &::-webkit-search-cancel-button { -webkit-appearance: none; }
+      
 		}
 
 		.reset-search {
