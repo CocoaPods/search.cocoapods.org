@@ -42,9 +42,11 @@
 					<fieldset>
 						<h2><label for="pod_search">Search pods</label></h2>
             <select class="platform">
-              <option value="on:osx on:ios" <%= 'selected' if @platform == :both %>>OS X and iOS</option>
-              <option value="on:ios"        <%= 'selected' if @platform == :ios  %>>iOS</option>
-              <option value="on:osx"        <%= 'selected' if @platform == :osx  %>>OS X</option>
+              <optgroup label="Filter for">
+                <option value="on:osx on:ios" <%= 'selected' if @platform == :both %>>OS X and iOS</option>
+                <option value="on:ios"        <%= 'selected' if @platform == :ios  %>>iOS only</option>
+                <option value="on:osx"        <%= 'selected' if @platform == :osx  %>>OS X only</option>
+              </optgroup>
             </select>
 						<!-- <div class="search-modes">
 						              <input type="radio" name="platform" value="on:osx on:ios" id="search_mode_both" checked="<%= @platform == :both %>">
