@@ -266,7 +266,7 @@ a {
     overflow: hidden; }
     /* line 231, ../cocoapods.scss */
     .main-content .platform label {
-      background: url(../../images/platform.gif) no-repeat;
+      background: url(../../images/platform.orange.png) no-repeat;
       display: block;
       float: left; }
       /* line 235, ../cocoapods.scss */
@@ -274,42 +274,42 @@ a {
         padding: 0 10px;
         line-height: 30px;
         display: block;
-        background: url(../../images/platform.gif) repeat-x;
+        background: url(../../images/platform.orange.png) repeat-x;
         font-weight: bold; }
       /* line 236, ../cocoapods.scss */
       .main-content .platform label.both {
-        background-position: left -90px;
+        background-position: left -60px;
         padding: 0 0 0 5px; }
       /* line 237, ../cocoapods.scss */
       .main-content .platform label.ios {
-        background-position: left -180px;
+        background-position: left -150px;
         padding: 0;
         border-left: 1px solid lightgrey;
         border-right: 1px solid lightgrey; }
       /* line 238, ../cocoapods.scss */
       .main-content .platform label.osx {
-        background-position: right -180px;
+        background-position: right -120px;
         padding: 0 5px 0 0; }
       /* line 239, ../cocoapods.scss */
       .main-content .platform label.both.selected {
-        background-position: left -150px; }
+        background-position: left -90px; }
         /* line 241, ../cocoapods.scss */
         .main-content .platform label.both.selected span {
-          background-position: left -60px;
+          background-position: left -30px;
           color: #fff; }
       /* line 243, ../cocoapods.scss */
       .main-content .platform label.ios.selected {
-        background-position: left -150px; }
+        background-position: left -90px; }
         /* line 245, ../cocoapods.scss */
         .main-content .platform label.ios.selected span {
-          background-position: left -60px;
+          background-position: left -30px;
           color: #fff; }
       /* line 247, ../cocoapods.scss */
       .main-content .platform label.osx.selected {
-        background-position: right -240px; }
+        background-position: right -150px; }
         /* line 249, ../cocoapods.scss */
         .main-content .platform label.osx.selected span {
-          background-position: right -60px;
+          background-position: right -30px;
           color: #fff; }
     /* line 252, ../cocoapods.scss */
     .main-content .platform label {

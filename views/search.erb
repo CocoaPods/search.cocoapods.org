@@ -41,11 +41,11 @@
 						<h2><label for="pod_search">Search pods</label></h2>
             <div class="platform">
               <input value="on:osx on:ios" type="radio" id="platform_both" name="platform" <%= 'checked' if @platform == :both %>/>
-              <label class="both" for="platform_both"><span>iOS and OSX</span></label>
+              <label class="both" for="platform_both"><span>iOS &amp; OSX</span></label>
               <input value="on:ios" type="radio" id="platform_ios" name="platform" <%= 'checked' if @platform == :ios %>/>
-              <label class="ios" for="platform_ios"><span>iOs</span></label>
+              <label class="ios" for="platform_ios"><span>iOs only</span></label>
               <input value="on:osx" type="radio" id="platform_osx" name="platform" <%= 'checked' if @platform == :osx %>/>
-              <label class="osx" for="platform_osx"><span>OSX</span></label>
+              <label class="osx" for="platform_osx"><span>OSX only</span></label>
             </div>
 						<input type="search" id="pod_search" placeholder="pod name, e.g. Kiwi" class="query" autofocus autocomplete="off">
             <a href="#" class="reset-search" style="display:none">Reset search</a>
