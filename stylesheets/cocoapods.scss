@@ -198,7 +198,8 @@ a {
 			font-size:24px;
 			font-family:inherit;
 			font-weight:bold;
-			padding:6px 24px 6px 36px;
+			padding:6px 0px;
+      text-indent: 36px;
 			margin:8px 0 0 0;
 			@include border-radius(23px);
 			-webkit-appearance:none;
