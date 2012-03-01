@@ -161,12 +161,14 @@ class CocoapodSearch < Sinatra::Application
 
     # TODO: There is probably a query parser of Picky that could be used here.
     #
-    if @query =~ ON_IOS && @query =~ ON_OSX
-      @platform = :both
+    @platform = if @query =~ ON_IOS && @query =~ ON_OSX
+      :both
     elsif @query =~ ON_IOS
-      @platform = :ios
+      :ios
+    elsif @query =~ ON_OSX
+      :osx
     else
-      @platform = :osx
+      :both
     end
 
     erb :'/search'

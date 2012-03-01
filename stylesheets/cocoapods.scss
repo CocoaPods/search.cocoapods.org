@@ -223,6 +223,36 @@ a {
 			}
 		}
 	}
+  
+  .platform {
+    margin-top: 2px;
+    padding-left: 10px;
+    overflow: hidden;
+    label {
+      background: url(../../images/platform.gif) no-repeat;
+      display: block;
+      float: left;
+      & span { padding: 0 10px; line-height: 30px; display: block; background: url(../../images/platform.gif) repeat-x; font-weight: bold; }
+      &.both { background-position: left -90px; padding: 0 0 0 5px; }
+      &.ios { background-position: left -180px; padding: 0; border-left: 1px solid lightgrey; border-right: 1px solid lightgrey; }
+      &.osx { background-position: right -180px; padding: 0 5px 0 0; }
+      &.both.selected {
+        background-position: left -150px;
+        & span { background-position: left -60px; color: #fff; }
+      }
+      &.ios.selected {
+        background-position: left -150px;
+        & span { background-position: left -60px; color: #fff; }
+      }
+      &.osx.selected {
+        background-position: right -240px;
+        & span { background-position: right -60px; color: #fff; }
+      }
+    }
+    label { cursor: pointer; }
+    label span { cursor: pointer; }
+    input { display: none; }
+  }
 
 	footer {
 		padding:0 24px 18px 24px;

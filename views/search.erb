@@ -3,9 +3,7 @@
   <head>
   	<title>CocoaPods: The Objective-C Library Manager</title>
   	<link href="stylesheets/css/cocoapods.css" media="screen" rel="stylesheet" type="text/css">
-  	<link href="stylesheets/select.css" media="screen" rel="stylesheet" type="text/css">
     <link href="stylesheets/prettify.css" media="screen" rel="stylesheet" type="text/css">
-  	<!-- <link rel="stylesheet" href="stylesheets/picky.css"> -->
   	<link rel="shortcut icon" href="favicon.ico">
   </head>
 
@@ -41,21 +39,14 @@
 				<form class="search-form" id="search" onkeypress="return event.keyCode != 13;">
 					<fieldset>
 						<h2><label for="pod_search">Search pods</label></h2>
-            <select class="platform">
-              <optgroup label="Filter for">
-                <option value="on:osx on:ios" <%= 'selected' if @platform == :both %>>OS X and iOS</option>
-                <option value="on:ios"        <%= 'selected' if @platform == :ios  %>>iOS only</option>
-                <option value="on:osx"        <%= 'selected' if @platform == :osx  %>>OS X only</option>
-              </optgroup>
-            </select>
-						<!-- <div class="search-modes">
-						              <input type="radio" name="platform" value="on:osx on:ios" id="search_mode_both" checked="<%= @platform == :both %>">
-						              <label for="search_mode_both">OS X and iOS</label>
-						              <input type="radio" name="platform" value="on:ios" id="search_mode_ios" checked="<%= @platform == :ios %>">
-						              <label for="search_mode_ios">iOS</label>
-						              <input type="radio" name="platform" value="on:osx" id="search_mode_osx" checked="<%= @platform == :osx %>">
-						              <label for="search_mode_osx">OS X</label>
-						            </div> -->
+            <div class="platform">
+              <input value="on:osx on:ios" type="radio" id="platform_both" name="platform" <%= 'checked' if @platform == :both %>/>
+              <label class="both" for="platform_both"><span>iOS and OSX</span></label>
+              <input value="on:ios" type="radio" id="platform_ios" name="platform" <%= 'checked' if @platform == :ios %>/>
+              <label class="ios" for="platform_ios"><span>iOs</span></label>
+              <input value="on:osx" type="radio" id="platform_osx" name="platform" <%= 'checked' if @platform == :osx %>/>
+              <label class="osx" for="platform_osx"><span>OSX</span></label>
+            </div>
 						<input type="search" id="pod_search" placeholder="pod name, e.g. Kiwi" class="query" autofocus autocomplete="off">
             <a href="#" class="reset-search" style="display:none">Reset search</a>
 					</fieldset>
@@ -171,61 +162,14 @@ $ pod spec lint Peanut.podspec
 
   	<script type="text/javascript">
   		var platformRemoverRegexp = /(platform|on\:\w+\s?)+/;
-      var platformSelect = $("select.platform");
+      var platformSelect = $(".platform");
+      var selectCheckedPlatform = function() {
+        platformSelect.find('label').removeClass('selected');
+        platformSelect.find('input:checked + label').addClass('selected');
+      };
       
       // TODO Add tap gesture support to the cycle button?
       $(window).ready(function() {
-        // var searchModes = $(".search-modes");
-        //         var activeSearchMode = $('<div class="active-search-mode"></div>');
-        //         var searchModeSelector = $('<ul class="search-modes-selector"></ul>').hide();
-        //     
-        //         searchModes.append(activeSearchMode);
-        //         searchModes.append(searchModeSelector);
-        // 
-        //         searchModes.find("input[type='radio']").each(function() {
-        //           var input = $(this);
-        //           var option = $('<li></li>').html(input.next("label").html());
-        //           searchModeSelector.append(option);
-        //           if (input.attr("checked") === true)
-        //             option.addClass("active");
-        //           option.attr("rel", input.attr("id"));
-        //           option.data("input", input);
-        //         });
-        // 
-        //         var selectSearchOption = function(option) {
-        //           var input = option.data("input");
-        //           searchModeSelector.find("li").removeClass("active");
-        //           option.addClass("active");
-        //           activeSearchMode.html(option.html());
-        //           input.attr("checked", true);
-        //           searchModeSelector.hide();
-        //           pickyClient.resend();
-        //         }
-        // 
-        //         searchModeSelector.delegate("li", "click", function() {
-        //           selectSearchOption($(this));
-        //         });
-        // 
-        //         $(document).click(function(event) {
-        //           var target = $(event.target);
-        //           if (target.hasClass("active-search-mode")) {
-        //             searchModeSelector.show();
-        //           } else {
-        //             searchModeSelector.hide();
-        //           }
-        //         });
-        //     
-        //         activeSearchMode.html(searchModes.find("input[checked=true]").next("label").html());
-        // 
-        //         $(document).delegate(".results .result", "click", function(event) {
-        //           if (event.target && $(event.target).parent(".author").length > 0) {
-        //             return;
-        //           }
-        //           event.preventDefault();
-        //           var result = $(this);
-        //           location.href = result.find("h3 a").attr("href");
-        //         });
-
         pickyClient = new PickyClient({
           full: '/search',
 		  
@@ -256,8 +200,7 @@ $ pod spec lint Peanut.podspec
           //
           before: function(query, params) {
             query = query.replace(platformRemoverRegexp, '');
-            // var platformModifier = $('#search .search-modes-selector .active').data("input").val();
-            var platformModifier = platformSelect.val();
+            var platformModifier = platformSelect.find("input:checked").val();
             return platformModifier + ' ' + query;
           },
           // We filter duplicate ids here.
@@ -357,36 +300,22 @@ $ pod spec lint Peanut.podspec
         
         // Resend query on platform selection.
         //
-        platformSelect.bind('change', function() {
+        // Note: Also updates the label.
+        //
+        platformSelect.bind('click', function(event) {
+          selectCheckedPlatform();
           $("#pod_search").focus();
           pickyClient.resend();
         });
-
-        // An initial search text, prefilled
-        // this one is passed through the query param q.
-        //
-        // Example: www.mysearch.com/?q=example
-        //
         
-        // var query = decodeURIComponent(location.search);
-        // if (query.indexOf("on:") === -1) {
-        //   selectSearchOption($(".search-modes-selector li[rel='search_mode_both']"));
-        // }
-        // query = query.replace(platformRemoverRegexp, '');
-        // query = query.replace("?q=", '');
+        // Select the right platform.
+        //
+        selectCheckedPlatform();
         
+        // Initially insert the query given in the URL. 
+        //
         pickyClient.insertFromURL("<%= @query %>");
-
-        // $('body').addClass($.os.ios ? 'ios' : 'desktop');
-
-        // if ($("#pod_search").val().length > 0) {
-        //   $("#reset_search").show();
-        // }
       });
-
-      // $(window).load(function() {
-      //   prettyPrint();
-      // });
   	</script>
   </body>
 </html>
