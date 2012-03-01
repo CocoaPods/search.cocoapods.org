@@ -190,62 +190,6 @@ a {
 			float:left;
 		}
 
-		.search-modes {
-			float:left;
-			margin:5px 0 0 10px;
-			position:relative;
-
-			input, label {
-				display:none;
-			}
-			.active-search-mode {
-				background:#E5A222 url(../../images/dropdown-arrow.png) right center no-repeat;
-				@include border-radius(14px);
-				padding:3px 30px 3px 10px;
-				font-size:14px;
-				font-weight:bold;
-				width:auto;
-				float:left;
-				cursor:pointer;
-
-				&:hover {
-					background-color:lighten(#E5A222, 10%);
-				}
-			}
-			.search-modes-selector {
-				position:absolute;
-				top:2px;
-				left:2px;
-				@include border-radius(12px);
-				@include box-shadow(0 0 10px rgba(0,0,0,.7));
-
-				li {
-					cursor:pointer;
-					background:#FEDB9C;
-					border:2px solid #E5A222;
-					border-bottom:none;
-					padding:5px 10px 5px 30px;
-					white-space:nowrap;
-
-					&:hover {
-						background:lighten(#FEDB9C, 10%);
-					}
-					&:first-child {
-						@include border-top-radius(12px);
-					}
-					&:last-child {
-						@include border-bottom-radius(12px);
-						border-bottom:2px solid #E5A222;
-					}
-					&.active {
-						background-image:url(../../images/check.png);
-						background-repeat:no-repeat;
-						background-position:8px center;
-					}
-				}
-			}
-		}
-
 		input[type="search"] {
 			clear:both;
 			background:#fff url(../../images/searchlens.png) 8px 7px no-repeat;
