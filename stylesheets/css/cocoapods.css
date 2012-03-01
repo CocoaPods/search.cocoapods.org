@@ -261,95 +261,96 @@ a {
         background-position: left bottom; }
   /* line 227, ../cocoapods.scss */
   .main-content .platform {
-    margin-top: 2px;
-    padding-left: 10px;
+    font-size: 0.95em;
+    margin-top: 1px;
+    padding-left: 15px;
     overflow: hidden; }
-    /* line 231, ../cocoapods.scss */
+    /* line 232, ../cocoapods.scss */
     .main-content .platform label {
       background: url(../../images/platform.orange.png) no-repeat;
       display: block;
       float: left; }
-      /* line 235, ../cocoapods.scss */
+      /* line 236, ../cocoapods.scss */
       .main-content .platform label span {
         padding: 0 10px;
         line-height: 30px;
         display: block;
         background: url(../../images/platform.orange.png) repeat-x;
         font-weight: bold; }
-      /* line 236, ../cocoapods.scss */
+      /* line 237, ../cocoapods.scss */
       .main-content .platform label.both {
         background-position: left -60px;
         padding: 0 0 0 5px; }
-      /* line 237, ../cocoapods.scss */
+      /* line 238, ../cocoapods.scss */
       .main-content .platform label.ios {
         background-position: left -150px;
         padding: 0;
         border-left: 1px solid lightgrey;
         border-right: 1px solid lightgrey; }
-      /* line 238, ../cocoapods.scss */
+      /* line 239, ../cocoapods.scss */
       .main-content .platform label.osx {
         background-position: right -120px;
         padding: 0 5px 0 0; }
-      /* line 239, ../cocoapods.scss */
+      /* line 240, ../cocoapods.scss */
       .main-content .platform label.both.selected {
         background-position: left -90px; }
-        /* line 241, ../cocoapods.scss */
+        /* line 242, ../cocoapods.scss */
         .main-content .platform label.both.selected span {
           background-position: left -30px;
           color: #fff; }
-      /* line 243, ../cocoapods.scss */
+      /* line 244, ../cocoapods.scss */
       .main-content .platform label.ios.selected {
         background-position: left -90px; }
-        /* line 245, ../cocoapods.scss */
+        /* line 246, ../cocoapods.scss */
         .main-content .platform label.ios.selected span {
           background-position: left -30px;
           color: #fff; }
-      /* line 247, ../cocoapods.scss */
+      /* line 248, ../cocoapods.scss */
       .main-content .platform label.osx.selected {
         background-position: right -150px; }
-        /* line 249, ../cocoapods.scss */
+        /* line 250, ../cocoapods.scss */
         .main-content .platform label.osx.selected span {
           background-position: right -30px;
           color: #fff; }
-    /* line 252, ../cocoapods.scss */
+    /* line 253, ../cocoapods.scss */
     .main-content .platform label {
       cursor: pointer; }
-    /* line 253, ../cocoapods.scss */
+    /* line 254, ../cocoapods.scss */
     .main-content .platform label span {
       cursor: pointer; }
-    /* line 254, ../cocoapods.scss */
+    /* line 255, ../cocoapods.scss */
     .main-content .platform input {
       display: none; }
-  /* line 257, ../cocoapods.scss */
+  /* line 258, ../cocoapods.scss */
   .main-content footer {
     padding: 0 24px 18px 24px; }
-    /* line 259, ../cocoapods.scss */
+    /* line 260, ../cocoapods.scss */
     .main-content footer p {
       font-size: 12px;
       margin-bottom: 0;
       color: #9b8372; }
-  /* line 266, ../cocoapods.scss */
+  /* line 267, ../cocoapods.scss */
   .main-content section {
     margin: 18px 24px;
     padding: 0 0 18px 0;
     border-bottom: 3px solid #F6DDD1; }
-    /* line 271, ../cocoapods.scss */
+    /* line 272, ../cocoapods.scss */
     .main-content section :last-child {
       margin-bottom: 0; }
-    /* line 275, ../cocoapods.scss */
+    /* line 276, ../cocoapods.scss */
     .main-content section#install {
       margin-top: 0; }
 
-/* line 279, ../cocoapods.scss */
+/* line 280, ../cocoapods.scss */
 ::-webkit-input-placeholder {
   color: #d3d0d0; }
 
 @media screen and (max-width: 1024px) {
-  /* line 284, ../cocoapods.scss */
+  /* line 285, ../cocoapods.scss */
   .container {
     width: 100%; }
 
-  /* line 288, ../cocoapods.scss */
+  /* line 289, ../cocoapods.scss */
   .sidebar,
   .main-content {
     position: static;
@@ -358,6 +359,6 @@ a {
     margin: 0;
     width: 100%; }
 
-  /* line 294, ../cocoapods.scss */
+  /* line 295, ../cocoapods.scss */
   .masthead {
     text-align: center; } }
