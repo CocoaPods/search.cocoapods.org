@@ -191,6 +191,9 @@ a {
 		}
 
 		input[type="search"] {
+      -moz-box-sizing: border-box;
+      -webkit-box-sizing: border-box;
+      box-sizing: border-box;
 			clear:both;
 			background:#fff url(../../images/searchlens.png) 8px 7px no-repeat;
 			border:3px solid #E6A33C;
@@ -198,8 +201,7 @@ a {
 			font-size:24px;
 			font-family:inherit;
 			font-weight:bold;
-			padding: 6px 0px;
-      text-indent: 36px;
+      padding: 6px 36px 6px 40px;
 			margin:8px 0 0 0;
 			@include border-radius(23px);
       -moz-appearance:none;
@@ -229,6 +231,9 @@ a {
 	}
   
   .platform {
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
     font-size: 0.95em;
     margin-top: 1px;
     padding-left: 15px;
@@ -237,7 +242,7 @@ a {
       background: url(../../images/platform.orange.png) no-repeat;
       display: block;
       float: left;
-      & span { padding: 0 10px; line-height: 30px; display: block; background: url(../../images/platform.orange.png) repeat-x; font-weight: bold; }
+      & span { padding: 0 10px; height: 30px; line-height: 32.5px; display: block; background: url(../../images/platform.orange.png) repeat-x; font-weight: bold; }
       &.both { background-position: left -60px; padding: 0 0 0 5px; }
       &.ios { background-position: left -150px; padding: 0; border-left: 1px solid lightgrey; border-right: 1px solid lightgrey; }
       &.osx { background-position: right -120px; padding: 0 5px 0 0; }
