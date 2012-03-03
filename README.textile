@@ -6,6 +6,12 @@ h1. Search Engine Notes
 
 h2. Developing
 
+h3. Installation
+
+* @git submodule update --init@
+* @bundle install@
+* @gem install foreman@
+
 h3. Run locally with foreman
 
 * @foreman check@

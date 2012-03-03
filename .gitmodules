@@ -1,0 +1,6 @@
+[submodule "vendor/CocoaPods"]
+	path = vendor/CocoaPods
+	url = git://github.com/CocoaPods/CocoaPods.git
+[submodule "vendor/Xcodeproj"]
+	path = vendor/Xcodeproj
+	url = git://github.com/CocoaPods/Xcodeproj.git

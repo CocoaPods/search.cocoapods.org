@@ -2,6 +2,9 @@ require 'sinatra/base'
 require 'i18n'
 require 'picky'
 require 'picky-client'
+
+$:.unshift File.expand_path('../vendor/CocoaPods/lib', __FILE__)
+$:.unshift File.expand_path('../vendor/Xcodeproj/lib', __FILE__)
 require 'cocoapods'
 
 # Extend Pod::Specification with the capability of ignoring bad specs.

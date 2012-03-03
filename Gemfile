@@ -1,3 +1,7 @@
+# We don't install CocoaPods as a gem, but rather vendor it as a git submodule.
+# The reason for this is that we don't need the Xcodeproj dependency and in
+# fact makes it even impossible to install on Heroku.
+
 source :gemcutter
 
 gem 'bundler'
@@ -17,8 +21,6 @@ gem 'rack'
 gem 'rack_fast_escape', '2009.06.24' # Optional.
 gem 'text'
 gem 'yajl-ruby', :require => 'yajl'
-
-gem 'cocoapods'
 
 # Should be optional, but isn't yet.
 #
