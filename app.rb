@@ -126,7 +126,6 @@ class CocoapodSearch < Sinatra::Application
     # Indexing the data.
     #
     index.reindex
-    
   end
 
   # Define a search over the books index.

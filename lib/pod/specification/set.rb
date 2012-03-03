@@ -35,7 +35,7 @@ module Pod
       end
 
       def mapped_platform
-        specification.platform || [:ios, :osx]
+        specification.platform.name || "ios osx"
       end
       
       # Summary with words already contained in
