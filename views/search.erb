@@ -43,7 +43,7 @@
               <input value="on:osx on:ios" type="radio" id="platform_both" name="platform" <%= 'checked' if @platform == :both %>/>
               <label class="both" for="platform_both"><span>iOS &amp; OSX</span></label>
               <input value="on:ios" type="radio" id="platform_ios" name="platform" <%= 'checked' if @platform == :ios %>/>
-              <label class="ios" for="platform_ios"><span>iOs</span></label>
+              <label class="ios" for="platform_ios"><span>iOS</span></label>
               <input value="on:osx" type="radio" id="platform_osx" name="platform" <%= 'checked' if @platform == :osx %>/>
               <label class="osx" for="platform_osx"><span>OSX</span></label>
             </div>
@@ -202,6 +202,9 @@ $ pod spec lint Peanut.podspec
           // Removes it if it is.
           //
           before: function(query, params) {
+            // We don't add the platform if it is empty (still saved in history as empty, though).
+            //
+            if (query == '') { return ''; }
             query = query.replace(platformRemoverRegexp, '');
             var platformModifier = platformSelect.find("input:checked").val();
             return platformModifier + ' ' + query;
@@ -315,9 +318,12 @@ $ pod spec lint Peanut.podspec
         //
         selectCheckedPlatform();
         
-        // Initially insert the query given in the URL. 
+        // Initially insert the query given in the URL
+        // if there is one.
         //
-        pickyClient.insertFromURL("<%= @query %>");
+        if ("<%= @query %>" != "") {
+          pickyClient.insertFromURL("<%= @query %>");
+        }
       });
   	</script>
   </body>
