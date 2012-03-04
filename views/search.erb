@@ -166,6 +166,9 @@ $ pod spec lint Peanut.podspec
   	<script type="text/javascript">
   		var platformRemoverRegexp = /(platform|on\:\w+\s?)+/;
       var platformSelect = $(".platform");
+      
+      // Sets the checkbox labels correctly.
+      //
       var selectCheckedPlatform = function() {
         platformSelect.find('label').removeClass('selected');
         platformSelect.find('input:checked + label').addClass('selected');
@@ -308,10 +311,10 @@ $ pod spec lint Peanut.podspec
         //
         // Note: Also updates the label.
         //
-        platformSelect.bind('click', function(event) {
+        platformSelect.find('input').bind('change', function(event) {
+          pickyClient.resend();
           selectCheckedPlatform();
           $("#pod_search").focus();
-          pickyClient.resend();
         });
         
         // Initially select the right platform.
