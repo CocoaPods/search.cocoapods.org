@@ -203,9 +203,9 @@ a {
 			font-weight:bold;
       padding: 6px 36px 6px 40px;
 			margin:8px 0 0 0;
-			@include border-radius(23px);
       -moz-appearance:none;
       -webkit-appearance:none;
+			@include border-radius(23px);
 
 			&:focus {
 				outline:none;
