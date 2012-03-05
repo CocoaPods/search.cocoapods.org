@@ -7,6 +7,10 @@ $:.unshift File.expand_path('../vendor/CocoaPods/lib', __FILE__)
 $:.unshift File.expand_path('../vendor/Xcodeproj/lib', __FILE__)
 require 'cocoapods'
 
+# Loads the helper class for extracting the searched platform.
+#
+require File.expand_path '../lib/platform', __FILE__
+
 # Extend Pod::Specification with the capability of ignoring bad specs.
 #
 require File.expand_path '../lib/pod/specification', __FILE__
@@ -153,25 +157,11 @@ class CocoapodSearch < Sinatra::Application
   set :public_folder, File.dirname(__FILE__)
   set :views,         File.expand_path('../views', __FILE__)
 
-  ON_IOS = /(on|platform):ios/i
-  ON_OSX = /(on|platform):osx/i
-
   # Root, the search page.
   #
   get '/' do
     @query = params[:q]
-
-    # TODO: There is probably a query parser of Picky that could be used here.
-    #
-    @platform = if @query =~ ON_IOS && @query =~ ON_OSX
-      :both
-    elsif @query =~ ON_IOS
-      :ios
-    elsif @query =~ ON_OSX
-      :osx
-    else
-      :both
-    end
+    @platform = Platform.extract_from @query
 
     erb :'/index'
   end
