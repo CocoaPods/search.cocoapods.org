@@ -55,7 +55,7 @@
 					</div>
 					<div class="allocations">
 						<ol class="shown"></ol>
-						<ol class="mode"></ol>
+						<ol class="more"></ol>
 						<ol class="hidden"></ol>
 					</div>
 					<div class="results"></div>
@@ -259,7 +259,12 @@ $ pod spec lint Peanut.podspec
           // If a category is missing, it is appended in a virtual group at the end.
           // Optional. Default is [].
           //
-          //groups: [['author', 'title', 'subjects']],
+          // We group platform explicitly, so it is always positioned at
+          // the start of the explanation of the choices (also, we can
+          // simply not show it).
+          //
+          groups: [['platform']],
+          
           // This is used for formatting inside the choice groups.
           //
           // Use %n$s, where n is the position of the category in the key.
@@ -267,28 +272,29 @@ $ pod spec lint Peanut.podspec
           //
           choices: {
             en: {
-              'name,platform': 'named %1$s', // platform is not shown.
-              'platform,name': 'named %2$s',
-              'author,platform': 'written by %1$s',
-              'platform,author': 'written by %2$s',
-              'summary,platform': '%1$s in summary',
-              'platform,summary': '%2$s in summary',
-              'dependencies,platform': 'using %1$s',
-              'platform,dependencies': 'using %2$s',
-              'platform,author,name': '%3$s, written by %2$s',
-              'platform,name,author': '%2$s, written by %3$s',
-              'platform,name,version': '%2$s, version %3$s',
-              'platform,version,name': '%2$s of %3$s',
-              'platform,name,dependencies': '%2$s, using %3$s',
-              'platform,dependencies,name': '%2$s used by %3$s',
-              'platform,author,dependencies': 'written by %2$s and using %3$s',
-              'platform,dependencies,author': 'using %2$s, written by %3$s',
-              'platform,dependencies,version': '%2$s used by version %3$s',
-              'platform,version,dependencies': '%3$s used by version %2$s',
-              'platform,summary,name': '%3$s with \"%2$s\" in summary',
-              'platform,name,summary': '%2$s with \"%3$s\" in summary',
-              'platform,summary,author': 'written by %3$s with \"%2$s\" in summary',
-              'platform,author,summary': 'written by %2$s with \"%3$s\" in summary'
+              'platform': '', // platform is simply never shown.
+              
+              'name': 'named %1$s',
+              'author': 'written by %1$s',
+              'summary': '%1$s in summary',
+              'dependencies': 'using %1$s',
+              'author,name': '%2$s, written by %1$s',
+              'name,author': '%1$s, written by %2$s',
+              'version,name': '%1$s of %2$s',
+              'name,dependencies': '%1$s, using %2$s',
+              'dependencies,name': '%1$s used by %2$s',
+              'author,dependencies': 'written by %1$s and using %2$s',
+              'dependencies,author': 'using %1$s, written by %2$s',
+              'dependencies,version': '%1$s used by version %2$s',
+              'version,dependencies': '%2$s used by version %1$s',
+              'author,version': 'version %2$s by %1$s',
+              'version,author': 'version %1$s by %2$s',
+              'summary,version': 'version %2$s with \"%1$s\" in summary',
+              'version,summary': 'version %1$s with \"%2$s\" in summary',
+              'summary,name': '%2$s with \"%1$s\" in summary',
+              'name,summary': '%1$s with \"%2$s\" in summary',
+              'summary,author': 'written by %2$s with \"%1$s\" in summary',
+              'author,summary': 'written by %1$s with \"%2$s\" in summary'
             }
           },
 
@@ -300,7 +306,7 @@ $ pod spec lint Peanut.podspec
             en:{
               name: 'named',
               author: 'written by',
-              versions: 'version',
+              versions: 'on version',
               dependencies: 'using',
               summary: 'with summary'
             }
