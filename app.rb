@@ -173,7 +173,7 @@ class CocoapodSearch < Sinatra::Application
       :both
     end
 
-    erb :'/search'
+    erb :'/index'
   end
 
   # Renders the results into the json.
