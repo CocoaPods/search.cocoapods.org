@@ -87,7 +87,8 @@ $ pod setup
 						your Xcode project directory:
 					</p>
 <pre class="prettyprint">
-$ vim Podfile
+$ edit Podfile
+platform :ios
 dependency 'JSONKit',       '~> 1.4'
 dependency 'Reachability',  '~> 3.0.0'
 </pre>
@@ -95,10 +96,13 @@ dependency 'Reachability',  '~> 3.0.0'
 						Now you can install the dependencies in your project:
 					</p>
 <pre class="prettyprint">
-$ pod install
+$ pod install App.xcodeproj
 </pre>
 					<h3>Please note</h3>
 					<p>
+            Your project only has to be specified the first time you run pod install.
+          </p>
+          <p>
 						Make sure to always open the Xcode workspace instead of the project 
 						file when building your project:
 					</p>
