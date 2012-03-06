@@ -111,23 +111,27 @@ class CocoapodSearch < Sinatra::Application
     # Content to render.
     #
     Pod::Source.new(pods_path).pod_sets.each do |set|
-      id      = set.name.dup
-      version = set.versions.first
+      begin
+        id      = set.name.dup
+        version = set.versions.first
       
-      specification = set.specification
-      summary       = specification.summary
-      authors       = specification.authors
-      link          = specification.homepage
+        specification = set.specification
+        summary       = specification.summary
+        authors       = specification.authors
+        link          = specification.homepage
       
-      # Picky is destructive with the given data
-      # strings, which is why we dup the content
-      # to render.
-      #
-      Pod::View.add(id,
-                    version && version.dup,
-                    summary && summary.dup,
-                    authors && authors.dup,
-                    link    && link.dup)
+        # Picky is destructive with the given data
+        # strings, which is why we dup the content
+        # to render.
+        #
+        Pod::View.add(id,
+                      version && version.dup,
+                      summary && summary.dup,
+                      authors && authors.dup,
+                      link    && link.dup)
+      rescue StandardError
+        next # Skip this pod.
+      end
     end
     
     # Indexing the data.

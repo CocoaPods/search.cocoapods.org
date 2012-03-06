@@ -1,10 +1,13 @@
 module Pod
   class Specification
 
-    # Extend the pod sets with an id method.
+    # Note: Very explicitly handles errors.
+    # TODO Handle more elegantly.
     #
     class Set
-
+      
+      # Extend the pod sets with an id method.
+      #
       def id
         name
       end
@@ -24,18 +27,26 @@ module Pod
       def mapped_authors
         spec_authors = specification.authors
         spec_authors && spec_authors.keys.join(' ') || ''
+      rescue StandardError
+        ''
       end
 
       def mapped_versions
         versions.reduce([]) { |combined, version| combined << version.version }.join ' '
+      rescue StandardError
+        ''
       end
 
       def mapped_dependencies
         specification.dependencies.map(&:name).join ' '
+      rescue StandardError
+        ''
       end
 
       def mapped_platform
         specification.platform.name || "ios osx"
+      rescue StandardError
+        '' # i.e. never found.
       end
       
       # Summary with words already contained in
@@ -44,6 +55,8 @@ module Pod
       #
       def mapped_summary
         specification.summary
+      rescue StandardError
+        ''
       end
 
     end
