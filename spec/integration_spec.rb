@@ -91,6 +91,10 @@ describe 'Integration Tests' do
   
   it { pods.search('summary:google').ids.should == ['MTLocation', 'MTStatusBarOverlay'] }
   
+  # No single characters indexed.
+  #
+  it { pods.search('on:ios "a"').ids.should == [] }
+  
   #
   # TODO We need specs. Lots of specs.
   #

@@ -1,6 +1,9 @@
 module Pod
   class Specification
-
+    
+    # This class preprocesses the pod specs
+    # for indexing in Picky and also handles spec errors.
+    #
     # Note: Very explicitly handles errors.
     # TODO Handle more elegantly.
     #
@@ -13,11 +16,10 @@ module Pod
       end
       
       # Returns not just the name, but the
-      # Uppercase/lowercase parts with
-      # length > 1.
+      # Uppercase/lowercase parts.
       #
       def split_name
-        [name, name.split(/([A-Z]?[a-z]+)/).map(&:downcase).select { |word| word.size > 1 }].flatten
+        [name, name.split(/([A-Z]?[a-z]+)/).map(&:downcase)].flatten
       end
       
       def mapped_name

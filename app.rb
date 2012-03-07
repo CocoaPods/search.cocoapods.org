@@ -63,7 +63,8 @@ class CocoapodSearch < Sinatra::Application
     #
     indexing removes_characters: /[^a-z0-9\s\/\-\_\:\"\&\.]/i,
              stopwords:          /\b(and|the|of|it|in|for)\b/i,
-             splits_text_on:     /[\s\/\-\_\:\"\&\/]/
+             splits_text_on:     /[\s\/\-\_\:\"\&\/]/,
+             rejects_token_if:   lambda { |token| token.size < 2 }
 
     # Note: Add more categories.
     #
