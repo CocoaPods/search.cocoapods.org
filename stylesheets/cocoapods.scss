@@ -108,7 +108,8 @@ a {
 		.addination,
 		.result,
 		.no_results,
-		.allocations ol li {
+		.allocations ol li,
+    .more {
 			padding:24px;
 			background:#FDFAF2;
 			border-bottom:1px solid #F0E7DD;
@@ -116,7 +117,8 @@ a {
 
 		.result,
 		.addination,
-		.allocations ol li {
+		.allocations ol li,
+    .more {
 			&:hover {
 				background:darken(#FDFAF2, 5%);
 				cursor:pointer;
@@ -176,6 +178,18 @@ a {
 					}
 				}
 			}
+      
+      .more {
+        position: absolute;
+        font-weight: bold;
+        line-height: 1.1em;
+        padding: 0.2em 1em 0.4em;
+        margin: 0 44%;
+        @include border-bottom-radius(20px);
+        border-left-width: 1px;
+        border-right-width: 1px;
+        border-bottom-width: 2px;
+      }
 		}
 
 		.no_results {
