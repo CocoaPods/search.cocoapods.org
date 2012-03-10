@@ -5,6 +5,7 @@
     <link href="stylesheets/css/cocoapods.css" media="screen" rel="stylesheet" type="text/css">
     <link href="stylesheets/prettify.css" media="screen" rel="stylesheet" type="text/css">
   	<link rel="shortcut icon" href="favicon.ico">
+    <%= analytics %>
   </head>
 
   <body>
@@ -160,12 +161,12 @@ $ pod spec lint Peanut.podspec
 				</foooter>
 			</article>
 		</div>
-
-  	<script type="text/javascript" src="javascripts/jquery-1.5.0.min.js"></script>
-  	<script type="text/javascript" src="javascripts/prettify.js"></script>
-  	<script type="text/javascript" src="javascripts/history.min.js"></script>
-  	<script type="text/javascript" src="javascripts/history.adapter.jquery.min.js"></script>
-  	<script type="text/javascript" src="javascripts/picky.min.js"></script>
+    
+    <%= js 'jquery-1.5.0.min' %>
+    <%= js 'prettify' %>
+    <%= js 'history.min' %>
+    <%= js 'history.adapter.jquery.min' %>
+    <%= js 'picky.min' %>
 
   	<script type="text/javascript">
   		var platformRemoverRegexp = /(platform|on\:\w+\s?)+/;
