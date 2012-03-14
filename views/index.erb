@@ -184,9 +184,9 @@ $ pod spec lint Peanut.podspec
       var trackAnalytics = function(data, query) {
         var total = data.total;
         if (total > 0) {
-          _gaq.push(['_trackEvent', 'search', 'with results', query, total]);
+          _gaq.push(['_trackEvent', 'search', 'With results', query, total]);
         } else {
-          _gaq.push(['_trackEvent', 'search', 'no results', query, 0]);
+          _gaq.push(['_trackEvent', 'search', 'Not found', query, 0]);
         }
       }
       
