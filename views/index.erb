@@ -179,6 +179,17 @@ $ pod spec lint Peanut.podspec
         platformSelect.find('input:checked + label').addClass('selected');
       };
       
+      // Tracking the search results.
+      //
+      var trackAnalytics = function(data, query) {
+        var total = data.total;
+        if (total > 0) {
+          _gaq.push(['_trackEvent', 'search', 'with results', query, total]);
+        } else {
+          _gaq.push(['_trackEvent', 'search', 'no results', query, 0]);
+        }
+      }
+      
       // TODO Add tap gesture support to the cycle button?
       $(window).ready(function() {
         pickyClient = new PickyClient({
@@ -221,7 +232,11 @@ $ pod spec lint Peanut.podspec
           // (Not in the server as it might be
           // used for APIs etc.)
           //
+          // We also track the data for analytics.
+          //
           success: function(data, query) {
+            trackAnalytics(data, query);
+            
             var seen = {};
             
             var allocations = data.allocations;
