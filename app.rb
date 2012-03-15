@@ -120,7 +120,8 @@ class CocoapodSearch < Sinatra::Application
         summary       = specification.summary
         authors       = specification.authors
         link          = specification.homepage
-      
+        subspecs      = specification.recursive_subspecs
+        
         # Picky is destructive with the given data
         # strings, which is why we dup the content
         # to render.
@@ -129,7 +130,8 @@ class CocoapodSearch < Sinatra::Application
                       version && version.dup,
                       summary && summary.dup,
                       authors && authors.dup,
-                      link    && link.dup)
+                      link    && link.dup,
+                      subspecs)
       rescue StandardError
         next # Skip this pod.
       end

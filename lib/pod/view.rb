@@ -2,12 +2,12 @@ module Pod
 
   # "View" class to render results with.
   #
-  class View < Struct.new(:id, :version, :summary, :authors, :link)
+  class View < Struct.new(:id, :version, :summary, :authors, :link, :subspecs)
     
     # The view content cache.
     #
     # Structure:
-    #   { id => [version, summary, authors, link] }
+    #   { id => [version, summary, authors, link, [subspec1, subspec2, ...]] }
     #
     def self.content
       @content ||= {}
@@ -18,8 +18,8 @@ module Pod
     # Note: We could already prerender it if
     # necessary.
     #
-    def self.add id, version, summary, authors, link
-      content[id] = new id, version, summary, authors, link
+    def self.add id, version, summary, authors, link, subspecs
+      content[id] = new id, version, summary, authors, link, subspecs
     end
 
     # Stub find method coverts result ids into
@@ -40,7 +40,10 @@ module Pod
         %{<a href="javascript:pickyClient.insert('#{name}')">#{name}</a>}
       end
       rendered_authors = oxfordify rendered_authors
-      %Q{<li class="result"><h3><a href="#{link}">#{id}</a> #{version}</h3><p>#{summary}</p><p class="author">#{rendered_authors}</p></li>}
+      
+      rendered_subspecs = subspecs.map(&:name).join(', ')
+      
+      %Q{<li class="result"><h3><a href="#{link}">#{id}</a>#{version}</h3><p class="subspecs">#{rendered_subspecs}</p><p>#{summary}</p><p class="author">#{rendered_authors}</p></li>}
     end
     
     # Examples:

@@ -63,7 +63,7 @@ describe 'Integration Tests' do
   
   # Rendering.
   #
-  it { pods.search('kiwi').entries.should == [%Q{<li class="result"><h3><a href="http://kiwi-lib.info">Kiwi</a> 1.0.0</h3><p>A Behavior Driven Development library  iPhone  iPad development.</p><p class="author"><a href="javascript:pickyClient.insert('Allen Ding')">Allen Ding</a> and <a href="javascript:pickyClient.insert('Luke Redpath')">Luke Redpath</a></p></li>}] }
+  it { pods.search('kiwi').entries.should == [%Q{<li class=\"result\"><h3><a href=\"http://kiwi-lib.info\">Kiwi</a>1.0.0</h3><p class=\"subspecs\"></p><p>A Behavior Driven Development library  iPhone  iPad development.</p><p class=\"author\"><a href=\"javascript:pickyClient.insert('Allen Ding')\">Allen Ding</a> and <a href=\"javascript:pickyClient.insert('Luke Redpath')\">Luke Redpath</a></p></li>}] }
   
   # Qualifiers.
   #

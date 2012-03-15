@@ -126,6 +126,9 @@ a {
 		}
 
 		.result {
+      h3 a {
+        margin-right: 0.4em;
+      }
 			h3, p {
 				font-size:18px;
 			}
@@ -133,11 +136,15 @@ a {
 				margin:5px 0 0 0;
 
 				&.author {
-					font-size:12px;
+					font-size:0.8em;
 
 					a {
 						font-weight:normal;
 					}
+				}
+        
+				&.subspecs {
+					font-size:0.7em;
 				}
 			}
 		}
@@ -180,6 +187,7 @@ a {
 			}
       
       .more {
+        display: none;
         position: absolute;
         font-weight: bold;
         line-height: 1.1em;
