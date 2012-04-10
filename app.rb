@@ -117,6 +117,7 @@ class CocoapodSearch < Sinatra::Application
         version = set.versions.first
       
         specification = set.specification
+        platform      = specification.platform.name
         summary       = specification.summary
         authors       = specification.authors
         link          = specification.homepage
@@ -127,6 +128,7 @@ class CocoapodSearch < Sinatra::Application
         # to render.
         #
         Pod::View.add(id,
+                      platform,
                       version && version.dup,
                       summary && summary.dup,
                       authors && authors.dup,
@@ -150,7 +152,11 @@ class CocoapodSearch < Sinatra::Application
               stopwords:          /\b(and|the|of|it|in|for)\b/i,
               splits_text_on:     /[\s\/\-\&]+/
 
-    boost [:platform, :name, :author]  => +3,
+    boost [:name, :author]  => +3,
+          [:name]           => +2,
+          [:name, :summary] => -3, # Summary is the least important.
+          [:summary]        => -3, #
+          [:platform, :name, :author]  => +3,
           [:platform, :name]           => +2,
           [:platform, :name, :summary] => -3, # Summary is the least important.
           [:platform, :summary]        => -3  #

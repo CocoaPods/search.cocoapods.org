@@ -41,12 +41,14 @@
 					<fieldset>
 						<h2><label for="pod_search">Search pods</label></h2>
             <div class="platform">
+              <input value="" type="radio" id="platform_either" name="platform" <%= 'checked' if @platform == :either %>/>
+              <label class="left" for="platform_either"><span>Either OS</span></label>
               <input value="on:osx on:ios" type="radio" id="platform_both" name="platform" <%= 'checked' if @platform == :both %>/>
-              <label class="both" for="platform_both"><span>iOS &amp; OSX</span></label>
+              <label class="middle" for="platform_both"><span>iOS &amp; OSX</span></label>
               <input value="on:ios" type="radio" id="platform_ios" name="platform" <%= 'checked' if @platform == :ios %>/>
-              <label class="ios" for="platform_ios"><span>iOS</span></label>
+              <label class="middle" for="platform_ios"><span>iOS</span></label>
               <input value="on:osx" type="radio" id="platform_osx" name="platform" <%= 'checked' if @platform == :osx %>/>
-              <label class="osx" for="platform_osx"><span>OSX</span></label>
+              <label class="right" for="platform_osx"><span>OSX</span></label>
             </div>
 						<input type="search" id="pod_search" placeholder="pod name, e.g. Kiwi, version, author, deps…" class="query" autofocus autocomplete="off">
             <a href="#" class="reset-search" style="display:none">Reset search</a>
@@ -226,6 +228,7 @@ $ pod spec lint Peanut.podspec
             if (query == '') { return ''; }
             query = query.replace(platformRemoverRegexp, '');
             var platformModifier = platformSelect.find("input:checked").val();
+            if (platformModifier == '') { return query; }
             return platformModifier + ' ' + query;
           },
           // We filter duplicate ids here.

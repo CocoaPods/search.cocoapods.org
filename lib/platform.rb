@@ -20,7 +20,7 @@ class Platform
     elsif osx
       :osx
     else
-      :both
+      :either
     end
   end
   

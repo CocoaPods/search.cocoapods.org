@@ -2,12 +2,12 @@ module Pod
 
   # "View" class to render results with.
   #
-  class View < Struct.new(:id, :version, :summary, :authors, :link, :subspecs)
+  class View < Struct.new(:id, :platform, :version, :summary, :authors, :link, :subspecs)
     
     # The view content cache.
     #
     # Structure:
-    #   { id => [version, summary, authors, link, [subspec1, subspec2, ...]] }
+    #   { id => [platform, version, summary, authors, link, [subspec1, subspec2, ...]] }
     #
     def self.content
       @content ||= {}
@@ -18,8 +18,8 @@ module Pod
     # Note: We could already prerender it if
     # necessary.
     #
-    def self.add id, version, summary, authors, link, subspecs
-      content[id] = new id, version, summary, authors, link, subspecs
+    def self.add id, *args
+      content[id] = new id, *args
     end
 
     # Stub find method coverts result ids into
@@ -35,6 +35,10 @@ module Pod
     # Renders a result for display
     # in the Picky front end.
     #
+    @@platform_mapping = {
+      :ios  => 'iOS',
+      :osx  => 'OSX'
+    }
     def render
       rendered_authors = authors && authors.map do |name, _|
         %{<a href="javascript:pickyClient.insert('#{name}')">#{name}</a>}
@@ -43,7 +47,10 @@ module Pod
       
       rendered_subspecs = subspecs.map(&:name).join(', ')
       
-      %Q{<li class="result"><h3><a href="#{link}">#{id}</a>#{version}</h3><p class="subspecs">#{rendered_subspecs}</p><p>#{summary}</p><p class="author">#{rendered_authors}</p></li>}
+      rendered_platform = @@platform_mapping[platform]
+      rendered_platform = %Q{<div class="os">#{rendered_platform} only</div>} if rendered_platform
+      
+      %Q{<li class="result">#{rendered_platform}<h3><a href="#{link}">#{id}</a>#{version}</h3><p class="subspecs">#{rendered_subspecs}</p><p>#{summary}</p><p class="author">#{rendered_authors}</p></li>}
     end
     
     # Examples:

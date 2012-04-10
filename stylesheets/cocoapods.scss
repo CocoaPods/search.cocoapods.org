@@ -147,6 +147,17 @@ a {
 					font-size:0.7em;
 				}
 			}
+      .os {
+        border: 2px solid #654;
+        font-size: 0.5em;
+        padding: 0.25em 0.5em;
+        border-radius: 0.5em;
+        vertical-align: middle;
+        float: right;
+        color: white;
+        background-color: #987;
+        font-weight: bold;
+      }
 		}
 
 		.results {
@@ -265,18 +276,18 @@ a {
       display: block;
       float: left;
       & span { padding: 0 10px; height: 30px; line-height: 32.5px; display: block; background: url(../../images/platform.orange.png) repeat-x; font-weight: bold; }
-      &.both { background-position: left -60px; padding: 0 0 0 5px; }
-      &.ios { background-position: left -150px; padding: 0; border-left: 1px solid lightgrey; border-right: 1px solid lightgrey; }
-      &.osx { background-position: right -120px; padding: 0 5px 0 0; }
-      &.both.selected {
+      &.left { background-position: left -60px; padding: 0 0 0 5px; }
+      &.middle { background-position: left -150px; padding: 0; border-left: 1px solid lightgrey; border-right: 1px solid lightgrey; }
+      &.right { background-position: right -120px; padding: 0 5px 0 0; }
+      &.left.selected {
         background-position: left -90px;
         & span { background-position: left -30px; color: #fff; }
       }
-      &.ios.selected {
+      &.middle.selected {
         background-position: left -90px;
         & span { background-position: left -30px; color: #fff; }
       }
-      &.osx.selected {
+      &.right.selected {
         background-position: right -150px;
         & span { background-position: right -30px; color: #fff; }
       }
