@@ -333,12 +333,12 @@ a {
       /* line 279, ../cocoapods.scss */
       .main-content .platform label.left {
         background-position: left -60px;
-        padding: 0 0 0 5px; }
+        padding: 0 0 0 5px;
+        border-right: 1px solid lightgrey; }
       /* line 280, ../cocoapods.scss */
       .main-content .platform label.middle {
         background-position: left -150px;
         padding: 0;
-        border-left: 1px solid lightgrey;
         border-right: 1px solid lightgrey; }
       /* line 281, ../cocoapods.scss */
       .main-content .platform label.right {

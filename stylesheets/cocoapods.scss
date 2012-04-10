@@ -276,8 +276,8 @@ a {
       display: block;
       float: left;
       & span { padding: 0 10px; height: 30px; line-height: 32.5px; display: block; background: url(../../images/platform.orange.png) repeat-x; font-weight: bold; }
-      &.left { background-position: left -60px; padding: 0 0 0 5px; }
-      &.middle { background-position: left -150px; padding: 0; border-left: 1px solid lightgrey; border-right: 1px solid lightgrey; }
+      &.left { background-position: left -60px; padding: 0 0 0 5px; border-right: 1px solid lightgrey; }
+      &.middle { background-position: left -150px; padding: 0; border-right: 1px solid lightgrey; }
       &.right { background-position: right -120px; padding: 0 5px 0 0; }
       &.left.selected {
         background-position: left -90px;
