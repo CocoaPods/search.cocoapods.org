@@ -1,6 +1,6 @@
 module Pod
   class Specification
-    
+
     # This class preprocesses the pod specs
     # for indexing in Picky and also handles spec errors.
     #
@@ -8,20 +8,20 @@ module Pod
     # TODO Handle more elegantly.
     #
     class Set
-      
+
       # Extend the pod sets with an id method.
       #
       def id
         name
       end
-      
+
       # Returns not just the name, but the
       # Uppercase/lowercase parts.
       #
       def split_name
         [name, name.split(/([A-Z]?[a-z]+)/).map(&:downcase)].flatten
       end
-      
+
       def mapped_name
         split_name.join ' '
       end
@@ -40,17 +40,17 @@ module Pod
       end
 
       def mapped_dependencies
-        specification.dependencies.map(&:name).join ' '
+        specification.external_dependencies(true).map(&:name).join ' '
       rescue StandardError
         ''
       end
 
       def mapped_platform
-        specification.platform.name || "ios osx"
+        specification.available_platforms.map(&:name).sort.join(' ')
       rescue StandardError
         '' # i.e. never found.
       end
-      
+
       # Summary with words already contained in
       # name removed such as to minimize
       # multiple results.
@@ -60,7 +60,7 @@ module Pod
       rescue StandardError
         ''
       end
-      
+
     end
 
   end
