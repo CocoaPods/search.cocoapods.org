@@ -15,7 +15,7 @@ class CocoapodSearch
     # Note: Overwrites the old specs.zip.
     #
     def get
-      `curl -L -o ./tmp/specs.tar.gz http://github.com/CocoaPods/Specs/tarball/0.6`
+      `curl -L -o ./tmp/specs.tar.gz http://github.com/CocoaPods/Specs/tarball/master`
     end
 
     # Prepares the specs for indexing.
