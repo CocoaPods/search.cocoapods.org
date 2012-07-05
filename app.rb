@@ -117,7 +117,7 @@ class CocoapodSearch < Sinatra::Application
         version = set.versions.first
       
         specification = set.specification
-        platforms      = specification.available_platforms.map(&:name)
+        platforms     = specification.available_platforms.map(&:name)
         summary       = specification.summary
         authors       = specification.authors
         link          = specification.homepage
