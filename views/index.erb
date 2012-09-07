@@ -77,7 +77,7 @@ $ pod setup
 </pre>
 					<p>
 						Now that you’ve got CocoaPods installed it’s time to 
-						<a href="http://cocoapods.org/#get_started">get started</a>.
+						<a href="#get_started">get started</a>.
 					</p>
 				</section>
 
@@ -93,19 +93,15 @@ $ pod setup
 <pre class="prettyprint">
 $ edit Podfile
 platform :ios
-dependency 'JSONKit',       '~> 1.4'
-dependency 'Reachability',  '~> 3.0.0'
+pod 'JSONKit',       '~> 1.4'
+pod 'Reachability',  '~> 3.0.0'
 </pre>
 					<p>
 						Now you can install the dependencies in your project:
 					</p>
 <pre class="prettyprint">
-$ pod install App.xcodeproj
+$ pod install
 </pre>
-					<h3>Please note</h3>
-					<p>
-            Your project only has to be specified the first time you run pod install.
-          </p>
           <p>
 						Make sure to always open the Xcode workspace instead of the project 
 						file when building your project:
