@@ -118,7 +118,7 @@ class CocoapodSearch < Sinatra::Application
       
         specification = set.specification
         platforms     = specification.available_platforms.map(&:name)
-        summary       = specification.summary
+        summary       = specification.summary[0..139] # Cut down to 140 characters. TODO Duplicated code. See set.rb.
         authors       = specification.authors
         link          = specification.homepage
         subspecs      = specification.recursive_subspecs

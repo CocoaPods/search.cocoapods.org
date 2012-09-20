@@ -56,7 +56,7 @@ module Pod
       # multiple results.
       #
       def mapped_summary
-        specification.summary
+        specification.summary[0..139]
       rescue StandardError
         ''
       end
