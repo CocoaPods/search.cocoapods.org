@@ -29,25 +29,25 @@ module Pod
       def mapped_authors
         spec_authors = specification.authors
         spec_authors && spec_authors.keys.join(' ') || ''
-      rescue StandardError
+      rescue StandardError, SyntaxError
         ''
       end
 
       def mapped_versions
         versions.reduce([]) { |combined, version| combined << version.version }.join ' '
-      rescue StandardError
+      rescue StandardError, SyntaxError
         ''
       end
 
       def mapped_dependencies
         specification.external_dependencies(true).map(&:name).join ' '
-      rescue StandardError
+      rescue StandardError, SyntaxError
         ''
       end
 
       def mapped_platform
         specification.available_platforms.map(&:name).sort.join(' ')
-      rescue StandardError
+      rescue StandardError, SyntaxError
         '' # i.e. never found.
       end
 
@@ -57,7 +57,7 @@ module Pod
       #
       def mapped_summary
         specification.summary[0..139]
-      rescue StandardError
+      rescue StandardError, SyntaxError
         ''
       end
 
