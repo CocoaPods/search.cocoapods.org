@@ -134,7 +134,7 @@ class CocoapodSearch < Sinatra::Application
                       authors && authors.dup,
                       link    && link.dup,
                       subspecs)
-      rescue StandardError
+      rescue StandardError, SyntaxError # Yes, people commit pod specs with SyntaxErrors
         next # Skip this pod.
       end
     end
