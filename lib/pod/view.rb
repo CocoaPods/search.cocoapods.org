@@ -41,7 +41,7 @@ module Pod
     }
     def render
       rendered_authors = authors && authors.map do |name, _|
-        %{<a href="javascript:pickyClient.insert('#{name}')">#{name}</a>}
+        %{<a href="javascript:pickyClient.insert('#{name.gsub(/[']/, '\\\\\'')}')">#{name}</a>}
       end
       rendered_authors = oxfordify rendered_authors
       
