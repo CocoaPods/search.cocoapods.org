@@ -166,6 +166,7 @@ $ pod spec lint Peanut.podspec
     <%= js 'history.min' %>
     <%= js 'history.adapter.jquery.min' %>
     <%= js 'picky.min' %>
+	<%= js 'jquery.clippy.min' %>
 
   	<script type="text/javascript">
   		var platformRemoverRegexp = /(platform|on\:\w+\s?)+/;
@@ -214,6 +215,12 @@ $ pod spec lint Peanut.podspec
           beforeInsert: function(query) {
             return query.replace(platformRemoverRegexp, '');
           },
+
+		after: function(data, query) {
+			$('.clippy').clippy({
+				'clippy_path': '/media/clippy.swf'
+			});
+		},
           // Before Picky sends any data to the server.
           //
           // Adds the platform modifier to it if it isn't there already.
