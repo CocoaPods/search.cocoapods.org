@@ -2,6 +2,7 @@ require 'sinatra/base'
 require 'i18n'
 require 'picky'
 require 'picky-client'
+require "haml"
 
 $:.unshift File.expand_path('../vendor/CocoaPods/lib', __FILE__)
 $:.unshift File.expand_path('../vendor/Xcodeproj/lib', __FILE__)
@@ -176,7 +177,7 @@ class CocoapodSearch < Sinatra::Application
     @query = params[:q]
     @platform = Platform.extract_from @query
 
-    erb :'/index'
+    haml :index
   end
 
   # Renders the results into the json.
