@@ -1,3 +1,4 @@
+/* line 17, ../../../../.rvm/gems/ruby-1.9.3-p362/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
 a, abbr, acronym, address, big, cite, code,
@@ -18,51 +19,64 @@ time, mark, audio, video {
   font-size: 100%;
   vertical-align: baseline; }
 
+/* line 22, ../../../../.rvm/gems/ruby-1.9.3-p362/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
 html {
   line-height: 1; }
 
+/* line 24, ../../../../.rvm/gems/ruby-1.9.3-p362/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
 ol, ul {
   list-style: none; }
 
+/* line 26, ../../../../.rvm/gems/ruby-1.9.3-p362/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
 table {
   border-collapse: collapse;
   border-spacing: 0; }
 
+/* line 28, ../../../../.rvm/gems/ruby-1.9.3-p362/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
 caption, th, td {
   text-align: left;
   font-weight: normal;
   vertical-align: middle; }
 
+/* line 30, ../../../../.rvm/gems/ruby-1.9.3-p362/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
 q, blockquote {
   quotes: none; }
+  /* line 103, ../../../../.rvm/gems/ruby-1.9.3-p362/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
   q:before, q:after, blockquote:before, blockquote:after {
     content: "";
     content: none; }
 
+/* line 32, ../../../../.rvm/gems/ruby-1.9.3-p362/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
 a img {
   border: none; }
 
+/* line 116, ../../../../.rvm/gems/ruby-1.9.3-p362/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
 article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section, summary {
   display: block; }
 
+/* line 4, ../cocoapods.scss */
 body {
   font-family: Helvetica, Arial, sans-serif;
   color: #452e00;
   line-height: 1.4;
   background: #401600; }
 
+/* line 11, ../cocoapods.scss */
 a {
   color: #CA8A29;
   font-weight: bold;
   text-decoration: none; }
+  /* line 16, ../cocoapods.scss */
   a:hover {
     color: #a06d20; }
 
+/* line 21, ../cocoapods.scss */
 .container {
   width: 1024px;
   margin: 0 auto;
   position: relative; }
 
+/* line 27, ../cocoapods.scss */
 .sidebar {
   border-top: 20px solid #d3bcac;
   width: 360px;
@@ -72,25 +86,32 @@ a {
   left: 50%;
   margin-left: -512px;
   height: 100%; }
+  /* line 37, ../cocoapods.scss */
   .sidebar .masthead {
     background: url(../../images/logo-sidebar.png) center 20px no-repeat;
     border-bottom: 1px solid #f5dab0;
     padding: 205px 45px 24px 45px; }
+    /* line 42, ../cocoapods.scss */
     .sidebar .masthead h1 {
       font-size: 50px;
       font-weight: bold;
       color: #723D2A; }
+      /* line 46, ../cocoapods.scss */
       .sidebar .masthead h1 em {
         color: #E6A33C; }
+    /* line 50, ../cocoapods.scss */
     .sidebar .masthead p {
       font-size: 18px;
       font-weight: bold; }
+  /* line 55, ../cocoapods.scss */
   .sidebar nav, .sidebar .intro {
     padding: 24px 45px; }
+  /* line 58, ../cocoapods.scss */
   .sidebar .intro {
     font-size: 14px;
     border-bottom: 1px solid #f5dab0; }
 
+/* line 64, ../cocoapods.scss */
 .main-content {
   border-top: 20px solid #e3d8d4;
   width: 664px;
@@ -98,17 +119,23 @@ a {
   right: 0;
   position: absolute;
   background: #fff; }
+  /* line 72, ../cocoapods.scss */
   .main-content h2, .main-content h3 {
     font-weight: bold; }
+  /* line 76, ../cocoapods.scss */
   .main-content h2 {
     font-size: 18px;
     margin-bottom: 18px; }
+  /* line 81, ../cocoapods.scss */
   .main-content h3 {
     font-size: 16px; }
+  /* line 85, ../cocoapods.scss */
   .main-content p {
     margin-bottom: 18px; }
+  /* line 89, ../cocoapods.scss */
   .main-content pre {
     font-family: Monaco, "Courier New", monospace; }
+    /* line 92, ../cocoapods.scss */
     .main-content pre.prettyprint {
       -webkit-border-radius: 5px;
       -moz-border-radius: 5px;
@@ -120,10 +147,12 @@ a {
       margin-bottom: 18px;
       padding: 5px 8px;
       font-size: 14px; }
+  /* line 102, ../cocoapods.scss */
   .main-content .search-form {
     background: url(../../images/search-decorator.png) left bottom repeat-x;
     padding-bottom: 25px;
     position: relative; }
+    /* line 112, ../cocoapods.scss */
     .main-content .search-form fieldset,
     .main-content .search-form .addination,
     .main-content .search-form .result,
@@ -133,24 +162,32 @@ a {
       padding: 24px;
       background: #FDFAF2;
       border-bottom: 1px solid #f0e7dd; }
+    /* line 122, ../cocoapods.scss */
     .main-content .search-form .result:hover,
     .main-content .search-form .addination:hover,
     .main-content .search-form .allocations ol li:hover,
     .main-content .search-form .more:hover {
       background: #faf2dc;
       cursor: pointer; }
+    /* line 129, ../cocoapods.scss */
     .main-content .search-form .result h3 a {
       margin-right: 0.4em; }
+    /* line 132, ../cocoapods.scss */
     .main-content .search-form .result h3, .main-content .search-form .result p {
       font-size: 18px; }
+    /* line 135, ../cocoapods.scss */
     .main-content .search-form .result p {
       margin: 5px 0 0 0; }
+      /* line 138, ../cocoapods.scss */
       .main-content .search-form .result p.author {
         font-size: 0.8em; }
+        /* line 141, ../cocoapods.scss */
         .main-content .search-form .result p.author a {
           font-weight: normal; }
+      /* line 146, ../cocoapods.scss */
       .main-content .search-form .result p.subspecs {
         font-size: 0.7em; }
+    /* line 150, ../cocoapods.scss */
     .main-content .search-form .result .os {
       border: 2px solid #665544;
       font-size: 0.5em;
@@ -161,19 +198,24 @@ a {
       color: white;
       background-color: #987;
       font-weight: bold; }
+    /* line 164, ../cocoapods.scss */
     .main-content .search-form .results .header {
       display: none; }
+    /* line 169, ../cocoapods.scss */
     .main-content .search-form .addination {
       font-size: 18px;
       font-weight: bold;
       color: #C98903; }
+    /* line 177, ../cocoapods.scss */
     .main-content .search-form .allocations ol li {
       overflow: hidden;
       font-size: 18px;
       font-weight: bold; }
+      /* line 181, ../cocoapods.scss */
       .main-content .search-form .allocations ol li .text {
         float: left;
         width: 450px; }
+      /* line 185, ../cocoapods.scss */
       .main-content .search-form .allocations ol li .count {
         font-size: 14px;
         float: right;
@@ -184,8 +226,10 @@ a {
         -ms-border-radius: 15px;
         -o-border-radius: 15px;
         border-radius: 15px; }
+      /* line 193, ../cocoapods.scss */
       .main-content .search-form .allocations ol li:hover .count {
         background: #f3e0b0; }
+    /* line 200, ../cocoapods.scss */
     .main-content .search-form .allocations .more {
       display: none;
       position: absolute;
@@ -202,14 +246,17 @@ a {
       border-left-width: 1px;
       border-right-width: 1px;
       border-bottom-width: 2px; }
+    /* line 214, ../cocoapods.scss */
     .main-content .search-form .no_results {
       font-size: 18px;
       font-weight: bold;
       color: #a51801; }
+    /* line 220, ../cocoapods.scss */
     .main-content .search-form h2 {
       font-size: 24px;
       margin-bottom: 0;
       float: left; }
+    /* line 226, ../cocoapods.scss */
     .main-content .search-form input[type="search"] {
       -moz-box-sizing: border-box;
       -webkit-box-sizing: border-box;
@@ -230,13 +277,16 @@ a {
       -ms-border-radius: 23px;
       -o-border-radius: 23px;
       border-radius: 23px; }
+      /* line 243, ../cocoapods.scss */
       .main-content .search-form input[type="search"]:focus {
         outline: none;
         -webkit-box-shadow: 0 0 10px #e6a532;
         -moz-box-shadow: 0 0 10px #e6a532;
         box-shadow: 0 0 10px #e6a532; }
+      /* line 247, ../cocoapods.scss */
       .main-content .search-form input[type="search"]::-webkit-search-cancel-button {
         -webkit-appearance: none; }
+    /* line 251, ../cocoapods.scss */
     .main-content .search-form .reset-search {
       width: 28px;
       height: 28px;
@@ -245,8 +295,10 @@ a {
       top: 74px;
       right: 33px;
       background: url(../../images/cancel.png) left top no-repeat; }
+      /* line 260, ../cocoapods.scss */
       .main-content .search-form .reset-search:hover {
         background-position: left bottom; }
+  /* line 266, ../cocoapods.scss */
   .main-content .platform {
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
@@ -255,10 +307,12 @@ a {
     margin-top: 1px;
     padding-left: 15px;
     overflow: hidden; }
+    /* line 274, ../cocoapods.scss */
     .main-content .platform label {
       background: url(../../images/platform.orange.png) no-repeat;
       display: block;
       float: left; }
+      /* line 278, ../cocoapods.scss */
       .main-content .platform label span {
         padding: 0 10px;
         height: 30px;
@@ -266,60 +320,80 @@ a {
         display: block;
         background: url(../../images/platform.orange.png) repeat-x;
         font-weight: bold; }
+      /* line 279, ../cocoapods.scss */
       .main-content .platform label.left {
         background-position: left -60px;
         padding: 0 0 0 5px;
         border-right: 1px solid lightgrey; }
+      /* line 280, ../cocoapods.scss */
       .main-content .platform label.middle {
         background-position: left -150px;
         padding: 0;
         border-right: 1px solid lightgrey; }
+      /* line 281, ../cocoapods.scss */
       .main-content .platform label.right {
         background-position: right -120px;
         padding: 0 5px 0 0; }
+      /* line 282, ../cocoapods.scss */
       .main-content .platform label.left.selected {
         background-position: left -90px; }
+        /* line 284, ../cocoapods.scss */
         .main-content .platform label.left.selected span {
           background-position: left -30px;
           color: #fff; }
+      /* line 286, ../cocoapods.scss */
       .main-content .platform label.middle.selected {
         background-position: left -90px; }
+        /* line 288, ../cocoapods.scss */
         .main-content .platform label.middle.selected span {
           background-position: left -30px;
           color: #fff; }
+      /* line 290, ../cocoapods.scss */
       .main-content .platform label.right.selected {
         background-position: right -150px; }
+        /* line 292, ../cocoapods.scss */
         .main-content .platform label.right.selected span {
           background-position: right -30px;
           color: #fff; }
+    /* line 295, ../cocoapods.scss */
     .main-content .platform label {
       cursor: pointer; }
+    /* line 296, ../cocoapods.scss */
     .main-content .platform label span {
       cursor: pointer; }
+    /* line 297, ../cocoapods.scss */
     .main-content .platform input {
       display: none; }
+  /* line 300, ../cocoapods.scss */
   .main-content footer {
     padding: 0 24px 18px 24px; }
+    /* line 302, ../cocoapods.scss */
     .main-content footer p {
       font-size: 12px;
       margin-bottom: 0;
       color: #9b8372; }
+  /* line 309, ../cocoapods.scss */
   .main-content section {
     margin: 18px 24px;
     padding: 0 0 18px 0;
     border-bottom: 3px solid #f6ddd1; }
+    /* line 314, ../cocoapods.scss */
     .main-content section :last-child {
       margin-bottom: 0; }
+    /* line 318, ../cocoapods.scss */
     .main-content section#install {
       margin-top: 0; }
 
+/* line 322, ../cocoapods.scss */
 ::-webkit-input-placeholder {
   color: #d3d0d0; }
 
 @media screen and (max-width: 1024px) {
+  /* line 327, ../cocoapods.scss */
   .container {
     width: 100%; }
 
+  /* line 331, ../cocoapods.scss */
   .sidebar,
   .main-content {
     position: static;
@@ -328,9 +402,6 @@ a {
     margin: 0;
     width: 100%; }
 
+  /* line 337, ../cocoapods.scss */
   .masthead {
     text-align: center; } }
-.pod_spec {
-  border: #e6a33c 1px solid;
-  background-color: white;
-  padding: 2px 4px; }
