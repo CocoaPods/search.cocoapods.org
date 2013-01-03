@@ -28,7 +28,7 @@ module Pod
     # Note: Picky calls this method from its
     # Results#populate_with method.
     #
-    def self.find ids, options = {}
+    def self.find_all_by_id ids, options = {}
       ids.map { |id| content[id] }
     end
     
