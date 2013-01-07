@@ -21,23 +21,19 @@ a {
 .container {
 	width:1024px;
 	margin:0 auto;
-	position:relative;
+  display: table;
 }
 
 .sidebar {
 	border-top:20px solid #d3bcac;
 	width:360px;
 	background:#FCF3E5;
-	position:fixed;
-	top:0;
-	left:50%;
-	margin-left:-512px;
-	height:100%;
+  display: table-cell;
 
 	.masthead {
 		background:url(../../images/logo-sidebar.png) center 20px no-repeat;
 		border-bottom:1px solid #F5DAB0;
-		padding:205px 45px 24px 45px;
+		padding:205px 35px 24px 45px;
 
 		h1 {
 			font-size:50px;
@@ -64,9 +60,8 @@ a {
 .main-content {
 	border-top:20px solid #E3D8D4;
 	width:664px;
-	top:0;
-	right:0;
-	position:absolute;
+  display: table-cell;
+  vertical-align: top;
 	background:#fff;
 
 	h2, h3 {
@@ -324,17 +319,13 @@ a {
 }
 
 @media screen and (max-width: 1024px) {
-	.container {
-		width:100%;
-	}
-	.sidebar,
-	.main-content {
-		position:static;
-		top:0; left:0;
-		margin:0;
-		width:100%;
-	}
-	.masthead {
-		text-align:center;
-	}
+  .container,
+  .sidebar,
+  .main-content {
+    display: block;
+    width:100%;
+  }
+  .masthead {
+    text-align:center;
+  }
 }
