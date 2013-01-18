@@ -77,7 +77,8 @@ a {
       background: url(../../images/platform.orange.png) no-repeat;
       display: block;
       float: left;
-      & span { padding: 0 10px; height: 30px; line-height: 32.5px; display: block; background: url(../../images/platform.orange.png) repeat-x; font-weight: bold; }
+      & span { border-bottom: 1px solid #f9eddb; padding: 0 10px; height: 30px; line-height: 32.5px; display: block; background: url(../../images/platform.orange.png) repeat-x; font-weight: bold; }
+      &.selected span { border-bottom: none; }
       &.left { background-position: left -60px; padding: 0 0 0 5px; border-right: 1px solid lightgrey; }
       &.middle { background-position: left -150px; padding: 0; border-right: 1px solid lightgrey; }
       &.right { background-position: right -120px; padding: 0 5px 0 0; }
@@ -265,7 +266,7 @@ a {
   }
   
 	.masthead {
-		/* background:url(../../images/logo-sidebar.png) center 20px no-repeat; */
+		background-color: white;
 		border-bottom:1px solid #F5DAB0;
 		padding:24px 35px 24px 45px;
 
