@@ -104,7 +104,7 @@ a {
   .header .breadcrumb {
     float: left;
     width: 17em;
-    padding: 1.35em 0; }
+    line-height: 4em; }
   /* line 55, ../cocoapods.scss */
   .header fieldset {
     height: 56px;
