@@ -55,82 +55,324 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
   display: block; }
 
 /* line 4, ../cocoapods.scss */
+* {
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box; }
+
+/* line 6, ../cocoapods.scss */
 body {
+  font-size: 14px;
   font-family: Helvetica, Arial, sans-serif;
   color: #452e00;
   line-height: 1.4;
   background: #401600; }
 
-/* line 11, ../cocoapods.scss */
+/* line 14, ../cocoapods.scss */
 a {
   color: #CA8A29;
   font-weight: bold;
   text-decoration: none; }
-  /* line 16, ../cocoapods.scss */
+  /* line 19, ../cocoapods.scss */
   a:hover {
     color: #a06d20; }
 
-/* line 21, ../cocoapods.scss */
+/* line 24, ../cocoapods.scss */
 .container {
   width: 1024px;
-  margin: 0 auto;
-  display: table; }
+  margin: 0 auto; }
 
-/* line 27, ../cocoapods.scss */
+/* line 29, ../cocoapods.scss */
+.header {
+  background-color: #fcf3e5;
+  border-bottom: 1px solid #caaf9b;
+  background-image: -webkit-linear-gradient(top, #fcf3e5, #eee2d0);
+  overflow: hidden; }
+  /* line 35, ../cocoapods.scss */
+  .header .logo {
+    float: left;
+    width: 40px;
+    height: 40px;
+    margin: 0.55em 0.85em 0 4.1em;
+    background-image: url(http://docs.cocoapods.org/img/logo-565fc475.png);
+    background-repeat: no-repeat;
+    background-position: left center; }
+  /* line 45, ../cocoapods.scss */
+  .header a {
+    color: #8c7a73; }
+  /* line 49, ../cocoapods.scss */
+  .header .breadcrumb {
+    float: left;
+    width: 17em;
+    padding: 1.35em 0; }
+  /* line 55, ../cocoapods.scss */
+  .header fieldset {
+    height: 56px;
+    float: left;
+    padding-top: 0.9em; }
+  /* line 61, ../cocoapods.scss */
+  .header .platform {
+    width: 25em;
+    float: left;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    font-size: 0.95em;
+    margin-top: 1px;
+    padding-left: 15px;
+    overflow: hidden; }
+    /* line 71, ../cocoapods.scss */
+    .header .platform label {
+      background: url(../../images/platform.orange.png) no-repeat;
+      display: block;
+      float: left; }
+      /* line 75, ../cocoapods.scss */
+      .header .platform label span {
+        padding: 0 10px;
+        height: 30px;
+        line-height: 32.5px;
+        display: block;
+        background: url(../../images/platform.orange.png) repeat-x;
+        font-weight: bold; }
+      /* line 76, ../cocoapods.scss */
+      .header .platform label.left {
+        background-position: left -60px;
+        padding: 0 0 0 5px;
+        border-right: 1px solid lightgrey; }
+      /* line 77, ../cocoapods.scss */
+      .header .platform label.middle {
+        background-position: left -150px;
+        padding: 0;
+        border-right: 1px solid lightgrey; }
+      /* line 78, ../cocoapods.scss */
+      .header .platform label.right {
+        background-position: right -120px;
+        padding: 0 5px 0 0; }
+      /* line 79, ../cocoapods.scss */
+      .header .platform label.left.selected {
+        background-position: left -90px; }
+        /* line 81, ../cocoapods.scss */
+        .header .platform label.left.selected span {
+          background-position: left -30px;
+          color: #fff; }
+      /* line 83, ../cocoapods.scss */
+      .header .platform label.middle.selected {
+        background-position: left -90px; }
+        /* line 85, ../cocoapods.scss */
+        .header .platform label.middle.selected span {
+          background-position: left -30px;
+          color: #fff; }
+      /* line 87, ../cocoapods.scss */
+      .header .platform label.right.selected {
+        background-position: right -150px; }
+        /* line 89, ../cocoapods.scss */
+        .header .platform label.right.selected span {
+          background-position: right -30px;
+          color: #fff; }
+    /* line 92, ../cocoapods.scss */
+    .header .platform label {
+      cursor: pointer; }
+    /* line 93, ../cocoapods.scss */
+    .header .platform label span {
+      cursor: pointer; }
+    /* line 94, ../cocoapods.scss */
+    .header .platform input {
+      display: none; }
+  /* line 98, ../cocoapods.scss */
+  .header .search-form * {
+    float: left; }
+  /* line 100, ../cocoapods.scss */
+  .header .search-form input[type="search"] {
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    /* background:#fff url(../../images/searchlens.png) 8px 7px no-repeat; */
+    border: 1px solid #d5c6af;
+    width: 20em;
+    font-size: 13px;
+    font-family: inherit;
+    font-weight: 400;
+    padding: 7px 6px 6px 14px;
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    -webkit-border-radius: 23px;
+    -moz-border-radius: 23px;
+    -ms-border-radius: 23px;
+    -o-border-radius: 23px;
+    border-radius: 23px; }
+    /* line 114, ../cocoapods.scss */
+    .header .search-form input[type="search"]:focus {
+      outline: none;
+      -webkit-box-shadow: 0 0 10px #e6a532;
+      -moz-box-shadow: 0 0 10px #e6a532;
+      box-shadow: 0 0 10px #e6a532; }
+    /* line 120, ../cocoapods.scss */
+    .header .search-form input[type="search"]::-webkit-search-cancel-button {
+      -webkit-appearance: none; }
+  /* line 123, ../cocoapods.scss */
+  .header .search-form .reset-search {
+    width: 20px;
+    height: 20px;
+    margin: 0.5em -26px;
+    text-indent: -999em;
+    background: url(../../images/cancel.png) left top no-repeat;
+    background-size: 100%; }
+    /* line 131, ../cocoapods.scss */
+    .header .search-form .reset-search:hover {
+      background-position: left bottom; }
+
+/* line 143, ../cocoapods.scss */
+.main-content .addination,
+.main-content .result,
+.main-content .no_results,
+.main-content .allocations ol li,
+.main-content .more {
+  padding: 24px;
+  background: #FDFAF2;
+  border-bottom: 1px solid #F0E7DD; }
+/* line 153, ../cocoapods.scss */
+.main-content .result:hover,
+.main-content .addination:hover,
+.main-content .allocations ol li:hover,
+.main-content .more:hover {
+  background: #faf2dc;
+  cursor: pointer; }
+/* line 160, ../cocoapods.scss */
+.main-content .result h3 a {
+  margin-right: 0.4em; }
+/* line 163, ../cocoapods.scss */
+.main-content .result h3, .main-content .result p {
+  font-size: 18px; }
+/* line 166, ../cocoapods.scss */
+.main-content .result p {
+  margin: 5px 0 0 0; }
+  /* line 169, ../cocoapods.scss */
+  .main-content .result p.author {
+    font-size: 0.8em; }
+    /* line 172, ../cocoapods.scss */
+    .main-content .result p.author a {
+      font-weight: normal; }
+  /* line 177, ../cocoapods.scss */
+  .main-content .result p.subspecs {
+    font-size: 0.7em; }
+/* line 181, ../cocoapods.scss */
+.main-content .result .os {
+  border: 2px solid #654;
+  font-size: 0.5em;
+  padding: 0.25em 0.5em;
+  border-radius: 0.5em;
+  vertical-align: middle;
+  float: right;
+  color: white;
+  background-color: #987;
+  font-weight: bold; }
+/* line 195, ../cocoapods.scss */
+.main-content .results .header {
+  display: none; }
+/* line 200, ../cocoapods.scss */
+.main-content .addination {
+  font-size: 18px;
+  font-weight: bold;
+  color: #C98903; }
+/* line 208, ../cocoapods.scss */
+.main-content .allocations ol li {
+  overflow: hidden;
+  font-size: 18px;
+  font-weight: bold; }
+  /* line 212, ../cocoapods.scss */
+  .main-content .allocations ol li .text {
+    float: left;
+    width: 450px; }
+  /* line 216, ../cocoapods.scss */
+  .main-content .allocations ol li .count {
+    font-size: 14px;
+    float: right;
+    background: #f6e9c6;
+    padding: 3px 14px;
+    -webkit-border-radius: 15px;
+    -moz-border-radius: 15px;
+    -ms-border-radius: 15px;
+    -o-border-radius: 15px;
+    border-radius: 15px; }
+  /* line 224, ../cocoapods.scss */
+  .main-content .allocations ol li:hover .count {
+    background: #f3e0b0; }
+/* line 231, ../cocoapods.scss */
+.main-content .allocations .more {
+  display: none;
+  position: absolute;
+  font-weight: bold;
+  line-height: 1.1em;
+  padding: 0.2em 1em 0.4em;
+  margin: 0 44%;
+  -moz-border-radius-bottomleft: 20px;
+  -webkit-border-bottom-left-radius: 20px;
+  border-bottom-left-radius: 20px;
+  -moz-border-radius-bottomright: 20px;
+  -webkit-border-bottom-right-radius: 20px;
+  border-bottom-right-radius: 20px;
+  border-left-width: 1px;
+  border-right-width: 1px;
+  border-bottom-width: 2px; }
+/* line 245, ../cocoapods.scss */
+.main-content .no_results {
+  font-size: 18px;
+  font-weight: bold;
+  color: #a51801; }
+
+/* line 252, ../cocoapods.scss */
 .sidebar {
-  border-top: 20px solid #d3bcac;
   width: 360px;
   background: #FCF3E5;
   display: table-cell; }
-  /* line 33, ../cocoapods.scss */
+  /* line 257, ../cocoapods.scss */
   .sidebar .masthead {
     background: url(../../images/logo-sidebar.png) center 20px no-repeat;
     border-bottom: 1px solid #F5DAB0;
     padding: 205px 35px 24px 45px; }
-    /* line 38, ../cocoapods.scss */
+    /* line 262, ../cocoapods.scss */
     .sidebar .masthead h1 {
       font-size: 50px;
       font-weight: bold;
       color: #723D2A; }
-      /* line 42, ../cocoapods.scss */
+      /* line 266, ../cocoapods.scss */
       .sidebar .masthead h1 em {
         color: #E6A33C; }
-    /* line 46, ../cocoapods.scss */
+    /* line 270, ../cocoapods.scss */
     .sidebar .masthead p {
       font-size: 18px;
       font-weight: bold; }
-  /* line 51, ../cocoapods.scss */
+  /* line 275, ../cocoapods.scss */
   .sidebar nav, .sidebar .intro {
     padding: 24px 45px; }
-  /* line 54, ../cocoapods.scss */
+  /* line 278, ../cocoapods.scss */
   .sidebar .intro {
     font-size: 14px;
     border-bottom: 1px solid #F5DAB0; }
 
-/* line 60, ../cocoapods.scss */
+/* line 284, ../cocoapods.scss */
 .main-content {
-  border-top: 20px solid #E3D8D4;
   width: 664px;
   display: table-cell;
   vertical-align: top;
   background: #fff; }
-  /* line 67, ../cocoapods.scss */
+  /* line 290, ../cocoapods.scss */
   .main-content h2, .main-content h3 {
     font-weight: bold; }
-  /* line 71, ../cocoapods.scss */
+  /* line 294, ../cocoapods.scss */
   .main-content h2 {
     font-size: 18px;
     margin-bottom: 18px; }
-  /* line 76, ../cocoapods.scss */
+  /* line 299, ../cocoapods.scss */
   .main-content h3 {
     font-size: 16px; }
-  /* line 80, ../cocoapods.scss */
+  /* line 303, ../cocoapods.scss */
   .main-content p {
     margin-bottom: 18px; }
-  /* line 84, ../cocoapods.scss */
+  /* line 307, ../cocoapods.scss */
   .main-content pre {
     font-family: Monaco, "Courier New", monospace; }
-    /* line 87, ../cocoapods.scss */
+    /* line 310, ../cocoapods.scss */
     .main-content pre.prettyprint {
       -webkit-border-radius: 5px;
       -moz-border-radius: 5px;
@@ -142,255 +384,35 @@ a {
       margin-bottom: 18px;
       padding: 5px 8px;
       font-size: 14px; }
-  /* line 97, ../cocoapods.scss */
-  .main-content .search-form {
-    background: url(../../images/search-decorator.png) left bottom repeat-x;
-    padding-bottom: 25px;
-    position: relative; }
-    /* line 107, ../cocoapods.scss */
-    .main-content .search-form fieldset,
-    .main-content .search-form .addination,
-    .main-content .search-form .result,
-    .main-content .search-form .no_results,
-    .main-content .search-form .allocations ol li,
-    .main-content .search-form .more {
-      padding: 24px;
-      background: #FDFAF2;
-      border-bottom: 1px solid #F0E7DD; }
-    /* line 117, ../cocoapods.scss */
-    .main-content .search-form .result:hover,
-    .main-content .search-form .addination:hover,
-    .main-content .search-form .allocations ol li:hover,
-    .main-content .search-form .more:hover {
-      background: #faf2dc;
-      cursor: pointer; }
-    /* line 124, ../cocoapods.scss */
-    .main-content .search-form .result h3 a {
-      margin-right: 0.4em; }
-    /* line 127, ../cocoapods.scss */
-    .main-content .search-form .result h3, .main-content .search-form .result p {
-      font-size: 18px; }
-    /* line 130, ../cocoapods.scss */
-    .main-content .search-form .result p {
-      margin: 5px 0 0 0; }
-      /* line 133, ../cocoapods.scss */
-      .main-content .search-form .result p.author {
-        font-size: 0.8em; }
-        /* line 136, ../cocoapods.scss */
-        .main-content .search-form .result p.author a {
-          font-weight: normal; }
-      /* line 141, ../cocoapods.scss */
-      .main-content .search-form .result p.subspecs {
-        font-size: 0.7em; }
-    /* line 145, ../cocoapods.scss */
-    .main-content .search-form .result .os {
-      border: 2px solid #654;
-      font-size: 0.5em;
-      padding: 0.25em 0.5em;
-      border-radius: 0.5em;
-      vertical-align: middle;
-      float: right;
-      color: white;
-      background-color: #987;
-      font-weight: bold; }
-    /* line 159, ../cocoapods.scss */
-    .main-content .search-form .results .header {
-      display: none; }
-    /* line 164, ../cocoapods.scss */
-    .main-content .search-form .addination {
-      font-size: 18px;
-      font-weight: bold;
-      color: #C98903; }
-    /* line 172, ../cocoapods.scss */
-    .main-content .search-form .allocations ol li {
-      overflow: hidden;
-      font-size: 18px;
-      font-weight: bold; }
-      /* line 176, ../cocoapods.scss */
-      .main-content .search-form .allocations ol li .text {
-        float: left;
-        width: 450px; }
-      /* line 180, ../cocoapods.scss */
-      .main-content .search-form .allocations ol li .count {
-        font-size: 14px;
-        float: right;
-        background: #f6e9c6;
-        padding: 3px 14px;
-        -webkit-border-radius: 15px;
-        -moz-border-radius: 15px;
-        -ms-border-radius: 15px;
-        -o-border-radius: 15px;
-        border-radius: 15px; }
-      /* line 188, ../cocoapods.scss */
-      .main-content .search-form .allocations ol li:hover .count {
-        background: #f3e0b0; }
-    /* line 195, ../cocoapods.scss */
-    .main-content .search-form .allocations .more {
-      display: none;
-      position: absolute;
-      font-weight: bold;
-      line-height: 1.1em;
-      padding: 0.2em 1em 0.4em;
-      margin: 0 44%;
-      -moz-border-radius-bottomleft: 20px;
-      -webkit-border-bottom-left-radius: 20px;
-      border-bottom-left-radius: 20px;
-      -moz-border-radius-bottomright: 20px;
-      -webkit-border-bottom-right-radius: 20px;
-      border-bottom-right-radius: 20px;
-      border-left-width: 1px;
-      border-right-width: 1px;
-      border-bottom-width: 2px; }
-    /* line 209, ../cocoapods.scss */
-    .main-content .search-form .no_results {
-      font-size: 18px;
-      font-weight: bold;
-      color: #a51801; }
-    /* line 215, ../cocoapods.scss */
-    .main-content .search-form h2 {
-      font-size: 24px;
-      margin-bottom: 0;
-      float: left; }
-    /* line 221, ../cocoapods.scss */
-    .main-content .search-form input[type="search"] {
-      -moz-box-sizing: border-box;
-      -webkit-box-sizing: border-box;
-      box-sizing: border-box;
-      clear: both;
-      background: white url(../../images/searchlens.png) 8px 7px no-repeat;
-      border: 3px solid #E6A33C;
-      width: 100%;
-      font-size: 24px;
-      font-family: inherit;
-      font-weight: bold;
-      padding: 6px 36px 6px 40px;
-      margin: 8px 0 0 0;
-      -moz-appearance: none;
-      -webkit-appearance: none;
-      -webkit-border-radius: 23px;
-      -moz-border-radius: 23px;
-      -ms-border-radius: 23px;
-      -o-border-radius: 23px;
-      border-radius: 23px; }
-      /* line 238, ../cocoapods.scss */
-      .main-content .search-form input[type="search"]:focus {
-        outline: none;
-        -webkit-box-shadow: 0 0 10px #e6a532;
-        -moz-box-shadow: 0 0 10px #e6a532;
-        box-shadow: 0 0 10px #e6a532; }
-      /* line 242, ../cocoapods.scss */
-      .main-content .search-form input[type="search"]::-webkit-search-cancel-button {
-        -webkit-appearance: none; }
-    /* line 246, ../cocoapods.scss */
-    .main-content .search-form .reset-search {
-      width: 28px;
-      height: 28px;
-      text-indent: -999em;
-      position: absolute;
-      top: 74px;
-      right: 33px;
-      background: url(../../images/cancel.png) left top no-repeat; }
-      /* line 255, ../cocoapods.scss */
-      .main-content .search-form .reset-search:hover {
-        background-position: left bottom; }
-  /* line 261, ../cocoapods.scss */
-  .main-content .platform {
-    -moz-box-sizing: border-box;
-    -webkit-box-sizing: border-box;
-    box-sizing: border-box;
-    font-size: 0.95em;
-    margin-top: 1px;
-    padding-left: 15px;
-    overflow: hidden; }
-    /* line 269, ../cocoapods.scss */
-    .main-content .platform label {
-      background: url(../../images/platform.orange.png) no-repeat;
-      display: block;
-      float: left; }
-      /* line 273, ../cocoapods.scss */
-      .main-content .platform label span {
-        padding: 0 10px;
-        height: 30px;
-        line-height: 32.5px;
-        display: block;
-        background: url(../../images/platform.orange.png) repeat-x;
-        font-weight: bold; }
-      /* line 274, ../cocoapods.scss */
-      .main-content .platform label.left {
-        background-position: left -60px;
-        padding: 0 0 0 5px;
-        border-right: 1px solid lightgrey; }
-      /* line 275, ../cocoapods.scss */
-      .main-content .platform label.middle {
-        background-position: left -150px;
-        padding: 0;
-        border-right: 1px solid lightgrey; }
-      /* line 276, ../cocoapods.scss */
-      .main-content .platform label.right {
-        background-position: right -120px;
-        padding: 0 5px 0 0; }
-      /* line 277, ../cocoapods.scss */
-      .main-content .platform label.left.selected {
-        background-position: left -90px; }
-        /* line 279, ../cocoapods.scss */
-        .main-content .platform label.left.selected span {
-          background-position: left -30px;
-          color: #fff; }
-      /* line 281, ../cocoapods.scss */
-      .main-content .platform label.middle.selected {
-        background-position: left -90px; }
-        /* line 283, ../cocoapods.scss */
-        .main-content .platform label.middle.selected span {
-          background-position: left -30px;
-          color: #fff; }
-      /* line 285, ../cocoapods.scss */
-      .main-content .platform label.right.selected {
-        background-position: right -150px; }
-        /* line 287, ../cocoapods.scss */
-        .main-content .platform label.right.selected span {
-          background-position: right -30px;
-          color: #fff; }
-    /* line 290, ../cocoapods.scss */
-    .main-content .platform label {
-      cursor: pointer; }
-    /* line 291, ../cocoapods.scss */
-    .main-content .platform label span {
-      cursor: pointer; }
-    /* line 292, ../cocoapods.scss */
-    .main-content .platform input {
-      display: none; }
-  /* line 295, ../cocoapods.scss */
+  /* line 320, ../cocoapods.scss */
   .main-content footer {
     padding: 0 24px 18px 24px; }
-    /* line 297, ../cocoapods.scss */
+    /* line 322, ../cocoapods.scss */
     .main-content footer p {
       font-size: 12px;
       margin-bottom: 0;
       color: #9b8372; }
-  /* line 304, ../cocoapods.scss */
+  /* line 329, ../cocoapods.scss */
   .main-content section {
     margin: 18px 24px;
     padding: 0 0 18px 0;
     border-bottom: 3px solid #F6DDD1; }
-    /* line 309, ../cocoapods.scss */
+    /* line 334, ../cocoapods.scss */
     .main-content section :last-child {
       margin-bottom: 0; }
-    /* line 313, ../cocoapods.scss */
-    .main-content section#install {
-      margin-top: 0; }
 
-/* line 317, ../cocoapods.scss */
+/* line 340, ../cocoapods.scss */
 ::-webkit-input-placeholder {
   color: #d3d0d0; }
 
 @media screen and (max-width: 1024px) {
-  /* line 324, ../cocoapods.scss */
+  /* line 347, ../cocoapods.scss */
   .container,
   .sidebar,
   .main-content {
     display: block;
     width: 100%; }
 
-  /* line 328, ../cocoapods.scss */
+  /* line 351, ../cocoapods.scss */
   .masthead {
     text-align: center; } }

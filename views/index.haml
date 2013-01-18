@@ -9,13 +9,30 @@
 
 	%body
 		.container
+			.header
+				.logo
+				.breadcrumb
+					%a{ :href => "http://cocoapods.org/"} CocoaPods
+				%form{:class => "search-form", :id => "search", :onkeypress => "return event.keyCode != 13;"}
+					%fieldset
+						.platform
+							%input{:value => "", :type => "radio", :id => "platform_either", :name => "platform", :checked => (@platform == :either)}/
+							%label{:class => "left", :for => "platform_either"} <span>Either OS</span>
+							%input{:value => "on:osx on:ios", :type => "radio", :id => "platform_both", :name => "platform", :checked => (@platform == :both)}/
+							%label{:class =>"middle", :for =>"platform_both"} <span>iOS &amp; OSX</span>
+							%input{:value => "on:ios", :type => "radio", :id => "platform_ios", :name => "platform", :checked => (@platform == :ios)}/
+							%label{:class => "middle", :for => "platform_ios"} <span>iOS</span>
+							%input{:value => "on:osx", :type => "radio", :id => "platform_osx", :name => "platform", :checked => (@platform == :osx)}/
+							%label{:class => "right", :for => "platform_osx"} <span>OSX</span>
+						%input{:type => "search", :id => "pod_search", :placeholder => "pod name, version, author, deps…", :class => "query", :autofocus => true, :autocomplete => "off"}/
+						%a{ :href => "#", :class => "reset-search", :style => "display:none" } Reset search
 			.sidebar
-				.masthead
-					%h1 Cocoa<em>Pods</em>
-					%p
-						The best way to manage library 
-						dependencies in Objective-C 
-						projects.
+				// .masthead
+				// 	%h1 Cocoa<em>Pods</em>
+				// 	%p
+				// 		The best way to manage library 
+				// 		dependencies in Objective-C 
+				// 		projects.
 				.intro
 					%p
 						Specify the libraries for your project in an easy to edit text file. Then use 
@@ -34,20 +51,7 @@
 						%li
 							%a{:href =>"http://groups.google.com/group/cocoapods"} Mailing List
 			%article.main-content
-				%form{:class => "search-form", :id => "search", :onkeypress => "return event.keyCode != 13;"}
-					%fieldset
-						%h2 <label for="pod_search">Search pods</label>
-						.platform
-							%input{:value => "", :type => "radio", :id => "platform_either", :name => "platform", :checked => (@platform == :either)}/
-							%label{:class => "left", :for => "platform_either"} <span>Either OS</span>
-							%input{:value => "on:osx on:ios", :type => "radio", :id => "platform_both", :name => "platform", :checked => (@platform == :both)}/
-							%label{:class =>"middle", :for =>"platform_both"} <span>iOS &amp; OSX</span>
-							%input{:value => "on:ios", :type => "radio", :id => "platform_ios", :name => "platform", :checked => (@platform == :ios)}/
-							%label{:class => "middle", :for => "platform_ios"} <span>iOS</span>
-							%input{:value => "on:osx", :type => "radio", :id => "platform_osx", :name => "platform", :checked => (@platform == :osx)}/
-							%label{:class => "right", :for => "platform_osx"} <span>OSX</span>
-						%input{:type => "search", :id => "pod_search", :placeholder => "pod name, e.g. Kiwi, version, author, deps…", :class => "query", :autofocus => true, :autocomplete => "off"}/
-						%a{:href => "#", :class => "reset-search", :style => "display:none"} Reset search
+				#search
 					.no_results{:style => "display:none"}
 						No pods found.
 					.allocations
