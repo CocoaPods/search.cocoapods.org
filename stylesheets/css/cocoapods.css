@@ -326,53 +326,62 @@ a {
   background: #FCF3E5;
   display: table-cell; }
   /* line 257, ../cocoapods.scss */
+  .sidebar h2 {
+    font-weight: bold;
+    margin: 1em 0 0.5em 0; }
+  /* line 262, ../cocoapods.scss */
   .sidebar .masthead {
-    background: url(../../images/logo-sidebar.png) center 20px no-repeat;
+    /* background:url(../../images/logo-sidebar.png) center 20px no-repeat; */
     border-bottom: 1px solid #F5DAB0;
-    padding: 205px 35px 24px 45px; }
-    /* line 262, ../cocoapods.scss */
+    padding: 24px 35px 24px 45px; }
+    /* line 267, ../cocoapods.scss */
     .sidebar .masthead h1 {
       font-size: 50px;
       font-weight: bold;
       color: #723D2A; }
-      /* line 266, ../cocoapods.scss */
+      /* line 271, ../cocoapods.scss */
       .sidebar .masthead h1 em {
         color: #E6A33C; }
-    /* line 270, ../cocoapods.scss */
+    /* line 275, ../cocoapods.scss */
     .sidebar .masthead p {
       font-size: 18px;
       font-weight: bold; }
-  /* line 275, ../cocoapods.scss */
+  /* line 280, ../cocoapods.scss */
   .sidebar nav, .sidebar .intro {
     padding: 24px 45px; }
-  /* line 278, ../cocoapods.scss */
+  /* line 283, ../cocoapods.scss */
   .sidebar .intro {
     font-size: 14px;
     border-bottom: 1px solid #F5DAB0; }
 
-/* line 284, ../cocoapods.scss */
+/* line 289, ../cocoapods.scss */
 .main-content {
   width: 664px;
   display: table-cell;
   vertical-align: top;
-  background: #fff; }
-  /* line 290, ../cocoapods.scss */
+  background: #fff;
+  /*  .reset-search {
+      padding: 0.5em;
+      display: block;
+      text-align: center;
+    } */ }
+  /* line 295, ../cocoapods.scss */
   .main-content h2, .main-content h3 {
     font-weight: bold; }
-  /* line 294, ../cocoapods.scss */
+  /* line 299, ../cocoapods.scss */
   .main-content h2 {
     font-size: 18px;
     margin-bottom: 18px; }
-  /* line 299, ../cocoapods.scss */
+  /* line 304, ../cocoapods.scss */
   .main-content h3 {
     font-size: 16px; }
-  /* line 303, ../cocoapods.scss */
+  /* line 308, ../cocoapods.scss */
   .main-content p {
     margin-bottom: 18px; }
-  /* line 307, ../cocoapods.scss */
+  /* line 312, ../cocoapods.scss */
   .main-content pre {
     font-family: Monaco, "Courier New", monospace; }
-    /* line 310, ../cocoapods.scss */
+    /* line 315, ../cocoapods.scss */
     .main-content pre.prettyprint {
       -webkit-border-radius: 5px;
       -moz-border-radius: 5px;
@@ -384,35 +393,35 @@ a {
       margin-bottom: 18px;
       padding: 5px 8px;
       font-size: 14px; }
-  /* line 320, ../cocoapods.scss */
+  /* line 325, ../cocoapods.scss */
   .main-content footer {
     padding: 0 24px 18px 24px; }
-    /* line 322, ../cocoapods.scss */
+    /* line 327, ../cocoapods.scss */
     .main-content footer p {
       font-size: 12px;
       margin-bottom: 0;
       color: #9b8372; }
-  /* line 329, ../cocoapods.scss */
+  /* line 334, ../cocoapods.scss */
   .main-content section {
     margin: 18px 24px;
     padding: 0 0 18px 0;
     border-bottom: 3px solid #F6DDD1; }
-    /* line 334, ../cocoapods.scss */
+    /* line 339, ../cocoapods.scss */
     .main-content section :last-child {
       margin-bottom: 0; }
 
-/* line 340, ../cocoapods.scss */
+/* line 351, ../cocoapods.scss */
 ::-webkit-input-placeholder {
   color: #d3d0d0; }
 
 @media screen and (max-width: 1024px) {
-  /* line 347, ../cocoapods.scss */
+  /* line 358, ../cocoapods.scss */
   .container,
   .sidebar,
   .main-content {
     display: block;
     width: 100%; }
 
-  /* line 351, ../cocoapods.scss */
+  /* line 362, ../cocoapods.scss */
   .masthead {
     text-align: center; } }

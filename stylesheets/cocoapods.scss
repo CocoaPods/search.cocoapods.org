@@ -253,11 +253,16 @@ a {
 	width:360px;
 	background:#FCF3E5;
   display: table-cell;
-
+  
+  h2 {
+    font-weight: bold;
+    margin: 1em 0 0.5em 0;
+  }
+  
 	.masthead {
-		background:url(../../images/logo-sidebar.png) center 20px no-repeat;
+		/* background:url(../../images/logo-sidebar.png) center 20px no-repeat; */
 		border-bottom:1px solid #F5DAB0;
-		padding:205px 35px 24px 45px;
+		padding:24px 35px 24px 45px;
 
 		h1 {
 			font-size:50px;
@@ -335,6 +340,12 @@ a {
 			margin-bottom:0;
 		}
 	}
+  
+/*  .reset-search {
+    padding: 0.5em;
+    display: block;
+    text-align: center;
+  } */
 }
 
 ::-webkit-input-placeholder {

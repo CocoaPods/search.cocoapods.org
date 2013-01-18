@@ -27,31 +27,36 @@
 						%input{:type => "search", :id => "pod_search", :placeholder => "pod name, version, author, deps…", :class => "query", :autofocus => true, :autocomplete => "off"}/
 						%a{ :href => "#", :class => "reset-search", :style => "display:none" } Reset search
 			.sidebar
-				// .masthead
-				// 	%h1 Cocoa<em>Pods</em>
-				// 	%p
-				// 		The best way to manage library 
-				// 		dependencies in Objective-C 
-				// 		projects.
+				.masthead
+					%p
+						The best way to manage library 
+						dependencies in Objective-C 
+						projects.
 				.intro
 					%p
 						Specify the libraries for your project in an easy to edit text file. Then use 
 						CocoaPods to resolve all dependencies, fetch the source, and set up your 
 						Xcode workspace.
 				%nav
+					%h2 Issues & Code
 					%ul
-						%li
-							%a{:href => "https://github.com/CocoaPods/CocoaPods"} GitHub Repo
-						%li
-							%a{:href => "http://feeds.cocoapods.org/new-pods.rss"}New Pods RSS Feed
 						%li
 							%a{:href => "https://github.com/CocoaPods/CocoaPods/issues"} Submit an issue
 						%li
-							%a{:href => "https://github.com/CocoaPods/CocoaPods/wiki"} Browse the wiki
+							%a{:href => "https://github.com/CocoaPods/CocoaPods"} Github Repository
+					%h2 News & Infos
+					%ul
+						%li
+							%a{:href => "http://docs.cocoapods.org/"} Documentation
 						%li
 							%a{:href =>"http://groups.google.com/group/cocoapods"} Mailing List
+						%li
+							%a{:href => "https://github.com/CocoaPods/CocoaPods/wiki"} Browse the wiki
+						%li
+							%a{:href => "http://feeds.cocoapods.org/new-pods.rss"} New Pods RSS Feed
 			%article.main-content
 				#search
+					// %a{ :href => "#", :class => "reset-search", :style => "display:none" } Clear Results
 					.no_results{:style => "display:none"}
 						No pods found.
 					.allocations
