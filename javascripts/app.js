@@ -131,8 +131,8 @@ $(window).ready(function() {
       en: {
         'platform': '', // platform is simply never shown.
               
-        'name': 'Called %1$s',
-        'author': 'Written by %1$s',
+        'name': 'Called <strong>%1$s</strong>',
+        'author': 'Written by <strong>%1$s</strong>',
         'summary': 'Having \"%1$s\" in summary',
         'dependencies': 'Using %1$s',
         'author,name': 'Called %2$s, written by %1$s',

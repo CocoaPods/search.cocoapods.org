@@ -102,6 +102,7 @@ a {
   
 	.search-form {
     overflow: hidden;
+    float: left;
   
     * { float:left; }
     
@@ -331,7 +332,7 @@ a {
 	}
 
 	footer {
-		padding:0 24px 18px 24px;
+		padding: 24px 24px 18px 24px;
 		p {
 			font-size:12px;
 			margin-bottom:0;
@@ -340,9 +341,9 @@ a {
 	}
 
 	section {
-		margin:18px 24px;
-		padding:0 0 18px 0;
-		border-bottom:3px solid #F6DDD1;
+    margin: 0 24px;
+		padding: 18px 0;
+		border-bottom: 1px solid #F5DAB0;
 
 		:last-child {
 			margin-bottom:0;
