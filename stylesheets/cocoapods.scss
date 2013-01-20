@@ -150,7 +150,7 @@ a {
 	.no_results,
 	.allocations ol li,
   .more {
-		padding:24px;
+		padding: 15px 24px 12px;
 		background:#FDFAF2;
 		border-bottom:1px solid #F0E7DD;
 	}
@@ -169,9 +169,6 @@ a {
     h3 a {
       margin-right: 0.4em;
     }
-		h3, p {
-			font-size:18px;
-		}
 		p {
 			margin:5px 0 0 0;
 
@@ -207,7 +204,6 @@ a {
 	}
 
 	.addination {
-		font-size:18px;
 		font-weight:bold;
 		color:#C98903;
 	}
@@ -216,11 +212,10 @@ a {
 		ol {
 			li {
 				overflow:hidden;
-				font-size:18px;
-				font-weight:bold;
+        em { font-weight: bold; }
 				.text {
 					float:left;
-					width:450px;
+          line-height: 1.8em;
 				}
 				.count {
 					font-size:14px;
