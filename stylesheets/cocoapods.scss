@@ -101,6 +101,8 @@ a {
   }
   
 	.search-form {
+    overflow: hidden;
+  
     * { float:left; }
     
 		input[type="search"] {
