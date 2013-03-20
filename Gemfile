@@ -1,6 +1,7 @@
 source 'http://rubygems.org'
 
 gem 'bundler'
+gem 'foreman'
 gem 'cocoapods-core'
 
 # Gems required by the Picky client.
