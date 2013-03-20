@@ -103,10 +103,12 @@ a {
 	.search-form {
     overflow: hidden;
     float: left;
-  
+    
     * { float:left; }
     
-		input[type="search"] {
+    fieldset { width: 48em; }
+  
+    input[type="search"] {
       -moz-box-sizing: border-box;
       -webkit-box-sizing: border-box;
       box-sizing: border-box;
