@@ -2,11 +2,8 @@ require 'sinatra/base'
 require 'i18n'
 require 'picky'
 require 'picky-client'
-require "haml"
-
-$:.unshift File.expand_path('../vendor/CocoaPods/lib', __FILE__)
-$:.unshift File.expand_path('../vendor/Xcodeproj/lib', __FILE__)
-require 'cocoapods'
+require 'haml'
+require 'cocoapods-core'
 
 # Loads the helper class for extracting the searched platform.
 #
