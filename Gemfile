@@ -1,10 +1,7 @@
-# We don't install CocoaPods as a gem, but rather vendor it as a git submodule.
-# The reason for this is that we don't need the Xcodeproj dependency and in
-# fact makes it even impossible to install on Heroku.
-
-source :gemcutter
+source 'http://rubygems.org'
 
 gem 'bundler'
+gem 'cocoapods-core'
 
 # Gems required by the Picky client.
 #
