@@ -187,7 +187,7 @@ class CocoapodSearch < Sinatra::Application
     results = results.to_hash
     results.extend Picky::Convenience
     results.populate_with Pod::View do |pod|
-      pod.render
+      pod && pod.render
     end
     Yajl::Encoder.encode results
   end
