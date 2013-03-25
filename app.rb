@@ -1,3 +1,4 @@
+require 'rake' # TODO Remove as soon as https://github.com/CocoaPods/cocoapods.org/issues/33 is resolved.
 require 'sinatra/base'
 require 'i18n'
 require 'picky'
@@ -132,7 +133,8 @@ class CocoapodSearch < Sinatra::Application
                       authors && authors.dup,
                       link    && link.dup,
                       subspecs)
-      rescue StandardError, SyntaxError # Yes, people commit pod specs with SyntaxErrors
+      rescue StandardError, SyntaxError => e# Yes, people commit pod specs with SyntaxErrors
+        puts e.message
         next # Skip this pod.
       end
     end
@@ -187,7 +189,7 @@ class CocoapodSearch < Sinatra::Application
     results = results.to_hash
     results.extend Picky::Convenience
     results.populate_with Pod::View do |pod|
-      pod && pod.render
+      pod.render
     end
     Yajl::Encoder.encode results
   end
