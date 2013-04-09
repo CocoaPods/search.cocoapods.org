@@ -48,12 +48,30 @@ module Pod
       rendered_subspecs = subspecs.map(&:name).join(', ')
       
       rendered_platform = @@platform_mapping[platforms.first] if platforms.count == 1
-      rendered_platform = %Q{<div class="os">#{rendered_platform} only</div>} if rendered_platform
+      rendered_platform = %Q{<span class="os">#{rendered_platform} only</span>} if rendered_platform
       pod_spec          = "pod '#{id}', '~&gt; #{version}'"
       
-      header = %Q{<h3><a href="#{link}">#{id}</a>#{version} <span class="clippy">#{pod_spec}</span><a class="docs" href="http://cocoadocs.org/docsets/#{id}/#{version}">CocoaDocs</a></h3>}
-      
-      %Q{<li class="result">#{rendered_platform}#{header}<p class="subspecs">#{rendered_subspecs}</p><p>#{summary}</p><p class="author">#{rendered_authors}</p></li>}
+<<-POD
+<li class="result">
+  <div class="infos">
+    <h3>
+      <a href="#{link}">#{id}</a>
+      #{rendered_platform}
+      <span class="version">
+        #{version}
+        <span class="clippy">#{pod_spec}</span>
+      </span>
+    </h3>
+    <p class="subspecs">#{rendered_subspecs}</p>
+    <p>#{summary}</p>
+    <p class="author">#{rendered_authors}</p>
+  </div>
+  <div class="actions">
+    <a href="http://cocoadocs.org/docsets/#{id}/#{version}">Docs</a>
+    <a href="#{link}">Repo</a>
+  </div>
+</li>
+POD
     end
     
     # Examples:
