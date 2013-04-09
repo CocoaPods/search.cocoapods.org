@@ -50,7 +50,10 @@ module Pod
       rendered_platform = @@platform_mapping[platforms.first] if platforms.count == 1
       rendered_platform = %Q{<div class="os">#{rendered_platform} only</div>} if rendered_platform
       pod_spec          = "pod '#{id}', '~&gt; #{version}'"
-      %Q{<li class="result">#{rendered_platform}<h3><a href="#{link}">#{id}</a>#{version} <span class="clippy">#{pod_spec}</span></h3><p class="subspecs">#{rendered_subspecs}</p><p>#{summary}</p><p class="author">#{rendered_authors}</p></li>}
+      
+      header = %Q{<h3><a href="#{link}">#{id}</a>#{version} <span class="clippy">#{pod_spec}</span><a class="docs" href="http://cocoadocs.org/docsets/#{id}/#{version}">CocoaDocs</a></h3>}
+      
+      %Q{<li class="result">#{rendered_platform}#{header}<p class="subspecs">#{rendered_subspecs}</p><p>#{summary}</p><p class="author">#{rendered_authors}</p></li>}
     end
     
     # Examples:

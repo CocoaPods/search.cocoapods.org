@@ -168,8 +168,16 @@ a {
 	}
 
 	.result {
+    &:hover a.docs { opacity: 1; }
+    
     h3 a {
       margin-right: 0.4em;
+      
+      &.docs {
+        opacity: 0;
+        font-size: 0.8em;
+        margin-left: 0.5em;
+      }
     }
 		p {
 			margin:5px 0 0 0;
