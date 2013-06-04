@@ -80,7 +80,7 @@ class CocoapodSearch < Sinatra::Application
   [:get, :post].each do |type|
     send type, "/post-receive-hook/#{ENV['HOOK_PATH']}" do
       begin
-        self.prepare true
+        self.class.prepare true
 
         status 200
         body "REINDEXED"
