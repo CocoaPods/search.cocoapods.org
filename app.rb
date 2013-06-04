@@ -1,4 +1,3 @@
-require 'rake' # TODO Remove as soon as https://github.com/CocoaPods/cocoapods.org/issues/33 is resolved.
 require 'sinatra/base'
 require 'i18n'
 require 'picky'
@@ -22,11 +21,11 @@ require File.expand_path '../lib/pod/specification/set', __FILE__
 #
 require File.expand_path '../lib/pod/view', __FILE__
 
-# Load data container.
+# Load pods data container.
 #
 require File.expand_path '../lib/pods', __FILE__
 
-# Load search.
+# Load search interface and index.
 #
 require File.expand_path '../lib/search', __FILE__
 
