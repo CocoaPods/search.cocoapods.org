@@ -1,7 +1,3 @@
-# Load the spec loader that gets the specs from github.
-#
-require File.expand_path '../pods/specs', __FILE__
-
 class Pods
   
   attr_reader :path, :specs
@@ -19,10 +15,9 @@ class Pods
   
     # Getting the data.
     #
-    specs = Specs.new
-    if force || specs.empty?
-      specs.get
-      specs.prepare
+    if force || empty?
+      get
+      unpack
     end
   
     # Content to render.
@@ -57,6 +52,29 @@ class Pods
         next # Skip this pod.
       end
     end
+  end
+  
+  # Are there any specs to index?
+  #
+  def empty?
+    Dir['./tmp/specs/*'].empty?
+  end
+
+  # Gets the latest master specs from the Specs repo.
+  #
+  # Note: Overwrites the old specs.zip.
+  #
+  def get
+    `curl -L -o ./tmp/specs.tar.gz http://github.com/CocoaPods/Specs/tarball/master`
+  end
+
+  # Prepares the specs for indexing.
+  #
+  def unpack
+    `rm -rf ./tmp/specs`
+    `gunzip -f ./tmp/specs.tar.gz`
+    `cd tmp; tar xvf specs.tar`
+    `mv -f ./tmp/CocoaPods-Specs-* ./tmp/specs`
   end
   
 end
