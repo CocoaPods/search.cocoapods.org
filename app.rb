@@ -112,8 +112,6 @@ class CocoapodSearch < Sinatra::Application
     #
     Pod::Source.new(pods_path).pod_sets.each do |set|
       begin
-        pods_specs[set.name] = set.specification rescue
-        
         id      = set.name.dup
         version = set.versions.first
       
@@ -135,6 +133,8 @@ class CocoapodSearch < Sinatra::Application
                       authors && authors.dup,
                       link    && link.dup,
                       subspecs)
+        
+        pods_specs[set.name] = set.specification
       rescue StandardError, SyntaxError => e# Yes, people commit pod specs with SyntaxErrors
         puts e.message
         next # Skip this pod.
