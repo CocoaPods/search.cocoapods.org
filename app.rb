@@ -39,12 +39,12 @@ class CocoapodSearch < Sinatra::Application
   #
   include Picky
 
-
   # Server.
   #
   
   pods_path = Pathname.new ENV['COCOAPODS_SPECS_PATH'] || './tmp/specs'
-
+  pods_specs = {}
+  
   # Define an index.
   #
   index = Index.new :pods do
@@ -112,6 +112,8 @@ class CocoapodSearch < Sinatra::Application
     #
     Pod::Source.new(pods_path).pod_sets.each do |set|
       begin
+        pods_specs[set.name] = set.specification rescue
+        
         id      = set.name.dup
         version = set.versions.first
       
@@ -208,6 +210,13 @@ class CocoapodSearch < Sinatra::Application
         body e.message
       end
     end
+  end
+  
+  # API.
+  #
+  get '/api/v1/pod/:name.json' do
+    pod = pods_specs[params[:name]]
+    pod && pod.to_hash.to_json || status(404) && body("Pod not found.")
   end
 
   helpers do
