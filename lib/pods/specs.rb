@@ -1,6 +1,6 @@
 require 'net/http'
 
-class CocoapodSearch
+class Pods
 
   class Specs
 
@@ -28,5 +28,5 @@ class CocoapodSearch
     end
 
   end
-
+  
 end

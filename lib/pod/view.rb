@@ -18,7 +18,7 @@ module Pod
     # Note: We could already prerender it if
     # necessary.
     #
-    def self.add id, *args
+    def self.update id, *args
       content[id] = new id, *args
     end
 
