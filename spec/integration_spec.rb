@@ -97,9 +97,5 @@ describe 'Integration Tests' do
   # No single characters indexed.
   #
   it { pods.search('on:ios "a"').ids.should == [] }
-  
-  #
-  # TODO We need specs. Lots of specs.
-  #
 
 end

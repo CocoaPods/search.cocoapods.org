@@ -2,7 +2,7 @@ h1. Search Engine Notes
 
 * Running on Ruby 1.9.2/3.
 * Using "Picky":http://florianhanke.com/picky.
-* Runs on Heroku (http://podsearch.heroku.com). TODO We might need to move this to cocoapods.heroku.com.
+* Runs on Heroku (http://cocoapods.org).
 
 h2. Developing
 

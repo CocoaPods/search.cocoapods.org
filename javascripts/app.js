@@ -19,7 +19,8 @@ if (total > 0) {
 }
 }
       
-// TODO Add tap gesture support to the cycle button?
+// TODO Add tap gesture support to the cycle button? How?
+//
 $(window).ready(function() {
   pickyClient = new PickyClient({
     full: '/search',
