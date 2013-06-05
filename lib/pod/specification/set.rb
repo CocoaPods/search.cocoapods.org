@@ -59,6 +59,36 @@ module Pod
       rescue Pod::Informative, StandardError, SyntaxError
         ''
       end
+      
+      # Tag extracted from summary.
+      #
+      # Note: Just mocking the NLP functionality.
+      #
+      @@tags = %w{
+        analytics
+        api
+        authentication
+        communication
+        gesture
+        http
+        json
+        logging
+        network
+        notification
+        parser
+        password
+        payment
+        rest
+        serialization
+        test
+        widget
+        xml
+      }
+      def tags
+        specification.summary.downcase.scan(/\b(#{@@tags.join('|')})\w*\b/).flatten.uniq
+      rescue Pod::Informative, StandardError, SyntaxError
+        []
+      end
 
     end
 

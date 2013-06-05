@@ -1,0 +1,32 @@
+/ TODO Move much of this into Pod::View.
+
+%h1
+  = @infos['name']
+  = @infos['version']
+  /= @infos['license']
+%p
+  = @infos['homepage']
+  
+%p
+  - platforms = @infos['platforms']
+  - platforms && platforms.each do |name, version|
+    = name
+    = version
+%p
+  = @infos['summary']
+
+- if @authors
+  %h2 Authors
+  - @authors.each do |name, pods|
+    %h3= name
+    - pods.each do |pod|
+      %a{ :href => pod }= pod
+      %br/
+
+- unless @tags.empty?
+  %h2 Tags
+  - @tags.each do |name, pods|
+    %h3= name
+    - pods.each do |pod|
+      %a{ :href => pod }= pod
+      %br/

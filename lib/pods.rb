@@ -8,7 +8,11 @@ class Pods
   end
   
   def sets
-    Pod::Source.new(path).pod_sets
+    @sets ||= Pod::Source.new(path).pod_sets
+  end
+  
+  def reset
+    @sets = nil
   end
   
   def prepare force = false
@@ -18,6 +22,7 @@ class Pods
     if force || empty?
       get
       unpack
+      reset
     end
   
     # Content to render.
@@ -33,6 +38,7 @@ class Pods
         authors       = specification.authors
         link          = specification.homepage
         subspecs      = specification.recursive_subspecs
+        tags          = set.tags
       
         # Picky is destructive with the given data
         # strings, which is why we dup the content
@@ -44,7 +50,8 @@ class Pods
                          summary && summary.dup,
                          authors && authors.dup,
                          link    && link.dup,
-                         subspecs)
+                         subspecs,
+                         tags)
       
         @specs[set.name] = set.specification
       rescue StandardError, SyntaxError => e# Yes, people commit pod specs with SyntaxErrors

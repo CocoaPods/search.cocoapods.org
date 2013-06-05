@@ -2,7 +2,7 @@ module Pod
 
   # "View" class to render results with.
   #
-  class View < Struct.new(:id, :platforms, :version, :summary, :authors, :link, :subspecs)
+  class View < Struct.new(:id, :platforms, :version, :summary, :authors, :link, :subspecs, :tags)
     
     # The view content cache.
     #

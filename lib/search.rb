@@ -28,7 +28,8 @@ class Search
       indexing removes_characters: /[^a-z0-9\s\/\-\_\:\"\&\.]/i,
                stopwords:          /\b(and|the|of|it|in|for)\b/i,
                splits_text_on:     /[\s\/\-\_\:\"\&\/]/,
-               rejects_token_if:   lambda { |token| token.size < 2 }
+               rejects_token_if:   lambda { |token| token.size < 2 },
+               substitutes_characters_with: CharacterSubstituters::WestEuropean.new
 
       # Note: Add more categories.
       #
@@ -57,6 +58,10 @@ class Search
       category :summary,
                partial: Partial::Substring.new(from: 1),
                :from => :mapped_summary
+      category :tags,
+               partial: Partial::None.new,
+               qualifiers: [:tag, :tags],
+               tokenized: true
     end
   
     # Define a search over the books index.

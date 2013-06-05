@@ -73,6 +73,46 @@ class CocoapodSearch < Sinatra::Application
     end
     Yajl::Encoder.encode results
   end
+  
+  # Note: Prototyping code.
+  #
+  get '/pod/:name' do
+    pod = pods.specs[params[:name]]
+    if pod
+      @infos = pod.to_hash
+      name = @infos['name']
+      authors = @infos['authors']
+      
+      # Search for authors' other pods.
+      #
+      @authors = {}
+      authors = if authors.respond_to? :keys
+        authors.keys
+      else
+        [authors]
+      end
+      authors.each do |name|
+        names = name.split
+        results = search.interface.search names.map { |name| "author:#{name}" }.join(' ')
+        @authors[name] = results.ids
+      end
+      
+      # Get topic from pod and search for that topic.
+      #
+      @tags = {}
+      tags = Pod::View.content[name].tags
+      tags.each do |name|
+        names = name.split
+        results = search.interface.search names.map { |name| "tag:#{name}" }.join(' ')
+        @tags[name] = results.ids
+      end
+      
+      haml :pod
+    else
+      status(404)
+      body("Pod not found.")
+    end
+  end
 
   # Install get and post hooks.
   #
