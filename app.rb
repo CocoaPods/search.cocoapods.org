@@ -55,8 +55,8 @@ class CocoapodSearch < Sinatra::Application
   get '/' do
     @query = params[:q]
     @platform = Platform.extract_from @query
-
-    haml :index
+    
+    haml :index, :layout => :search
   end
 
   # Renders the results into the json.
@@ -107,7 +107,7 @@ class CocoapodSearch < Sinatra::Application
         @tags[name] = results.ids
       end
       
-      haml :pod
+      haml :pod, :layout => :search
     else
       status(404)
       body("Pod not found.")

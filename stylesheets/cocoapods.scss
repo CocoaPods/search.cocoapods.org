@@ -269,11 +269,10 @@ a {
       
     .more {
       display: none;
-      position: absolute;
       font-weight: bold;
       line-height: 1.1em;
       padding: 0.2em 1em 0.4em;
-      margin: 0 44%;
+      margin: 0 45%;
       @include border-bottom-radius(20px);
       border-left-width: 1px;
       border-right-width: 1px;

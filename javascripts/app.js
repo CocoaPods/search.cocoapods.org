@@ -18,9 +18,7 @@ if (total > 0) {
   _gaq.push(['_trackEvent', 'search', 'not found', query, 0]);
 }
 }
-      
-// TODO Add tap gesture support to the cycle button? How?
-//
+
 $(window).ready(function() {
   pickyClient = new PickyClient({
     full: '/search',

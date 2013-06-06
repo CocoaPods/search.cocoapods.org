@@ -1,153 +1,77 @@
-!!!
-%html
-	%head
-		%title CocoaPods: The Objective-C Library Manager
-		%link{:rel => "stylesheet", :type => "text/css", :href => "stylesheets/css/cocoapods.css", :media => "screen"}/
-		%link{:rel => "stylesheet", :type => "text/css", :href => "stylesheets/prettify.css", :media => "screen"}/
-		%link{:rel => "shortcut icon", :href => "favicon.ico"}
-		= analytics
+%section#install
+	%h2 Install
+	%p
+		CocoaPods is distributed as a <a href="http://rubygems.org/gems/cocoapods">ruby gem</a>, 
+		installing it is as easy as running the following commands in the terminal:
+	%pre.prettyprint
+		:preserve
+			$ [sudo] gem install cocoapods
+			$ pod setup
+	%p
+		Now that you’ve got CocoaPods installed it’s time to 
+		<a href="#get_started">get started</a>.
 
-	%body
-		.container
-			.header
-				.logo
-				.breadcrumb
-					%a{ :href => "/" } CocoaPods
-				%form{:class => "search-form", :id => "search", :onkeypress => "return event.keyCode != 13;"}
-					%fieldset
-						.platform
-							%input{:value => "", :type => "radio", :id => "platform_either", :name => "platform", :checked => (@platform == :either)}/
-							%label{:class => "left", :for => "platform_either"} <span>Either OS</span>
-							%input{:value => "on:osx on:ios", :type => "radio", :id => "platform_both", :name => "platform", :checked => (@platform == :both)}/
-							%label{:class =>"middle", :for =>"platform_both"} <span>iOS &amp; OSX</span>
-							%input{:value => "on:ios", :type => "radio", :id => "platform_ios", :name => "platform", :checked => (@platform == :ios)}/
-							%label{:class => "middle", :for => "platform_ios"} <span>iOS</span>
-							%input{:value => "on:osx", :type => "radio", :id => "platform_osx", :name => "platform", :checked => (@platform == :osx)}/
-							%label{:class => "right", :for => "platform_osx"} <span>OSX</span>
-						%input{:type => "search", :id => "pod_search", :placeholder => "pod name, version, author, deps…", :class => "query", :autofocus => true, :autocomplete => "off"}/
-						%a{ :href => "#", :class => "reset-search", :style => "display:none" } Reset search
-			.sidebar
-				.masthead
-					%p
-						The best way to manage library 
-						dependencies in Objective-C 
-						projects.
-				/ .intro
-				/ 	%p
-				/ 		Specify the libraries for your project in an easy to edit text file. Then use 
-				/ 		CocoaPods to resolve all dependencies, fetch the source, and set up your 
-				/ 		Xcode workspace.
-				%nav
-					%h2 Issues & Code
-					%ul
-						%li
-							%a{:href => "https://github.com/CocoaPods/CocoaPods/issues"} Submit an issue
-						%li
-							%a{:href => "https://github.com/CocoaPods/CocoaPods"} Github Repository
-					%h2 News & Infos
-					%ul
-						%li
-							%a{:href => "http://docs.cocoapods.org/"} Documentation
-						%li
-							%a{:href =>"http://groups.google.com/group/cocoapods"} Mailing List
-						%li
-							%a{:href => "https://github.com/CocoaPods/CocoaPods/wiki"} Browse the wiki
-						%li
-							%a{:href => "http://feeds.cocoapods.org/new-pods.rss"} New Pods RSS Feed
-			%article.main-content
-				#search
-					// %a{ :href => "#", :class => "reset-search", :style => "display:none" } Clear Results
-					.no_results{:style => "display:none"}
-						No pods found.
-					.allocations
-						%ol.shown
-						%ol.more more
-						%ol.hidden
-					.results
-				%section#install
-					%h2 Install
-					%p
-						CocoaPods is distributed as a <a href="http://rubygems.org/gems/cocoapods">ruby gem</a>, 
-						installing it is as easy as running the following commands in the terminal:
-					%pre.prettyprint
-						:preserve
-							$ [sudo] gem install cocoapods
-							$ pod setup
-					%p
-						Now that you’ve got CocoaPods installed it’s time to 
-						<a href="#get_started">get started</a>.
+%section#get_started
+	%h2 Get started
+	%p
+		Search for pods by name and description.
+	%p
+		Then list the dependencies in a text file named Podfile in 
+		your Xcode project directory:
+	%pre.prettyprint
+		:preserve
+			$ edit Podfile
+			platform :ios
+			pod 'JSONKit',       '~> 1.4'
+			pod 'Reachability',  '~> 3.0.0'
+	%p
+		Now you can install the dependencies in your project:
+	%pre.prettyprint
+		$ pod install
+	%p
+		Make sure to always open the Xcode workspace instead of the project 
+		file when building your project:
+	%pre.prettyprint
+		$ open App.xcworkspace
+	%p
+		Now you can import your dependencies e.g.:
+	%pre.prettyprint
+		:escaped
+			#import <Reachability.h>
+	%h3 How to create a pod
+	%p
+		Sometimes CocoaPods doesn’t yet have a pod for one of your dependencies. 
+		Fortunately, creating a pod is pretty easy:
+	%pre.prettyprint
+		:preserve
+			$ pod spec create Peanut
+			$ edit Peanut.podspec
+			$ pod spec lint Peanut.podspec
+	%p
+		When you’re done, please <a href="https://github.com/CocoaPods/CocoaPods/issues">create a ticket</a> 
+		and upload the pod. You can also fork the <a href="https://github.com/CocoaPods/Specs">CocoaPods specs</a> 
+		GitHub repository and send a pull request. We really love contributions!
 
-				%section#get_started
-					%h2 Get started
-					%p
-						Search for pods by name and description.
-					%p
-						Then list the dependencies in a text file named Podfile in 
-						your Xcode project directory:
-					%pre.prettyprint
-						:preserve
-							$ edit Podfile
-							platform :ios
-							pod 'JSONKit',       '~> 1.4'
-							pod 'Reachability',  '~> 3.0.0'
-					%p
-						Now you can install the dependencies in your project:
-					%pre.prettyprint
-						$ pod install
-					%p
-						Make sure to always open the Xcode workspace instead of the project 
-						file when building your project:
-					%pre.prettyprint
-						$ open App.xcworkspace
-					%p
-						Now you can import your dependencies e.g.:
-					%pre.prettyprint
-						:escaped
-							#import <Reachability.h>
-					%h3 How to create a pod
-					%p
-						Sometimes CocoaPods doesn’t yet have a pod for one of your dependencies. 
-						Fortunately, creating a pod is pretty easy:
-					%pre.prettyprint
-						:preserve
-							$ pod spec create Peanut
-							$ edit Peanut.podspec
-							$ pod spec lint Peanut.podspec
-					%p
-						When you’re done, please <a href="https://github.com/CocoaPods/CocoaPods/issues">create a ticket</a> 
-						and upload the pod. You can also fork the <a href="https://github.com/CocoaPods/Specs">CocoaPods specs</a> 
-						GitHub repository and send a pull request. We really love contributions!
-
-				%section#contribute
-					%h2 Contribute
-					%p
-						We’re developing CocoaPods on GitHub. There’s a repository for the 
-						<a href="https://github.com/CocoaPods/CocoaPods">CocoaPods tool</a> and one for the 
-						<a href="https://github.com/CocoaPods/Specs">pods specs</a>. It’s easy and really gratifying 
-						to contribute patches or pods, you even get push access when one of your specs or patches is accepted.
-					%p
-						Follow <a href="http://twitter.com/CocoaPods">CocoaPods</a> on Twitter to get up to date 
-						information about what’s going on in the CocoaPods world.
-					%p
-						Please report any problems with CocoaPods to the <a href="http://github.com/CocoaPods/CocoaPods/issues">CocoaPods issues page</a>.
-				%footer
-					%p
-						Website and search backend (<a href="http://florianhanke.com/picky/">Picky</a>) by <a href="http://twitter.com/hanke">Florian Hanke</a>. Please report any problems with this website to the cocoapods.org <a href="http://github.com/CocoaPods/cocoapods.org/issues">issues page</a>.
-					%p
-						Website design by <a href="http://markovics.com/">Philipp Markovics</a> and <a href="http://twitter.com/hanke">Florian Hanke</a>. 
-						Website copy by <a href="http://twitter.com/manfreds">Manfred Stienstra</a>. 
-						Logo by <a href="http://twitter.com/maxsteenbergen">Max Steenbergen</a>. 
-					%p
-						CocoaPods is a project from <a href="http://twitter.com/alloy">Eloy Durán</a>
-						with contributions from <a href="https://github.com/CocoaPods/CocoaPods/contributors">many others</a>. 
-						Sponsored by <a href="http://www.fngtps.com/">Fingertips</a> and <a href="http://www.sauspiel.de/">Sauspiel</a>.
-		:javascript
-			window.initial_query = "#{@query}";
-
-		= js 'jquery-1.5.0.min'
-		= js 'prettify'
-		= js 'history.min'
-		= js 'history.adapter.jquery.min'
-		= js 'picky.min'
-		= js 'jquery.clippy.min'
-		= js 'app'
+%section#contribute
+	%h2 Contribute
+	%p
+		We’re developing CocoaPods on GitHub. There’s a repository for the 
+		<a href="https://github.com/CocoaPods/CocoaPods">CocoaPods tool</a> and one for the 
+		<a href="https://github.com/CocoaPods/Specs">pods specs</a>. It’s easy and really gratifying 
+		to contribute patches or pods, you even get push access when one of your specs or patches is accepted.
+	%p
+		Follow <a href="http://twitter.com/CocoaPods">CocoaPods</a> on Twitter to get up to date 
+		information about what’s going on in the CocoaPods world.
+	%p
+		Please report any problems with CocoaPods to the <a href="http://github.com/CocoaPods/CocoaPods/issues">CocoaPods issues page</a>.
+%footer
+	%p
+		Website and search backend (<a href="http://florianhanke.com/picky/">Picky</a>) by <a href="http://twitter.com/hanke">Florian Hanke</a>. Please report any problems with this website to the cocoapods.org <a href="http://github.com/CocoaPods/cocoapods.org/issues">issues page</a>.
+	%p
+		Website design by <a href="http://markovics.com/">Philipp Markovics</a> and <a href="http://twitter.com/hanke">Florian Hanke</a>. 
+		Website copy by <a href="http://twitter.com/manfreds">Manfred Stienstra</a>. 
+		Logo by <a href="http://twitter.com/maxsteenbergen">Max Steenbergen</a>. 
+	%p
+		CocoaPods is a project from <a href="http://twitter.com/alloy">Eloy Durán</a>
+		with contributions from <a href="https://github.com/CocoaPods/CocoaPods/contributors">many others</a>. 
+		Sponsored by <a href="http://www.fngtps.com/">Fingertips</a> and <a href="http://www.sauspiel.de/">Sauspiel</a>.

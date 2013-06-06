@@ -1,7 +1,7 @@
 CocoapodSearch.helpers do
 
   def js path
-    "<script src='javascripts/#{path}.js' type='text/javascript'></script>"
+    "<script src='/javascripts/#{path}.js' type='text/javascript'></script>"
   end
   
   def analytics

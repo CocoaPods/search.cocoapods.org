@@ -1,0 +1,77 @@
+!!!
+%html
+	%head
+		%title CocoaPods: The Objective-C Library Manager
+		%link{:rel => "stylesheet", :type => "text/css", :href => "/stylesheets/css/cocoapods.css", :media => "screen"}/
+		%link{:rel => "stylesheet", :type => "text/css", :href => "/stylesheets/prettify.css", :media => "screen"}/
+		%link{:rel => "shortcut icon", :href => "favicon.ico"}
+		= analytics
+
+	%body
+		.container
+			.header
+				.logo
+				.breadcrumb
+					%a{ :href => "/" } CocoaPods
+				%form{:class => "search-form", :id => "search", :onkeypress => "return event.keyCode != 13;"}
+					%fieldset
+						.platform
+							%input{:value => "", :type => "radio", :id => "platform_either", :name => "platform", :checked => (@platform == :either)}/
+							%label{:class => "left", :for => "platform_either"} <span>Either OS</span>
+							%input{:value => "on:osx on:ios", :type => "radio", :id => "platform_both", :name => "platform", :checked => (@platform == :both)}/
+							%label{:class =>"middle", :for =>"platform_both"} <span>iOS &amp; OSX</span>
+							%input{:value => "on:ios", :type => "radio", :id => "platform_ios", :name => "platform", :checked => (@platform == :ios)}/
+							%label{:class => "middle", :for => "platform_ios"} <span>iOS</span>
+							%input{:value => "on:osx", :type => "radio", :id => "platform_osx", :name => "platform", :checked => (@platform == :osx)}/
+							%label{:class => "right", :for => "platform_osx"} <span>OSX</span>
+						%input{:type => "search", :id => "pod_search", :placeholder => "pod name, version, author, deps…", :class => "query", :autofocus => true, :autocomplete => "off"}/
+						%a{ :href => "#", :class => "reset-search", :style => "display:none" } Reset search
+			.sidebar
+				.masthead
+					%p
+						The best way to manage library 
+						dependencies in Objective-C 
+						projects.
+				/ .intro
+				/ 	%p
+				/ 		Specify the libraries for your project in an easy to edit text file. Then use 
+				/ 		CocoaPods to resolve all dependencies, fetch the source, and set up your 
+				/ 		Xcode workspace.
+				%nav
+					%h2 Issues & Code
+					%ul
+						%li
+							%a{:href => "https://github.com/CocoaPods/CocoaPods/issues"} Submit an issue
+						%li
+							%a{:href => "https://github.com/CocoaPods/CocoaPods"} Github Repository
+					%h2 News & Infos
+					%ul
+						%li
+							%a{:href => "http://docs.cocoapods.org/"} Documentation
+						%li
+							%a{:href =>"http://groups.google.com/group/cocoapods"} Mailing List
+						%li
+							%a{:href => "https://github.com/CocoaPods/CocoaPods/wiki"} Browse the wiki
+						%li
+							%a{:href => "http://feeds.cocoapods.org/new-pods.rss"} New Pods RSS Feed
+			%article.main-content
+				#search
+					// %a{ :href => "#", :class => "reset-search", :style => "display:none" } Clear Results
+					.no_results{:style => "display:none"}
+						No pods found.
+					.allocations
+						%ol.shown
+						%ol.more more
+						%ol.hidden
+					.results
+				= yield
+		:javascript
+			window.initial_query = "#{@query}";
+
+		= js 'jquery-1.5.0.min'
+		= js 'prettify'
+		= js 'history.min'
+		= js 'history.adapter.jquery.min'
+		= js 'picky.min'
+		= js 'jquery.clippy.min'
+		= js 'app'
