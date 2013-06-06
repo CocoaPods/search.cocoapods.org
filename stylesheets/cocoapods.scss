@@ -269,6 +269,7 @@ a {
       
     .more {
       display: none;
+			text-align: center;
       font-weight: bold;
       line-height: 1.1em;
       padding: 0.2em 1em 0.4em;
@@ -331,13 +332,17 @@ a {
   vertical-align: top;
 	background:#fff;
 
-	h2, h3 {
+	h1, h2, h3 {
 		font-weight:bold;
+		margin-bottom:1em;
+	}
+
+	h1 {
+		font-size:20px;
 	}
 
 	h2 {
 		font-size:18px;
-		margin-bottom:18px;
 	}
 
 	h3 {

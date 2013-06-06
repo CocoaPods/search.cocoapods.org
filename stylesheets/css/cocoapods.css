@@ -340,11 +340,11 @@ a {
 /* line 270, ../cocoapods.scss */
 .main-content .allocations .more {
   display: none;
-  position: absolute;
+  text-align: center;
   font-weight: bold;
   line-height: 1.1em;
   padding: 0.2em 1em 0.4em;
-  margin: 0 44%;
+  margin: 0 45%;
   -moz-border-radius-bottomleft: 20px;
   -webkit-border-bottom-left-radius: 20px;
   border-bottom-left-radius: 20px;
@@ -407,22 +407,25 @@ a {
       text-align: center;
     } */ }
   /* line 335, ../cocoapods.scss */
-  .main-content h2, .main-content h3 {
-    font-weight: bold; }
-  /* line 339, ../cocoapods.scss */
-  .main-content h2 {
-    font-size: 18px;
-    margin-bottom: 18px; }
+  .main-content h1, .main-content h2, .main-content h3 {
+    font-weight: bold;
+    margin-bottom: 1em; }
+  /* line 340, ../cocoapods.scss */
+  .main-content h1 {
+    font-size: 20px; }
   /* line 344, ../cocoapods.scss */
+  .main-content h2 {
+    font-size: 18px; }
+  /* line 348, ../cocoapods.scss */
   .main-content h3 {
     font-size: 16px; }
-  /* line 348, ../cocoapods.scss */
+  /* line 352, ../cocoapods.scss */
   .main-content p {
     margin-bottom: 18px; }
-  /* line 352, ../cocoapods.scss */
+  /* line 356, ../cocoapods.scss */
   .main-content pre {
     font-family: Monaco, "Courier New", monospace; }
-    /* line 355, ../cocoapods.scss */
+    /* line 359, ../cocoapods.scss */
     .main-content pre.prettyprint {
       -webkit-border-radius: 5px;
       -moz-border-radius: 5px;
@@ -434,40 +437,40 @@ a {
       margin-bottom: 18px;
       padding: 5px 8px;
       font-size: 14px; }
-  /* line 365, ../cocoapods.scss */
+  /* line 369, ../cocoapods.scss */
   .main-content footer {
     padding: 24px 24px 18px 24px; }
-    /* line 367, ../cocoapods.scss */
+    /* line 371, ../cocoapods.scss */
     .main-content footer p {
       font-size: 12px;
       margin-bottom: 0;
       color: #9b8372; }
-  /* line 374, ../cocoapods.scss */
+  /* line 378, ../cocoapods.scss */
   .main-content section {
     margin: 0 24px;
     padding: 18px 0;
     border-bottom: 1px solid #F5DAB0; }
-    /* line 379, ../cocoapods.scss */
+    /* line 383, ../cocoapods.scss */
     .main-content section :last-child {
       margin-bottom: 0; }
 
-/* line 391, ../cocoapods.scss */
+/* line 395, ../cocoapods.scss */
 ::-webkit-input-placeholder {
   color: #d3d0d0; }
 
 @media screen and (max-width: 1024px) {
-  /* line 398, ../cocoapods.scss */
+  /* line 402, ../cocoapods.scss */
   .container,
   .sidebar,
   .main-content {
     display: block;
     width: 100%; }
-    /* line 402, ../cocoapods.scss */
+    /* line 406, ../cocoapods.scss */
     .container .result .infos,
     .sidebar .result .infos,
     .main-content .result .infos {
       width: 80%; }
 
-  /* line 406, ../cocoapods.scss */
+  /* line 410, ../cocoapods.scss */
   .masthead {
     text-align: center; } }

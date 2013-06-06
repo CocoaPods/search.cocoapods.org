@@ -16,7 +16,7 @@
 				%form{:class => "search-form", :id => "search", :onkeypress => "return event.keyCode != 13;"}
 					%fieldset
 						.platform
-							%input{:value => "", :type => "radio", :id => "platform_either", :name => "platform", :checked => (@platform == :either)}/
+							%input{:value => "", :type => "radio", :id => "platform_either", :name => "platform", :checked => (!@platform || @platform == :either)}/
 							%label{:class => "left", :for => "platform_either"} <span>Either OS</span>
 							%input{:value => "on:osx on:ios", :type => "radio", :id => "platform_both", :name => "platform", :checked => (@platform == :both)}/
 							%label{:class =>"middle", :for =>"platform_both"} <span>iOS &amp; OSX</span>
@@ -32,11 +32,6 @@
 						The best way to manage library 
 						dependencies in Objective-C 
 						projects.
-				/ .intro
-				/ 	%p
-				/ 		Specify the libraries for your project in an easy to edit text file. Then use 
-				/ 		CocoaPods to resolve all dependencies, fetch the source, and set up your 
-				/ 		Xcode workspace.
 				%nav
 					%h2 Issues & Code
 					%ul
