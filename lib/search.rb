@@ -61,7 +61,7 @@ class Search
       category :tags,
                partial: Partial::None.new,
                qualifiers: [:tag, :tags],
-               tokenized: true
+               tokenize: false
     end
   
     # Define a search over the books index.
@@ -72,12 +72,17 @@ class Search
                 stopwords:          /\b(and|the|of|it|in|for)\b/i,
                 splits_text_on:     /[\s\/\-\&]+/
 
-      boost [:name, :author]  => +3,
-            [:name]           => +2,
+      boost [:name, :author]  => +2,
+            [:name]           => +3,
+            [:tags]           => +3,
+            [:tags, :name]    => +2,
+            [:name, :tags]    => +2,
             [:name, :summary] => -3, # Summary is the least important.
             [:summary]        => -3, #
-            [:platform, :name, :author]  => +3,
-            [:platform, :name]           => +2,
+            [:platform, :name, :author]  => +2,
+            [:platform, :name]           => +3,
+            [:tags, :name]               => +3,
+            [:name, :tags]               => +2,
             [:platform, :name, :summary] => -3, # Summary is the least important.
             [:platform, :summary]        => -3  #
     end

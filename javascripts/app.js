@@ -134,8 +134,11 @@ $(window).ready(function() {
         'author': 'Written by <em>%1$s</em>',
         'summary': 'Having \"<em>%1$s</em>\" in summary',
         'dependencies': 'Using <em>%1$s</em>',
+        'tags': 'Tagged <em>%1$s</em>',
         'author,name': 'Called <em>%2$s</em>, written by <em>%1$s</em>',
         'name,author': 'Called <em>%1$s</em>, written by <em>%2$s</em>',
+        'tags,name': 'Called <em>%2$s</em>, tagged as <em>%1$s</em>',
+        'name,tags': 'Called <em>%1$s</em>, tagged as <em>%2$s</em>',
         'version,name': '<em>%1$s</em> of <em>%2$s</em>',
         'name,dependencies': '<em>%1$s</em>, using <em>%2$s</em>',
         'dependencies,name': '<em>%1$s</em> used by <em>%2$s</em>',
@@ -164,11 +167,12 @@ $(window).ready(function() {
     //
     explanations: {
       en:{
-        name: 'named',
-        author: 'written by',
-        versions: 'on version',
-        dependencies: 'using',
-        summary: 'with summary'
+          name: 'named',
+          author: 'written by',
+          versions: 'on version',
+          dependencies: 'using',
+          summary: 'with summary',
+          tags: 'tagged as'
         }
       }
     }

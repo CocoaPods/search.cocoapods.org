@@ -3,6 +3,7 @@ require 'i18n'
 require 'picky'
 require 'picky-client'
 require 'haml'
+require 'json'
 require 'cocoapods-core'
 
 # Loads the helper class for extracting the searched platform.
