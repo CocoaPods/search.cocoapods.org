@@ -50,7 +50,7 @@ describe 'Integration Tests' do
   
   # Category boosting.
   #
-  it { pods.search('on:osx k* a').should have_categories(["platform", "name", "author"], ["platform", "name", "name"], ["platform", "author", "summary"], ["platform", "author", "author"], ["platform", "author", "name"], ["platform", "summary", "author"], ["platform", "author", "dependencies"], ["platform", "name", "dependencies"], ["platform", "name", "summary"], ["platform", "summary", "summary"]) }
+  it { pods.search('on:osx k* a').should have_categories(["platform", "name", "name"], ["platform", "name", "author"], ["platform", "author", "summary"], ["platform", "author", "author"], ["platform", "author", "name"], ["platform", "summary", "author"], ["platform", "author", "dependencies"], ["platform", "name", "dependencies"], ["platform", "name", "summary"], ["platform", "summary", "summary"]) }
   it { pods.search('on:osx jsonkit').should have_categories(["platform", "name"]) }
   
   # Partial.
