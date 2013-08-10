@@ -21,7 +21,7 @@ describe 'Integration Tests' do
 
   # Testing a specific order of result ids.
   #
-  it { pods.search('on:osx ki').ids.should == ["JSONKit", "KISSmetrics", "KissXML", "Kiwi", "MacMapKit", "MKNetworkKit", "KISSmetrics", "KLExpandingSelect", "LibYAML", "MTDates", "MTGeometry", "MTJSONDictionary", "MTJSONUtils", "MTPocket", "MTQueue", "MTStringAttributes", "LastFm", "MKFoundation", "KISSmetrics"] }
+  it { pods.search('on:osx ki').ids.should == ["JSONKit", "KISSmetrics", "KissXML", "Kiwi", "MKNetworkKit", "MacMapKit", "KISSmetrics", "KLExpandingSelect", "LibYAML", "MTDates", "MTGeometry", "MTJSONDictionary", "MTJSONUtils", "MTPocket", "MTQueue", "MTStringAttributes", "LastFm", "MKFoundation", "KISSmetrics"] }
   
   # Speed.
   #
@@ -77,7 +77,7 @@ describe 'Integration Tests' do
   it { pods.search('writer:allen').ids.should == ['Kiwi'] }
   it { pods.search('by:allen').ids.should == ['Kiwi'] }
   
-  it { pods.search('version:1.0.0').ids.should == ["JASidePanels", "JCDHTTPConnection", "JCNotificationBannerPresenter", "JDDroppableView", "JDFlipNumberView", "JGAFImageCache", "JJCachedAsyncViewDrawing", "JTTargetActionBlock", "JWT", "JXHTTP", "KGNoise", "KISSmetrics", "Kiwi", "KJSimpleBinding", "KoaPullToRefresh", "KTOneFingerRotationGestureRecognizer", "KYArcTab", "KYCircleMenu", "Lambda-Alert", "LARSBar"] }
+  it { pods.search('version:1.0.0').ids.should == ["JASidePanels", "JCDHTTPConnection", "JCNotificationBannerPresenter", "JDDroppableView", "JDFlipNumberView", "JGAFImageCache", "JJCachedAsyncViewDrawing", "JTTargetActionBlock", "JWT", "JXHTTP", "KGNoise", "KISSmetrics", "KJSimpleBinding", "KTOneFingerRotationGestureRecognizer", "KYArcTab", "KYCircleMenu", "Kiwi", "KoaPullToRefresh", "LARSBar", "LARSTorch"] }
   
   expected_dependencies = ["KeenClient"]
   

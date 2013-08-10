@@ -7,8 +7,10 @@ class Pods
     @specs = {}
   end
   
+  # Sets are ordered by name.
+  #
   def sets
-    @sets ||= Pod::Source.new(path).pod_sets
+    @sets ||= Pod::Source.new(path).pod_sets.sort_by { |set| set.name }
   end
   
   def reset
