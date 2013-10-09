@@ -150,7 +150,8 @@ class CocoapodSearch < Sinatra::Application
       simple_data << pod.render_short_json
     end
     
-    response["Access-Control-Allow-Headers"] = "*"
+    response["Access-Control-Allow-Origin"] = "*"
+    
     Yajl::Encoder.encode simple_data
   end
 
