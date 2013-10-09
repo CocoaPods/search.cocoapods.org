@@ -39,6 +39,7 @@ module Pod
       :ios  => 'iOS',
       :osx  => 'OS X'
     }
+    
     def render
       rendered_authors = authors && authors.map do |name, _|
         %{<a href="javascript:pickyClient.insert('#{name.gsub(/[']/, '\\\\\'')}')">#{name}</a>}
@@ -85,6 +86,16 @@ POD
       else
         "#{words[0..-2].join(', ')}, and #{words.last}"
       end
+    end
+
+    # temporary for API 1.5 
+    
+    def render_short_json
+      {
+        "id" => id,
+        "summary" => summary,
+        "version" => version
+      }
     end
 
   end

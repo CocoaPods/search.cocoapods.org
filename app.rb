@@ -137,7 +137,23 @@ class CocoapodSearch < Sinatra::Application
     pod = pods.specs[params[:name]]
     pod && pod.to_hash.to_json || status(404) && body("Pod not found.")
   end
+
+  # Temporary for CocoaDocs till we separate out API & html 
   
+  get '/api/v1.5/pods/search' do
+    results = search.interface.search params[:query], params[:ids] || 20, params[:offset] || 0
+    results = results.to_hash
+    results.extend Picky::Convenience
+    
+    simple_data = []
+    results.populate_with Pod::View do |pod|
+      simple_data << pod.render_short_json
+    end
+    
+    response["Access-Control-Allow-Headers"] = "*"
+    Yajl::Encoder.encode simple_data
+  end
+
   require File.expand_path('../helpers', __FILE__)
 
 end
