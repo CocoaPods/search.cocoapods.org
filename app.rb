@@ -66,6 +66,8 @@ class CocoapodSearch < Sinatra::Application
   # populate the result hash with rendered models.
   #
   get '/search' do
+    response["Access-Control-Allow-Origin"] = "*"
+    
     results = search.interface.search params[:query], params[:ids] || 20, params[:offset] || 0
     results = results.to_hash
     results.extend Picky::Convenience
