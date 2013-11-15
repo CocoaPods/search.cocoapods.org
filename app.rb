@@ -66,13 +66,25 @@ class CocoapodSearch < Sinatra::Application
   # populate the result hash with rendered models.
   #
   get '/search' do
+    results = search.interface.search params[:query], params[:ids] || 20, params[:offset] || 0
+    results = results.to_hash
+    results.extend Picky::Convenience
+    results.populate_with Pod::View do |pod|
+      pod.render
+    end
+    Yajl::Encoder.encode results
+  end
+  
+  # An action for beta.cocoapods.org until search.cocoapods.org goes live.
+  #
+  get '/search.json' do
     response["Access-Control-Allow-Origin"] = "*"
     
     results = search.interface.search params[:query], params[:ids] || 20, params[:offset] || 0
     results = results.to_hash
     results.extend Picky::Convenience
     results.populate_with Pod::View do |pod|
-      pod.render
+      pod.to_json
     end
     Yajl::Encoder.encode results
   end

@@ -99,6 +99,23 @@ POD
         "version" => version
       }
     end
+    
+    def to_hash
+      {
+        :id => id,
+        :platforms => platforms,
+        :version => version,
+        :summary => summary,
+        :authors => authors,
+        :link => link,
+        :subspecs => subspecs,
+        :tags => tags
+      }
+    end
+    
+    def to_json
+      to_hash.to_json
+    end
 
   end
 end
