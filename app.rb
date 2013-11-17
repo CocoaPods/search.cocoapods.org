@@ -80,8 +80,8 @@ class CocoapodSearch < Sinatra::Application
   get '/search.json' do
     response["Access-Control-Allow-Origin"] = "*"
     
-    ids    = params[:ids] || 20
-    offset = params[:offset] || 0
+    ids    = params[:ids].to_i || 20
+    offset = params[:offset].to_i || 0
     results = search.interface.search params[:query], ids, offset, :unique => offset.zero?
     results = results.to_hash
     results.extend Picky::Convenience
