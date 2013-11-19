@@ -80,15 +80,25 @@ class CocoapodSearch < Sinatra::Application
   get '/search.json' do
     response["Access-Control-Allow-Origin"] = "*"
     
-    ids    = params[:ids].to_i || 20
-    offset = params[:offset].to_i || 0
-    results = search.interface.search params[:query], ids, offset, :unique => offset.zero?
+    offset = params[:offset] && params[:offset].to_i || 0
+    results = search.interface.search params[:query], params[:ids] || 20, offset, :unique => offset.zero?
     results = results.to_hash
     results.extend Picky::Convenience
     results.populate_with Pod::View do |pod|
       pod.to_json
     end
     Yajl::Encoder.encode results
+  end
+  
+  # An action for beta.cocoapods.org until search.cocoapods.org goes live.
+  #
+  # Returns a json with helpful content.
+  #
+  get '/no_results.json' do
+    response["Access-Control-Allow-Origin"] = "*"
+    
+    Yajl::Encoder.encode tag: search.index.facets(:tags)
+                         # author: search.index.facets(:author)
   end
   
   # Note: Prototyping code.
