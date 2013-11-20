@@ -77,15 +77,17 @@ class Search
             [:tags]           => +1,
             [:tags, :name]    => +2,
             [:name, :tags]    => +2,
-            [:name, :summary] => -3, # Summary is the least important.
-            [:summary]        => -3, #
+            [:name, :summary] => -3,
+            [:summary]        => -3,
+            [:dependencies]   => -4,
             [:platform, :name, :author]  => +2,
             [:platform, :name]           => +3,
             [:platform, :tags]           => +1,
             [:platform, :tags, :name]    => +2,
             [:platform, :name, :tags]    => +2,
-            [:platform, :name, :summary] => -3, # Summary is the least important.
-            [:platform, :summary]        => -3  #
+            [:platform, :name, :summary] => -3,
+            [:platform, :summary]        => -3,
+            [:platform, :dependencies]   => -4
     end
   
   end
