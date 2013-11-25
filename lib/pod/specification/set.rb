@@ -14,11 +14,16 @@ module Pod
         name
       end
 
-      # Returns not just the name, but the
-      # Uppercase/lowercase parts.
+      # Returns not just the name, but also:
+      #  * Separated uppercase/lowercase parts.
+      #  * Name without initials.
       #
       def split_name
-        [name, name.split(/([A-Z]?[a-z]+)/).map(&:downcase)].flatten
+        [
+          name,
+          name.split(/([A-Z]?[a-z]+)/).map(&:downcase),
+          (name[2..-1] if name.match(/\A[A-Z]{3}[a-z]/))
+        ].compact.flatten
       end
 
       def mapped_name
