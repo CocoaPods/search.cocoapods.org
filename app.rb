@@ -54,8 +54,7 @@ class CocoapodSearch < Sinatra::Application
   # Root, the search page.
   #
   get '/' do
-    
-    redirect 'http://beta.cocoapods.org', 'Deprecating current CocoaPods.org'
+    redirect "http://beta.cocoapods.org?q=#{params[:q]}", 'Deprecating current CocoaPods.org'
     
     @query = params[:q]
     @platform = Platform.extract_from @query
