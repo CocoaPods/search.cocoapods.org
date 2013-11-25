@@ -25,7 +25,23 @@ module Pod
           (name[2..-1] if name.match(/\A[A-Z]{3}[a-z]/))
         ].compact.flatten
       end
-
+      
+      # This is to provide helpful suggestions on long words.
+      #
+      def split_name_for_automatic_splitting
+        temp = name
+        if temp
+          if temp.match /\A[A-Z]{3}[a-z]/
+            temp = temp[2..-1]
+          end
+          (temp && temp.split(/([A-Z]?[a-z]+)/).map(&:downcase) || []).reject do |part|
+            part.size < 3
+          end
+        else
+          []
+        end
+      end
+      
       def mapped_name
         split_name.join ' '
       end

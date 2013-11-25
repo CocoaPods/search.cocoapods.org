@@ -43,7 +43,7 @@ class CocoapodSearch < Sinatra::Application
   
   self.class.send :define_method, :prepare do |force = false|
     pods.prepare force
-    search.index.reindex
+    search.reindex
   end
   
   set :logging,       false
