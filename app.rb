@@ -118,8 +118,6 @@ class CocoapodSearch < Sinatra::Application
       suggestions[:split] = split if split
     end
     
-    puts suggestions
-    
     Yajl::Encoder.encode suggestions
   end
   
