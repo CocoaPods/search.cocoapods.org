@@ -114,8 +114,7 @@ class CocoapodSearch < Sinatra::Application
     }
     
     if query
-      split = search.splitter.split query
-      suggestions[:split] = split if split
+      suggestions[:split] = search.splitter.split query
     end
     
     Yajl::Encoder.encode suggestions
