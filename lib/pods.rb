@@ -40,6 +40,7 @@ class Pods
         authors       = specification.authors
         link          = specification.homepage
         subspecs      = specification.recursive_subspecs
+        source        = specification.source
         tags          = set.tags
       
         # Picky is destructive with the given data
@@ -52,9 +53,9 @@ class Pods
                          summary && summary.dup,
                          authors && authors.dup,
                          link    && link.dup,
+                         source,
                          subspecs,
                          tags)
-      
         @specs[set.name] = set.specification
       rescue StandardError, SyntaxError => e# Yes, people commit pod specs with SyntaxErrors
         puts e.message

@@ -14,10 +14,14 @@ describe 'Integration Tests' do
   end
 
   let(:pods) { Picky::TestClient.new(CocoapodSearch, :path => '/search.json') }
+
+  # # Bugs.
+  # #
+  # it { pods.search('pod').entries.should == [] }
   
   # Rendering.
   #
-  it { pods.search('kiwi 1.0.0').entries.should == ["{\"id\":\"Kiwi\",\"platforms\":[\"osx\",\"ios\"],\"version\":\"2.1\",\"summary\":\"A Behavior Driven Development library for iOS and OS X.\",\"authors\":{\"Allen Ding\":\"alding@gmail.com\",\"Luke Redpath\":\"luke@lukeredpath.co.uk\"},\"link\":\"https://github.com/allending/Kiwi\",\"subspecs\":[],\"tags\":[]}"] }
+  it { pods.search('kiwi 1.0.0').entries.should == ["{\"id\":\"Kiwi\",\"platforms\":[\"osx\",\"ios\"],\"version\":\"2.1\",\"summary\":\"A Behavior Driven Development library for iOS and OS X.\",\"authors\":{\"Allen Ding\":\"alding@gmail.com\",\"Luke Redpath\":\"luke@lukeredpath.co.uk\"},\"link\":\"https://github.com/allending/Kiwi\",\"source\":{\"git\":\"https://github.com/allending/Kiwi.git\",\"tag\":\"2.1\"},\"subspecs\":[],\"tags\":[]}"] }
   
   # Offset.
   #
