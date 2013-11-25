@@ -5,7 +5,7 @@ class Search
   #
   include Picky
 
-  attr_reader :index, :interface
+  attr_reader :index, :interface, :splitter
 
   def initialize pods
     @pods = pods
@@ -89,6 +89,8 @@ class Search
             [:platform, :summary]        => -3,
             [:platform, :dependencies]   => -4
     end
+    
+    @splitter = Picky::Splitters::Automatic.new @index[:name]
   
   end
   

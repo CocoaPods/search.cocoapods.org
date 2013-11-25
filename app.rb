@@ -107,8 +107,20 @@ class CocoapodSearch < Sinatra::Application
   get '/no_results.json' do
     response["Access-Control-Allow-Origin"] = "*"
     
-    Yajl::Encoder.encode tag: search.index.facets(:tags)
-                         # author: search.index.facets(:author)
+    query = params[:query]
+    
+    suggestions = {
+      tag: search.index.facets(:tags)
+    }
+    
+    if query
+      split = search.splitter.split query
+      suggestions[:split] = split if split
+    end
+    
+    puts suggestions
+    
+    Yajl::Encoder.encode suggestions
   end
   
   # Note: Prototyping code.

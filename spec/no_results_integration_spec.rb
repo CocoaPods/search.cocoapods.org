@@ -34,8 +34,8 @@ describe 'Integration Tests' do
       "analytics" => 1
     }
   end
-  # it 'will return the right amount of author words' do
-  #   Yajl.load(no_results.send_search)["author"].size.should == 3
-  # end
+  it 'will return a correctly split query' do
+    Yajl.load(no_results.send_search(query: "libcomponentlogging"))["split"].should == ["lib", "component", "logging"]
+  end
 
 end
