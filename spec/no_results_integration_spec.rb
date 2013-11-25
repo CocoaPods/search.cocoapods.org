@@ -35,10 +35,10 @@ describe 'Integration Tests' do
     }
   end
   it 'will return a correctly split query' do
-    Yajl.load(no_results.send_search(query: "meow"))["split"].should == []
+    Yajl.load(no_results.send_search(query: "meow"))["split"].should == [[], 0]
   end
   it 'will return a correctly split query' do
-    Yajl.load(no_results.send_search(query: "libcomponentlogging"))["split"].should == ["lib", "component", "logging"]
+    Yajl.load(no_results.send_search(query: "libcomponentlogging"))["split"].should == [["lib", "component", "logging"], 23]
   end
 
 end
