@@ -23,7 +23,7 @@ CocoapodSearch.helpers do
     results.extend Picky::Convenience
     
     flat_results = results.ids.map do |id|
-      yield Pod::View.content[id]
+      rendering.call Pod::View.content[id]
     end
     
     Yajl::Encoder.encode flat_results
