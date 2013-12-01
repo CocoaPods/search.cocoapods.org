@@ -3,6 +3,8 @@
 require 'spec_helper'
 require 'picky-client/spec'
 
+# Spec for the flat ids result list API.
+#
 # Uses the fixed set of pods from the ./data directory.
 #
 describe 'Search Integration Tests' do
