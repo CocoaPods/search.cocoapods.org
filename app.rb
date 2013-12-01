@@ -53,6 +53,8 @@ class CocoapodSearch < Sinatra::Application
 
   # The old search page.
   #
+  # TODO Remove ASAP.
+  #
   get '/old' do
     @query = params[:q]
     @platform = Platform.extract_from @query
@@ -61,6 +63,8 @@ class CocoapodSearch < Sinatra::Application
   end
 
   # Root, the search page.
+  #
+  # TODO Remove as soon as the new cocoapods.org goes live on that address.
   #
   get '/' do
     redirect "http://beta.cocoapods.org?q=#{params[:q]}", 'Deprecating current CocoaPods.org'
