@@ -18,7 +18,7 @@ CocoapodSearch.helpers do
   # Returns a list style search result – just a list of results (in your rendered format).
   #
   def flat_result search, params, &rendering
-    results = search.interface.search params[:query], params[:ids] || 10000, params[:offset] || 0
+    results = search.interface.search params[:query], params[:ids] || 20, params[:offset] || 0
     results = results.to_hash
     results.extend Picky::Convenience
     
