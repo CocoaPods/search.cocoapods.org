@@ -86,7 +86,7 @@ class CocoapodSearch < Sinatra::Application
     Yajl::Encoder.encode results
   end
   
-  # An action for beta.cocoapods.org until search.cocoapods.org goes live.
+  # Returns picky style results specific to cocoapods.org.
   #
   get '/search.json' do
     response["Access-Control-Allow-Origin"] = "*"
@@ -100,9 +100,7 @@ class CocoapodSearch < Sinatra::Application
     Yajl::Encoder.encode results
   end
   
-  # An action for beta.cocoapods.org until search.cocoapods.org goes live.
-  #
-  # Returns a json with helpful content.
+  # Returns a JSON hash with helpful content with "no results" specific to cocoapods.org.
   #
   get '/no_results.json' do
     response["Access-Control-Allow-Origin"] = "*"
@@ -121,8 +119,35 @@ class CocoapodSearch < Sinatra::Application
     
     Yajl::Encoder.encode suggestions
   end
+
+  # Get and post hooks for triggering updates.
+  #
+  [:get, :post].each do |type|
+    send type, "/post-receive-hook/#{ENV['HOOK_PATH']}" do
+      begin
+        self.class.prepare true
+
+        status 200
+        body "REINDEXED"
+      rescue StandardError => e
+        status 500
+        body e.message
+      end
+    end
+  end
   
-  # Note: Prototyping code.
+  # Pod API code.
+  #
+  # TODO Remove -> Trunk will handle this.
+  #
+  get '/api/v1/pod/:name.json' do
+    pod = pods.specs[params[:name]]
+    pod && pod.to_hash.to_json || status(404) && body("Pod not found.")
+  end
+  
+  # Pod API code.
+  #
+  # TODO Remove -> Trunk will handle this.
   #
   get '/pod/:name' do
     pod = pods.specs[params[:name]]
@@ -162,31 +187,10 @@ class CocoapodSearch < Sinatra::Application
     end
   end
 
-  # Install get and post hooks.
-  #
-  [:get, :post].each do |type|
-    send type, "/post-receive-hook/#{ENV['HOOK_PATH']}" do
-      begin
-        self.class.prepare true
-
-        status 200
-        body "REINDEXED"
-      rescue StandardError => e
-        status 500
-        body e.message
-      end
-    end
-  end
-  
-  # API.
-  #
-  get '/api/v1/pod/:name.json' do
-    pod = pods.specs[params[:name]]
-    pod && pod.to_hash.to_json || status(404) && body("Pod not found.")
-  end
-
   # Temporary for CocoaDocs till we separate out API & html 
-  
+  #
+  # TODO Remove.
+  #
   get '/api/v1.5/pods/search' do
     results = search.interface.search params[:query], params[:ids] || 20, params[:offset] || 0
     results = results.to_hash
@@ -202,6 +206,39 @@ class CocoapodSearch < Sinatra::Application
     Yajl::Encoder.encode simple_data
   end
 
+  # API 2.0
+  #
+  
+  #
+  #
+  get '/api/v2.0/pods/search/picky/full' do
+    cors_allow_all
+    
+    picky_result search, params do |pod|
+      pod.render
+    end
+  end
+  
+  #
+  #
+  get '/api/v2.0/pods/search/short' do
+    cors_allow_all
+    
+    flat_result search, params do |pod|
+      pod.render_short_json
+    end
+  end
+  
+  #
+  #
+  get '/api/v2.0/pods/search/ids' do
+    cors_allow_all
+    
+    flat_result search, params do |pod|
+      pod.id
+    end
+  end
+  
   require File.expand_path('../helpers', __FILE__)
 
 end
