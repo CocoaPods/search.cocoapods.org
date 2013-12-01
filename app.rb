@@ -85,7 +85,7 @@ class CocoapodSearch < Sinatra::Application
     results = results.to_hash
     results.extend Picky::Convenience
     results.populate_with Pod::View do |pod|
-      pod.render
+      pod.to_html
     end
     Yajl::Encoder.encode results
   end
@@ -101,7 +101,7 @@ class CocoapodSearch < Sinatra::Application
     results = results.to_hash
     results.extend Picky::Convenience
     results.populate_with Pod::View do |pod|
-      pod.to_json
+      pod.to_hash
     end
     Yajl::Encoder.encode results
   end
@@ -215,27 +215,27 @@ class CocoapodSearch < Sinatra::Application
   # API 2.0
   #
   
-  #
+  # Returns a Picky style JSON result with entries rendered as a JSON hash.
   #
   get '/api/v2.0/pods/search/picky.json' do
     cors_allow_all
     
     picky_result search, params do |pod|
-      pod.render
+      pod.to_hash
     end
   end
   
+  # Returns a flat list of results with entries rendered as a JSON hash.
   #
-  #
-  get '/api/v2.0/pods/search/flat.short.json' do
+  get '/api/v2.0/pods/search/flat.hash.json' do
     cors_allow_all
     
     flat_result search, params do |pod|
-      pod.render_short_json
+      pod.to_hash
     end
   end
   
-  #
+  # Returns a flat list of ids in the JSON format.
   #
   get '/api/v2.0/pods/search/flat.ids.json' do
     cors_allow_all

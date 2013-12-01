@@ -40,7 +40,9 @@ module Pod
       :osx  => 'OS X'
     }
     
-    def render
+    # TODO Remove.
+    #
+    def to_html
       rendered_authors = authors && authors.map do |name, _|
         %{<a href="javascript:pickyClient.insert('#{name.gsub(/[']/, '\\\\\'')}')">#{name}</a>}
       end
@@ -91,7 +93,9 @@ POD
     end
 
     # temporary for API 1.5 
-    
+    #
+    # TODO Remove ASAP.
+    #
     def render_short_json
       {
         "id" => id,
