@@ -21,17 +21,6 @@ class CocoapodSearch < Sinatra::Application
   set :public_folder, File.dirname(__FILE__)
   set :views,         File.expand_path('../views', __FILE__)
 
-  # The old search page.
-  #
-  # TODO Remove ASAP.
-  #
-  get '/old' do
-    @query = params[:q]
-    @platform = Platform.extract_from @query
-    
-    haml :index, :layout => :search
-  end
-
   # Root, the search page.
   #
   # TODO Remove as soon as the new cocoapods.org goes live on that address.

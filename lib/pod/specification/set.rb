@@ -19,10 +19,11 @@ module Pod
       #  * Name without initials.
       #
       def split_name
+        _, after_initials = name.split(/(?=[A-Z][a-z])/, 2)
         [
           name,
           name.split(/([A-Z]?[a-z]+)/).map(&:downcase),
-          name.split(/(?=[A-Z][a-z])/, 2)[1].downcase
+          after_initials && after_initials.downcase
         ].compact.flatten
       end
       
