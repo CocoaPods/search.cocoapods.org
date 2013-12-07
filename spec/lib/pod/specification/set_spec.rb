@@ -8,7 +8,7 @@ describe Pod::Specification::Set do
 
     let(:set) { described_class.new 'ABCSomeName' }
   
-    it '' do
+    it 'splits the set name correctly' do
       set.split_name.should == ["ABCSomeName", "abc", "some", "", "name", "somename"]
     end
 
