@@ -1,34 +1,4 @@
-require 'sinatra/base'
-require 'i18n'
-require 'picky'
-require 'picky-client'
-require 'haml'
-require 'json'
-require 'cocoapods-core'
-
-# Loads the helper class for extracting the searched platform.
-#
-require File.expand_path '../lib/platform', __FILE__
-
-# Extend Pod::Specification with the capability of ignoring bad specs.
-#
-require File.expand_path '../lib/pod/specification', __FILE__
-
-# Extend Pod::Specification::Set with a few needed methods for indexing.
-#
-require File.expand_path '../lib/pod/specification/set', __FILE__
-
-# Load a view proxy for dealing with "rendering".
-#
-require File.expand_path '../lib/pod/view', __FILE__
-
-# Load pods data container.
-#
-require File.expand_path '../lib/pods', __FILE__
-
-# Load search interface and index.
-#
-require File.expand_path '../lib/search', __FILE__
+require File.expand_path '../lib/cocoapods.org', __FILE__
 
 # This app shows how to integrate the Picky server directly
 # inside a web app. However, if you really need performance
