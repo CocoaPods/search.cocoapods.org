@@ -22,7 +22,7 @@ module Pod
         [
           name,
           name.split(/([A-Z]?[a-z]+)/).map(&:downcase),
-          (name[2..-1] if name.match(/\A[A-Z]{3}[a-z]/))
+          name.split(/(?=[A-Z][a-z])/, 2)[1].downcase
         ].compact.flatten
       end
       
