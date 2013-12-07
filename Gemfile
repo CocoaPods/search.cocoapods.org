@@ -18,7 +18,7 @@ gem 'procrastinate'
 
 # Gems required by the Picky server.
 #
-gem 'picky', '~> 4.17.1'
+gem 'picky', '~> 4.19.4'
 gem 'rake'
 gem 'rack'
 gem 'rack_fast_escape', '2009.06.24' # Optional.
