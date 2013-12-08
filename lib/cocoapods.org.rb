@@ -14,9 +14,9 @@ require File.expand_path '../platform', __FILE__
 #
 require File.expand_path '../pod/specification', __FILE__
 
-# Extend Pod::Specification::Set with a few needed methods for indexing.
+# Wrap Pod::Specification::Set with a few needed methods for indexing.
 #
-require File.expand_path '../pod/specification/set', __FILE__
+require File.expand_path '../pod/specification/wrapped_set', __FILE__
 
 # Load a view proxy for dealing with "rendering".
 #

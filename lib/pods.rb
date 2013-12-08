@@ -10,7 +10,7 @@ class Pods
   # Sets are ordered by name.
   #
   def sets
-    @sets ||= Pod::Source.new(path).pod_sets.sort_by { |set| set.name }
+    @sets ||= Pod::Source.new(path).pod_sets.sort_by { |set| set.name }.map { |set| Pod::Specification::WrappedSet.new set }
   end
   
   def reset
@@ -56,8 +56,9 @@ class Pods
                          source,
                          subspecs,
                          tags)
-        @specs[set.name] = set.specification
+        @specs[set.name] = specification
       rescue StandardError, SyntaxError => e# Yes, people commit pod specs with SyntaxErrors
+        puts "Ignoring set #{set.name}."
         puts e.message
         next # Skip this pod.
       end

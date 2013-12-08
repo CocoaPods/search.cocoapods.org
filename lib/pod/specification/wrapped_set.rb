@@ -1,4 +1,5 @@
 module Pod
+  
   class Specification
 
     # This class preprocesses the pod specs
@@ -6,12 +7,32 @@ module Pod
     #
     # Note: Very explicitly handles errors.
     #
-    class Set
+    class WrappedSet
+      
+      attr_reader :set
+      
+      def initialize set
+        @set = set
+      end
 
       # Extend the pod sets with an id method.
       #
       def id
         name
+      end
+      
+      def name
+        set.name
+      end
+      
+      def versions
+        set.versions
+      end
+      
+      # Caches the specification.
+      #
+      def specification
+        @specification ||= set.specification
       end
 
       # Returns not just the name, but also:
