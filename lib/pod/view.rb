@@ -116,7 +116,8 @@ POD
         :subspecs => subspecs,
         :tags => tags,
         :documentation_url => documentation_url
-      }
+        
+      }.delete_if { |k, v| v.nil? }
     end
     
     def to_json

@@ -34,14 +34,15 @@ class Pods
         id      = set.name.dup
         version = set.versions.first
     
-        specification = set.specification
-        platforms     = specification.available_platforms.map(&:name)
-        summary       = specification.summary[0..139] # Cut down to 140 characters. TODO Duplicated code. See set.rb.
-        authors       = specification.authors
-        link          = specification.homepage
-        subspecs      = specification.recursive_subspecs
-        source        = specification.source
-        tags          = set.tags
+        specification     = set.specification
+        platforms         = specification.available_platforms.map(&:name)
+        summary           = specification.summary[0..139] # Cut down to 140 characters. TODO Duplicated code. See set.rb.
+        authors           = specification.authors
+        link              = specification.homepage
+        subspecs          = specification.recursive_subspecs
+        source            = specification.source
+        documentation_url = specification.documentation_url
+        tags              = set.tags
       
         # Picky is destructive with the given data
         # strings, which is why we dup the content
@@ -55,7 +56,8 @@ class Pods
                          link    && link.dup,
                          source,
                          subspecs,
-                         tags)
+                         tags,
+                         documentation_url)
         @specs[set.name] = specification
       rescue StandardError, SyntaxError => e# Yes, people commit pod specs with SyntaxErrors
         puts "Ignoring set #{set.name}."
