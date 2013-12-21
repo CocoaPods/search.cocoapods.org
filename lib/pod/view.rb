@@ -105,7 +105,7 @@ POD
     end
     
     def to_hash
-      {
+      result = {
         :id => id,
         :platforms => platforms,
         :version => version,
@@ -114,10 +114,10 @@ POD
         :link => link,
         :source => source,
         :subspecs => subspecs,
-        :tags => tags,
-        :documentation_url => documentation_url
-        
-      }.delete_if { |k, v| v.nil? }
+        :tags => tags
+      }
+      result[:documentation_url] = documentation_url if documentation_url
+      result
     end
     
     def to_json
