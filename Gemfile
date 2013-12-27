@@ -1,6 +1,6 @@
 source 'http://rubygems.org'
 
-ruby '1.9.3'
+ruby '2.1.0'
 
 gem 'rake'
 gem 'bundler'
@@ -19,7 +19,6 @@ gem 'procrastinate'
 # Gems required by the Picky server.
 #
 gem 'picky', '~> 4.19.4'
-gem 'rake'
 gem 'rack'
 gem 'rack_fast_escape', '2009.06.24' # Optional.
 gem 'text'

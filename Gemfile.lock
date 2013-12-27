@@ -14,10 +14,10 @@ GEM
       multi_json (~> 1.0)
     arel (3.0.3)
     builder (3.0.4)
-    cocoapods-core (0.28.0)
+    cocoapods-core (0.29.0)
       activesupport (>= 3.2.15, < 4)
       fuzzy_match (~> 2.0.4)
-      json (~> 1.8)
+      json_pure (~> 1.8)
       nap (~> 0.5)
     daemons (1.1.9)
     diff-lcs (1.2.5)
@@ -30,7 +30,7 @@ GEM
     haml (4.0.4)
       tilt
     i18n (0.6.9)
-    json (1.8.1)
+    json_pure (1.8.1)
     multi_json (1.8.2)
     nap (0.6.0)
     picky (4.19.4)
@@ -38,7 +38,7 @@ GEM
       multi_json
       rack_fast_escape
       text
-    picky-client (4.19.3)
+    picky-client (4.19.4)
       activesupport (>= 3.0)
       yajl-ruby
     procrastinate (0.6.0)
@@ -48,7 +48,7 @@ GEM
       rack
     rack_fast_escape (2009.06.24)
       url_escape
-    rake (10.1.0)
+    rake (10.1.1)
     rspec (2.14.1)
       rspec-core (~> 2.14.0)
       rspec-expectations (~> 2.14.0)
@@ -71,7 +71,7 @@ GEM
     tilt (1.4.1)
     tzinfo (0.3.38)
     url_escape (2009.06.24)
-    yajl-ruby (1.1.0)
+    yajl-ruby (1.2.0)
 
 PLATFORMS
   ruby
