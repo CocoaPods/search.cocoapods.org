@@ -158,7 +158,7 @@ class CocoapodSearch < Sinatra::Application
   
   # Returns a flat list of ids in the JSON format.
   #
-  get '/api/v2.0/pods/search/flat.ids.json' do
+  get '/api/v2.0/pods/flat.ids.json' do
     cors_allow_all
     
     result = flat_result search, params do |pod|
