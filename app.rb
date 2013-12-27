@@ -109,48 +109,6 @@ class CocoapodSearch < Sinatra::Application
     pod = pods.specs[params[:name]]
     pod && pod.to_hash.to_json || status(404) && body("Pod not found.")
   end
-  
-  # Pod API code.
-  #
-  # TODO Remove -> Trunk will handle this.
-  #
-  get '/pod/:name' do
-    pod = pods.specs[params[:name]]
-    if pod
-      @infos = pod.to_hash
-      name = @infos['name']
-      authors = @infos['authors']
-      
-      # Search for authors' other pods.
-      #
-      @authors = {}
-      authors = if authors.respond_to? :keys
-        authors.keys
-      else
-        [authors]
-      end
-      authors.each do |name|
-        names = name.split
-        results = search.interface.search names.map { |name| "author:#{name}" }.join(' ')
-        @authors[name] = results.ids
-      end
-      
-      # Get topic from pod and search for that topic.
-      #
-      @tags = {}
-      tags = Pod::View.content[name].tags
-      tags.each do |name|
-        names = name.split
-        results = search.interface.search names.map { |name| "tag:#{name}" }.join(' ')
-        @tags[name] = results.ids
-      end
-      
-      haml :pod, :layout => :search
-    else
-      status(404)
-      body("Pod not found.")
-    end
-  end
 
   # Temporary for CocoaDocs till we separate out API & html 
   #
