@@ -59,9 +59,9 @@ class Pods
                          tags,
                          documentation_url)
         @specs[set.name] = specification
-      rescue StandardError, SyntaxError => e# Yes, people commit pod specs with SyntaxErrors
-        puts "Ignoring set #{set.name}."
-        puts e.message
+      rescue StandardError, Pod::DSLError, SyntaxError => e# Yes, people commit pod specs with SyntaxErrors
+        puts
+        puts "Could not load pod set: #{set.name}. Ignoring."
         next # Skip this pod.
       end
     end
