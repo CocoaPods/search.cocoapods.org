@@ -137,11 +137,7 @@ class CocoapodSearch < Sinatra::Application
   get '/api/v2.0/pods/picky.json' do
     cors_allow_all
     
-    result = picky_result search, params do |pod|
-      pod.to_hash
-    end
-    
-    json result
+    json picky_result(search, params, &:to_hash)
   end
   
   # Returns a flat list of results with entries rendered as a JSON hash.
@@ -149,11 +145,7 @@ class CocoapodSearch < Sinatra::Application
   get '/api/v2.0/pods/flat.hash.json' do
     cors_allow_all
     
-    result = flat_result search, params do |pod|
-      pod.to_hash
-    end
-    
-    json result
+    json flat_result(search, params, &:to_hash)
   end
   
   # Returns a flat list of ids in the JSON format.
@@ -161,11 +153,7 @@ class CocoapodSearch < Sinatra::Application
   get '/api/v2.0/pods/flat.ids.json' do
     cors_allow_all
     
-    result = flat_result search, params do |pod|
-      pod.id
-    end
-    
-    json result
+    json flat_result(search, params, &:id)
   end
   
   require File.expand_path('../helpers', __FILE__)
