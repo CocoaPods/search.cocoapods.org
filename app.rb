@@ -129,7 +129,25 @@ class CocoapodSearch < Sinatra::Application
     Yajl::Encoder.encode simple_data
   end
 
-  # API 2.0
+  # search.cocoapods.org API 2.0
+  #
+  # Follows this convention:
+  #
+  # /api/<version>/<result type>/<result structure>.<result item format>.<result format>
+  #
+  # Explanation:
+  # * /api This is the API of search.cocoapods.org.
+  # * <version> Version 2.0 of the API.
+  # * <result type> What you are searching. Available:
+  #   * pods Result items will be pods.
+  # * <result structure> How the results are structured. Available:
+  #   * flat Results are a flat list of result items without extra information.
+  #   * picky https://github.com/floere/picky/wiki/Results-format-and-structure
+  # * <result item format> The format of each item in the results. Available:
+  #   * hash A hash representing the result item.
+  #   * ids Just the id of a result item.
+  # * <result format> The data format of the results. Available:
+  #   * json
   #
   
   # Returns a Picky style JSON result with entries rendered as a JSON hash.
