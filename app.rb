@@ -165,6 +165,14 @@ class CocoapodSearch < Sinatra::Application
     json picky_result search, params, &:to_hash
   end
   
+  # Returns a Picky style JSON result with just ids as entries.
+  #
+  get '/api/v2.0/pods.picky.ids.json' do
+    cors_allow_all
+    
+    json picky_result search, params, &:id
+  end
+  
   # Returns a flat list of results with entries rendered as a JSON hash.
   #
   get '/api/v2.0/pods.flat.hash.json' do
