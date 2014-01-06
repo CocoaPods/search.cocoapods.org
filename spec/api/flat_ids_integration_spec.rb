@@ -15,7 +15,7 @@ describe 'Search Integration Tests' do
     CocoapodSearch.prepare # Needed to load the data for the rendered search results.
   end
 
-  let(:pods) { Picky::TestClient.new(CocoapodSearch, :path => '/api/v2.0/pods/flat.ids.json') }
+  let(:pods) { Picky::TestClient.new(CocoapodSearch, :path => '/api/v2.0/pods.flat.ids.json') }
   
   # This is how results should look - a flat list of ids.
   #

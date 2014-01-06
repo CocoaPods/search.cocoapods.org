@@ -133,12 +133,12 @@ class CocoapodSearch < Sinatra::Application
   #
   # Follows this convention:
   #
-  # /api/<version>/<result type>/<result structure>.<result item format>.<result format>
+  # /api/<version>/<result collection>.<result structure>.<result item format>.<result format>?<query params>
   #
   # Explanation:
   # * /api This is the API of search.cocoapods.org.
   # * <version> Version 2.0 of the API.
-  # * <result type> What you are searching. Available:
+  # * <result collection> What you are searching. Available:
   #   * pods Result items will be pods.
   # * <result structure> How the results are structured. Available:
   #   * flat Results are a flat list of result items without extra information.
@@ -148,11 +148,18 @@ class CocoapodSearch < Sinatra::Application
   #   * ids Just the id of a result item.
   # * <result format> The data format of the results. Available:
   #   * json
+  # * <query params> Options to filter. Available:
+  #   * query A Picky style query.
+  #   * ids The amount of ids wanted.
+  #   * offset The offset in the results.
+  #
+  # Example:
+  #   http://search.cocoapods.org/api/v2.0/pods.picky.hash.json?query=author:eloy&ids=20&offset=0
   #
   
   # Returns a Picky style JSON result with entries rendered as a JSON hash.
   #
-  get '/api/v2.0/pods/picky.hash.json' do
+  get '/api/v2.0/pods.picky.hash.json' do
     cors_allow_all
     
     json picky_result search, params, &:to_hash
@@ -160,7 +167,7 @@ class CocoapodSearch < Sinatra::Application
   
   # Returns a flat list of results with entries rendered as a JSON hash.
   #
-  get '/api/v2.0/pods/flat.hash.json' do
+  get '/api/v2.0/pods.flat.hash.json' do
     cors_allow_all
     
     json flat_result search, params, &:to_hash
@@ -168,7 +175,7 @@ class CocoapodSearch < Sinatra::Application
   
   # Returns a flat list of ids in the JSON format.
   #
-  get '/api/v2.0/pods/flat.ids.json' do
+  get '/api/v2.0/pods.flat.ids.json' do
     cors_allow_all
     
     json flat_result search, params, &:id
