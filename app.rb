@@ -33,25 +33,10 @@ class CocoapodSearch < Sinatra::Application
     
     haml :index, :layout => :search
   end
-
-  # Returns picky style results specific to cocoapods.org.
-  #
-  # You get the results from the (local) picky server and then
-  # populate the result hash with rendered models.
-  #
-  get '/search' do
-    results = search.interface.search params[:query], params[:ids] || 20, params[:offset] || 0
-    results = results.to_hash
-    results.extend Picky::Convenience
-    results.populate_with Pod::View do |pod|
-      pod.to_html
-    end
-    Yajl::Encoder.encode results
-  end
   
   # Returns picky style results specific to cocoapods.org.
   #
-  # TODO Remove.
+  # TODO Use the API for this.
   #
   get '/search.json' do
     response["Access-Control-Allow-Origin"] = "*"
