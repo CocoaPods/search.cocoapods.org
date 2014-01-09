@@ -1,3 +1,5 @@
+# Contains helpers for the API.
+#
 CocoapodSearch.helpers do
   
   # Returns a Picky style search result (including how results were found etc.)
