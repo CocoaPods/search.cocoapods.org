@@ -16,10 +16,7 @@ class CocoapodSearch < Sinatra::Application
     search.reindex
   end
   
-  set :logging,       false
-  set :static,        true
-  set :public_folder, File.dirname(__FILE__)
-  set :views,         File.expand_path('../views', __FILE__)
+  set :logging, false
 
   # search.cocoapods.org API 2.0
   #
