@@ -14,8 +14,8 @@ gem 'cocoapods-core'
 gem 'thin'
 gem 'sinatra'
 gem 'picky', '~> 4.19'
+gem 'picky-client', '~> 4.19'
 
 group :test do
   gem 'rspec'
-  gem 'picky-client', '~> 4.19'
 end
