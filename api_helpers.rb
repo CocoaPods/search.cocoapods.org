@@ -4,8 +4,7 @@ CocoapodSearch.helpers do
   
   # Returns a Picky style search result (including how results were found etc.)
   #
-  # More info here:
-  # TODO Result JSON.
+  # More info here: https://github.com/floere/picky/wiki/Results-format-and-structure.
   #
   def picky_result search, params, &rendering
     results = search.interface.search params[:query], params[:ids] || 20, params[:offset] || 0
