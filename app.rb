@@ -20,86 +20,6 @@ class CocoapodSearch < Sinatra::Application
   set :static,        true
   set :public_folder, File.dirname(__FILE__)
   set :views,         File.expand_path('../views', __FILE__)
-  
-  # Returns picky style results specific to cocoapods.org.
-  #
-  # TODO Use the API for this.
-  #
-  get '/search.json' do
-    response["Access-Control-Allow-Origin"] = "*"
-    
-    results = search.interface.search params[:query], params[:ids] || 20, params[:offset] || 0
-    results = results.to_hash
-    results.extend Picky::Convenience
-    results.populate_with Pod::View do |pod|
-      pod.to_hash
-    end
-    Yajl::Encoder.encode results
-  end
-  
-  # Returns a JSON hash with helpful content with "no results" specific to cocoapods.org.
-  #
-  get '/no_results.json' do
-    response["Access-Control-Allow-Origin"] = "*"
-    
-    query = params[:query]
-    
-    suggestions = {
-      tag: search.index.facets(:tags)
-    }
-    
-    if query
-      split = search.splitter.split query
-      result = search.interface.search split.join(' '), 0, 0
-      suggestions[:split] = [split, result.total]
-    end
-    
-    Yajl::Encoder.encode suggestions
-  end
-
-  # Get and post hooks for triggering updates.
-  #
-  [:get, :post].each do |type|
-    send type, "/post-receive-hook/#{ENV['HOOK_PATH']}" do
-      begin
-        self.class.prepare true
-
-        status 200
-        body "REINDEXED"
-      rescue StandardError => e
-        status 500
-        body e.message
-      end
-    end
-  end
-  
-  # Pod API code.
-  #
-  # TODO Remove -> Trunk will handle this.
-  #
-  get '/api/v1/pod/:name.json' do
-    pod = pods.specs[params[:name]]
-    pod && pod.to_hash.to_json || status(404) && body("Pod not found.")
-  end
-
-  # Temporary for CocoaDocs till we separate out API & html 
-  #
-  # TODO Remove.
-  #
-  get '/api/v1.5/pods/search' do
-    results = search.interface.search params[:query], params[:ids] || 20, params[:offset] || 0
-    results = results.to_hash
-    results.extend Picky::Convenience
-    
-    simple_data = []
-    results.populate_with Pod::View do |pod|
-      simple_data << pod.render_short_json
-    end
-    
-    response["Access-Control-Allow-Origin"] = "*"
-    
-    Yajl::Encoder.encode simple_data
-  end
 
   # search.cocoapods.org API 2.0
   #
@@ -128,6 +48,10 @@ class CocoapodSearch < Sinatra::Application
   # Example:
   #   http://search.cocoapods.org/api/v2.0/pods.picky.hash.json?query=author:eloy&ids=20&offset=0
   #
+  
+  # Helpers used by the API.
+  #
+  require File.expand_path('../api_helpers', __FILE__)
   
   # Returns a Picky style JSON result with entries rendered as a JSON hash.
   #
@@ -161,6 +85,73 @@ class CocoapodSearch < Sinatra::Application
     json flat_result search, params, &:id
   end
   
-  require File.expand_path('../helpers', __FILE__)
+  
+  # Temporary for CocoaDocs till we separate out API & html 
+  #
+  # TODO Remove.
+  #
+  get '/api/v1.5/pods/search' do
+    results = search.interface.search params[:query], params[:ids] || 20, params[:offset] || 0
+    results = results.to_hash
+    results.extend Picky::Convenience
+    
+    simple_data = []
+    results.populate_with Pod::View do |pod|
+      simple_data << pod.render_short_json
+    end
+    
+    response["Access-Control-Allow-Origin"] = "*"
+    
+    Yajl::Encoder.encode simple_data
+  end
+  
+  # Pod API code.
+  #
+  # TODO Remove -> Trunk will handle this.
+  #
+  # Currently only used by @fjcaetano for badge handling.
+  #
+  get '/api/v1/pod/:name.json' do
+    pod = pods.specs[params[:name]]
+    pod && pod.to_hash.to_json || status(404) && body("Pod not found.")
+  end
+  
+  # Returns a JSON hash with helpful content with "no results" specific to cocoapods.org.
+  #
+  # TODO Move this into an API?
+  #
+  get '/no_results.json' do
+    response["Access-Control-Allow-Origin"] = "*"
+    
+    query = params[:query]
+    
+    suggestions = {
+      tag: search.index.facets(:tags)
+    }
+    
+    if query
+      split = search.splitter.split query
+      result = search.interface.search split.join(' '), 0, 0
+      suggestions[:split] = [split, result.total]
+    end
+    
+    Yajl::Encoder.encode suggestions
+  end
+
+  # Get and post hooks for triggering index updates.
+  #
+  [:get, :post].each do |type|
+    send type, "/post-receive-hook/#{ENV['HOOK_PATH']}" do
+      begin
+        self.class.prepare true
+
+        status 200
+        body "REINDEXED"
+      rescue StandardError => e
+        status 500
+        body e.message
+      end
+    end
+  end
 
 end
