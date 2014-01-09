@@ -1,8 +1,10 @@
 require File.expand_path '../lib/cocoapods.org', __FILE__
 
-# This app shows how to integrate the Picky server directly
-# inside a web app. However, if you really need performance
-# and easy caching this is not recommended.
+# The Sinatra search server.
+#
+# Mainly offers two things:
+#  * Search API methods.
+#  * Index update URL for the Github update hook.
 #
 class CocoapodSearch < Sinatra::Application
   
