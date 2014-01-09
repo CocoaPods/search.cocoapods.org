@@ -1,9 +1,7 @@
 require 'sinatra/base'
 require 'i18n'
 require 'picky'
-require 'picky-client'
-require 'haml'
-require 'json'
+require 'picky-client' # Needed for Picky::Convenience.
 require 'cocoapods-core'
 
 # Loads the helper class for extracting the searched platform.
