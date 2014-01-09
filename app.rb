@@ -20,19 +20,6 @@ class CocoapodSearch < Sinatra::Application
   set :static,        true
   set :public_folder, File.dirname(__FILE__)
   set :views,         File.expand_path('../views', __FILE__)
-
-  # Root, the search page.
-  #
-  # TODO Remove as soon as the new cocoapods.org goes live on that address.
-  #
-  get '/' do
-    redirect "http://beta.cocoapods.org?q=#{params[:q]}", 'Deprecating current CocoaPods.org'
-    
-    @query = params[:q]
-    @platform = Platform.extract_from @query
-    
-    haml :index, :layout => :search
-  end
   
   # Returns picky style results specific to cocoapods.org.
   #
