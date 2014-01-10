@@ -33,7 +33,7 @@ class Pods
       begin
         id      = set.name.dup
         version = set.versions.first
-    
+
         specification     = set.specification
         platforms         = specification.available_platforms.map(&:name)
         summary           = specification.summary[0..139] # Cut down to 140 characters. TODO Duplicated code. See set.rb.
@@ -43,7 +43,7 @@ class Pods
         source            = specification.source
         documentation_url = specification.documentation_url
         tags              = set.tags
-      
+
         # Picky is destructive with the given data
         # strings, which is why we dup the content
         # to render.
@@ -59,7 +59,7 @@ class Pods
                          tags,
                          documentation_url)
         @specs[set.name] = specification
-      rescue StandardError, Pod::DSLError, SyntaxError => e# Yes, people commit pod specs with SyntaxErrors
+      rescue StandardError, Pod::DSLError, SyntaxError => e # Yes, people commit pod specs with SyntaxErrors
         puts
         puts "Could not load pod set: #{set.name}. Ignoring."
         next # Skip this pod.

@@ -20,7 +20,7 @@ CocoapodSearch.helpers do
   #
   def flat_result search, params, &rendering
     results = search.interface.search params[:query], params[:ids] || 20, params[:offset] || 0
-        
+    
     flat_results = results.ids.map do |id|
       rendering.call Pod::View.content[id]
     end
