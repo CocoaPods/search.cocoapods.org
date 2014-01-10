@@ -16,7 +16,7 @@ class Search
 
       # Use the cocoapods-specs repo for the data.
       #
-      source { pods.sets }
+      source { pods.sets.reject { |set| set.name == 'LibComponentLogging-pods' } }
 
       # As a test, we use the pod names as ids
       # (symbols to enhance performance).
