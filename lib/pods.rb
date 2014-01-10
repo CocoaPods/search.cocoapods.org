@@ -10,7 +10,11 @@ class Pods
   # Sets are ordered by name.
   #
   def sets
-    @sets ||= Pod::Source.new(path).pod_sets.sort_by { |set| set.name }.map { |set| Pod::Specification::WrappedSet.new set }
+    @sets ||= Pod::Source.new(path).
+      pod_sets.
+      sort_by { |set| set.name }. # Search result order.
+      select { |set| set.specification rescue nil }. # Filter breaking specs. Here we are not interested in why they fail.
+      map { |set| Pod::Specification::WrappedSet.new set } # Wrap and add convenience methods.
   end
   
   def reset
@@ -18,7 +22,6 @@ class Pods
   end
   
   def prepare force = false
-  
     # Getting the data.
     #
     if force || empty?
@@ -30,40 +33,34 @@ class Pods
     # Content to render.
     #
     sets.each do |set|
-      begin
-        id      = set.name.dup
-        version = set.versions.first
+      id      = set.name.dup
+      version = set.versions.first
 
-        specification     = set.specification
-        platforms         = specification.available_platforms.map(&:name)
-        summary           = specification.summary[0..139] # Cut down to 140 characters. TODO Duplicated code. See set.rb.
-        authors           = specification.authors
-        link              = specification.homepage
-        subspecs          = specification.recursive_subspecs
-        source            = specification.source
-        documentation_url = specification.documentation_url
-        tags              = set.tags
+      specification     = set.specification
+      platforms         = specification.available_platforms.map(&:name)
+      summary           = specification.summary[0..139] # Cut down to 140 characters. TODO Duplicated code. See set.rb.
+      authors           = specification.authors
+      link              = specification.homepage
+      subspecs          = specification.recursive_subspecs
+      source            = specification.source
+      documentation_url = specification.documentation_url
+      tags              = set.tags
 
-        # Picky is destructive with the given data
-        # strings, which is why we dup the content
-        # to render.
-        #
-        Pod::View.update(id,
-                         platforms,
-                         version && version.dup,
-                         summary && summary.dup,
-                         authors && authors.dup,
-                         link    && link.dup,
-                         source,
-                         subspecs,
-                         tags,
-                         documentation_url)
-        @specs[set.name] = specification
-      rescue StandardError, Pod::DSLError, SyntaxError => e # Yes, people commit pod specs with SyntaxErrors
-        puts
-        puts "Could not load pod set: #{set.name}. Ignoring."
-        next # Skip this pod.
-      end
+      # Picky is destructive with the given data
+      # strings, which is why we dup the content
+      # to render.
+      #
+      Pod::View.update(id,
+                       platforms,
+                       version && version.dup,
+                       summary && summary.dup,
+                       authors && authors.dup,
+                       link    && link.dup,
+                       source,
+                       subspecs,
+                       tags,
+                       documentation_url)
+      @specs[set.name] = specification
     end
   end
   
