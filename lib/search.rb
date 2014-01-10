@@ -18,10 +18,9 @@ class Search
       #
       source { pods.sets }
 
-      # As a test, we use the pod names as ids
-      # (symbols to enhance performance).
+      # We use the pod names as ids (as strings).
       #
-      key_format :to_sym
+      key_format :to_s
 
       # TODO We need to work on this. This is still the Picky standard.
       #
