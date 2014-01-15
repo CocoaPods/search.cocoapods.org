@@ -84,6 +84,45 @@ class CocoapodSearch < Sinatra::Application
     json flat_result search, params, &:id
   end
   
+  # OPTIONS information.
+  #
+  [:picky, :flat].each do |structure|
+    [:hash, :ids].each do |item_format|
+      options "/api/v2.0/pods.#{structure}.#{item_format}.json" do
+        response['Allow'] = 'GET,OPTIONS'
+        info = {
+          GET: {
+            description: "Perform a query and receive a JSON #{structure} result with result items formatted as #{item_format}.",
+            parameters: {
+              query: {
+                type: "string",
+                description: "The search query. All Picky special characters are allowed and used.",
+                required: true                
+              },
+              ids: {
+                type: "integer",
+                description: "How many result ids and items should be returned with the result.",
+                required: false,
+                default: 20
+              },
+              offset: {
+                type: "integer",
+                description: "At what position the query results should start.",
+                required: false,
+                default: 0
+              }
+            },
+            example: {
+              query: "af networking",
+              ids: 50,
+              offset: 0
+            }
+          }
+        }
+        json info
+      end
+    end
+  end
   
   # Temporary for CocoaDocs till we separate out API & html 
   #

@@ -34,6 +34,8 @@ GEM
     rack (1.5.2)
     rack-protection (1.5.1)
       rack
+    rack-test (0.6.2)
+      rack (>= 1.0)
     rack_fast_escape (2009.06.24)
       url_escape
     rake (10.1.1)
@@ -71,6 +73,7 @@ DEPENDENCIES
   picky-client (~> 4.19)
   procrastinate
   rack
+  rack-test
   rack_fast_escape (= 2009.06.24)
   rake
   rspec
