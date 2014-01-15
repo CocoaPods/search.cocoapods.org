@@ -92,7 +92,7 @@ class CocoapodSearch < Sinatra::Application
         response['Allow'] = 'GET,OPTIONS'
         info = {
           GET: {
-            description: "Perform a query and receive a JSON #{structure} result with result items formatted as #{item_format}.",
+            description: "Perform a query and receive a #{structure} JSON result with result items formatted as #{item_format}.",
             parameters: {
               query: {
                 type: "string",

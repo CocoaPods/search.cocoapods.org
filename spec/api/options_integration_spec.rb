@@ -25,7 +25,7 @@ describe 'Search Integration Tests' do
       it "returns information on the API" do
         options "/api/v2.0/pods.#{structure}.#{item_format}.json"
     
-        last_response.body.should == "{\"GET\":{\"description\":\"Perform a query and receive a JSON #{structure} result with result items formatted as #{item_format}.\",\"parameters\":{\"query\":{\"type\":\"string\",\"description\":\"The search query. All Picky special characters are allowed and used.\",\"required\":true},\"ids\":{\"type\":\"integer\",\"description\":\"How many result ids and items should be returned with the result.\",\"required\":false,\"default\":20},\"offset\":{\"type\":\"integer\",\"description\":\"At what position the query results should start.\",\"required\":false,\"default\":0}},\"example\":{\"query\":\"af networking\",\"ids\":50,\"offset\":0}}}"
+        last_response.body.should == "{\"GET\":{\"description\":\"Perform a query and receive a #{structure} JSON result with result items formatted as #{item_format}.\",\"parameters\":{\"query\":{\"type\":\"string\",\"description\":\"The search query. All Picky special characters are allowed and used.\",\"required\":true},\"ids\":{\"type\":\"integer\",\"description\":\"How many result ids and items should be returned with the result.\",\"required\":false,\"default\":20},\"offset\":{\"type\":\"integer\",\"description\":\"At what position the query results should start.\",\"required\":false,\"default\":0}},\"example\":{\"query\":\"af networking\",\"ids\":50,\"offset\":0}}}"
       end
     end
   end
