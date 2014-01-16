@@ -4,8 +4,10 @@ CocoapodSearch.helpers do
   
   @api_routes = []
   
-  def self.store method, path
-    @api_routes << path if :get == method
+  # Store a path for use in a global OPTIONS endpoint.
+  #
+  def self.store path
+    @api_routes << path
   end
   
   # Return all API routes in their original form.
@@ -14,49 +16,81 @@ CocoapodSearch.helpers do
     @api_routes
   end
   
+  @versioned_accepts = {}
+  
   # Creates two API endpoints:
   #   1. Comfortable URL-based.
   #   2. HTTP header-based.
   #
-  def self.api method, path, &calculation
-    store method, convenient_path = "/api/v2.0/#{path}.json"
-    
-    # Create a convenient browser-accessible endpoint.
+  def self.api version, structure, item_structure, format, accepts, &search
+    # If there is a version, we install a comfy browser-accessible path.
     #
-    send method, convenient_path do
-      cors_allow_all
+    if version
+      convenient_path = "/api/v#{version}.0/pods.#{structure}.#{item_structure}.#{format}"
+    
+      store convenient_path
+    
+      # Create a convenient browser-accessible endpoint.
+      #
+      get convenient_path do
+        cors_allow_all
       
-      json instance_eval &calculation
+        instance_eval &search
+      end
+      
+      options convenient_path do
+        response['Allow'] = 'GET,OPTIONS'
+        json GET: {
+          description: "Perform a query and receive a #{structure} JSON result with result items formatted as #{item_structure}.",
+          parameters: {
+            query: {
+              type: "string",
+              description: "The search query. All Picky special characters are allowed and used.",
+              required: true                
+            },
+            ids: {
+              type: "integer",
+              description: "How many result ids and items should be returned with the result.",
+              required: false,
+              default: 20
+            },
+            offset: {
+              type: "integer",
+              description: "At what position the query results should start.",
+              required: false,
+              default: 0
+            }
+          },
+          example: {
+            query: "af networking",
+            ids: 50,
+            offset: 0
+          }
+        }
+      end
     end
     
-    store method, http_path = "/api/#{path}"
+    # Store the accepts.
+    #
+    @versioned_accepts[version && version.to_s] ||= {}
+    accepts[:accept].each do |accept|
+      @versioned_accepts[version && version.to_s][accept] = search
+    end
+  end
+  def self.install_machine_api
+    versioned_accepts = @versioned_accepts
+    
+    machine_path = '/api/pods'
     
     # Create a machine/command-line accessible endpoint.
     #
-    send method, http_path do
+    get machine_path do
       cors_allow_all
       
       request.accept.each do |accept|
-        case accept.params['version']
-        when nil
-          # Without explicit version it will by default provide the latest version.
-          #
-          case accept.to_s
-          when '*/*'
-            halt json instance_eval &calculation
-          when 'text/json'
-            halt json instance_eval &calculation
-          when 'application/json'
-            halt json instance_eval &calculation
-          end
-        when '2'
-          case accept.to_s
-          when 'application/json'
-            halt json instance_eval &calculation
-          end
-        else
-          halt 406
-        end
+        version = versioned_accepts[accept.params['version']] || next
+        handler = version[accept.to_s] || next
+        halt (handler && instance_eval(&handler) || next)
       end
       
       halt 406

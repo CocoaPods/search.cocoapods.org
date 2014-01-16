@@ -52,68 +52,39 @@ class CocoapodSearch < Sinatra::Application
   #
   require File.expand_path('../api_helpers', __FILE__)
   
+  # Default endpoint.
+  #
+  api nil, :flat, :ids, :json, accept: ['*/*', 'text/json', 'application/json'] do
+    json picky_result search, params, &:to_hash
+  end
+  
   # Returns a Picky style result with entries rendered as a hash.
   #
-  api :get, 'pods.picky.hash' do
-    picky_result search, params, &:to_hash
+  api 2, :picky, :hash, :json, accept: ['application/vnd.cocoapods.org+picky.hash.json'] do
+    json picky_result search, params, &:to_hash
   end
   
   # Returns a Picky style result with just ids as entries.
   #
-  api :get, 'pods.picky.ids' do
-    picky_result search, params, &:id
+  api 2, :picky, :ids, :json, accept: ['application/vnd.cocoapods.org+picky.ids.json'] do
+    json picky_result search, params, &:id
   end
   
   # Returns a flat list of results with entries rendered as a hash.
   #
-  api :get, 'pods.flat.hash' do
-    flat_result search, params, &:to_hash
+  api 2, :flat, :hash, :json, accept: ['application/vnd.cocoapods.org+flat.hash.json'] do
+    json flat_result search, params, &:to_hash
   end
   
   # Returns a flat list of ids.
   #
-  api :get, 'pods.flat.ids' do
-    flat_result search, params, &:id
+  api 2, :flat, :ids, :json, accept: ['application/vnd.cocoapods.org+flat.ids.json'] do
+    json flat_result search, params, &:id
   end
   
-  # OPTIONS information.
+  # Installs API for calls using Accept.
   #
-  [:picky, :flat].each do |structure|
-    [:hash, :ids].each do |item_format|
-      api :options, "pods.#{structure}.#{item_format}" do
-        response['Allow'] = 'GET,OPTIONS'
-        {
-          GET: {
-            description: "Perform a query and receive a #{structure} JSON result with result items formatted as #{item_format}.",
-            parameters: {
-              query: {
-                type: "string",
-                description: "The search query. All Picky special characters are allowed and used.",
-                required: true                
-              },
-              ids: {
-                type: "integer",
-                description: "How many result ids and items should be returned with the result.",
-                required: false,
-                default: 20
-              },
-              offset: {
-                type: "integer",
-                description: "At what position the query results should start.",
-                required: false,
-                default: 0
-              }
-            },
-            example: {
-              query: "af networking",
-              ids: 50,
-              offset: 0
-            }
-          }
-        }
-      end
-    end
-  end
+  install_machine_api
   
   # Temporary for CocoaDocs till we separate out API & html 
   #

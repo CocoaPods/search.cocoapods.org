@@ -34,38 +34,40 @@ describe 'Search Integration Tests' do
     
       # Defaults.
       #
-      ["/api/pods.picky.hash", { query: query }, {}],
-      ["/api/pods.picky.ids",  { query: query }, {}],
-      ["/api/pods.flat.hash",  { query: query }, {}],
-      ["/api/pods.flat.ids",   { query: query }, {}],
+      ["/api/pods", { query: query }, {}],
+      ["/api/pods", { query: query }, {}],
+      ["/api/pods", { query: query }, {}],
+      ["/api/pods", { query: query }, {}],
     
-      ["/api/pods.picky.hash", { query: query }, { 'HTTP_ACCEPT' => "text/json" }],
-      ["/api/pods.picky.ids",  { query: query }, { 'HTTP_ACCEPT' => "text/json" }],
-      ["/api/pods.flat.hash",  { query: query }, { 'HTTP_ACCEPT' => "text/json" }],
-      ["/api/pods.flat.ids",   { query: query }, { 'HTTP_ACCEPT' => "text/json" }],
+      ["/api/pods", { query: query }, { 'HTTP_ACCEPT' => "text/json" }],
+      ["/api/pods", { query: query }, { 'HTTP_ACCEPT' => "text/json" }],
+      ["/api/pods", { query: query }, { 'HTTP_ACCEPT' => "text/json" }],
+      ["/api/pods", { query: query }, { 'HTTP_ACCEPT' => "text/json" }],
     
-      ["/api/pods.picky.hash", { query: query }, { 'HTTP_ACCEPT' => "application/json" }],
-      ["/api/pods.picky.ids",  { query: query }, { 'HTTP_ACCEPT' => "application/json" }],
-      ["/api/pods.flat.hash",  { query: query }, { 'HTTP_ACCEPT' => "application/json" }],
-      ["/api/pods.flat.ids",   { query: query }, { 'HTTP_ACCEPT' => "application/json" }],
+      ["/api/pods", { query: query }, { 'HTTP_ACCEPT' => "application/json" }],
+      ["/api/pods", { query: query }, { 'HTTP_ACCEPT' => "application/json" }],
+      ["/api/pods", { query: query }, { 'HTTP_ACCEPT' => "application/json" }],
+      ["/api/pods", { query: query }, { 'HTTP_ACCEPT' => "application/json" }],
     
       # Versions.
       #
-      ["/api/pods.picky.hash", { query: query }, { 'HTTP_ACCEPT' => "application/json; version=2" }],
-      ["/api/pods.picky.ids",  { query: query }, { 'HTTP_ACCEPT' => "application/json; version=2" }],
-      ["/api/pods.flat.hash",  { query: query }, { 'HTTP_ACCEPT' => "application/json; version=2" }],
-      ["/api/pods.flat.ids",   { query: query }, { 'HTTP_ACCEPT' => "application/json; version=2" }]
+      ["/api/pods", { query: query }, { 'HTTP_ACCEPT' => "application/vnd.cocoapods.org+picky.hash.json; version=2" }],
+      ["/api/pods", { query: query }, { 'HTTP_ACCEPT' => "application/vnd.cocoapods.org+picky.ids.json; version=2" }],
+      ["/api/pods", { query: query }, { 'HTTP_ACCEPT' => "application/vnd.cocoapods.org+flat.hash.json; version=2" }],
+      ["/api/pods", { query: query }, { 'HTTP_ACCEPT' => "application/vnd.cocoapods.org+flat.ids.json; version=2" }]
     ].each do |params|
       it "returns information on the API" do
         get *params
       
         last_response.should be_ok
       
-        case params.first
-        when %r{.picky}
-          Yajl::Parser.parse(last_response.body)['total'].should == expected_results
-        else
+        # If there is "flat" in there, check the resulting array size.
+        #
+        case params.first + (params.last['HTTP_ACCEPT'] || "")
+        when %r{flat}
           Yajl::Parser.parse(last_response.body).size.should == expected_results
+        else
+          Yajl::Parser.parse(last_response.body)['total'].should == expected_results
         end
       end
     end
@@ -92,22 +94,22 @@ describe 'Search Integration Tests' do
     [
       # Wrong Accept.
       #
-      ["/api/pods.picky.hash", { query: query }, { 'HTTP_ACCEPT' => "txt/json" }],
-      ["/api/pods.picky.ids",  { query: query }, { 'HTTP_ACCEPT' => "txt/json" }],
-      ["/api/pods.flat.hash",  { query: query }, { 'HTTP_ACCEPT' => "txt/json" }],
-      ["/api/pods.flat.ids",   { query: query }, { 'HTTP_ACCEPT' => "txt/json" }],
+      ["/api/pods", { query: query }, { 'HTTP_ACCEPT' => "txt/json" }],
+      ["/api/pods",  { query: query }, { 'HTTP_ACCEPT' => "txt/json" }],
+      ["/api/pods",  { query: query }, { 'HTTP_ACCEPT' => "txt/json" }],
+      ["/api/pods",   { query: query }, { 'HTTP_ACCEPT' => "txt/json" }],
     
-      ["/api/pods.picky.hash", { query: query }, { 'HTTP_ACCEPT' => "application/jsn" }],
-      ["/api/pods.picky.ids",  { query: query }, { 'HTTP_ACCEPT' => "application/jsn" }],
-      ["/api/pods.flat.hash",  { query: query }, { 'HTTP_ACCEPT' => "application/jsn" }],
-      ["/api/pods.flat.ids",   { query: query }, { 'HTTP_ACCEPT' => "application/jsn" }],
+      ["/api/pods", { query: query }, { 'HTTP_ACCEPT' => "application/jsn" }],
+      ["/api/pods",  { query: query }, { 'HTTP_ACCEPT' => "application/jsn" }],
+      ["/api/pods",  { query: query }, { 'HTTP_ACCEPT' => "application/jsn" }],
+      ["/api/pods",   { query: query }, { 'HTTP_ACCEPT' => "application/jsn" }],
     
       # Wrong version in Accept.
       #
-      ["/api/pods.picky.hash", { query: query }, { 'HTTP_ACCEPT' => "application/json; version=0" }],
-      ["/api/pods.picky.ids",  { query: query }, { 'HTTP_ACCEPT' => "application/json; version=2.0" }],
-      ["/api/pods.flat.hash",  { query: query }, { 'HTTP_ACCEPT' => "application/json; version=0.9-beta" }],
-      ["/api/pods.flat.ids",   { query: query }, { 'HTTP_ACCEPT' => "application/json; version=2.0.1" }]
+      ["/api/pods", { query: query }, { 'HTTP_ACCEPT' => "application/vnd.cocoapods.org+picky.hash.json; version=0" }],
+      ["/api/pods",  { query: query }, { 'HTTP_ACCEPT' => "application/vnd.cocoapods.org+picky.hash.json; version=2.0" }],
+      ["/api/pods",  { query: query }, { 'HTTP_ACCEPT' => "application/vnd.cocoapods.org+picky.hash.json; version=0.9-beta" }],
+      ["/api/pods",   { query: query }, { 'HTTP_ACCEPT' => "application/vnd.cocoapods.org+picky.hash.json; version=2.0.1" }]
     ].each do |params|
       it "returns information on the API" do
         get *params
