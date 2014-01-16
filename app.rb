@@ -52,45 +52,37 @@ class CocoapodSearch < Sinatra::Application
   #
   require File.expand_path('../api_helpers', __FILE__)
   
-  # Returns a Picky style JSON result with entries rendered as a JSON hash.
+  # Returns a Picky style result with entries rendered as a hash.
   #
-  get '/api/v2.0/pods.picky.hash.json' do
-    cors_allow_all
-    
-    json picky_result search, params, &:to_hash
+  api :get, 'pods.picky.hash' do
+    picky_result search, params, &:to_hash
   end
   
-  # Returns a Picky style JSON result with just ids as entries.
+  # Returns a Picky style result with just ids as entries.
   #
-  get '/api/v2.0/pods.picky.ids.json' do
-    cors_allow_all
-    
-    json picky_result search, params, &:id
+  api :get, 'pods.picky.ids' do
+    picky_result search, params, &:id
   end
   
-  # Returns a flat list of results with entries rendered as a JSON hash.
+  # Returns a flat list of results with entries rendered as a hash.
   #
-  get '/api/v2.0/pods.flat.hash.json' do
-    cors_allow_all
-    
-    json flat_result search, params, &:to_hash
+  api :get, 'pods.flat.hash' do
+    flat_result search, params, &:to_hash
   end
   
-  # Returns a flat list of ids in the JSON format.
+  # Returns a flat list of ids.
   #
-  get '/api/v2.0/pods.flat.ids.json' do
-    cors_allow_all
-    
-    json flat_result search, params, &:id
+  api :get, 'pods.flat.ids' do
+    flat_result search, params, &:id
   end
   
   # OPTIONS information.
   #
   [:picky, :flat].each do |structure|
     [:hash, :ids].each do |item_format|
-      options "/api/v2.0/pods.#{structure}.#{item_format}.json" do
+      api :options, "pods.#{structure}.#{item_format}" do
         response['Allow'] = 'GET,OPTIONS'
-        info = {
+        {
           GET: {
             description: "Perform a query and receive a #{structure} JSON result with result items formatted as #{item_format}.",
             parameters: {
@@ -119,7 +111,6 @@ class CocoapodSearch < Sinatra::Application
             }
           }
         }
-        json info
       end
     end
   end

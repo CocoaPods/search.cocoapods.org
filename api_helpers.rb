@@ -2,6 +2,46 @@
 #
 CocoapodSearch.helpers do
   
+  # Creates two API endpoints:
+  #   1. Comfortable URL-based.
+  #   2. HTTP header-based.
+  #
+  def self.api method, path, &calculation
+    self.send method, "/api/v2.0/#{path}.json" do
+      cors_allow_all
+      
+      json instance_eval &calculation
+    end
+    send method, "/api/#{path}" do
+      cors_allow_all
+      
+      request.accept.each do |accept|
+        case accept.params['version']
+        when nil
+          # Without explicit version it will by default provide the latest version.
+          #
+          case accept.to_s
+          when '*/*'
+            halt json instance_eval &calculation
+          when 'text/json'
+            halt json instance_eval &calculation
+          when 'application/json'
+            halt json instance_eval &calculation
+          end
+        when '2'
+          case accept.to_s
+          when 'application/json'
+            halt json instance_eval &calculation
+          end
+        else
+          halt 406
+        end
+      end
+      
+      halt 406
+    end
+  end
+  
   # Returns a Picky style search result (including how results were found etc.)
   #
   # More info here: https://github.com/floere/picky/wiki/Results-format-and-structure.
