@@ -15,7 +15,7 @@ describe 'Search Integration Tests' do
     CocoapodSearch.prepare # Needed to load the data for the rendered search results.
   end
 
-  let(:pods) { Picky::TestClient.new(CocoapodSearch, :path => '/api/v2.0/pods.flat.ids.json') }
+  let(:pods) { Picky::TestClient.new(CocoapodSearch, :path => '/api/v1/pods.flat.ids.json') }
   
   it "does not raise an error when searching for 'pod'" do
     pods.search('pod').should_not raise_error

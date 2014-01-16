@@ -27,10 +27,10 @@ describe 'Search Integration Tests' do
     [
       # Convenience.
       #
-      ["/api/v2.0/pods.picky.hash.json", { query: query }],
-      ["/api/v2.0/pods.picky.ids.json",  { query: query }],
-      ["/api/v2.0/pods.flat.hash.json",  { query: query }],
-      ["/api/v2.0/pods.flat.ids.json",   { query: query }],
+      ["/api/v1/pods.picky.hash.json", { query: query }],
+      ["/api/v1/pods.picky.ids.json",  { query: query }],
+      ["/api/v1/pods.flat.hash.json",  { query: query }],
+      ["/api/v1/pods.flat.ids.json",   { query: query }],
     
       # Defaults.
       #
@@ -51,10 +51,10 @@ describe 'Search Integration Tests' do
     
       # Versions.
       #
-      ["/api/pods", { query: query }, { 'HTTP_ACCEPT' => "application/vnd.cocoapods.org+picky.hash.json; version=2" }],
-      ["/api/pods", { query: query }, { 'HTTP_ACCEPT' => "application/vnd.cocoapods.org+picky.ids.json; version=2" }],
-      ["/api/pods", { query: query }, { 'HTTP_ACCEPT' => "application/vnd.cocoapods.org+flat.hash.json; version=2" }],
-      ["/api/pods", { query: query }, { 'HTTP_ACCEPT' => "application/vnd.cocoapods.org+flat.ids.json; version=2" }]
+      ["/api/pods", { query: query }, { 'HTTP_ACCEPT' => "application/vnd.cocoapods.org+picky.hash.json; version=1" }],
+      ["/api/pods", { query: query }, { 'HTTP_ACCEPT' => "application/vnd.cocoapods.org+picky.ids.json; version=1" }],
+      ["/api/pods", { query: query }, { 'HTTP_ACCEPT' => "application/vnd.cocoapods.org+flat.hash.json; version=1" }],
+      ["/api/pods", { query: query }, { 'HTTP_ACCEPT' => "application/vnd.cocoapods.org+flat.ids.json; version=1" }]
     ].each do |params|
       it "returns information on the API" do
         get *params
@@ -79,10 +79,10 @@ describe 'Search Integration Tests' do
     [
       # Wrong URL.
       #
-      ["/api/v2.0/pods.picky.hash.jsn", { query: query }],
-      ["/api/v2.0/pods.picky.json",  { query: query }],
-      ["/api/v2.0/pods.hash.json",  { query: query }],
-      ["/api/v0.0/pods.flat.ids.json",   { query: query }],
+      ["/api/v1/pods.picky.hash.jsn", { query: query }],
+      ["/api/v1/pods.picky.json",  { query: query }],
+      ["/api/v1/pods.hash.json",  { query: query }],
+      ["/api/v0/pods.flat.ids.json",   { query: query }],
     ].each do |params|
       it "returns information on the API" do
         get *params
@@ -107,9 +107,9 @@ describe 'Search Integration Tests' do
       # Wrong version in Accept.
       #
       ["/api/pods", { query: query }, { 'HTTP_ACCEPT' => "application/vnd.cocoapods.org+picky.hash.json; version=0" }],
-      ["/api/pods",  { query: query }, { 'HTTP_ACCEPT' => "application/vnd.cocoapods.org+picky.hash.json; version=2.0" }],
+      ["/api/pods",  { query: query }, { 'HTTP_ACCEPT' => "application/vnd.cocoapods.org+picky.hash.json; version=1.0" }],
       ["/api/pods",  { query: query }, { 'HTTP_ACCEPT' => "application/vnd.cocoapods.org+picky.hash.json; version=0.9-beta" }],
-      ["/api/pods",   { query: query }, { 'HTTP_ACCEPT' => "application/vnd.cocoapods.org+picky.hash.json; version=2.0.1" }]
+      ["/api/pods",   { query: query }, { 'HTTP_ACCEPT' => "application/vnd.cocoapods.org+picky.hash.json; version=1.0.1" }]
     ].each do |params|
       it "returns information on the API" do
         get *params

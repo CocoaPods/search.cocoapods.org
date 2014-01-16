@@ -26,7 +26,7 @@ CocoapodSearch.helpers do
     # If there is a version, we install a comfy browser-accessible path.
     #
     if version
-      convenient_path = "/api/v#{version}.0/pods.#{structure}.#{item_structure}.#{format}"
+      convenient_path = "/api/v#{version}/pods.#{structure}.#{item_structure}.#{format}"
     
       store convenient_path
     

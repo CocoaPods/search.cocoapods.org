@@ -45,7 +45,7 @@ class CocoapodSearch < Sinatra::Application
   #   * offset The offset in the results.
   #
   # Example:
-  #   http://search.cocoapods.org/api/v2.0/pods.picky.hash.json?query=author:eloy&ids=20&offset=0
+  #   http://search.cocoapods.org/api/v1/pods.picky.hash.json?query=author:eloy&ids=20&offset=0
   #
   
   # Helpers used by the API.
@@ -60,25 +60,25 @@ class CocoapodSearch < Sinatra::Application
   
   # Returns a Picky style result with entries rendered as a hash.
   #
-  api 2, :picky, :hash, :json, accept: ['application/vnd.cocoapods.org+picky.hash.json'] do
+  api 1, :picky, :hash, :json, accept: ['application/vnd.cocoapods.org+picky.hash.json'] do
     json picky_result search, params, &:to_hash
   end
   
   # Returns a Picky style result with just ids as entries.
   #
-  api 2, :picky, :ids, :json, accept: ['application/vnd.cocoapods.org+picky.ids.json'] do
+  api 1, :picky, :ids, :json, accept: ['application/vnd.cocoapods.org+picky.ids.json'] do
     json picky_result search, params, &:id
   end
   
   # Returns a flat list of results with entries rendered as a hash.
   #
-  api 2, :flat, :hash, :json, accept: ['application/vnd.cocoapods.org+flat.hash.json'] do
+  api 1, :flat, :hash, :json, accept: ['application/vnd.cocoapods.org+flat.hash.json'] do
     json flat_result search, params, &:to_hash
   end
   
   # Returns a flat list of ids.
   #
-  api 2, :flat, :ids, :json, accept: ['application/vnd.cocoapods.org+flat.ids.json'] do
+  api 1, :flat, :ids, :json, accept: ['application/vnd.cocoapods.org+flat.ids.json'] do
     json flat_result search, params, &:id
   end
   
