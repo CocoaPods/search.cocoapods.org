@@ -2,17 +2,38 @@
 #
 CocoapodSearch.helpers do
   
+  @api_routes = []
+  
+  def self.store method, path
+    @api_routes << path if :get == method
+  end
+  
+  # Return all API routes in their original form.
+  #
+  def self.api_routes
+    @api_routes
+  end
+  
   # Creates two API endpoints:
   #   1. Comfortable URL-based.
   #   2. HTTP header-based.
   #
   def self.api method, path, &calculation
-    self.send method, "/api/v2.0/#{path}.json" do
+    store method, convenient_path = "/api/v2.0/#{path}.json"
+    
+    # Create a convenient browser-accessible endpoint.
+    #
+    send method, convenient_path do
       cors_allow_all
       
       json instance_eval &calculation
     end
-    send method, "/api/#{path}" do
+    
+    store method, http_path = "/api/#{path}"
+    
+    # Create a machine/command-line accessible endpoint.
+    #
+    send method, http_path do
       cors_allow_all
       
       request.accept.each do |accept|
