@@ -48,13 +48,20 @@ describe 'Search Integration Tests' do
       ["/api/pods", { query: query }, { 'HTTP_ACCEPT' => "application/json" }],
       ["/api/pods", { query: query }, { 'HTTP_ACCEPT' => "application/json" }],
       ["/api/pods", { query: query }, { 'HTTP_ACCEPT' => "application/json" }],
+
+      # Latest version.
+      #
+      ["/api/pods", { query: query }, { 'HTTP_ACCEPT' => "application/vnd.cocoapods.org+picky.hash.json" }],
+      ["/api/pods", { query: query }, { 'HTTP_ACCEPT' => "application/vnd.cocoapods.org+picky.ids.json" }],
+      ["/api/pods", { query: query }, { 'HTTP_ACCEPT' => "application/vnd.cocoapods.org+flat.hash.json" }],
+      ["/api/pods", { query: query }, { 'HTTP_ACCEPT' => "application/vnd.cocoapods.org+flat.ids.json" }],
     
       # Versions.
       #
       ["/api/pods", { query: query }, { 'HTTP_ACCEPT' => "application/vnd.cocoapods.org+picky.hash.json; version=1" }],
       ["/api/pods", { query: query }, { 'HTTP_ACCEPT' => "application/vnd.cocoapods.org+picky.ids.json; version=1" }],
       ["/api/pods", { query: query }, { 'HTTP_ACCEPT' => "application/vnd.cocoapods.org+flat.hash.json; version=1" }],
-      ["/api/pods", { query: query }, { 'HTTP_ACCEPT' => "application/vnd.cocoapods.org+flat.ids.json; version=1" }]
+      ["/api/pods", { query: query }, { 'HTTP_ACCEPT' => "application/vnd.cocoapods.org+flat.ids.json; version=1" }],
     ].each do |params|
       it "returns information on the API" do
         get *params

@@ -78,6 +78,10 @@ CocoapodSearch.helpers do
     end
   end
   def self.install_machine_api
+    # Get the latest version.
+    #
+    install_nil_version_handlers
+    
     versioned_accepts = @versioned_accepts
     
     machine_path = '/api/pods'
@@ -94,6 +98,13 @@ CocoapodSearch.helpers do
       end
       
       halt 406
+    end
+  end
+  def self.install_nil_version_handlers
+    latest_version = @versioned_accepts.keys.select { |s| Integer(s) rescue nil }.sort.last
+    
+    @versioned_accepts[latest_version].each do |accept, search|
+      @versioned_accepts[nil][accept] = search
     end
   end
   

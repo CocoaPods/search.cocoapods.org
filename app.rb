@@ -52,7 +52,7 @@ class CocoapodSearch < Sinatra::Application
   #
   require File.expand_path('../api_helpers', __FILE__)
   
-  # Default endpoint.
+  # Default endpoint returns the latest picky hash version.
   #
   api nil, :flat, :ids, :json, accept: ['*/*', 'text/json', 'application/json'] do
     json picky_result search, params, &:to_hash
