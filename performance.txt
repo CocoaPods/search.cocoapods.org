@@ -1,0 +1,13 @@
+# 1. Startup with bundle exec foreman start
+# 2. Run ab, see below.
+#
+
+# picky.hash - slowest as the results are largest.
+#
+ab -n 10000 -c 100 'http://127.0.0.1:5000/api/pods.picky.hash.json'
+ab -n 10000 -c 100 -T "Accept: application/vnd.cocoapods.org+picky.hash.json" 'http://127.0.0.1:5000/api/pods'
+
+# flat.ids - fastest as the results are smaller.
+#
+ab -n 10000 -c 100 'http://127.0.0.1:5000/api/pods.flat.ids.json'
+ab -n 10000 -c 100 -T "Accept: application/vnd.cocoapods.org+flat.ids.json" 'http://127.0.0.1:5000/api/pods'
