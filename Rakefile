@@ -11,7 +11,7 @@ namespace :spec do
   end
   
   task :all do
-    sh "bundle exec bacon #{specs '**'}"
+    sh "bundle exec bacon -q #{specs '**'}"
   end
 end
 
