@@ -11,8 +11,6 @@ namespace :spec do
   end
   
   task :all do
-    ENV['GENERATE_COVERAGE'] = 'true'
-
     sh "bundle exec bacon #{specs '**'}"
   end
 end
