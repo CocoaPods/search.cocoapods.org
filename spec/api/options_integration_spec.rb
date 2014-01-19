@@ -1,6 +1,6 @@
 # coding: utf-8
 #
-require 'spec_helper'
+require File.expand_path '../../spec_helper', __FILE__
 require 'rack/test'
 
 # Spec for the flat ids result list API.
@@ -8,13 +8,7 @@ require 'rack/test'
 # Uses the fixed set of pods from the ./data directory.
 #
 describe 'Search Integration Tests' do
-  include Rack::Test::Methods
-  
-  before(:all) do
-    Picky::Indexes.index
-    Picky::Indexes.load
-    CocoapodSearch.prepare # Needed to load the data for the rendered search results.
-  end
+  extend Rack::Test::Methods
   
   def app
     CocoapodSearch

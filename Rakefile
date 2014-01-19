@@ -1,12 +1,23 @@
 require 'picky/tasks'
 
-task :default => :spec
+namespace :spec do
+  def specs dir
+    FileList["spec/#{dir}/*_spec.rb"].shuffle.join ' '
+  end
 
-begin
-  require 'rspec'
-  require 'rspec/core/rake_task'
-  RSpec::Core::RakeTask.new :spec
-rescue Exception => e
-  # Triggered on Heroku.
-  # See https://devcenter.heroku.com/changelog-items/363.
+  desc "Automatically run specs for updated files"
+  task :kick do
+    exec "bundle exec kicker -c"
+  end
+  
+  task :all do
+    ENV['GENERATE_COVERAGE'] = 'true'
+
+    sh "bundle exec bacon #{specs '**'}"
+  end
 end
+
+desc "Run all specs"
+task :spec => 'spec:all'
+
+task :default => :spec

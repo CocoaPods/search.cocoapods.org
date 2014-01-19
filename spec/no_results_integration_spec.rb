@@ -1,19 +1,15 @@
 # coding: utf-8
 #
-require 'spec_helper'
+require File.expand_path '../spec_helper', __FILE__
 require 'picky-client/spec'
 
 # Uses the fixed set of pods from the ./data directory.
 #
 describe 'Integration Tests' do
   
-  before(:all) do
-    Picky::Indexes.index
-    Picky::Indexes.load
-    CocoapodSearch.prepare # Needed to load the data for the rendered search results.
+  def no_results
+    Picky::TestClient.new CocoapodSearch, :path => '/no_results.json'
   end
-
-  let(:no_results) { Picky::TestClient.new(CocoapodSearch, :path => '/no_results.json') }
   
   it 'will return the right tag facets' do
     Yajl.load(no_results.send_search)["tag"].should == {

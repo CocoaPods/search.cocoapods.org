@@ -1,6 +1,6 @@
 # coding: utf-8
 #
-require 'spec_helper'
+require File.expand_path '../../spec_helper', __FILE__
 require 'rack/test'
 
 # Spec for the flat ids result list API.
@@ -8,19 +8,14 @@ require 'rack/test'
 # Uses the fixed set of pods from the ./data directory.
 #
 describe 'Search Integration Tests' do
-  include Rack::Test::Methods
-  
-  before(:all) do
-    Picky::Indexes.index
-    Picky::Indexes.load
-    CocoapodSearch.prepare # Needed to load the data for the rendered search results.
-  end
   
   def app
     CocoapodSearch
   end
 
   describe 'expected successes' do
+    extend Rack::Test::Methods
+    
     query            = 'easy'
     expected_results = 12
 
@@ -66,7 +61,7 @@ describe 'Search Integration Tests' do
       it "returns information on the API" do
         get *params
       
-        last_response.should be_ok
+        last_response.status.should == 200
       
         # If there is "flat" in there, check the resulting array size.
         #
@@ -81,6 +76,8 @@ describe 'Search Integration Tests' do
   end
   
   describe 'expected failures' do
+    extend Rack::Test::Methods
+    
     query = 'test'
     
     [
@@ -94,7 +91,7 @@ describe 'Search Integration Tests' do
       it "returns information on the API" do
         get *params
       
-        last_response.should be_not_found
+        last_response.status.should == 404
       end
     end
     

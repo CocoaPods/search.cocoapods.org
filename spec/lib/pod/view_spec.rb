@@ -1,12 +1,14 @@
 # coding: utf-8
 #
-require 'spec_helper'
+require File.expand_path '../../../spec_helper', __FILE__
 
 describe Pod::View do
   
-  context 'simple example' do
+  describe 'simple example' do
 
-    let(:view) { described_class.new 'id', 'platforms', 'version', 'summary', 'authors', 'link', 'source', 'subspecs', 'tags', nil }
+    def view
+      @view ||= Pod::View.new 'id', 'platforms', 'version', 'summary', 'authors', 'link', 'source', 'subspecs', 'tags', nil
+    end
     
     describe '#to_hash' do
       
