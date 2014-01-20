@@ -16,7 +16,7 @@ describe Pod::View do
         view.to_hash.should == {:id=>"id", :platforms=>"platforms", :version=>"version", :summary=>"summary", :authors=>"authors", :link=>"link", :source=>"source", :subspecs=>"subspecs", :tags=>"tags"}
       end
       
-      it 'is correct with documentation_url' do
+      it 'is ok with documentation_url' do
         view.documentation_url = 'documentation_url'
         view.to_hash.should == {:id=>"id", :platforms=>"platforms", :version=>"version", :summary=>"summary", :authors=>"authors", :link=>"link", :source=>"source", :subspecs=>"subspecs", :tags=>"tags", :documentation_url=>"documentation_url"}
       end

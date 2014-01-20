@@ -36,7 +36,7 @@ def categories_of results
   end
 end
 
-def correct &block
+def ok &block
   should 'be correct', &block
 end
 
@@ -44,10 +44,6 @@ end
 #
 Object.send :remove_const, :Config
 Config = RbConfig
-
-# Bacon.
-#
-Bacon.summary_on_exit
 
 # Load and prepare everything for the spec(s).
 #
