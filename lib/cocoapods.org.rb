@@ -27,3 +27,7 @@ require File.expand_path '../pods', __FILE__
 # Load search interface and index.
 #
 require File.expand_path '../search', __FILE__
+
+# Load master child communication.
+#
+require File.expand_path '../master', __FILE__
