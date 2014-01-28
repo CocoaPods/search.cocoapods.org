@@ -6,3 +6,4 @@ specs.zip
 tmp
 .DS_Store
 .sass-cache/
+*.log
