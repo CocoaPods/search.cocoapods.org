@@ -41,6 +41,7 @@ GEM
       mocha (>= 0.9.8)
     multi_json (1.8.4)
     nap (0.6.0)
+    newrelic_rpm (3.7.1.188)
     notify (0.5.2)
     picky (4.19.4)
       activesupport (~> 3.0)
@@ -92,6 +93,7 @@ DEPENDENCIES
   kicker
   mocha (~> 0.11.4)
   mocha-on-bacon
+  newrelic_rpm
   picky (~> 4.19)
   picky-client (~> 4.19)
   prettybacon!
