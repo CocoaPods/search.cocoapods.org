@@ -13,7 +13,7 @@ class Search
     # Define an index.
     #
     @index = Index.new :pods do
-
+      
       # Use the cocoapods-specs repo for the data.
       #
       source { pods.sets }

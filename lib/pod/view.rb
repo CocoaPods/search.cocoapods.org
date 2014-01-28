@@ -39,58 +39,6 @@ module Pod
       :ios  => 'iOS',
       :osx  => 'OS X'
     }
-    
-    # TODO Remove.
-    #
-    def to_html
-      rendered_authors = authors && authors.map do |name, _|
-        %{<a href="javascript:pickyClient.insert('#{name.gsub(/[']/, '\\\\\'')}')">#{name}</a>}
-      end
-      rendered_authors = oxfordify rendered_authors
-      
-      rendered_subspecs = subspecs.map(&:name).join(', ')
-      
-      rendered_platform = @@platform_mapping[platforms.first] if platforms.count == 1
-      rendered_platform = %Q{<span class="os">#{rendered_platform} only</span>} if rendered_platform
-      pod_spec          = "pod '#{id}', '~&gt; #{version}'"
-      pod_spec_url      = "https://github.com/CocoaPods/Specs/tree/master/#{id}"
-      
-<<-POD
-<li class="result">
-  <div class="infos">
-    <h3>
-      <a href="#{link}">#{id}</a>
-      #{rendered_platform}
-      <span class="version">
-        #{version}
-        <span class="clippy">#{pod_spec}</span>
-      </span>
-    </h3>
-    <p class="subspecs">#{rendered_subspecs}</p>
-    <p>#{summary}</p>
-    <p class="author">#{rendered_authors}</p>
-  </div>
-  <div class="actions">
-    <a href="http://cocoadocs.org/docsets/#{id}/#{version}">Docs</a>
-    <a href="#{link}">Repo</a>
-    <a href="#{pod_spec_url}">Spec</a>
-  </div>
-</li>
-POD
-    end
-    
-    # Examples:
-    #  * Apples
-    #  * Apples and Bananas
-    #  * Apples, Oranges, and Bananas.
-    #
-    def oxfordify words
-      if words.size < 3
-        words.join ' and '
-      else
-        "#{words[0..-2].join(', ')}, and #{words.last}"
-      end
-    end
 
     # temporary for API 1.5 
     #
@@ -98,9 +46,9 @@ POD
     #
     def render_short_json
       {
-        "id" => id,
-        "summary" => summary,
-        "version" => version
+        :id => id,
+        :summary => summary,
+        :version => version
       }
     end
     
