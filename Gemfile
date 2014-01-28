@@ -28,6 +28,6 @@ group :test do
   gem 'prettybacon', :git => 'https://github.com/irrationalfab/PrettyBacon.git', :branch => 'master'
 end
 
-configure :production do
+group :production do
   require 'newrelic_rpm'
 end
