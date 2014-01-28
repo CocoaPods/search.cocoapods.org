@@ -149,8 +149,8 @@ class CocoapodSearch < Sinatra::Application
 
   # Code to reindex in the master.
   #
-  reindexer = Master.new do |child|
-    pods.prepare true if child
+  reindexer = Master.new try_in_child: false do |child|
+    pods.prepare true # if child
     search.reindex
   end
   
@@ -162,7 +162,7 @@ class CocoapodSearch < Sinatra::Application
         reindexer.run 'reindex'
 
         status 200
-        body "REINDEXED"
+        body "REINDEXING"
       rescue StandardError => e
         status 500
         body e.message

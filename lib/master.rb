@@ -6,11 +6,16 @@ class Master
 
   class CouldNotRunError < StandardError; end
   
+  # The :try_in_child option determines if work is pre-run in a child
+  # before running it in a master. This makes the server
+  # more resistant against errors from the code that is run.
+  #
   # The block work is a block that is called in the child/master.
   # it receives a true if it is a child index, a false if master.
   #
-  def initialize &work
+  def initialize options = {}, &work
     @child, @parent = IO.pipe
+    @try_in_child = options[:try_in_child] != false
     @work = work
     start_master_process_thread
   end
@@ -24,9 +29,11 @@ class Master
   # Note: This is the method one should use.
   #
   def run message
-    STDOUT.puts "Trying to run work in CHILD."
-    close_child          # We close the child pipe lazily.
-    try_run              # We do a "try run".
+    close_child # We close the child pipe lazily.
+    if @try_in_child
+      STDOUT.puts "Trying to run work in CHILD."
+      try_run # We may do a "try run".
+    end
     write_parent message # Then we trigger reindexing in the parent.
   rescue CouldNotRunError => e
     # I need to die such that my broken state is never used.
@@ -62,13 +69,15 @@ class Master
         when 'reindex' # TODO This is currently hardcoded, but needs to be dynamic.
           STDOUT.puts "Trying to run work in MASTER."
           
-          # Try reindexing the master.
+          # Try work in the master.
           #
           try_run
           
           # Kill all kids except the one we already successfully reindexed.
           #
-          kill_each_worker_except pid
+          # If we do not try in child, kill all.
+          #
+          kill_each_worker_except @try_in_child ? pid : 'nonexistent pid'
         end
 
         # Fails hard on an error.
