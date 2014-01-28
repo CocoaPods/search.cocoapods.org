@@ -48,6 +48,15 @@ class CocoapodSearch < Sinatra::Application
   #   http://search.cocoapods.org/api/v1/pods.picky.hash.json?query=author:eloy&ids=20&offset=0
   #
   
+  # Machine based API:
+  #
+  # Example:
+  #   curl http://search.cocoapods.org/api/pods?query=test -H "Accept: application/vnd.cocoapods.org+picky.hash.json; version=1"
+  #   curl http://search.cocoapods.org/api/pods?query=test -H "Accept: application/vnd.cocoapods.org+picky.ids.json; version=1"
+  #   curl http://search.cocoapods.org/api/pods?query=test -H "Accept: application/vnd.cocoapods.org+flat.hash.json; version=1"
+  #   curl http://search.cocoapods.org/api/pods?query=test -H "Accept: application/vnd.cocoapods.org+flat.ids.json; version=1"
+  #
+  
   # Helpers used by the API.
   #
   require File.expand_path('../api_helpers', __FILE__)
@@ -138,12 +147,19 @@ class CocoapodSearch < Sinatra::Application
     Yajl::Encoder.encode suggestions
   end
 
+  # Code to reindex in the master.
+  #
+  reindexer = Master.new do |child|
+    pods.prepare true if child
+    search.reindex
+  end
+  
   # Get and post hooks for triggering index updates.
   #
   [:get, :post].each do |type|
     send type, "/post-receive-hook/#{ENV['HOOK_PATH']}" do
       begin
-        self.class.prepare true
+        reindexer.run 'reindex'
 
         status 200
         body "REINDEXED"
