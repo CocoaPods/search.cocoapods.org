@@ -15,8 +15,6 @@ gem 'sinatra'
 gem 'picky', '~> 4.19'
 gem 'picky-client', '~> 4.19'
 
-gem 'newrelic_rpm'
-
 group :development do
   gem 'foreman'
 end
@@ -28,4 +26,8 @@ group :test do
   gem 'bacon'
   gem 'mocha-on-bacon'
   gem 'prettybacon', :git => 'https://github.com/irrationalfab/PrettyBacon.git', :branch => 'master'
+end
+
+configure :production do
+  require 'newrelic_rpm'
 end
