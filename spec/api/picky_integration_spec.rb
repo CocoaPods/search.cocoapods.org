@@ -48,7 +48,7 @@ describe 'Integration Tests' do
   
   # Category boosting.
   #
-  ok { categories_of(pods.search('on:osx k* a')).should == [["platform", "name", "name"], ["platform", "name", "author"], ["platform", "author", "summary"], ["platform", "author", "author"], ["platform", "author", "name"], ["platform", "summary", "author"], ["platform", "author", "dependencies"], ["platform", "name", "dependencies"], ["platform", "name", "summary"], ["platform", "summary", "summary"]] }
+  ok { categories_of(pods.search('on:osx k* a')).should == [["platform", "name"], ["platform", "author"], ["platform", "summary"], ["platform", "dependencies"]] }
   ok { categories_of(pods.search('on:osx jsonkit')).should == [["platform", "name"]] }
   
   # Partial.

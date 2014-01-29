@@ -9,6 +9,13 @@ class Search
 
   def initialize pods
     @pods = pods
+    
+    # http://nlp.stanford.edu/IR-book/html/htmledition/dropping-common-terms-stop-words-1.html
+    #
+    # "it" is a prefix but we still stopword it.
+    # We do not stop "on" as it is used for qualifying the platform.
+    #
+    stopwords = /\b(a|an|are|as|at|be|by|for|from|has|he|in|is|it|its|of|that|the|to|was|were|will|with)\b/i
   
     # Define an index.
     #
@@ -25,7 +32,7 @@ class Search
       # TODO We need to work on this. This is still the Picky standard.
       #
       indexing removes_characters: /[^a-z0-9\s\/\-\_\:\"\&\.]/i,
-               stopwords:          /\b(and|or|the|of|it|in|for)\b/i,
+               stopwords:          stopwords,
                splits_text_on:     /[\s\/\-\_\:\"\&\/]/,
                rejects_token_if:   lambda { |token| token.size < 2 },
                substitutes_characters_with: CharacterSubstituters::WestEuropean.new
@@ -68,7 +75,7 @@ class Search
     @interface = Search.new index do
       searching substitutes_characters_with: CharacterSubstituters::WestEuropean.new, # Normalizes special user input, Ä -> Ae, ñ -> n etc.
                 removes_characters: /[^a-z0-9\s\/\-\_\&\.\"\~\*\:\,]/i, # Picky needs control chars *"~:, to pass through.
-                stopwords:          /\b(and|the|of|it|in|for)\b/i,
+                stopwords:          stopwords,
                 splits_text_on:     /[\s\/\-\&]+/
 
       boost [:name, :author]  => +2,
@@ -102,7 +109,7 @@ class Search
       # TODO We need to work on this. This is still the Picky standard.
       #
       indexing removes_characters: /[^a-z0-9\s\/\-\_\:\"\&\.]/i,
-               stopwords:          /\b(and|the|of|it|in|for)\b/i,
+               stopwords:          stopwords,
                splits_text_on:     /[\s\/\-\_\:\"\&\/]/,
                rejects_token_if:   lambda { |token| token.size < 2 },
                substitutes_characters_with: CharacterSubstituters::WestEuropean.new
