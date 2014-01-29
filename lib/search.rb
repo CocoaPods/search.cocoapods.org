@@ -37,35 +37,40 @@ class Search
                rejects_token_if:   lambda { |token| token.size < 2 },
                substitutes_characters_with: CharacterSubstituters::WestEuropean.new
 
+      few_similars = Similarity::DoubleMetaphone.new 2
+      
+      no_partial   = Partial::None.new
+      full_partial = Partial::Substring.new(from: 1)
+      
       # Note: Add more categories.
       #
       category :name,
-               similarity: Similarity::DoubleMetaphone.new(2),
-               partial: Partial::Substring.new(from: 1),
+               similarity: few_similars,
+               partial: full_partial,
                qualifiers: [:name, :pod],
                :from => :mapped_name
       category :author,
-               similarity: Similarity::DoubleMetaphone.new(2),
-               partial: Partial::Substring.new(from: 1),
+               similarity: few_similars,
+               partial: full_partial,
                qualifiers: [:author, :authors, :written, :writer, :by],
                :from => :mapped_authors
       category :version,
-               partial: Partial::Substring.new(from: 1),
+               partial: full_partial,
                :from => :mapped_versions
       category :dependencies,
-               similarity: Similarity::DoubleMetaphone.new(2),
-               partial: Partial::Substring.new(from: 1),
+               similarity: few_similars,
+               partial: full_partial,
                qualifiers: [:dependency, :dependencies, :depends, :using, :uses, :use, :needs],
                :from => :mapped_dependencies
       category :platform,
-               partial: Partial::None.new,
+               partial: no_partial,
                qualifiers: [:platform, :on],
                :from => :mapped_platform
       category :summary,
-               partial: Partial::Substring.new(from: 1),
+               partial: full_partial,
                :from => :mapped_summary
       category :tags,
-               partial: Partial::None.new,
+               partial: no_partial,
                qualifiers: [:tag, :tags],
                tokenize: false
     end
@@ -104,7 +109,7 @@ class Search
       # As a test, we use the pod names as ids
       # (symbols to enhance performance).
       #
-      key_format :to_sym
+      key_format :to_sym # TODO Memory issues?
 
       # TODO We need to work on this. This is still the Picky standard.
       #
