@@ -25,11 +25,11 @@ h3. ENV variables
 
 You need to set the HOOK_PATH env variable for the Github post-receive-hook (see below for more detail).
 
-heroku config:add HOOK_PATH=""
+@heroku config:add HOOK_PATH=...@
 
 We also do not load test or development.
 
-heroku config:add BUNDLE_WITHOUT="development:test"
+@heroku config:add BUNDLE_WITHOUT="development:test"@
 
 h4. HOOK_PATH
 
@@ -41,3 +41,9 @@ To change HOOK_PATH:
 
 # @heroku config:add HOOK_PATH=some_other_garbled_hook_path@
 # Update the post-receive-hook in the Specs repo to the new garbled path.
+
+h3. Notes
+
+We have enabled memory logging using the instructions from:
+
+* @https://devcenter.heroku.com/articles/log-runtime-metrics@
