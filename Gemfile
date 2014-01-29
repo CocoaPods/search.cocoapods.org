@@ -12,8 +12,8 @@ gem 'procrastinate'
 gem 'cocoapods-core'
 gem 'unicorn'
 gem 'sinatra'
-gem 'picky', '~> 4.19'
-gem 'picky-client', '~> 4.19'
+gem 'picky', '~> 4.19.5'
+gem 'picky-client', '~> 4.19.5'
 
 group :development do
   gem 'foreman'
