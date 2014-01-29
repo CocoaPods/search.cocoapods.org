@@ -109,7 +109,7 @@ class Search
       # As a test, we use the pod names as ids
       # (symbols to enhance performance).
       #
-      key_format :to_sym # TODO Memory issues?
+      key_format :to_s
 
       # TODO We need to work on this. This is still the Picky standard.
       #
