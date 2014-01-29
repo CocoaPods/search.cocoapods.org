@@ -25,7 +25,7 @@ class Search
       # TODO We need to work on this. This is still the Picky standard.
       #
       indexing removes_characters: /[^a-z0-9\s\/\-\_\:\"\&\.]/i,
-               stopwords:          /\b(and|the|of|it|in|for)\b/i,
+               stopwords:          /\b(and|or|the|of|it|in|for)\b/i,
                splits_text_on:     /[\s\/\-\_\:\"\&\/]/,
                rejects_token_if:   lambda { |token| token.size < 2 },
                substitutes_characters_with: CharacterSubstituters::WestEuropean.new
