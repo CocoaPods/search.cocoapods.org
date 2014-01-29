@@ -19,7 +19,7 @@ describe 'Integration Tests' do
 
   # Testing a specific order of result ids.
   #
-  ok { pods.search('on:osx ki').ids.should == ["JSONKit", "KISSmetrics", "KissXML", "Kiwi", "MKNetworkKit", "MacMapKit", "KISSmetrics", "KLExpandingSelect", "LibYAML", "MTDates", "MTGeometry", "MTJSONDictionary", "MTJSONUtils", "MTPocket", "MTQueue", "MTStringAttributes", "KISSmetrics", "LastFm", "MKFoundation"] }
+  ok { pods.search('on:osx ki').ids.should == ["JSONKit", "KISSmetrics", "KissXML", "Kiwi", "MKNetworkKit", "MacMapKit", "KISSmetrics", "KLExpandingSelect", "LibYAML", "MTDates", "MTGeometry", "MTJSONDictionary", "MTJSONUtils", "MTPocket", "MTQueue", "MTStringAttributes"] }
   
   # Speed.
   #
@@ -48,7 +48,7 @@ describe 'Integration Tests' do
   
   # Category boosting.
   #
-  ok { categories_of(pods.search('on:osx k* a')).should == [["platform", "name"], ["platform", "author"], ["platform", "summary"], ["platform", "dependencies"]] }
+  ok { categories_of(pods.search('on:osx k* a')).should == [["platform", "name"], ["platform", "author"]] }
   ok { categories_of(pods.search('on:osx jsonkit')).should == [["platform", "name"]] }
   
   # Partial.
@@ -63,41 +63,7 @@ describe 'Integration Tests' do
   #
   pod_spec = "pod 'Kiwi', '~&gt; 1.0.0'"
   ok {
-    pods.search('kiwi').entries.should == [
-      { :id => "Kiwi",
-      :platforms => ["osx", "ios"],
-      :version => "2.1",
-      :summary => "A Behavior Driven Development library for iOS and OS X.",
-      :authors =>
-       { :"Allen Ding" => "alding@gmail.com",
-         :"Luke Redpath" => "luke@lukeredpath.co.uk" },
-      :link => "https://github.com/allending/Kiwi",
-      :source => { :git => "https://github.com/allending/Kiwi.git", :tag => "2.1" },
-      :subspecs => [],
-      :tags => [] },
-      { :id => "MockInject",
-      :platforms => ["ios"],
-      :version => "0.1.0",
-      :summary =>
-        "A library that allows developers to globally mock any ObjectiveC class' initialization method when testing with Kiwi.",
-      :authors =>
-        { :"Matt Ganski" => "gantasygames@gmail.com" },
-      :link => "https://github.com/gantaa/MockInject",
-      :source => { :git => "https://github.com/gantaa/MockInject.git", :tag => "0.1.0" },
-      :subspecs => [],
-      :tags => ["test"]},
-      { :id => "MockInject",
-      :platforms => ["ios"],
-      :version => "0.1.0",
-      :summary =>
-        "A library that allows developers to globally mock any ObjectiveC class' initialization method when testing with Kiwi.",
-      :authors =>
-        { :"Matt Ganski" => "gantasygames@gmail.com" },
-      :link => "https://github.com/gantaa/MockInject",
-      :source => { :git => "https://github.com/gantaa/MockInject.git", :tag => "0.1.0" },
-      :subspecs => [],
-      :tags => ["test"] }
-    ]
+    pods.search('kiwi').entries.should == [{:id=>"Kiwi", :platforms=>["osx", "ios"], :version=>"2.1", :summary=>"A Behavior Driven Development library for iOS and OS X.", :authors=>{:"Allen Ding"=>"alding@gmail.com", :"Luke Redpath"=>"luke@lukeredpath.co.uk"}, :link=>"https://github.com/allending/Kiwi", :source=>{:git=>"https://github.com/allending/Kiwi.git", :tag=>"2.1"}, :subspecs=>[], :tags=>[]}, {:id=>"MockInject", :platforms=>["ios"], :version=>"0.1.0", :summary=>"A library that allows developers to globally mock any ObjectiveC class' initialization method when testing with Kiwi.", :authors=>{:"Matt Ganski"=>"gantasygames@gmail.com"}, :link=>"https://github.com/gantaa/MockInject", :source=>{:git=>"https://github.com/gantaa/MockInject.git", :tag=>"0.1.0"}, :subspecs=>[], :tags=>["test"]}]
   }
   
   # Qualifiers.

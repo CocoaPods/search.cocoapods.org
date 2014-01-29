@@ -59,7 +59,7 @@ class Search
                :from => :mapped_versions
       category :dependencies,
                similarity: few_similars,
-               partial: full_partial,
+               partial: no_partial, # full_partial,
                qualifiers: [:dependency, :dependencies, :depends, :using, :uses, :use, :needs],
                :from => :mapped_dependencies
       category :platform,
@@ -67,7 +67,7 @@ class Search
                qualifiers: [:platform, :on],
                :from => :mapped_platform
       category :summary,
-               partial: full_partial,
+               partial: no_partial, # full_partial,
                :from => :mapped_summary
       category :tags,
                partial: no_partial,
