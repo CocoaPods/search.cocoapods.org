@@ -23,6 +23,14 @@ h3. Deploying to Heroku
 
 h3. ENV variables
 
+You need to set the HOOK_PATH env variable for the Github post-receive-hook (see below for more detail).
+
+heroku config:add HOOK_PATH=""
+
+We also do not load test or development.
+
+heroku config:add BUNDLE_WITHOUT="development:test"
+
 h4. HOOK_PATH
 
 We use one ENV variable (@HOOK_PATH@) to set the hook path we use in the Specs repo's post-receive-hook to update the search engine's index: @heroku config:add HOOK_PATH=some_garbled_hook_path@.

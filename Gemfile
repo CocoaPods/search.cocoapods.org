@@ -3,20 +3,24 @@ source 'http://rubygems.org'
 ruby '2.0.0'
 
 gem 'bundler'
-gem 'rake'
-gem 'rack'
-gem 'rack_fast_escape', '2009.06.24'
-gem 'text'
-gem 'yajl-ruby', :require => 'yajl'
-gem 'procrastinate'
-gem 'cocoapods-core'
-gem 'unicorn'
-gem 'sinatra'
-gem 'picky', '~> 4.19.5'
-gem 'picky-client', '~> 4.19.5'
 
 group :development do
+  gem 'rake'
   gem 'foreman'
+end
+
+group :production do
+  gem 'rack'
+  gem 'rack_fast_escape', '2009.06.24'
+  gem 'text'
+  gem 'yajl-ruby', :require => 'yajl'
+  gem 'procrastinate'
+  gem 'cocoapods-core'
+  gem 'unicorn'
+  gem 'sinatra'
+  gem 'picky', '~> 4.19.5'
+  gem 'picky-client', '~> 4.19.5'
+  gem 'newrelic_rpm'
 end
 
 group :test do
@@ -26,8 +30,4 @@ group :test do
   gem 'bacon'
   gem 'mocha-on-bacon'
   gem 'prettybacon', :git => 'https://github.com/irrationalfab/PrettyBacon.git', :branch => 'master'
-end
-
-group :production do
-  gem 'newrelic_rpm'
 end
