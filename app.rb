@@ -149,9 +149,33 @@ class CocoapodSearch < Sinatra::Application
 
   # Code to reindex in the master.
   #
+  # Note: Runs the GC aggressively.
+  #
   reindexer = Master.new try_in_child: false do |child|
+    
+    GC.start full_mark: true, immediate_sweep: true
     pods.prepare true # if child
+    
+    GC.start full_mark: true, immediate_sweep: true
     search.reindex
+    
+    if ENV['TRACE_RUBY_OBJECT_ALLOCATION']
+      # Profiling.
+      #
+      # Analyze using:
+      # cat heap.json |
+      # ruby -rjson -ne ' obj = JSON.parse($_).values_at("file","line","type"); puts obj.join(":") if obj.first ' |
+      # sort      |
+      # uniq -c   |
+      # sort -n   |
+      # tail -20
+      #
+      GC.start full_mark: true, immediate_sweep: true
+      ObjectSpace.dump_all output: File.open('heap.json', 'w')
+    end
+    
+    GC.start full_mark: true, immediate_sweep: true
+    
   end
   
   # Get and post hooks for triggering index updates.
