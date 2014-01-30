@@ -5,6 +5,10 @@ end
 
 require File.expand_path '../app', __FILE__
 
+# Store the indexes in tmp.
+#
+Picky.root = 'tmp'
+
 # On startup load the indexes, else create them.
 #
 CocoapodSearch.load_indexes || CocoapodSearch.prepare
