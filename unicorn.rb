@@ -26,9 +26,25 @@ before_fork do |server, worker|
   #
   # Note: This means a previous master used USR2 to start me.
   #
-  if parent_id = Process.ppid
-    Process.kill 'WINCH', parent_id
-    Process.kill 'QUIT', parent_id
+  
+  # Is there an old unicorn, waiting to be put down?
+  #
+  oldpid_path = 'tmp/pids/unicorn.pid.oldbin'
+  if File.exists? oldpid_path
+    File.open oldpid_path do |pidfile|
+      old_unicorn_pid = Integer(pidfile.read.chomp)
+      parent_pid      = Process.ppid
+      
+      # Is my parent actually that unicorn?
+      #
+      if old_unicorn_pid == parent_pid
+        
+        # Patricide go!
+        #
+        Process.kill 'WINCH', parent_pid
+        Process.kill 'QUIT', parent_pid
+      end
+    end
   end
   
   # We catch TERM from Heroku and try to do a no-downtime restart.
@@ -39,9 +55,6 @@ before_fork do |server, worker|
     # USR2 will start a new master.
     #
     Process.kill 'USR2', Process.pid
-    File.open 'tmp/pids/unicorn.pid.oldbin' do |pidfile|
-      puts pidfile.read
-    end
   end
 end
 
