@@ -5,7 +5,9 @@ end
 
 require File.expand_path '../app', __FILE__
 
-CocoapodSearch.prepare
+# On startup load the indexes, else create them.
+#
+CocoapodSearch.load_indexes || CocoapodSearch.prepare
 
 GC.start full_mark: true, immediate_sweep: true
 

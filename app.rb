@@ -18,6 +18,14 @@ class CocoapodSearch < Sinatra::Application
     search.reindex
   end
   
+  self.class.send :define_method, :dump_indexes do
+    search.index.dump
+  end
+  
+  self.class.send :define_method, :load_indexes do
+    pods.prepare if search.index.load
+  end
+  
   set :logging, false
 
   # search.cocoapods.org API 2.0

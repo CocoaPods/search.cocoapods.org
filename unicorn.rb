@@ -52,6 +52,10 @@ before_fork do |server, worker|
   Signal.trap 'TERM' do
     puts 'Unicorn master intercepting the Heroku TERM and sending myself USR2 instead.'
     
+    # Dump the indexes to be picked up by the new Unicorn master.
+    #
+    CocoapodSearch.dump_indexes
+    
     # USR2 will start a new master.
     #
     Process.kill 'USR2', Process.pid
