@@ -64,6 +64,6 @@ h3. Current Heroku Labs Features
 [ ] buildpack-env-arg    Add user config vars  as a third argument to buildpacks during slug compilation
 [ ] http-request-id      Enables the Heroku-Request-ID header in requests and logs
 [+] log-runtime-metrics  Emit dyno resource usage information into app logs
-[+] preboot              Provide seamless web dyno deploys
+[ ] preboot              Provide seamless web dyno deploys
 [ ] user-env-compile     Add user config vars to the environment during slug compilation
 [ ] websockets           Experimental websockets support on herokuapp.com and custom domains
