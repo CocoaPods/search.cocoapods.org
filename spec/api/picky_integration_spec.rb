@@ -55,7 +55,7 @@ describe 'Integration Tests' do
   #
   # Platform is only found when fully mentioned (i.e. no partial).
   #
-  ok { pods.search('platform:osx').total.should == 108 }
+  ok { pods.search('platform:osx').total.should == 109 }
   ok { pods.search('platform:os').total.should == 0 }
   ok { pods.search('platform:o').total.should == 0 }
   
@@ -89,8 +89,8 @@ describe 'Integration Tests' do
   ok { pods.search('use:JSONKit').ids.should == expected_dependencies }
   ok { pods.search('needs:JSONKit').ids.should == expected_dependencies }
   
-  ok { pods.search('platform:osx').total.should == 108 }
-  ok { pods.search('on:osx').total.should == 108 }
+  ok { pods.search('platform:osx').total.should == 109 }
+  ok { pods.search('on:osx').total.should == 109 }
   
   ok { pods.search('summary:google').ids.should == ["LARSAdController", "MTLocation", "MTStatusBarOverlay"] }
   
