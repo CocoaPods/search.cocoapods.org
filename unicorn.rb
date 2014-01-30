@@ -32,6 +32,8 @@ before_fork do |server, worker|
   oldpid_path = 'tmp/pids/unicorn.pid.oldbin'
   if File.exists? oldpid_path
     File.open oldpid_path do |pidfile|
+      # Get the presumed old unicorn pid and the parent pid.
+      #
       old_unicorn_pid = Integer(pidfile.read.chomp)
       parent_pid      = Process.ppid
       
