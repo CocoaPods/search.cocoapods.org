@@ -17,6 +17,15 @@ class Search
     #
     stopwords = /\b(a|an|are|as|at|be|by|for|from|has|he|in|is|it|its|of|that|the|to|was|were|will|with)\b/i
   
+    # Set up similarity configurations.
+    #
+    few_similars = Similarity::DoubleMetaphone.new 2
+    
+    # Set up partial configurations.
+    #
+    no_partial   = Partial::None.new
+    full_partial = Partial::Substring.new(from: 1)
+  
     # Define an index.
     #
     @index = Index.new :pods do
@@ -29,18 +38,11 @@ class Search
       #
       key_format :to_s
 
-      # TODO We need to work on this. This is still the Picky standard.
-      #
       indexing removes_characters: /[^a-z0-9\s\/\-\_\:\"\&\.]/i,
                stopwords:          stopwords,
                splits_text_on:     /[\s\/\-\_\:\"\&\/]/,
                rejects_token_if:   lambda { |token| token.size < 2 },
                substitutes_characters_with: CharacterSubstituters::WestEuropean.new
-
-      few_similars = Similarity::DoubleMetaphone.new 2
-      
-      no_partial   = Partial::None.new
-      full_partial = Partial::Substring.new(from: 1)
       
       # Note: Add more categories.
       #
@@ -48,7 +50,11 @@ class Search
                similarity: few_similars,
                partial: full_partial,
                qualifiers: [:name, :pod],
-               :from => :mapped_name
+               :from => :mapped_name,
+               :indexing => {
+                 removes_characters: //,               # We don't remove any characters.
+                 splits_text_on:     /[\s\-]/ # We split on fewer characters.
+               }
       category :author,
                similarity: few_similars,
                partial: full_partial,
@@ -105,9 +111,8 @@ class Search
       # Use the cocoapods-specs repo for the data.
       #
       source { pods.sets }
-
-      # As a test, we use the pod names as ids
-      # (symbols to enhance performance).
+      
+      # We use the pod names as ids (as strings).
       #
       key_format :to_s
 
@@ -122,7 +127,7 @@ class Search
       # Note: Add more categories.
       #
       category :split,
-               partial: Partial::None.new,
+               partial: no_partial,
                tokenize: false,
                :from => :split_name_for_automatic_splitting
     end
