@@ -23,7 +23,12 @@ class CocoapodSearch < Sinatra::Application
   end
   
   self.class.send :define_method, :load_indexes do
-    pods.prepare if search.index.load
+    begin
+      search.index.load
+      pods.prepare
+    rescue
+      nil
+    end
   end
   
   set :logging, false
