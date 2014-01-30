@@ -74,7 +74,10 @@ class Search
                :from => :mapped_platform
       category :summary,
                partial: no_partial, # full_partial,
-               :from => :mapped_summary
+               :from => :mapped_summary,
+               :indexing => {
+                 removes_characters: /[^a-z0-9\s\-]/i # We remove special characters.
+               }
       category :tags,
                partial: no_partial,
                qualifiers: [:tag, :tags],

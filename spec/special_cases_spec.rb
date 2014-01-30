@@ -14,5 +14,8 @@ describe 'Special Cases' do
   it 'will correctly find _.m' do
     special_cases.search('_.m').should == ['_.m']
   end
+  it 'will correctly find JSONKit' do
+    special_cases.search('JSONKit very high library').should == ['JSONKit']
+  end
 
 end
