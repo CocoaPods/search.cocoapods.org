@@ -114,15 +114,15 @@ class CocoapodSearch < Sinatra::Application
   # TODO Remove.
   #
   get '/api/v1.5/pods/search' do
+    cors_allow_all
+    
     results = search.interface.search params[:query], params[:ids] || 20, params[:offset] || 0
     results = results.to_hash
     results.extend Picky::Convenience
     
-    results.amend_ids_with results.ids(params[:ids]).map { |id| pods[id] }
+    results.amend_ids_with results.ids.map { |id| pods[id] }
     
-    response["Access-Control-Allow-Origin"] = "*"
-    
-    Yajl::Encoder.encode results.entries
+    json results.entries
   end
   
   # Pod API code.

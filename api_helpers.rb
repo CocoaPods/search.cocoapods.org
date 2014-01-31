@@ -117,7 +117,7 @@ CocoapodSearch.helpers do
     results = results.to_hash
     results.extend Picky::Convenience
     
-    results.amend_ids_with results.ids(params[:ids]).map { |id| pods[id] }
+    results.amend_ids_with results.ids.map { |id| pods[id] }
     
     results
   end
