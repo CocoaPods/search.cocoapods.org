@@ -1,5 +1,9 @@
 require File.expand_path '../lib/cocoapods.org', __FILE__
 
+# Store the indexes in tmp.
+#
+Picky.root = 'tmp'
+
 # The Sinatra search server.
 #
 # Mainly offers two things:
@@ -20,15 +24,12 @@ class CocoapodSearch < Sinatra::Application
   
   self.class.send :define_method, :dump_indexes do
     search.index.dump
+    pods.dump
   end
   
   self.class.send :define_method, :load_indexes do
-    begin
-      search.index.load
-      pods.prepare
-    rescue
-      nil
-    end
+    search.index.load
+    pods.load
   end
   
   set :logging, false
@@ -77,31 +78,31 @@ class CocoapodSearch < Sinatra::Application
   # Default endpoint returns the latest picky hash version.
   #
   api nil, :flat, :ids, :json, accept: ['*/*', 'text/json', 'application/json'] do
-    json picky_result search, params, &:to_hash
+    json picky_result search, pods.view, params, &:to_hash
   end
   
   # Returns a Picky style result with entries rendered as a hash.
   #
   api 1, :picky, :hash, :json, accept: ['application/vnd.cocoapods.org+picky.hash.json'] do
-    json picky_result search, params, &:to_hash
+    json picky_result search, pods.view, params, &:to_hash
   end
   
   # Returns a Picky style result with just ids as entries.
   #
   api 1, :picky, :ids, :json, accept: ['application/vnd.cocoapods.org+picky.ids.json'] do
-    json picky_result search, params, &:id
+    json picky_result(search, pods.view, params) { |item| item[:id] }
   end
   
   # Returns a flat list of results with entries rendered as a hash.
   #
   api 1, :flat, :hash, :json, accept: ['application/vnd.cocoapods.org+flat.hash.json'] do
-    json flat_result search, params, &:to_hash
+    json flat_result search, pods.view, params, &:to_hash
   end
   
   # Returns a flat list of ids.
   #
   api 1, :flat, :ids, :json, accept: ['application/vnd.cocoapods.org+flat.ids.json'] do
-    json flat_result search, params, &:id
+    json flat_result(search, pods.view, params) { |item| item[:id] }
   end
   
   # Installs API for calls using Accept.
@@ -117,14 +118,11 @@ class CocoapodSearch < Sinatra::Application
     results = results.to_hash
     results.extend Picky::Convenience
     
-    simple_data = []
-    results.populate_with Pod::View do |pod|
-      simple_data << pod.render_short_json
-    end
+    results.amend_ids_with results.ids(params[:ids]).map { |id| pods[id] }
     
     response["Access-Control-Allow-Origin"] = "*"
     
-    Yajl::Encoder.encode simple_data
+    Yajl::Encoder.encode results.entries
   end
   
   # Pod API code.

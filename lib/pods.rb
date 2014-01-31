@@ -1,10 +1,14 @@
 class Pods
   
-  attr_reader :path, :specs
+  # TODO Remove specs ASAP.
+  #
+  attr_reader :path, :view, :specs
   
   def initialize pods_path
-    @path = pods_path
+    @path  = pods_path
+    @view  = {}
     @specs = {}
+    @view_dump_file = File.join Picky.root, 'view.dump'
   end
   
   # Sets are ordered by name.
@@ -33,34 +37,44 @@ class Pods
     # Content to render.
     #
     sets.each do |set|
-      id      = set.name.dup
-      version = set.versions.first
-
-      specification     = set.specification
-      platforms         = specification.available_platforms.map(&:name)
-      summary           = specification.summary[0..139] # Cut down to 140 characters. TODO Duplicated code. See set.rb.
-      authors           = specification.authors
-      link              = specification.homepage
-      subspecs          = specification.recursive_subspecs
-      source            = specification.source
-      documentation_url = specification.documentation_url
-      tags              = set.tags
+      id            = set.name.dup.to_s
+      specification = set.specification
 
       # Picky is destructive with the given data
       # strings, which is why we dup the content
       # to render.
       #
-      Pod::View.update(id,
-                       platforms,
-                       version && version.dup,
-                       summary && summary.dup,
-                       authors && authors.dup,
-                       link    && link.dup,
-                       source,
-                       subspecs,
-                       tags,
-                       documentation_url)
+      @view[id] = {
+        :id => id,
+        :platforms => specification.available_platforms.map(&:name).to_a,
+        :version => set.versions.first.to_s,
+        :summary => specification.summary[0..139].to_s, # Cut down to 140 characters. TODO Duplicated code. See set.rb.
+        :authors => specification.authors.to_hash,
+        :link => specification.homepage.to_s,
+        :source => specification.source.to_hash,
+        :subspecs => specification.recursive_subspecs.map(&:to_s),
+        :tags => set.tags.to_a
+      }
+      documentation_url = specification.documentation_url
+      @view[id][:documentation_url] = documentation_url if documentation_url
+      
+      # TODO Remove ASAP.
+      #
       @specs[set.name] = specification
+    end
+  end
+  
+  def load
+    if File.exists? @view_dump_file
+      File.open @view_dump_file, 'r' do |file|
+        @view = Marshal.load file
+      end
+    end
+  end
+  
+  def dump
+    File.open @view_dump_file, 'w' do |file|
+      Marshal.dump @view, file
     end
   end
   
