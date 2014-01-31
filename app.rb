@@ -133,7 +133,12 @@ class CocoapodSearch < Sinatra::Application
   #
   get '/api/v1/pod/:name.json' do
     pod = pods.specs[params[:name]]
-    pod && pod.to_hash.to_json || status(404) && body("Pod not found.")
+    pod && json(pod.to_hash) || status(404) && body("Pod not found.")
+
+    # TODO Replace at least with:
+    #
+    # pod = pods.view[params[:name]]
+    # pod && json(pod) || status(404) && body("Pod not found.")
   end
   
   # Returns a JSON hash with helpful content with "no results" specific to cocoapods.org.
