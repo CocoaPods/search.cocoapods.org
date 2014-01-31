@@ -111,7 +111,7 @@ class CocoapodSearch < Sinatra::Application
   
   # Temporary for CocoaDocs till we separate out API & html 
   #
-  # TODO Remove.
+  # TODO Remove (ask orta).
   #
   get '/api/v1.5/pods/search' do
     cors_allow_all
