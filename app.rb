@@ -120,7 +120,7 @@ class CocoapodSearch < Sinatra::Application
     results = results.to_hash
     results.extend Picky::Convenience
     
-    results.amend_ids_with results.ids.map { |id| pods[id] }
+    results.amend_ids_with results.ids.map { |id| pods.view[id] }
     
     json results.entries
   end
