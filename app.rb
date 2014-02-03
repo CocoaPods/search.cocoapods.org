@@ -116,7 +116,7 @@ class CocoapodSearch < Sinatra::Application
   get '/api/v1.5/pods/search' do
     cors_allow_all
     
-    results = search.interface.search params[:query], params[:ids] || 20, params[:offset] || 0
+    results = search.interface.search params[:query], params[:amount] || params[:ids] || 20, params[:'start-at'] || params[:offset] || 0
     results = results.to_hash
     results.extend Picky::Convenience
     
