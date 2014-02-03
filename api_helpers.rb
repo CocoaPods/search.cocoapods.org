@@ -138,6 +138,7 @@ CocoapodSearch.helpers do
   # Encode as json.
   #
   def json results
+    content_type 'application/json;charset=utf-8'
     Yajl::Encoder.encode results
   end
 

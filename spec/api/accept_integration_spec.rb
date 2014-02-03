@@ -62,7 +62,8 @@ describe 'Search Integration Tests' do
         get *params
       
         last_response.status.should == 200
-      
+        last_response.content_type.should == 'application/json;charset=utf-8'
+        
         # If there is "flat" in there, check the resulting array size.
         #
         case params.first + (params.last['HTTP_ACCEPT'] || "")
