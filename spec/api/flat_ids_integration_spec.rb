@@ -9,9 +9,24 @@ require 'picky-client/spec'
 #
 describe 'Search Integration Tests' do
   
+  # In these tests we are abusing the Picky client a little.
+  #
+  
+  def pod_hash
+    @pod_hash ||= Picky::TestClient.new CocoapodSearch, :path => '/api/v1/pods.flat.hash.json'
+  end
+  
+  # Testing the format.
+  #
+  ok { pod_hash.search('on:osx kiwi').should == [{:id=>"Kiwi", :platforms=>["osx", "ios"], :version=>"2.1", :summary=>"A Behavior Driven Development library for iOS and OS X.", :authors=>{:"Allen Ding"=>"alding@gmail.com", :"Luke Redpath"=>"luke@lukeredpath.co.uk"}, :link=>"https://github.com/allending/Kiwi", :source=>{:git=>"https://github.com/allending/Kiwi.git", :tag=>"2.1"}, :subspecs=>[], :tags=>[]}] }
+  
   def pods
     @pods ||= Picky::TestClient.new CocoapodSearch, :path => '/api/v1/pods.flat.ids.json'
   end
+  
+  # Testing the format.
+  #
+  ok { pods.search('on:osx kiwi').should == ['Kiwi'] }
   
   # Error cases.
   #

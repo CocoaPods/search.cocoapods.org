@@ -9,6 +9,14 @@ require 'picky-client/spec'
 #
 describe 'Integration Tests' do
     
+  def pod_ids
+    @pod_ids ||= Picky::TestClient.new CocoapodSearch, :path => '/api/v1/pods.picky.ids.json'
+  end
+  
+  # Testing the format.
+  #
+  ok { pod_ids.search('on:osx kiwi').entries.should == ['Kiwi'] }
+  
   def pods
     @pods ||= Picky::TestClient.new CocoapodSearch, :path => '/api/v1/pods.picky.hash.json'
   end
@@ -16,6 +24,10 @@ describe 'Integration Tests' do
   # Testing a count of results.
   #
   ok { pods.search('on:ios 1.0.0').total.should == 66 }
+  
+  # Testing the format.
+  #
+  ok { pods.search('on:osx kiwi').entries.should == [{:id=>"Kiwi", :platforms=>["osx", "ios"], :version=>"2.1", :summary=>"A Behavior Driven Development library for iOS and OS X.", :authors=>{:"Allen Ding"=>"alding@gmail.com", :"Luke Redpath"=>"luke@lukeredpath.co.uk"}, :link=>"https://github.com/allending/Kiwi", :source=>{:git=>"https://github.com/allending/Kiwi.git", :tag=>"2.1"}, :subspecs=>[], :tags=>[]}] }
 
   # Testing a specific order of result ids.
   #

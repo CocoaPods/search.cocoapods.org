@@ -78,13 +78,13 @@ class CocoapodSearch < Sinatra::Application
   # Default endpoint returns the latest picky hash version.
   #
   api nil, :flat, :ids, :json, accept: ['*/*', 'text/json', 'application/json'] do
-    json picky_result search, pods.view, params, &:to_hash
+    json picky_result(search, pods.view, params) { |item| item[:id] }
   end
   
   # Returns a Picky style result with entries rendered as a hash.
   #
   api 1, :picky, :hash, :json, accept: ['application/vnd.cocoapods.org+picky.hash.json'] do
-    json picky_result search, pods.view, params, &:to_hash
+    json picky_result(search, pods.view, params) { |item| item }
   end
   
   # Returns a Picky style result with just ids as entries.
@@ -96,7 +96,7 @@ class CocoapodSearch < Sinatra::Application
   # Returns a flat list of results with entries rendered as a hash.
   #
   api 1, :flat, :hash, :json, accept: ['application/vnd.cocoapods.org+flat.hash.json'] do
-    json flat_result search, pods.view, params, &:to_hash
+    json flat_result(search, pods.view, params) { |item| item }
   end
   
   # Returns a flat list of ids.
