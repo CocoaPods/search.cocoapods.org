@@ -192,6 +192,9 @@ class CocoapodSearch < Sinatra::Application
     
     GC.start full_mark: true, immediate_sweep: true
     
+    # Hand over work to successor Unicorn master.
+    #
+    Process.kill 'TERM', Process.pid
   end
   
   # Get and post hooks for triggering index updates.
