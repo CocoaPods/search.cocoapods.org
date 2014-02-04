@@ -41,8 +41,7 @@ class Search
       indexing removes_characters: /[^a-z0-9\s\/\-\_\:\"\&\.]/i,
                stopwords:          stopwords,
                splits_text_on:     /[\s\/\-\_\:\"\&\/]/,
-               rejects_token_if:   lambda { |token| token.size < 2 },
-               substitutes_characters_with: CharacterSubstituters::WestEuropean.new
+               rejects_token_if:   lambda { |token| token.size < 2 }
       
       # Note: Add more categories.
       #
@@ -59,7 +58,12 @@ class Search
                similarity: few_similars,
                partial: full_partial,
                qualifiers: [:author, :authors, :written, :writer, :by],
-               :from => :mapped_authors
+               :from => :mapped_authors,
+               :indexing => {
+                 # Some names have funky characters. Let's normalize.
+                 #
+                 substitutes_characters_with: CharacterSubstituters::WestEuropean.new
+               }
       category :version,
                partial: full_partial,
                :from => :mapped_versions
@@ -124,8 +128,7 @@ class Search
       indexing removes_characters: /[^a-z0-9\s\/\-\_\:\"\&\.]/i,
                stopwords:          stopwords,
                splits_text_on:     /[\s\/\-\_\:\"\&\/]/,
-               rejects_token_if:   lambda { |token| token.size < 2 },
-               substitutes_characters_with: CharacterSubstituters::WestEuropean.new
+               rejects_token_if:   lambda { |token| token.size < 2 }
 
       # Note: Add more categories.
       #
