@@ -143,8 +143,8 @@ class Search
   end
   
   def reindex
-    @index.reindex
-    @splitting_index.reindex
+    @index.each { |category| category.reindex }
+    @splitting_index.each { |category| category.reindex }
   end
   
 end

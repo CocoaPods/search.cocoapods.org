@@ -51,16 +51,23 @@ before_fork do |server, worker|
   
   # We catch TERM from Heroku and try to do a no-downtime restart.
   #
+  # We use a latch to only terminate it once.
+  #
+  terminated = false
   Signal.trap 'TERM' do
-    puts 'Unicorn master intercepting the Heroku TERM and sending myself USR2 instead.'
+    unless terminated
+      terminated = true
+      
+      puts 'Unicorn master intercepting the Heroku TERM and sending myself USR2 instead.'
     
-    # Dump the indexes to be picked up by the new Unicorn master.
-    #
-    CocoapodSearch.dump_indexes
+      # Dump the indexes to be picked up by the new Unicorn master.
+      #
+      CocoapodSearch.dump_indexes
     
-    # USR2 will start a new master.
-    #
-    Process.kill 'USR2', Process.pid
+      # USR2 will start a new master.
+      #
+      Process.kill 'USR2', Process.pid
+    end
   end
 end
 

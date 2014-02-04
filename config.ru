@@ -13,6 +13,4 @@ rescue
   CocoapodSearch.prepare
 end
 
-GC.start full_mark: true, immediate_sweep: true
-
 run CocoapodSearch
