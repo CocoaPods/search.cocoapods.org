@@ -194,7 +194,7 @@ class CocoapodSearch < Sinatra::Application
     
     # Hand over work to successor Unicorn master.
     #
-    Process.kill 'TERM', Process.pid
+    # Process.kill 'TERM', Process.pid
   end
   
   # Get and post hooks for triggering index updates.
