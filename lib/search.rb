@@ -51,7 +51,7 @@ class Search
                qualifiers: [:name, :pod],
                :from => :mapped_name,
                :indexing => {
-                 removes_characters: //,               # We don't remove any characters.
+                 removes_characters: //,      # We don't remove any characters.
                  splits_text_on:     /[\s\-]/ # We split on fewer characters.
                }
       category :author,
