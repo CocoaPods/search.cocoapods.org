@@ -10,6 +10,8 @@ class Search
   def initialize pods
     @pods = pods
     
+    @facet_keys = [:tags, :platform, :version]
+    
     # http://nlp.stanford.edu/IR-book/html/htmledition/dropping-common-terms-stop-words-1.html
     #
     # "it" is a prefix but we still stopword it.
@@ -145,6 +147,13 @@ class Search
   def reindex
     @index.each { |category| category.reindex }
     @splitting_index.each { |category| category.reindex }
+  end
+  
+  def facets options = {}
+    @facet_keys.inject({}) do |result, key|
+      result[key] = @interface.facets key, options
+      result
+    end
   end
   
 end
