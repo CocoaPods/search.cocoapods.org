@@ -188,7 +188,9 @@ class CocoapodSearch < Sinatra::Application
     
       # Hand over work to successor Unicorn master.
       #
-      Process.kill 'TERM', Process.pid
+      # Note: Not doing that currently as on Heroku, the restart in this manner does not work.
+      #
+      # Process.kill 'TERM', Process.pid
       
       currently_indexing = false
     end
