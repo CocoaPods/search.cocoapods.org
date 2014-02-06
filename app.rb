@@ -18,18 +18,15 @@ class CocoapodSearch < Sinatra::Application
   search = Search.new pods
   
   self.class.send :define_method, :prepare do |force = false|
-    pods.prepare force
-    search.reindex
+    search.reindex force
   end
   
   self.class.send :define_method, :dump_indexes do
-    search.index.dump
-    pods.dump
+    search.dump
   end
   
   self.class.send :define_method, :load_indexes do
-    search.index.load
-    pods.load
+    search.load
   end
   
   set :logging, false
@@ -168,8 +165,7 @@ class CocoapodSearch < Sinatra::Application
   currently_indexing = false
   reindexer = Master.new try_in_child: false do |child|
     unless currently_indexing
-      pods.prepare true
-      search.reindex
+      search.reindex true
     
       if ENV['TRACE_RUBY_OBJECT_ALLOCATION']
         # Profiling.

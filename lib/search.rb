@@ -35,7 +35,7 @@ class Search
       # Use the cocoapods-specs repo for the data.
       #
       source { pods.sets }
-
+      
       # We use the pod names as ids (as strings).
       #
       key_format :to_s
@@ -117,6 +117,7 @@ class Search
     end
     
     @splitting_index = Index.new :splitting do
+      
       # Use the cocoapods-specs repo for the data.
       #
       source { pods.sets }
@@ -144,9 +145,34 @@ class Search
   
   end
   
-  def reindex
-    @index.each { |category| category.reindex }
-    @splitting_index.each { |category| category.reindex }
+  def reindex force = false
+    @index.clear
+    @splitting_index.clear
+    
+    # If we don't do this, Ruby will continue grabbing more and more memory.
+    #
+    GC.start full_mark: true, immediate_sweep: true
+    
+    @pods.prepare force
+    
+    @index.reindex
+    @splitting_index.reindex
+    
+    @pods.reset
+    
+    # If we don't do this, Ruby will continue grabbing more and more memory.
+    #
+    GC.start full_mark: true, immediate_sweep: true
+  end
+  
+  def load
+    @index.load
+    @pods.load
+  end
+  
+  def dump
+    @index.dump
+    @pods.dump
   end
   
   def facets options = {}
