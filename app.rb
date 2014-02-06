@@ -211,10 +211,11 @@ class CocoapodSearch < Sinatra::Application
   # Experimental APIs.
   #
   get '/api/v1/pods.facets.json' do
-    body json search.facets(params.inject({}) do |result, (param, value)|
+    normalized_params = params.inject({}) do |result, (param, value)|
       result[param.gsub(/\-/, '_').to_sym] = Integer(value) rescue value
       result
-    end)
+    end
+    body json search.facets normalized_params
   end
 
 end

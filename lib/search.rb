@@ -10,8 +10,6 @@ class Search
   def initialize pods
     @pods = pods
     
-    @facet_keys = [:tags, :platform, :version]
-    
     # http://nlp.stanford.edu/IR-book/html/htmledition/dropping-common-terms-stop-words-1.html
     #
     # "it" is a prefix but we still stopword it.
@@ -142,7 +140,8 @@ class Search
     end
     
     @splitter = Picky::Splitters::Automatic.new @splitting_index[:split]
-  
+    
+    @facet_keys = @index.categories.map(&:name).sort - [:name, :author, :summary, :dependencies]
   end
   
   def reindex force = false
@@ -176,7 +175,16 @@ class Search
   end
   
   def facets options = {}
-    @facet_keys.inject({}) do |result, key|
+    only   = options[:only]
+    except = options[:except]
+    
+    keys = @facet_keys
+    keys = keys & [*only].map(&:to_sym) if only
+    keys = keys - [*except].map(&:to_sym) if except
+    
+    options[:counts] = options[:counts] != 'false'
+    
+    keys.inject({}) do |result, key|
       result[key] = @interface.facets key, options
       result
     end
