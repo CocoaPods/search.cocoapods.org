@@ -177,9 +177,11 @@ class Search
   def facets options = {}
     only   = options[:only]
     except = options[:except]
+    also   = options[:include]
     
     keys = @facet_keys
-    keys = keys & [*only].map(&:to_sym) if only
+    keys = keys + [*also].map(&:to_sym)   if also
+    keys = keys & [*only].map(&:to_sym)   if only
     keys = keys - [*except].map(&:to_sym) if except
     
     options[:counts] = options[:counts] != 'false'
