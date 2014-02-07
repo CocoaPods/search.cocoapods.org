@@ -16,7 +16,7 @@ class Search
     # We do not stop "on" as it is used for qualifying the platform.
     #
     stopwords = /\b(a|an|are|as|at|be|by|for|from|has|he|in|is|it|its|of|that|the|to|was|were|will|with)\b/i
-  
+    
     # Set up similarity configurations.
     #
     few_similars = Similarity::DoubleMetaphone.new 2
@@ -25,6 +25,13 @@ class Search
     #
     no_partial   = Partial::None.new
     full_partial = Partial::Substring.new(from: 1)
+    
+    default_indexing = {
+      removes_characters: /[^a-z0-9\s\/\-\_\:\"\&\.]/i,
+      stopwords:          stopwords,
+      splits_text_on:     /[\s\/\-\_\:\"\&\/]/,
+      rejects_token_if:   lambda { |token| token.size < 2 }
+    }
   
     # Define an index.
     #
@@ -38,11 +45,10 @@ class Search
       # We use the pod names as ids (as strings).
       #
       key_format :to_s
-
-      indexing removes_characters: /[^a-z0-9\s\/\-\_\:\"\&\.]/i,
-               stopwords:          stopwords,
-               splits_text_on:     /[\s\/\-\_\:\"\&\/]/,
-               rejects_token_if:   lambda { |token| token.size < 2 }
+      
+      # The default indexing. Override in category options.
+      #
+      indexing default_indexing
       
       # Note: Add more categories.
       #
@@ -51,20 +57,20 @@ class Search
                partial: full_partial,
                qualifiers: [:name, :pod],
                :from => :mapped_name,
-               :indexing => {
+               :indexing => default_indexing.merge(
                  removes_characters: //,      # We don't remove any characters.
                  splits_text_on:     /[\s\-]/ # We split on fewer characters.
-               }
+               )
       category :author,
                similarity: few_similars,
                partial: full_partial,
                qualifiers: [:author, :authors, :written, :writer, :by],
                :from => :mapped_authors,
-               :indexing => {
+               :indexing => default_indexing.merge(
                  # Some names have funky characters. Let's normalize.
                  #
-                 substitutes_characters_with: CharacterSubstituters::WestEuropean.new
-               }
+                 substitutes_characters_with: CharacterSubstituters::WestEuropean.new,
+               )
       category :version,
                partial: full_partial,
                :from => :mapped_versions
@@ -79,9 +85,9 @@ class Search
       category :summary,
                partial: no_partial, # full_partial,
                :from => :mapped_summary,
-               :indexing => {
+               :indexing => default_indexing.merge(
                  removes_characters: /[^a-z0-9\s\-]/i # We remove special characters.
-               }
+               )
       category :tags,
                partial: no_partial,
                qualifiers: [:tag, :tags],
@@ -127,10 +133,7 @@ class Search
 
       # TODO We need to work on this. This is still the Picky standard.
       #
-      indexing removes_characters: /[^a-z0-9\s\/\-\_\:\"\&\.]/i,
-               stopwords:          stopwords,
-               splits_text_on:     /[\s\/\-\_\:\"\&\/]/,
-               rejects_token_if:   lambda { |token| token.size < 2 }
+      indexing default_indexing
 
       # Note: Add more categories.
       #

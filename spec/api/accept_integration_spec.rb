@@ -17,7 +17,7 @@ describe 'Search Integration Tests' do
     extend Rack::Test::Methods
     
     query            = 'easy'
-    expected_results = 11
+    expected_results = 12
 
     [
       # Convenience.
@@ -60,7 +60,7 @@ describe 'Search Integration Tests' do
     ].each do |params|
       it "returns information on the API" do
         get *params
-      
+        
         last_response.status.should == 200
         last_response.content_type.should == 'application/json;charset=utf-8'
         
