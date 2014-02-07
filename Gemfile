@@ -18,8 +18,8 @@ group :production do
   gem 'cocoapods-core'
   gem 'unicorn'
   gem 'sinatra'
-  gem 'picky', '~> 4.19.5'
-  gem 'picky-client', '~> 4.19.5'
+  gem 'picky', '~> 4.20.0'
+  gem 'picky-client', '~> 4.20.0'
   gem 'newrelic_rpm'
 end
 
