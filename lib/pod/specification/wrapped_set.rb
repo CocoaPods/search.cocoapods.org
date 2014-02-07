@@ -105,25 +105,39 @@ module Pod
       
       # Tag extracted from summary.
       #
-      # Note: Just mocking the NLP functionality.
+      # Note: http://search.cocoapods.org/api/v1/pods.facets.json?include=name&only=name&at-least=30
       #
       @@tags = %w{
+        alert
         analytics
         api
         authentication
+        button
+        client
         communication
+        controller
         gesture
         http
+        image
         json
+        kit
+        layout
         logging
+        manager
+        navigation
         network
         notification
         parser
         password
         payment
+        picker
+        progress
         rest
         serialization
+        table
         test
+        text
+        view
         widget
         xml
       }
