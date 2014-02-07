@@ -29,6 +29,7 @@ class Search
     # Define an index.
     #
     @index = Index.new :pods do
+      static
       
       # Use the cocoapods-specs repo for the data.
       #
@@ -68,7 +69,6 @@ class Search
                partial: full_partial,
                :from => :mapped_versions
       category :dependencies,
-               similarity: few_similars,
                partial: no_partial, # full_partial,
                qualifiers: [:dependency, :dependencies, :depends, :using, :uses, :use, :needs],
                :from => :mapped_dependencies
@@ -115,6 +115,7 @@ class Search
     end
     
     @splitting_index = Index.new :splitting do
+      static
       
       # Use the cocoapods-specs repo for the data.
       #
