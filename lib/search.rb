@@ -154,7 +154,11 @@ class Search
     
     # If we don't do this, Ruby will continue grabbing more and more memory.
     #
-    GC.start full_mark: true, immediate_sweep: true
+    # Update: We are more strict with the GC.
+    # heroku config:add RUBY_GC_OLDMALLOC_LIMIT=16000000
+    # heroku config:add RUBY_GC_OLDMALLOC_LIMIT_MAX=16000000
+    #
+    # GC.start full_mark: true, immediate_sweep: true
     
     @pods.prepare force
     
@@ -165,7 +169,12 @@ class Search
     
     # If we don't do this, Ruby will continue grabbing more and more memory.
     #
-    GC.start full_mark: true, immediate_sweep: true
+    # Update: We are more strict with the GC.
+    # heroku config:add RUBY_GC_OLDMALLOC_LIMIT=16000000
+    # heroku config:add RUBY_GC_OLDMALLOC_LIMIT_MAX=16000000
+    #
+    # GC.start full_mark: true, immediate_sweep: true
+    
   end
   
   def load
