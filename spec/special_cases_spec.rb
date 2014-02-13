@@ -17,5 +17,9 @@ describe 'Special Cases' do
   it 'will correctly find JSONKit' do
     special_cases.search('JSONKit very high library').should == ['JSONKit']
   end
+  it 'will correctly find KGNoise@tonyzonghui' do
+    special_cases.search('name:KGNoise').should == ["KGNoise", "KGNoise@tonyzonghui"]
+    special_cases.search('name:KGNoise@tonyzonghui').should == ['KGNoise@tonyzonghui']
+  end
 
 end

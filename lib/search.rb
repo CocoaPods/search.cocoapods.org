@@ -58,7 +58,7 @@ class Search
                qualifiers: [:name, :pod],
                :from => :mapped_name,
                :indexing => default_indexing.merge(
-                 removes_characters: //,      # We don't remove any characters.
+                 removes_characters: false, # We don't remove any characters.
                  splits_text_on:     /[\s\-]/ # We split on fewer characters.
                )
       category :author,
@@ -98,7 +98,7 @@ class Search
     #
     @interface = Search.new index do
       searching substitutes_characters_with: CharacterSubstituters::WestEuropean.new, # Normalizes special user input, Ä -> Ae, ñ -> n etc.
-                removes_characters: /[^a-z0-9\s\/\-\_\&\.\"\~\*\:\,]/i, # Picky needs control chars *"~:, to pass through.
+                removes_characters: false, # We don't remove characters.
                 stopwords:          stopwords,
                 splits_text_on:     /[\s\/\-\&]+/
 
