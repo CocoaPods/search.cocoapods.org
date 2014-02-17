@@ -14,12 +14,27 @@ describe 'Special Cases' do
   it 'will correctly find _.m' do
     special_cases.search('_.m').should == ['_.m']
   end
+  
   it 'will correctly find JSONKit' do
     special_cases.search('JSONKit very high library').should == ['JSONKit']
   end
-  it 'will correctly find KGNoise@tonyzonghui' do
+  
+  it 'will correctly find something split on @' do
     special_cases.search('name:KGNoise').should == ["KGNoise", "KGNoise@tonyzonghui"]
     special_cases.search('name:KGNoise@tonyzonghui').should == ['KGNoise@tonyzonghui']
+  end
+  
+  it 'will correctly find something split on -' do
+    special_cases.search('name:kyoto').should == ['kyoto-cabinet']
+    special_cases.search('name:cabinet').should == ['kyoto-cabinet']
+    special_cases.search('name:kyoto-cabinet').should == ['kyoto-cabinet']
+    special_cases.search('name:kyoto name:cabinet').should == ['kyoto-cabinet']
+  end
+  
+  it 'will correctly find something split on -' do
+    special_cases.search('name:mkmapview"').should == ['MKMapView+AttributionView']
+    special_cases.search('name:AttributionView"').should == ['MKMapView+AttributionView']
+    special_cases.search('name:mkmapview name:attributionview').should == ['MKMapView+AttributionView']
   end
 
 end

@@ -40,12 +40,16 @@ module Pod
       #  * Name without initials.
       #
       def split_name
-        _, after_initials = name.split(/(?=[A-Z][a-z])/, 2)
+        first, *rest = name.split(/\b/)
+        initials, after_initials = first.split(/(?=[A-Z][a-z])/, 2)
         [
           name,
-          name.split(/([A-Z]?[a-z]+)/).map(&:downcase),
-          after_initials && after_initials.downcase
-        ].compact.flatten
+          initials,
+          after_initials,
+          first,
+          *rest,
+          *name.split(/([A-Z]?[a-z]+)/)
+        ].compact.map(&:downcase).uniq.map(&:freeze)
       end
       
       # This is to provide helpful suggestions on long words.

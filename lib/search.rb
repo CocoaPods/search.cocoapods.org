@@ -5,6 +5,10 @@ class Search
   #
   include Picky
 
+  # We don't use the normal range character.
+  #
+  Query::Token.range_character = '^'
+
   attr_reader :index, :interface, :splitter
 
   def initialize pods
@@ -59,7 +63,7 @@ class Search
                :from => :mapped_name,
                :indexing => default_indexing.merge(
                  removes_characters: false, # We don't remove any characters.
-                 splits_text_on:     /[\s\-]/ # We split on fewer characters.
+                 splits_text_on:     /\s/ # We split on fewer characters.
                )
       category :author,
                similarity: few_similars,
@@ -93,14 +97,14 @@ class Search
                qualifiers: [:tag, :tags],
                tokenize: false
     end
-  
+    
     # Define a search over the books index.
     #
     @interface = Search.new index do
       searching substitutes_characters_with: CharacterSubstituters::WestEuropean.new, # Normalizes special user input, Ä -> Ae, ñ -> n etc.
                 removes_characters: false, # We don't remove characters.
                 stopwords:          stopwords,
-                splits_text_on:     /[\s\/\-\&]+/
+                splits_text_on:     /\s/
 
       boost [:name, :author]  => +2,
             [:name]           => +3,
