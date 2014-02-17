@@ -56,14 +56,23 @@ class Search
       
       # Note: Add more categories.
       #
+      # category :id,
+      #          partial: no_partial,
+      #          qualifiers: [:id],
+      #          :from => :indexed_id,
+      #          :indexing => default_indexing.merge(
+      #            removes_characters: false,
+      #            splits_text_on: /\./
+      #          )
+      
       category :name,
                similarity: few_similars,
                partial: full_partial,
                qualifiers: [:name, :pod],
                :from => :mapped_name,
                :indexing => default_indexing.merge(
-                 removes_characters: false, # We don't remove any characters.
-                 splits_text_on:     /\s/ # We split on fewer characters.
+                 removes_characters: false,
+                 splits_text_on:     /\s/
                )
       category :author,
                similarity: few_similars,
@@ -101,11 +110,13 @@ class Search
     # Define a search over the books index.
     #
     @interface = Search.new index do
-      searching substitutes_characters_with: CharacterSubstituters::WestEuropean.new, # Normalizes special user input, Ä -> Ae, ñ -> n etc.
-                removes_characters: false, # We don't remove characters.
+      searching substitutes_characters_with: CharacterSubstituters::WestEuropean.new,
+                removes_characters: false,
                 stopwords:          stopwords,
                 splits_text_on:     /\s/
-
+      
+      ignore :id
+      
       boost [:name, :author]  => +2,
             [:name]           => +3,
             [:tags]           => +1,
@@ -122,6 +133,13 @@ class Search
             [:platform, :name, :summary] => -3,
             [:platform, :summary]        => -3,
             [:platform, :dependencies]   => -4
+    end
+    
+    @facets_interface = Search.new index do
+      searching substitutes_characters_with: CharacterSubstituters::WestEuropean.new, # Normalizes special user input, Ä -> Ae, ñ -> n etc.
+                removes_characters: false, # We don't remove characters.
+                stopwords:          stopwords,
+                splits_text_on:     /\s/
     end
     
     @splitting_index = Index.new :splitting do
@@ -149,7 +167,7 @@ class Search
     
     @splitter = Picky::Splitters::Automatic.new @splitting_index[:split]
     
-    @facet_keys = @index.categories.map(&:name).sort - [:name, :author, :summary, :dependencies]
+    @facet_keys = @index.categories.map(&:name).sort - [:id, :name, :author, :summary, :version, :dependencies]
   end
   
   def reindex force = false
@@ -195,7 +213,7 @@ class Search
     options[:counts] = options[:counts] != 'false'
     
     keys.inject({}) do |result, key|
-      result[key] = @interface.facets key, options
+      result[key] = @facets_interface.facets key, options
       result
     end
   end

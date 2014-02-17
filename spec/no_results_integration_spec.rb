@@ -8,7 +8,7 @@ require 'picky-client/spec'
 describe 'Integration Tests' do
   
   def no_results
-    Picky::TestClient.new CocoapodSearch, :path => '/no_results.json'
+    @no_results ||= Picky::TestClient.new CocoapodSearch, :path => '/no_results.json'
   end
   
   it 'will return the right tag facets' do
