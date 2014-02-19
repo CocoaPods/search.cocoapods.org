@@ -51,7 +51,7 @@ class Master
       loop do
         # Wait for input from the child.
         #
-        IO.select([@child], nil, nil, 2) or next
+        IO.select([@child], nil) or next
         
         # Get the result and decide what to do.
         #
@@ -78,6 +78,18 @@ class Master
           # If we do not try in child, kill all.
           #
           kill_each_worker_except @try_in_child ? pid : 'nonexistent pid'
+          
+          # Wait until they are restarted.
+          #
+          # Note: Yes I know, a sleep statement.
+          # The issue is that the indexing process including
+          # clearing the indexes is done before the children
+          # respawn if we don't wait here. In some cases,
+          # the children respawn only just after the indexes
+          # have been cleared, resulting in empty indexes in
+          # the children!
+          #
+          sleep 1
         end
 
         # Fails hard on an error.
