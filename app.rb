@@ -162,34 +162,29 @@ class CocoapodSearch < Sinatra::Application
 
   # Code to reindex in the master.
   #
-  currently_indexing = false
   reindexer = Master.new try_in_child: false do |child|
-    unless currently_indexing
-      search.reindex true
+    search.reindex true
     
-      if ENV['TRACE_RUBY_OBJECT_ALLOCATION']
-        # Profiling.
-        #
-        # Analyze using:
-        # cat heap.json |
-        # ruby -rjson -ne ' obj = JSON.parse($_).values_at("file","line","type"); puts obj.join(":") if obj.first ' |
-        # sort      |
-        # uniq -c   |
-        # sort -n   |
-        # tail -20
-        #
-        GC.start full_mark: true, immediate_sweep: true
-        ObjectSpace.dump_all output: File.open('heap.json', 'w')
-      end
-    
-      # Hand over work to successor Unicorn master.
+    if ENV['TRACE_RUBY_OBJECT_ALLOCATION']
+      # Profiling.
       #
-      # Note: Not doing that currently as on Heroku, the restart in this manner does not work.
+      # Analyze using:
+      # cat heap.json |
+      # ruby -rjson -ne ' obj = JSON.parse($_).values_at("file","line","type"); puts obj.join(":") if obj.first ' |
+      # sort      |
+      # uniq -c   |
+      # sort -n   |
+      # tail -20
       #
-      # Process.kill 'TERM', Process.pid
-      
-      currently_indexing = false
+      GC.start full_mark: true, immediate_sweep: true
+      ObjectSpace.dump_all output: File.open('heap.json', 'w')
     end
+    
+    # Hand over work to successor Unicorn master.
+    #
+    # Note: Not doing that currently as on Heroku, the restart in this manner does not work.
+    #
+    # Process.kill 'TERM', Process.pid
   end
   
   # Get and post hooks for triggering index updates.
