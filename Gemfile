@@ -39,5 +39,5 @@ group :test do
   gem 'mocha', '~> 0.11.4'
   gem 'bacon'
   gem 'mocha-on-bacon'
-  gem 'prettybacon', :git => 'https://github.com/irrationalfab/PrettyBacon.git', :branch => 'master'
+  gem 'prettybacon', :git => 'https://github.com/irrationalfab/PrettyBacon.git', :branch => 'master', :require => 'pretty_bacon'
 end
