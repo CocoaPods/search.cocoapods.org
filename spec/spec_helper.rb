@@ -1,4 +1,4 @@
-ENV['RACK_ENV'] = 'test'
+ENV['RACK_ENV'] ||= 'test'
 
 require File.expand_path '../../lib/cocoapods.org', __FILE__
 
