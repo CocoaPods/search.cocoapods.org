@@ -1,15 +1,6 @@
-ENV['PICKY_ENV'] = 'test'
+ENV['RACK_ENV'] = 'test'
 
 require File.expand_path '../../lib/cocoapods.org', __FILE__
-
-# require 'pathname'
-# ROOT = Pathname.new File.expand_path('../../', __FILE__)
-# $:.unshift((ROOT + 'spec').to_s)
-
-require 'bundler/setup'
-require 'bacon'
-require 'mocha-on-bacon'
-require 'pretty_bacon'
 
 # Tell CocoaPods where the specs are found.
 #
