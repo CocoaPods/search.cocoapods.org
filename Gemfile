@@ -2,28 +2,37 @@ source 'http://rubygems.org'
 
 ruby '2.1.0'
 
+# Main gems used in all the application.
+#
 gem 'bundler'
+gem 'sinatra', :require => 'sinatra/base'
+gem 'cocoapods-core'
+gem 'picky', '~> 4.20.0'
+gem 'picky-client', '~> 4.20.0' # Needed for Picky::Convenience
 
+# Auxiliary gems to make Picky faster/better.
+#
+gem 'text'
+gem 'rack_fast_escape', '2009.06.24'
+gem 'yajl-ruby', :require => 'yajl'
+
+# Pure development gems.
+#
 group :development do
   gem 'rake'
   gem 'foreman'
 end
 
+# Pure production gems.
+#
 group :production do
-  gem 'rack'
-  gem 'rack_fast_escape', '2009.06.24'
-  gem 'text'
-  gem 'yajl-ruby', :require => 'yajl'
-  gem 'procrastinate'
-  gem 'cocoapods-core'
   gem 'unicorn'
-  gem 'sinatra'
-  gem 'picky', '~> 4.20.0'
-  gem 'picky-client', '~> 4.20.0'
   gem 'newrelic_rpm'
   gem 'gabba'
 end
 
+# Pure test gems.
+#
 group :test do
   gem 'rack-test'
   gem 'kicker'
