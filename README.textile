@@ -98,3 +98,8 @@ h5. API structure
 Tracks events related to which API is used.
 
 pods/search-format/data&format/-
+
+h5. Note
+
+Currently we use Gabba, a synchronous GA tracker (https://github.com/hybridgroup/gabba/issues/12).
+TODO Do asynchronous calls in a thread/process.
