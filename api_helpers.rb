@@ -113,9 +113,13 @@ CocoapodSearch.helpers do
   # More info here: https://github.com/floere/picky/wiki/Results-format-and-structure.
   #
   def picky_result search, pods, params, &rendering
-    results = search.interface.search params[:query], params[:amount] || params[:ids] || 20, params[:'start-at'] || params[:offset] || 0
+    query = params[:query]
+    
+    results = search.interface.search query, params[:amount] || params[:ids] || 20, params[:'start-at'] || params[:offset] || 0
     results = results.to_hash
     results.extend Picky::Convenience
+    
+    CocoapodSearch.track_search query, results.total
     
     results.amend_ids_with results.ids.map { |id| rendering.call pods[id] }
     
@@ -125,7 +129,12 @@ CocoapodSearch.helpers do
   # Returns a list style search result – just a list of results (in your rendered format).
   #
   def flat_result search, pods, params, &rendering
-    results = search.interface.search params[:query], params[:amount] || params[:ids] || 20, params[:'start-at'] || params[:offset] || 0
+    query = params[:query]
+    
+    results = search.interface.search query, params[:amount] || params[:ids] || 20, params[:'start-at'] || params[:offset] || 0
+    
+    CocoapodSearch.track_search query, results.total
+    
     results.ids.map { |id| rendering.call pods[id] }
   end
   

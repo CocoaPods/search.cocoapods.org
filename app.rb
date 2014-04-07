@@ -12,6 +12,10 @@ Picky.root = 'tmp'
 #
 class CocoapodSearch < Sinatra::Application
   
+  def self.analytics
+    @analytics ||= defined?(Gabba) && Gabba::Gabba.new('UA-29866548-5', 'cocoapods.org')
+  end
+  
   # Data container and search.
   #
   pods = Pods.new Pathname.new ENV['COCOAPODS_SPECS_PATH'] || './tmp/specs'
@@ -75,30 +79,35 @@ class CocoapodSearch < Sinatra::Application
   # Default endpoint returns the latest picky hash version.
   #
   api nil, :flat, :ids, :json, accept: ['*/*', 'text/json', 'application/json'] do
+    CocoapodSearch.track_format :search, :'default-flat/ids/json'
     json picky_result(search, pods.view, params) { |item| item[:id] }
   end
   
   # Returns a Picky style result with entries rendered as a hash.
   #
   api 1, :picky, :hash, :json, accept: ['application/vnd.cocoapods.org+picky.hash.json'] do
+    CocoapodSearch.track_format :search, :'picky/hash/json'
     json picky_result(search, pods.view, params) { |item| item }
   end
   
   # Returns a Picky style result with just ids as entries.
   #
   api 1, :picky, :ids, :json, accept: ['application/vnd.cocoapods.org+picky.ids.json'] do
+    CocoapodSearch.track_format :search, :'picky/ids/json'
     json picky_result(search, pods.view, params) { |item| item[:id] }
   end
   
   # Returns a flat list of results with entries rendered as a hash.
   #
   api 1, :flat, :hash, :json, accept: ['application/vnd.cocoapods.org+flat.hash.json'] do
+    CocoapodSearch.track_format :search, :'flat/hash/json'
     json flat_result(search, pods.view, params) { |item| item }
   end
   
   # Returns a flat list of ids.
   #
   api 1, :flat, :ids, :json, accept: ['application/vnd.cocoapods.org+flat.ids.json'] do
+    CocoapodSearch.track_format :search, :'flat/ids/json'
     json flat_result(search, pods.view, params) { |item| item[:id] }
   end
   
@@ -183,6 +192,7 @@ class CocoapodSearch < Sinatra::Application
       result[param.gsub(/\-/, '_').to_sym] = Integer(value) rescue value
       result
     end
+    CocoapodSearch.track_facets request
     body json search.facets normalized_params
   end
 
@@ -211,6 +221,18 @@ class CocoapodSearch < Sinatra::Application
     # Note: Not doing that currently as on Heroku, the restart in this manner does not work.
     #
     # Process.kill 'TERM', Process.pid
+  end
+  
+  # Tracking convenience methods.
+  #
+  def self.track_search query, total
+    analytics && analytics.event(:pods, :search, query, total)
+  end
+  def self.track_facets request
+    analytics && analytics.event(:pods, :facets, request.query_string)
+  end
+  def self.track_format type, format
+    analytics && analytics.event(:pods, :"#{type}-format", format)
   end
 
 end
