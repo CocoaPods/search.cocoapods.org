@@ -1,8 +1,4 @@
-require 'sinatra/base'
-require 'i18n'
-require 'picky'
-require 'picky-client' # Needed for Picky::Convenience.
-require 'cocoapods-core'
+Bundler.require
 
 # Loads the helper class for extracting the searched platform.
 #
