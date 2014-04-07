@@ -21,6 +21,7 @@ group :production do
   gem 'picky', '~> 4.20.0'
   gem 'picky-client', '~> 4.20.0'
   gem 'newrelic_rpm'
+  gem 'gabba'
 end
 
 group :test do
