@@ -84,35 +84,35 @@ class CocoapodSearch < Sinatra::Application
   # Default endpoint returns the latest picky hash version.
   #
   api nil, :flat, :ids, :json, accept: ['*/*', 'text/json', 'application/json'] do
-    CocoapodSearch.track_format :search, :'default-flat/ids/json'
+    CocoapodSearch.track_view request, :'default-flat/ids/json'
     json picky_result(search, pods.view, params) { |item| item[:id] }
   end
 
   # Returns a Picky style result with entries rendered as a hash.
   #
   api 1, :picky, :hash, :json, accept: ['application/vnd.cocoapods.org+picky.hash.json'] do
-    CocoapodSearch.track_format :search, :'picky/hash/json'
+    CocoapodSearch.track_view request, :'picky/hash/json'
     json picky_result(search, pods.view, params) { |item| item }
   end
 
   # Returns a Picky style result with just ids as entries.
   #
   api 1, :picky, :ids, :json, accept: ['application/vnd.cocoapods.org+picky.ids.json'] do
-    CocoapodSearch.track_format :search, :'picky/ids/json'
+    CocoapodSearch.track_view request, :'picky/ids/json'
     json picky_result(search, pods.view, params) { |item| item[:id] }
   end
 
   # Returns a flat list of results with entries rendered as a hash.
   #
   api 1, :flat, :hash, :json, accept: ['application/vnd.cocoapods.org+flat.hash.json'] do
-    CocoapodSearch.track_format :search, :'flat/hash/json'
+    CocoapodSearch.track_view request, :'flat/hash/json'
     json flat_result(search, pods.view, params) { |item| item }
   end
 
   # Returns a flat list of ids.
   #
   api 1, :flat, :ids, :json, accept: ['application/vnd.cocoapods.org+flat.ids.json'] do
-    CocoapodSearch.track_format :search, :'flat/ids/json'
+    CocoapodSearch.track_view request, :'flat/ids/json'
     json flat_result(search, pods.view, params) { |item| item[:id] }
   end
 
@@ -236,8 +236,8 @@ class CocoapodSearch < Sinatra::Application
   def self.track_facets request
     analytics && analytics.event(:pods, :facets, request.query_string)
   end
-  def self.track_format type, format
-    analytics && analytics.event(:pods, :"#{type}-format", format)
+  def self.track_view request, title
+    analytics && analytics.page_view(title, request.path)
   end
 
 end
