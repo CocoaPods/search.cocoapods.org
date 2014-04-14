@@ -13,8 +13,12 @@ Picky.root = 'tmp'
 class CocoapodSearch < Sinatra::Application
 
   def self.analytics
-    # @analytics ||=
-    defined?(Gabba) && Gabba::Gabba.new('UA-29866548-5', 'cocoapods.org')
+    if defined?(Gabba)
+      @analytics_counter ||= 0
+      @analytics = Gabba::Gabba.new('UA-29866548-5', 'cocoapods.org') if @analytics_counter % 100 == 0
+      @analytics_counter += 1
+    end
+    @analytics
   end
 
   # Data container and search.
