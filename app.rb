@@ -11,28 +11,29 @@ Picky.root = 'tmp'
 #  * Index update URL for the Github update hook.
 #
 class CocoapodSearch < Sinatra::Application
-  
+
   def self.analytics
-    @analytics ||= defined?(Gabba) && Gabba::Gabba.new('UA-29866548-5', 'cocoapods.org')
+    # @analytics ||=
+    defined?(Gabba) && Gabba::Gabba.new('UA-29866548-5', 'cocoapods.org')
   end
-  
+
   # Data container and search.
   #
   pods = Pods.new Pathname.new ENV['COCOAPODS_SPECS_PATH'] || './tmp/specs'
   search = Search.new pods
-  
+
   self.class.send :define_method, :prepare do |force = false|
     search.reindex force
   end
-  
+
   self.class.send :define_method, :dump_indexes do
     search.dump
   end
-  
+
   self.class.send :define_method, :load_indexes do
     search.load
   end
-  
+
   set :logging, false
 
   # search.cocoapods.org API 2.0
@@ -62,7 +63,7 @@ class CocoapodSearch < Sinatra::Application
   # Example:
   #   http://search.cocoapods.org/api/v1/pods.picky.hash.json?query=author:eloy&ids=20&offset=0
   #
-  
+
   # Machine based API:
   #
   # Example:
@@ -71,66 +72,66 @@ class CocoapodSearch < Sinatra::Application
   #   curl http://search.cocoapods.org/api/pods?query=test -H "Accept: application/vnd.cocoapods.org+flat.hash.json; version=1"
   #   curl http://search.cocoapods.org/api/pods?query=test -H "Accept: application/vnd.cocoapods.org+flat.ids.json; version=1"
   #
-  
+
   # Helpers used by the API.
   #
   require File.expand_path('../api_helpers', __FILE__)
-  
+
   # Default endpoint returns the latest picky hash version.
   #
   api nil, :flat, :ids, :json, accept: ['*/*', 'text/json', 'application/json'] do
     CocoapodSearch.track_format :search, :'default-flat/ids/json'
     json picky_result(search, pods.view, params) { |item| item[:id] }
   end
-  
+
   # Returns a Picky style result with entries rendered as a hash.
   #
   api 1, :picky, :hash, :json, accept: ['application/vnd.cocoapods.org+picky.hash.json'] do
     CocoapodSearch.track_format :search, :'picky/hash/json'
     json picky_result(search, pods.view, params) { |item| item }
   end
-  
+
   # Returns a Picky style result with just ids as entries.
   #
   api 1, :picky, :ids, :json, accept: ['application/vnd.cocoapods.org+picky.ids.json'] do
     CocoapodSearch.track_format :search, :'picky/ids/json'
     json picky_result(search, pods.view, params) { |item| item[:id] }
   end
-  
+
   # Returns a flat list of results with entries rendered as a hash.
   #
   api 1, :flat, :hash, :json, accept: ['application/vnd.cocoapods.org+flat.hash.json'] do
     CocoapodSearch.track_format :search, :'flat/hash/json'
     json flat_result(search, pods.view, params) { |item| item }
   end
-  
+
   # Returns a flat list of ids.
   #
   api 1, :flat, :ids, :json, accept: ['application/vnd.cocoapods.org+flat.ids.json'] do
     CocoapodSearch.track_format :search, :'flat/ids/json'
     json flat_result(search, pods.view, params) { |item| item[:id] }
   end
-  
+
   # Installs API for calls using Accept.
   #
   install_machine_api
-  
-  # Temporary for CocoaDocs till we separate out API & html 
+
+  # Temporary for CocoaDocs till we separate out API & html
   #
   # TODO Remove (ask orta).
   #
   get '/api/v1.5/pods/search' do
     cors_allow_all
-    
+
     results = search.interface.search params[:query], params[:amount] || params[:ids] || 20, params[:'start-at'] || params[:offset] || 0
     results = results.to_hash
     results.extend Picky::Convenience
-    
+
     results.amend_ids_with results.ids.map { |id| pods.view[id] }
-    
+
     json results.entries
   end
-  
+
   # Pod API code.
   #
   # TODO Remove -> Trunk will handle this.
@@ -146,29 +147,29 @@ class CocoapodSearch < Sinatra::Application
     # pod = pods.view[params[:name]]
     # pod && json(pod) || status(404) && body("Pod not found.")
   end
-  
+
   # Returns a JSON hash with helpful content with "no results" specific to cocoapods.org.
   #
   # TODO Move this into an API?
   #
   get '/no_results.json' do
     response["Access-Control-Allow-Origin"] = "*"
-    
+
     query = params[:query]
-    
+
     suggestions = {
       tag: search.index.facets(:tags)
     }
-    
+
     if query
       split = search.splitter.split query
       result = search.interface.search split.join(' '), 0, 0
       suggestions[:split] = [split, result.total]
     end
-    
+
     Yajl::Encoder.encode suggestions
   end
-  
+
   # Get and post hooks for triggering index updates.
   #
   [:get, :post].each do |type|
@@ -184,7 +185,7 @@ class CocoapodSearch < Sinatra::Application
       end
     end
   end
-  
+
   # Experimental APIs.
   #
   get '/api/v1/pods.facets.json' do
@@ -200,7 +201,7 @@ class CocoapodSearch < Sinatra::Application
   #
   reindexer = Master.new try_in_child: false do |child|
     search.reindex true
-    
+
     if ENV['TRACE_RUBY_OBJECT_ALLOCATION']
       # Profiling.
       #
@@ -215,14 +216,14 @@ class CocoapodSearch < Sinatra::Application
       GC.start full_mark: true, immediate_sweep: true
       ObjectSpace.dump_all output: File.open('heap.json', 'w')
     end
-    
+
     # Hand over work to successor Unicorn master.
     #
     # Note: Not doing that currently as on Heroku, the restart in this manner does not work.
     #
     # Process.kill 'TERM', Process.pid
   end
-  
+
   # Tracking convenience methods.
   #
   def self.track_search query, total
