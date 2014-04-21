@@ -174,22 +174,6 @@ class CocoapodSearch < Sinatra::Application
     Yajl::Encoder.encode suggestions
   end
 
-  # Get and post hooks for triggering index updates.
-  #
-  [:get, :post].each do |type|
-    send type, "/post-receive-hook/#{ENV['HOOK_PATH']}" do
-      begin
-        reindexer.run 'reindex'
-
-        status 200
-        body "REINDEXING"
-      rescue StandardError => e
-        status 500
-        body e.message
-      end
-    end
-  end
-
   # Experimental APIs.
   #
   get '/api/v1/pods.facets.json' do
@@ -226,6 +210,22 @@ class CocoapodSearch < Sinatra::Application
     # Note: Not doing that currently as on Heroku, the restart in this manner does not work.
     #
     # Process.kill 'TERM', Process.pid
+  end
+
+  # Get and post hooks for triggering index updates.
+  #
+  [:get, :post].each do |type|
+    send type, "/post-receive-hook/#{ENV['HOOK_PATH']}" do
+      begin
+        reindexer.run 'reindex'
+
+        status 200
+        body "REINDEXING"
+      rescue StandardError => e
+        status 500
+        body e.message
+      end
+    end
   end
 
   # Tracking convenience methods.
