@@ -5,7 +5,7 @@
 class Master
 
   class CouldNotRunError < StandardError; end
-  
+
   # The :try_in_child option determines if work is pre-run in a child
   # before running it in a master. This makes the server
   # more resistant against errors from the code that is run.
@@ -19,7 +19,7 @@ class Master
     @work = work
     start_master_process_thread
   end
-  
+
   # First tries to reindex in the child, and if
   # successful, sends a message to the parent to
   # do work there.
@@ -52,33 +52,33 @@ class Master
         # Wait for input from the child.
         #
         IO.select([@child], nil) or next
-        
+
         # Get the result and decide what to do.
         #
         # Note: Currently we do exactly one thing.
         #
-        
+
         # Get all data up and including ;;;.
         #
         result = @child.gets ';;;'
-        
+
         # Get the child's PID and the message.
         #
         pid, message = eval result
         case message
         when 'reindex' # TODO This is currently hardcoded, but needs to be dynamic.
           STDOUT.puts "Trying to run work in MASTER."
-          
+
           # Try work in the master.
           #
           try_run
-          
+
           # Kill all kids except the one we already successfully reindexed.
           #
           # If we do not try in child, kill all.
           #
           kill_each_worker_except @try_in_child ? pid : 'nonexistent pid'
-          
+
           # Wait until they are restarted.
           #
           # Note: Yes I know, a sleep statement.
@@ -112,7 +112,7 @@ class Master
   rescue Errno::ESRCH
     remove_worker wpid
   end
-  
+
   # Unicorn-specific helper methods.
   #
   def worker_pids
@@ -121,13 +121,13 @@ class Master
   def remove_worker wpid
     worker = Unicorn::HttpServer::WORKERS.delete(wpid) and worker.tmp.close rescue nil
   end
-  
+
   # Kills itself, but still answering the current request honorably.
   #
   def harakiri
     Process.kill :QUIT, Process.pid
   end
-  
+
   # Write the parent.
   #
   # Note: The ;;; is the end marker for the message.
@@ -135,7 +135,7 @@ class Master
   def write_parent message
     @parent.write "#{[Process.pid, message]};;;"
   end
-  
+
   # Close the child if it isn't yet closed.
   #
   def close_child
