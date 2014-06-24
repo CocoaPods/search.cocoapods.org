@@ -1,16 +1,15 @@
+require 'json'
 require File.expand_path '../version', __FILE__
 
 # Only for reading purposes.
 #
 class Pod < Sequel::Model(:pods)
   one_to_many :versions
+  
+  plugin :timestamps
 
   # Index specific methods.
   #
-
-  def id
-    name
-  end
 
   def mapped_name
     split_name.join ' '
@@ -20,23 +19,51 @@ class Pod < Sequel::Model(:pods)
     versions.map &:name
   end
   
+  def authors
+    specification['authors'] || {}
+  end
+  
   def mapped_authors
-    spec_authors = specification.authors
+    spec_authors = authors
     spec_authors && spec_authors.keys.join(' ') || ''
-  rescue Pod::Informative, StandardError, SyntaxError
+  rescue StandardError, SyntaxError
     ''
+  end
+  
+  def dependencies
+    specification.dependencies.map(&:name)
   end
   
   def mapped_dependencies
-    specification.dependencies.map(&:name).join ' '
-  rescue Pod::Informative, StandardError, SyntaxError
+    dependencies.join ' '
+  rescue StandardError, SyntaxError
     ''
   end
   
+  def homepage
+    specification['homepage']
+  end
+  
+  def platforms
+    (specification['platforms'] || {}).keys
+  end
+  
   def mapped_platform
-    specification.available_platforms.map(&:name).sort.join(' ')
-  rescue Pod::Informative, StandardError, SyntaxError
+    platforms.join(' ')
+  rescue StandardError, SyntaxError
     '' # i.e. never found.
+  end
+  
+  def summary
+    (specification['summary'] || [])[0..139]
+  end
+  
+  def source
+    specification['source'] || {}
+  end
+  
+  def recursive_subspecs
+    []
   end
   
   # Summary with words already contained in
@@ -44,9 +71,13 @@ class Pod < Sequel::Model(:pods)
   # multiple results.
   #
   def mapped_summary
-    specification.summary[0..139]
-  rescue Pod::Informative, StandardError, SyntaxError
+    summary
+  rescue StandardError, SyntaxError
     ''
+  end
+  
+  def documentation_url
+    specification['documentation_url']
   end
   
   def specification_json
@@ -135,7 +166,7 @@ class Pod < Sequel::Model(:pods)
   }
   def tags
     specification.summary.downcase.scan(/\b(#{@@tags.join('|')})\w*\b/).flatten.uniq
-  rescue Pod::Informative, StandardError, SyntaxError
+  rescue StandardError, SyntaxError
     []
   end
   

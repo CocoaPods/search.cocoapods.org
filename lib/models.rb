@@ -1,3 +1,4 @@
+ENV['RACK_ENV'] ||= 'production'
 ENV['DATABASE_URL'] ||= "postgres://localhost/trunk_cocoapods_org_#{ENV['RACK_ENV']}"
 DB = Sequel.connect ENV['DATABASE_URL']
 

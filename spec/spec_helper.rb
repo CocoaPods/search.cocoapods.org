@@ -1,10 +1,32 @@
-ENV['RACK_ENV'] ||= 'test'
+# Load DB.
+#
+if ENV['LOAD_TEST_DB']
+  `pg_restore --verbose --clean --no-acl --no-owner -h localhost -d trunk_cocoapods_org_test spec/trunk.dump`
+end
+
+ENV['RACK_ENV'] = 'test'
 
 require File.expand_path '../../lib/cocoapods.org', __FILE__
 
 # Tell CocoaPods where the specs are found.
 #
 ENV['COCOAPODS_SPECS_PATH'] = './spec/data'
+
+class Bacon::Context
+  def test_controller!(app)
+    extend Rack::Test::Methods
+
+    singleton_class.send(:define_method, :app) { app }
+    singleton_class.send(:define_method, :response_doc) { Nokogiri::HTML(last_response.body) }
+  end
+
+  alias_method :run_requirement_before_sequel, :run_requirement
+  def run_requirement(description, spec)
+    Sequel::Model.db.transaction(:rollback => :always) do
+      run_requirement_before_sequel(description, spec)
+    end
+  end
+end
 
 Picky::Loader.load_application
 

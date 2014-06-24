@@ -13,8 +13,15 @@ class Pods
   
   # Pods are ordered by name.
   #
+  # TODO: Remove limit.
+  #
   def each &block
-    Pod.order(:name).each &block
+    pods = Pod.limit(200).order(:name)
+    if block_given?
+      pods.each &block
+    else
+      pods.all
+    end
   end
   
   def reset
@@ -42,16 +49,16 @@ class Pods
       #
       @view[id] = {
         :id => id,
-        :platforms => specification.available_platforms.map(&:name).to_a,
-        :version => pod.versions.first.to_s,
-        :summary => specification.summary[0..139].to_s, # Cut down to 140 characters. TODO Duplicated code. See set.rb.
-        :authors => specification.authors.to_hash,
-        :link => specification.homepage.to_s,
-        :source => specification.source.to_hash,
-        :subspecs => specification.recursive_subspecs.map(&:to_s),
+        :platforms => pod.platforms,
+        :version => pod.mapped_versions.first.to_s,
+        :summary => pod.mapped_summary,
+        :authors => pod.authors,
+        :link => pod.homepage.to_s,
+        :source => pod.source,
+        :subspecs => pod.recursive_subspecs.map(&:to_s),
         :tags => pod.tags.to_a
       }
-      documentation_url = specification.documentation_url
+      documentation_url = pod.documentation_url
       @view[id][:documentation_url] = documentation_url if documentation_url
       
       # TODO Remove ASAP.

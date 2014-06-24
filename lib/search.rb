@@ -46,6 +46,8 @@ class Search
       #
       source { pods.each }
       
+      id :name
+      
       # We use the pod names as ids (as strings).
       #
       key_format :to_s
@@ -148,6 +150,8 @@ class Search
       # Use the cocoapods-specs repo for the data.
       #
       source { pods.each }
+      
+      id :name
       
       # We use the pod names as ids (as strings).
       #
