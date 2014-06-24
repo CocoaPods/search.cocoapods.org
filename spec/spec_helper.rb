@@ -12,15 +12,6 @@ Picky::Loader.load_application
 #
 Picky.logger = Picky::Loggers::Silent.new
 
-# Make Core shut up.
-#
-module Pod::CoreUI
-  def self.puts(*)
-  end
-  def self.warn(*)
-  end
-end
-
 def categories_of results
   results.allocations.map do |allocation|
     allocation[3].map { |combination| combination[0] }
