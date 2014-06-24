@@ -13,8 +13,8 @@ class Pods
   
   # Pods are ordered by name.
   #
-  def pods
-    Pod.order(:name)
+  def each &block
+    Pod.order(:name).each &block
   end
   
   def reset
@@ -32,7 +32,7 @@ class Pods
   
     # Content to render.
     #
-    pods.each do |pod|
+    each do |pod|
       id            = pod.name.dup.to_s
       specification = pod.specification
 
