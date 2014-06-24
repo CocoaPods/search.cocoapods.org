@@ -11,14 +11,10 @@ class Pods
     @view_dump_file = File.join Picky.root, 'view.dump'
   end
   
-  # Sets are ordered by name.
+  # Pods are ordered by name.
   #
-  def sets
-    @sets ||= Pod::Source.new(path).
-      pod_sets.
-      sort_by { |set| set.name }. # Search result order.
-      select { |set| set.specification rescue nil }. # Filter breaking specs. Here we are not interested in why they fail.
-      map { |set| Pod::Specification::WrappedSet.new set } # Wrap and add convenience methods.
+  def pods
+    Pod.order(:name)
   end
   
   def reset
@@ -36,9 +32,9 @@ class Pods
   
     # Content to render.
     #
-    sets.each do |set|
-      id            = set.name.dup.to_s
-      specification = set.specification
+    pods.each do |pod|
+      id            = pod.name.dup.to_s
+      specification = pod.specification
 
       # Picky is destructive with the given data
       # strings, which is why we dup the content
@@ -47,22 +43,20 @@ class Pods
       @view[id] = {
         :id => id,
         :platforms => specification.available_platforms.map(&:name).to_a,
-        :version => set.versions.first.to_s,
+        :version => pod.versions.first.to_s,
         :summary => specification.summary[0..139].to_s, # Cut down to 140 characters. TODO Duplicated code. See set.rb.
         :authors => specification.authors.to_hash,
         :link => specification.homepage.to_s,
         :source => specification.source.to_hash,
         :subspecs => specification.recursive_subspecs.map(&:to_s),
-        :tags => set.tags.to_a,
-        :deprecated => specification.deprecated?,
-        :deprecated_in_favor_of => specification.deprecated_in_favor_of
+        :tags => pod.tags.to_a
       }
       documentation_url = specification.documentation_url
       @view[id][:documentation_url] = documentation_url if documentation_url
       
       # TODO Remove ASAP.
       #
-      @specs[set.name] = specification
+      @specs[pod.name] = specification
     end
   end
   
