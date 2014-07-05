@@ -23,7 +23,7 @@ describe 'Integration Tests' do
 
   # Testing a count of results.
   #
-  ok { pods.search('on:ios 1.0.0').total.should == 45 }
+  ok { pods.search('on:ios 1.0.0').total.should == 103 }
   
   # Testing the format.
   #
@@ -33,7 +33,7 @@ describe 'Integration Tests' do
 
   # Testing a specific order of result ids.
   #
-  ok { pods.search('on:osx ki').ids.should == ["ADNKit", "AFKissXMLRequestOperation", "AFKissXMLRequestOperation@aceontech", "AFKissXMLRequestOperation@tonyzonghui"] }
+  ok { pods.search('on:osx ki').ids.should == ["ADNKit", "AFKissXMLRequestOperation", "AFKissXMLRequestOperation@aceontech", "AFKissXMLRequestOperation@tonyzonghui", "AZAppearanceKit", "AppKitActor"] }
   
   # Speed.
   #
@@ -44,7 +44,7 @@ describe 'Integration Tests' do
 
   # Similarity on author.
   #
-  ok { pods.search('on:ios allan~').ids.should == ["AFS3Client"] }
+  ok { pods.search('on:ios allan~').ids.should == ["AQGridView", "AFS3Client"] }
   
   # Partial version search.
   #
@@ -69,7 +69,7 @@ describe 'Integration Tests' do
   #
   # Platform is only found when fully mentioned (i.e. no partial).
   #
-  ok { pods.search('platform:osx').total.should == 34 }
+  ok { pods.search('platform:osx').total.should == 74 }
   ok { pods.search('platform:os').total.should == 0 }
   ok { pods.search('platform:o').total.should == 0 }
   
@@ -95,7 +95,7 @@ describe 'Integration Tests' do
   
   expected_dependencies = ["KeenClient"]
   
-  ok { pods.search('dependency:afnetworking').ids.should == expected_dependencies }
+  ok { pods.search('dependency:AVOSCloud').ids.should == expected_dependencies }
   ok { pods.search('dependencies:JSONKit').ids.should == expected_dependencies }
   ok { pods.search('depends:JSONKit').ids.should == expected_dependencies }
   ok { pods.search('using:JSONKit').ids.should == expected_dependencies }

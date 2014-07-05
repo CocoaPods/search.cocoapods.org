@@ -16,7 +16,7 @@ class Pods
   # TODO: Remove limit.
   #
   def each &block
-    pods = Pod.limit(200).order(:name)
+    pods = Pod.limit(1000).order(:name)
     if block_given?
       pods.each &block
     else
