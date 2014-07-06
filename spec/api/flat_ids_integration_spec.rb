@@ -48,6 +48,11 @@ describe 'Search Integration Tests' do
     require 'benchmark'
     Benchmark.realtime { pods.search('on:osx k* a') }.should < 0.005 # seconds
   end
+  
+  # Multiple results and uniqueness.
+  #
+  ok { pods.search('kiwi').should == ["Kiwi", "MockInject"] }
+  ok { pods.search('name:kiwi').should == ["Kiwi"] }
 
   # Similarity on author.
   #

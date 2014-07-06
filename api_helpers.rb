@@ -131,7 +131,10 @@ CocoapodSearch.helpers do
   def flat_result search, pods, params, &rendering
     query = params[:query]
     
-    results = search.interface.search query, params[:amount] || params[:ids] || 20, params[:'start-at'] || params[:offset] || 0
+    results = search.interface.search query,
+      params[:amount] || params[:ids] || 20,
+      params[:'start-at'] || params[:offset] || 0,
+      unique: true
     
     CocoapodSearch.track_search query, results.total
     
