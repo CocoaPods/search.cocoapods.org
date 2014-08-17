@@ -1,4 +1,15 @@
 GIT
+  remote: https://github.com/CocoaPods/Core.git
+  revision: b997f050f65b2823bbf3539308206b1b0e630932
+  branch: master
+  specs:
+    cocoapods-core (0.33.1)
+      activesupport (>= 3.2.15)
+      fuzzy_match (~> 2.0.4)
+      json_pure (~> 1.8)
+      nap (~> 0.8.0)
+
+GIT
   remote: https://github.com/irrationalfab/PrettyBacon.git
   revision: eaf7e6c786fd5ccc6fb88e943bf7c5e6c27569a3
   branch: master
@@ -13,11 +24,6 @@ GEM
       i18n (~> 0.6, >= 0.6.4)
       multi_json (~> 1.0)
     bacon (1.2.0)
-    cocoapods-core (0.29.0)
-      activesupport (>= 3.2.15, < 4)
-      fuzzy_match (~> 2.0.4)
-      json_pure (~> 1.8)
-      nap (~> 0.5)
     dotenv (0.9.0)
     ffi (1.9.3)
     foreman (0.63.0)
@@ -41,7 +47,7 @@ GEM
     mocha-on-bacon (0.2.1)
       mocha (>= 0.9.8)
     multi_json (1.8.4)
-    nap (0.6.0)
+    nap (0.8.0)
     newrelic_rpm (3.7.2.192)
     notify (0.5.2)
     picky (4.20.1)
@@ -86,7 +92,7 @@ PLATFORMS
 DEPENDENCIES
   bacon
   bundler
-  cocoapods-core
+  cocoapods-core!
   foreman
   gabba
   kicker
