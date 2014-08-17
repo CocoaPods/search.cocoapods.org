@@ -23,7 +23,7 @@ describe 'Integration Tests' do
 
   # Testing a count of results.
   #
-  ok { pods.search('on:ios 1.0.0').total.should == 66 }
+  ok { pods.search('on:ios 1.0.0').total.should == 65 }
   
   # Testing the format.
   #
