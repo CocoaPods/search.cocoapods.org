@@ -53,7 +53,9 @@ class Pods
         :link => specification.homepage.to_s,
         :source => specification.source.to_hash,
         :subspecs => specification.recursive_subspecs.map(&:to_s),
-        :tags => set.tags.to_a
+        :tags => set.tags.to_a,
+        :deprecated => specification.deprecated?,
+        :deprecated_in_favor_of => specification.deprecated_in_favor_of
       }
       documentation_url = specification.documentation_url
       @view[id][:documentation_url] = documentation_url if documentation_url
