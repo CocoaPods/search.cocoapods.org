@@ -13,12 +13,12 @@ describe 'Search Integration Tests' do
   
   ok do
     get '/api/v1/pods.facets.json', {}
-    Yajl.load(last_response.body).should == {"platform"=>{"ios"=>318, "osx"=>109}, "tags"=>{"serialization"=>3, "json"=>10, "view"=>43, "controller"=>23, "button"=>5, "notification"=>3, "image"=>15, "communication"=>1, "api"=>16, "table"=>6, "http"=>7, "progress"=>4, "layout"=>4, "network"=>5, "alert"=>3, "test"=>2, "manager"=>4, "navigation"=>5, "rest"=>3, "picker"=>4, "client"=>8, "logging"=>7, "parser"=>3, "xml"=>1, "authentication"=>1, "gesture"=>3, "text"=>2, "analytics"=>1}}
+    Yajl.load(last_response.body).should == {"platform"=>{"ios"=>317, "osx"=>109}, "tags"=>{"serialization"=>3, "json"=>10, "view"=>43, "controller"=>23, "button"=>5, "notification"=>3, "image"=>15, "communication"=>1, "api"=>16, "table"=>6, "http"=>7, "progress"=>4, "layout"=>4, "network"=>5, "alert"=>3, "test"=>2, "manager"=>4, "navigation"=>5, "rest"=>3, "picker"=>4, "client"=>8, "logging"=>7, "parser"=>3, "xml"=>1, "authentication"=>1, "gesture"=>3, "text"=>2, "analytics"=>1}}
   end
   
   ok do
     get '/api/v1/pods.facets.json', { only: 'platform' }
-    Yajl.load(last_response.body).should == {"platform"=>{"ios"=>318, "osx"=>109}}
+    Yajl.load(last_response.body).should == {"platform"=>{"ios"=>317, "osx"=>109}}
   end
   
   ok do
@@ -28,7 +28,7 @@ describe 'Search Integration Tests' do
   
   ok do
     get '/api/v1/pods.facets.json', { except: 'tags' }
-    Yajl.load(last_response.body).should == {"platform"=>{"ios"=>318, "osx"=>109}}
+    Yajl.load(last_response.body).should == {"platform"=>{"ios"=>317, "osx"=>109}}
   end
   
   ok do
