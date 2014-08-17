@@ -23,5 +23,6 @@
     "ios": "7.0"
   },
   "requires_arc": true,
-  "frameworks": "QuartzCore"
+  "frameworks": "QuartzCore",
+  "deprecated": true
 }
