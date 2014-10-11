@@ -115,7 +115,7 @@ CocoapodSearch.helpers do
   def picky_result search, pods, params, &rendering
     query = params[:query]
     
-    results = search.search query, params[:amount] || params[:ids] || 20, params[:'start-at'] || params[:offset] || 0
+    results = search.search query, params[:amount] || params[:ids] || 25, params[:'start-at'] || params[:offset] || 0
     results = results.to_hash
     results.extend Picky::Convenience
     
@@ -132,7 +132,7 @@ CocoapodSearch.helpers do
     query = params[:query]
     
     results = search.search query,
-      params[:amount] || params[:ids] || 20,
+      params[:amount] || params[:ids] || 25,
       params[:'start-at'] || params[:offset] || 0,
       unique: true
     
