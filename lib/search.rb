@@ -190,6 +190,27 @@ class Search
     GC.start full_mark: true, immediate_sweep: true
   end
   
+  #
+  #
+  def search query, amount, offset, options = {}
+    tokens = interface.tokenized query
+    results = interface.search_with tokens, amount.to_i, offset.to_i, query, options[:unique]
+    
+    # Promote exact result to top of allocation if it's a single word.
+    #
+    if tokens.size == 1
+      text = tokens.first.text
+      results.allocations.each do |allocation|
+        if found = allocation.ids.find { |id| id.downcase == text }
+          allocation.ids.delete found
+          allocation.ids.unshift found
+        end
+      end
+    end
+    
+    results
+  end
+  
   def load
     @index.load
     @pods.load
