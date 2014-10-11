@@ -107,10 +107,6 @@ class Search
                tokenize: false
     end
     
-    # Exact results are found first.
-    #
-    @index.extend Picky::Results::ExactFirst
-    
     # Define a search over the books index.
     #
     @interface = Search.new index do
