@@ -190,20 +190,28 @@ class Search
     GC.start full_mark: true, immediate_sweep: true
   end
   
+  # Wrap the search to artificially promote
+  # Exact hits.
   #
+  # TODO Move to Picky and allow modifications of search results
+  # on pre-result formatting.
   #
+  EXACT_SEARCH_RANGE = 100
   def search query, amount, offset, options = {}
+    amount = amount.to_i
     tokens = interface.tokenized query
-    results = interface.search_with tokens, amount.to_i, offset.to_i, query, options[:unique]
+    results = interface.search_with tokens, amount + EXACT_SEARCH_RANGE, offset.to_i, query, options[:unique]
     
     # Promote exact result to top of allocation if it's a single word.
     #
     if tokens.size == 1
       text = tokens.first.text
       results.allocations.each do |allocation|
-        if found = allocation.ids.find { |id| id.downcase == text }
-          allocation.ids.delete found
-          allocation.ids.unshift found
+        ids = allocation.ids
+        if found = ids.find { |id| id.downcase == text }
+          ids.delete found
+          ids.unshift found
+          ids.slice! amount, EXACT_SEARCH_RANGE
         end
       end
     end
