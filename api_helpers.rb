@@ -52,7 +52,7 @@ CocoapodSearch.helpers do
               type: "integer",
               description: "How many result ids and items should be returned with the result.",
               required: false,
-              default: 20
+              default: 25
             },
             offset: {
               type: "integer",
