@@ -44,9 +44,9 @@ class Search
       
       # Use the cocoapods-specs repo for the data.
       #
-      source { pods.each }
+      source { pods }
       
-      id :name
+      id :id
       
       # We use the pod names as ids (as strings).
       #
@@ -149,9 +149,9 @@ class Search
       
       # Use the cocoapods-specs repo for the data.
       #
-      source { pods.each }
+      source { pods }
       
-      id :name
+      id :id
       
       # We use the pod names as ids (as strings).
       #
