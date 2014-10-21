@@ -13,7 +13,10 @@ gem 'picky-client', '~> 4.22.0' # Needed for Picky::Convenience
 # Database.
 #
 gem 'pg'
-gem 'sequel'
+gem 'dm-core',             '>= 1.3.0.beta', require: true, git: 'https://github.com/technology-astronauts/dm-core.git'
+gem 'dm-do-adapter',       '>= 1.3.0.beta', require: true
+gem 'dm-postgres-adapter', '>= 1.3.0.beta', require: true
+gem 'flounder'
 
 # Auxiliary gems to make Picky faster/better.
 #
