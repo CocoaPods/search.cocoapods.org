@@ -1,0 +1,17 @@
+ENV['RACK_ENV'] ||= 'production'
+ENV['DATABASE_URL'] ||= "postgres://localhost/trunk_cocoapods_org_#{ENV['RACK_ENV']}"
+
+#
+#
+uri = DataObjects::URI::parse(ENV['DATABASE_URL'])
+options = {}
+[:host, :port, :user, :password].each { |key|
+  val = uri.send(key)
+  options[key] = val if val }
+if socket_dir=ENV['POSTGRES_UNIX_SOCKET']
+  App.logger.debug "Using unix socket connection for flounder. (#{socket_dir})"
+  options[:host] = socket_dir
+end
+options[:dbname] = uri.path[1..-1]
+
+DB = Flounder.connect options
