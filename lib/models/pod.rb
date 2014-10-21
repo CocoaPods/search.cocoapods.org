@@ -1,12 +1,46 @@
 require 'json'
-require File.expand_path '../version', __FILE__
 
 # Only for reading purposes.
 #
-class Pod < Sequel::Model(:pods)
-  one_to_many :versions
+class Pod
   
-  plugin :timestamps
+  attr_reader :row
+  
+  extend Forwardable
+  
+  # Forward entities.
+  #
+  def_delegators :row, :pod, :version, :commit
+  
+  # Forward attributes.
+  #
+  def_delegators :pod, :id, :name, :version
+  
+  def initialize row
+    @row = row
+  end
+
+  def self.entity
+    Domain.pods
+  end
+  
+  # Use e.g. Pod.find.where(…).all
+  #
+  def self.find
+    entity.
+      join(Domain.versions).on(:id => :pod_id).anchor.
+      join(Domain.commits).on(:id => :pod_version_id).hoist
+  end
+  
+  #
+  #
+  def self.all
+    yield(find).map(&modelify_block)
+  end
+  
+  def self.modelify_block
+    ->(pod) { new pod }
+  end
 
   # Index specific methods.
   #
