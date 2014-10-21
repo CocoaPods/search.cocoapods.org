@@ -14,7 +14,8 @@ require File.expand_path '../pod/specification/wrapped_set', __FILE__
 
 # Load master child communication.
 #
-require File.expand_path '../models', __FILE__
+require File.expand_path '../db', __FILE__
+require File.expand_path '../domain', __FILE__
 
 # Load pods data container.
 #
