@@ -13,14 +13,14 @@ class Pods
   
   # Pods are ordered by name.
   #
-  # TODO: Remove limit.
+  # TODO Remove limit.
   #
   def each &block
-    pods = Pod.limit(1000).order(:name)
+    pods = Pod.all { |pods| pods.limit(1000).order_by(:name.asc) }
     if block_given?
       pods.each &block
     else
-      pods.all
+      pods.all.each
     end
   end
   
