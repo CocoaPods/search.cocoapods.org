@@ -40,7 +40,7 @@ before_fork do |server, worker|
       # Is my parent actually that unicorn?
       #
       if old_unicorn_pid == parent_pid
-        
+
         # Patricide go!
         #
         Process.kill 'WINCH', parent_pid
