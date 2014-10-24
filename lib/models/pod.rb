@@ -227,7 +227,7 @@ class Pod
   end
   
   def to_h
-    {
+    h = {
       :id => name, # We don't hand out ids.
       :platforms => platforms,
       :version => mapped_versions.first.to_s,
@@ -238,6 +238,8 @@ class Pod
       :subspecs => recursive_subspecs.map(&:to_s),
       :tags => tags.to_a
     }
+    h[:documentation_url] = pod.documentation_url if pod.documentation_url
+    h
   end
   
 end
