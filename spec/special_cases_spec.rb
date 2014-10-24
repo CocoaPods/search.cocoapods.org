@@ -32,7 +32,7 @@ describe 'Special Cases' do
   end
   
   it 'will correctly find something split on -' do
-    special_cases.search('name:mkmapview"').should == ['MKMapView+AttributionView']
+    special_cases.search('name:mkmapview"').should == ["MKMapView+AttributionView", "MKMapView-ZoomLevel", "MKMapView-Blocks"]
     special_cases.search('name:AttributionView"').should == ['MKMapView+AttributionView']
     special_cases.search('name:mkmapview name:attributionview').should == ['MKMapView+AttributionView']
   end
