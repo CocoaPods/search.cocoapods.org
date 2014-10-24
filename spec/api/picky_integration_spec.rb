@@ -60,9 +60,9 @@ describe 'Integration Tests' do
   
   # Platform constrained search (platforms are AND-ed).
   #
-  ok { pods.search('on:osx abmultiton').ids.should == ["ABMultiton"] }
-  ok { pods.search('on:ios abmultiton').ids.should == ["ABMultiton"] }
-  ok { pods.search('on:osx on:ios abmultiton').ids.should == ["ABMultiton"] }
+  ok { pods.search('on:osx abmultiton').ids.should == [1285] } # ["ABMultiton"] }
+  ok { pods.search('on:ios abmultiton').ids.should == [1285] } # ["ABMultiton"] }
+  ok { pods.search('on:osx on:ios abmultiton').ids.should == [1285] } # ["ABMultiton"] }
   
   # Category boosting.
   #
