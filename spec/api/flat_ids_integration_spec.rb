@@ -42,7 +42,7 @@ describe 'Search Integration Tests' do
   
   # Testing a count of results.
   #
-  ok { pods.search('on:ios 1.0.0', ids: 1000).size.should == 70 }
+  ok { pods.search('on:ios 1.0.0', ids: 10000).size.should == 70 }
 
   # Speed.
   #
