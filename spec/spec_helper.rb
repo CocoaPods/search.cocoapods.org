@@ -51,5 +51,5 @@ Config = RbConfig
 
 # Load and prepare everything for the spec(s).
 #
-Picky::Indexes.index if ARGV[0] == 'index'
+# Picky::Indexes.index
 Picky::Indexes.load
