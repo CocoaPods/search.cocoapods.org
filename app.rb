@@ -143,9 +143,8 @@ class CocoapodSearch < Sinatra::Application
   # Currently only used by @fjcaetano for badge handling.
   #
   get '/api/v1/pod/:name.json' do
-    p Pod.all { |pods| pods.where(Domain.pods[:name] => params[:name]) }
-    pod = Pod.all { |pods| pods.where(Domain.pods[:name] => params[:name]) }.first
-    p pod.to_h
+    pods = Pod.all { |pods| pods.where(Domain.pods[:name] => params[:name]) }
+    pod = pods.first
     pod && json(pod.to_h) || status(404) && body("Pod not found.")
   end
 
