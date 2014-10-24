@@ -15,7 +15,7 @@ describe 'Integration Tests' do
   
   # Testing the format.
   #
-  ok { pod_ids.search('on:osx abmulti').entries.should == ['ABMultiton'] }
+  ok { pod_ids.search('on:osx abmultito').entries.should == ['ABMultiton'] }
   
   def pods
     @pods ||= Picky::TestClient.new CocoapodSearch, :path => '/api/v1/pods.picky.hash.json'
@@ -23,7 +23,7 @@ describe 'Integration Tests' do
 
   # Testing a count of results.
   #
-  ok { pods.search('on:ios 1.0.0').total.should == 103 }
+  ok { pods.search('on:ios 1.0.0').total.should == 1448 }
   
   # Testing the format.
   #
@@ -33,7 +33,9 @@ describe 'Integration Tests' do
 
   # Testing a specific order of result ids.
   #
-  ok { pods.search('on:osx ki').ids.should == ["ADNKit", "AFKissXMLRequestOperation", "AFKissXMLRequestOperation@aceontech", "AFKissXMLRequestOperation@tonyzonghui", "AZAppearanceKit", "AppKitActor"] }
+  ok { pods.search('on:osx ki').ids.should == [1282, 819, 3836, 2158, 372, 3829, 30, 554, 5657, 3783, 5107, 4939, 3753, 614, 6064, 4552, 3113, 4940, 2108, 3404]
+    # ["ADNKit", "AFKissXMLRequestOperation", "AFKissXMLRequestOperation@aceontech", "AFKissXMLRequestOperation@tonyzonghui", "AZAppearanceKit", "AppKitActor"]
+  }
   
   # Speed.
   #
@@ -44,15 +46,17 @@ describe 'Integration Tests' do
 
   # Similarity on author.
   #
-  ok { pods.search('on:ios allan~').ids.should == ["AQGridView", "AFS3Client"] }
+  ok { pods.search('on:ios allan~').ids.should == [3163, 5391, 13, 4847]
+    # was ["AQGridView", "AFS3Client"]
+  }
   
   # Partial version search.
   #
-  ok { pods.search('on:osx abmultiton 2').ids.should == ['ABMultiton'] }
-  ok { pods.search('on:osx abmultiton 2.').ids.should == ['ABMultiton'] }
-  ok { pods.search('on:osx abmultiton 2.0').ids.should == ['ABMultiton'] }
-  ok { pods.search('on:osx abmultiton 2.0.').ids.should == ['ABMultiton'] }
-  ok { pods.search('on:osx abmultiton 2.0.5').ids.should == ['ABMultiton'] }
+  ok { pods.search('on:osx abmultiton 2').ids.should == [1285] } # ['ABMultiton'] }
+  ok { pods.search('on:osx abmultiton 2.').ids.should == [1285] } # ['ABMultiton'] }
+  ok { pods.search('on:osx abmultiton 2.0').ids.should == [1285] } # ['ABMultiton'] }
+  ok { pods.search('on:osx abmultiton 2.0.').ids.should == [1285] } # ['ABMultiton'] }
+  ok { pods.search('on:osx abmultiton 2.0.5').ids.should == [1285] } # ['ABMultiton'] }
   
   # Platform constrained search (platforms are AND-ed).
   #

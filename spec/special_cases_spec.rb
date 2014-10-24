@@ -16,7 +16,7 @@ describe 'Special Cases' do
   end
   
   it 'will correctly find JSONKit' do
-    special_cases.search('JSONKit very high library').should == ['JSONKit']
+    special_cases.search('JSONKit very high library').should == ["JSONKit", "JSONKit-NoWarning"]
   end
   
   it 'will correctly find something split on @' do

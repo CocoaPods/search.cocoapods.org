@@ -85,35 +85,35 @@ class CocoapodSearch < Sinatra::Application
   #
   api nil, :flat, :ids, :json, accept: ['*/*', 'text/json', 'application/json'] do
     CocoapodSearch.track_view request, :'default-flat/ids/json'
-    json picky_result(search, pods.view, params) { |item| item[:id] }
+    json picky_result(search, pods, params) { |item| p [0, item]; p item.name }
   end
 
   # Returns a Picky style result with entries rendered as a hash.
   #
   api 1, :picky, :hash, :json, accept: ['application/vnd.cocoapods.org+picky.hash.json'] do
     CocoapodSearch.track_view request, :'picky/hash/json'
-    json picky_result(search, pods.view, params) { |item| item }
+    json picky_result(search, pods, params) { |item| p [1, item]; item.to_h }
   end
 
   # Returns a Picky style result with just ids as entries.
   #
   api 1, :picky, :ids, :json, accept: ['application/vnd.cocoapods.org+picky.ids.json'] do
     CocoapodSearch.track_view request, :'picky/ids/json'
-    json picky_result(search, pods.view, params) { |item| item[:id] }
+    json picky_result(search, pods, params) { |item| p [2, item]; item.name }
   end
 
   # Returns a flat list of results with entries rendered as a hash.
   #
   api 1, :flat, :hash, :json, accept: ['application/vnd.cocoapods.org+flat.hash.json'] do
     CocoapodSearch.track_view request, :'flat/hash/json'
-    json flat_result(search, pods.view, params) { |item| item }
+    json flat_result(search, pods, params) { |item| p [3, item]; item.to_h }
   end
 
   # Returns a flat list of ids.
   #
   api 1, :flat, :ids, :json, accept: ['application/vnd.cocoapods.org+flat.ids.json'] do
     CocoapodSearch.track_view request, :'flat/ids/json'
-    json flat_result(search, pods.view, params) { |item| item[:id] }
+    json flat_result(search, pods, params) { |item| p [4, item]; item.name }
   end
 
   # Installs API for calls using Accept.
@@ -131,7 +131,7 @@ class CocoapodSearch < Sinatra::Application
     results = results.to_hash
     results.extend Picky::Convenience
 
-    results.amend_ids_with results.ids.map { |id| pods.view[id] }
+    results.amend_ids_with pods[results.ids].map { |pod| pod.to_h }
 
     json results.entries
   end
@@ -143,13 +143,10 @@ class CocoapodSearch < Sinatra::Application
   # Currently only used by @fjcaetano for badge handling.
   #
   get '/api/v1/pod/:name.json' do
-    pod = pods.specs[params[:name]]
-    pod && json(pod.to_hash) || status(404) && body("Pod not found.")
-
-    # TODO Replace at least with:
-    #
-    # pod = pods.view[params[:name]]
-    # pod && json(pod) || status(404) && body("Pod not found.")
+    p Pod.all { |pods| pods.where(Domain.pods[:name] => params[:name]) }
+    pod = Pod.all { |pods| pods.where(Domain.pods[:name] => params[:name]) }.first
+    p pod.to_h
+    pod && json(pod.to_h) || status(404) && body("Pod not found.")
   end
 
   # Returns a JSON hash with helpful content with "no results" specific to cocoapods.org.

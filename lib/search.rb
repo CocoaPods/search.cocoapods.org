@@ -48,9 +48,9 @@ class Search
       
       id :id
       
-      # We use the pod names as ids (as strings).
+      # We use the ids.
       #
-      key_format :to_s
+      key_format :to_i
       
       # The default indexing. Override in category options.
       #
@@ -78,7 +78,7 @@ class Search
                )
       category :author,
                similarity: few_similars,
-               partial: full_partial,
+               partial: no_partial,
                qualifiers: [:author, :authors, :written, :writer, :by],
                :from => :mapped_authors,
                :indexing => default_indexing.merge(
@@ -151,7 +151,9 @@ class Search
       #
       source { pods }
       
-      id :id
+      # We use the ids.
+      #
+      key_format :to_i
       
       # We use the pod names as ids (as strings).
       #

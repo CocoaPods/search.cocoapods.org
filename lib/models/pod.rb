@@ -10,11 +10,11 @@ class Pod
   
   # Forward entities.
   #
-  def_delegators :row, :pod, :version, :commit
+  def_delegators :row, :pod, :versions, :commits
   
   # Forward attributes.
   #
-  def_delegators :pod, :id, :name, :version
+  def_delegators :pod, :id, :name
   
   def initialize row
     @row = row
@@ -28,8 +28,12 @@ class Pod
   #
   def self.find
     entity.
-      join(Domain.versions).on(:id => :pod_id).anchor.
-      join(Domain.commits).on(:id => :pod_version_id).hoist
+      join(Domain.versions).on(:id => :pod_id).
+      project(
+        *Domain.pods.fields,
+        'array_agg(pod_versions.name) AS versions'
+      ).
+      group_by(Domain.pods[:id])
   end
   
   #
@@ -50,7 +54,13 @@ class Pod
   end
 
   def mapped_versions
-    versions.map &:name
+    versions.gsub(/[\{\}]/, '').split(',')
+  end
+  
+  def last_version
+    mapped_versions.
+      # sort_by { |v| Gem::Version.new(v) }.
+      last
   end
   
   def authors
@@ -80,6 +90,8 @@ class Pod
   
   def platforms
     (specification['platforms'] || {}).keys
+  rescue
+    specification['platforms']
   end
   
   def mapped_platform
@@ -114,12 +126,21 @@ class Pod
     specification['documentation_url']
   end
   
+  # Just load the latest specification data.
+  #
   def specification_json
-    # TODO: Also sort Commits correctly.
-    #
-    version = versions.sort_by { |v| Gem::Version.new(v.name) }.last
-    commit = version.commits.last if version
-    commit.specification_data if commit
+    result = Domain.commits.
+      join(Domain.versions).on(:pod_version_id => :id).anchor.
+      join(Domain.pods).on(:pod_id => :id).hoist.
+      project(*Domain.commits[:specification_data]).
+      where(
+        Domain.pods[:id] => id,
+        Domain.versions[:name] => last_version
+      ).
+      limit(1).
+      order_by(Domain.commits[:pod_version_id]).
+      first
+    result.commit.specification_data if result
   end
 
   def specification
@@ -199,9 +220,24 @@ class Pod
     xml
   }
   def tags
+    p specification.summary.downcase.scan(/\b(#{@@tags.join('|')})\w*\b/).flatten.uniq
     specification.summary.downcase.scan(/\b(#{@@tags.join('|')})\w*\b/).flatten.uniq
   rescue StandardError, SyntaxError
     []
+  end
+  
+  def to_h
+    {
+      :id => name, # We don't hand out ids.
+      :platforms => platforms,
+      :version => mapped_versions.first.to_s,
+      :summary => mapped_summary,
+      :authors => authors,
+      :link => homepage.to_s,
+      :source => source,
+      :subspecs => recursive_subspecs.map(&:to_s),
+      :tags => tags.to_a
+    }
   end
   
 end
