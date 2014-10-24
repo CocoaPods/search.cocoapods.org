@@ -16,8 +16,9 @@ describe 'Search Integration Tests' do
   describe 'expected successes' do
     extend Rack::Test::Methods
     
-    query            = 'easy'
-    expected_results = 311
+    query                  = 'easy'
+    expected_results       = 20
+    expected_total_results = 311
 
     [
       # Convenience.
@@ -70,7 +71,7 @@ describe 'Search Integration Tests' do
         when %r{flat}
           Yajl::Parser.parse(last_response.body).size.should == expected_results
         else
-          Yajl::Parser.parse(last_response.body)['total'].should == expected_results
+          Yajl::Parser.parse(last_response.body)['total'].should == expected_total_results
         end
       end
     end
