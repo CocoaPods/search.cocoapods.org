@@ -28,7 +28,7 @@ describe 'Search Integration Tests' do
   
   # Testing the format.
   #
-  ok { pods.search('on:osx kiwi').should == ['Kiwi'] }
+  ok { pods.search('on:osx kiwi').should == ["Kiwi", "MSSpec"] }
   
   # Error cases.
   #
@@ -38,7 +38,7 @@ describe 'Search Integration Tests' do
   
   # This is how results should look - a flat list of ids.
   #
-  ok { pods.search('on:ios 1.0.0', ids: 200).should == ["JASidePanels", "JCDHTTPConnection", "JCNotificationBannerPresenter", "JDDroppableView", "JDFlipNumberView", "JGAFImageCache", "JJCachedAsyncViewDrawing", "JTTargetActionBlock", "JWT", "JXHTTP", "KGNoise", "KISSmetrics", "KJSimpleBinding", "KTOneFingerRotationGestureRecognizer", "KYArcTab", "KYCircleMenu", "Kiwi", "KoaPullToRefresh", "LARSBar", "LARSTorch", "LAWalkthrough", "LKbadgeView", "LLRoundSwitch", "LUKeychainAccess", "Lambda-Alert", "Lasagna-Cookies", "LastFm", "LibComponentLogging-Crashlytics", "LineKit", "LinqToObjectiveC", "LocationPickerView", "MACachedImageView", "MACalendarUI", "MACircleProgressIndicator", "MBAlertView", "MBMvc", "MCDateExtensions", "MCSwipeTableViewCell", "MCUIColorUtils", "MEActionSheet", "MEAlertView", "MFLicensing", "MFMathLib", "MGBox2", "MGSplitViewController", "MHPrettyDate", "MIHGradientView", "MJGFoundation", "MKMapViewZoom", "MKReachableOperationQueue", "MLScreenshot", "MLUIColorAdditions", "MMRecord", "MNColorKit", "MNStaticTableViewController", "MPNotificationView", "MRCurrencyRound", "MSPullToRefreshController", "MSVCLeakHunter", "MTMultipleViewController", "MTRecursiveKVC", "MessagePack", "MessagesTableViewController", "Mixpanel", "RMStepsController", "libechonest"] }
+  ok { pods.search('on:ios 1.0.0', ids: 200).should == ["JASidePanels", "JCDHTTPConnection", "JCNotificationBannerPresenter", "JDDroppableView", "JDFlipNumberView", "JGAFImageCache", "JJCachedAsyncViewDrawing", "JTTargetActionBlock", "JWT", "JXHTTP", "KGNoise", "KISSmetrics", "KJSimpleBinding", "KTOneFingerRotationGestureRecognizer", "KYArcTab", "KYCircleMenu", "Kiwi", "KoaPullToRefresh", "LARSBar", "LARSTorch", "LAWalkthrough", "LKbadgeView", "LLRoundSwitch", "LUKeychainAccess", "Lambda-Alert", "Lasagna-Cookies", "LastFm", "LibComponentLogging-Crashlytics", "LineKit", "LinqToObjectiveC", "LocationPickerView", "MACachedImageView", "MACalendarUI", "MACircleProgressIndicator", "MBAlertView", "MBMvc", "MCDateExtensions", "MCSwipeTableViewCell", "MCUIColorUtils", "MEActionSheet", "MEAlertView", "MFLicensing", "MFMathLib", "MGBox2", "MGSplitViewController", "MHPrettyDate", "MIHGradientView", "MJGFoundation", "MKMapViewZoom", "MKReachableOperationQueue", "MLScreenshot", "MLUIColorAdditions", "MMRecord", "MNColorKit", "MNStaticTableViewController", "MPNotificationView", "MRCurrencyRound", "MSPullToRefreshController", "MSVCLeakHunter", "MTMultipleViewController", "MTRecursiveKVC", "MapBox", "MessagePack", "MessagesTableViewController", "Mixpanel", "libechonest"] }
   
   # Testing a count of results.
   #

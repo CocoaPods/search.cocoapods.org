@@ -121,7 +121,7 @@ CocoapodSearch.helpers do
     
     CocoapodSearch.track_search query, results.total
     
-    results.amend_ids_with results.ids.map { |id| rendering.call pods[id] }
+    results.amend_ids_with pods[results.ids].map &rendering
     
     results
   end
@@ -138,7 +138,7 @@ CocoapodSearch.helpers do
     
     CocoapodSearch.track_search query, results.total
     
-    results.ids.map { |id| rendering.call pods[id] }
+    pods[results.ids].map &rendering
   end
   
   # Allow all origins.

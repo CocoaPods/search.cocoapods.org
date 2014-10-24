@@ -17,7 +17,7 @@ describe 'Search Integration Tests' do
     extend Rack::Test::Methods
     
     query            = 'easy'
-    expected_results = 12
+    expected_results = 311
 
     [
       # Convenience.

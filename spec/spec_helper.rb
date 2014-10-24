@@ -22,7 +22,7 @@ class Bacon::Context
 
   alias_method :run_requirement_before_sequel, :run_requirement
   def run_requirement(description, spec)
-    Sequel::Model.db.transaction(:rollback => :always) do
+    Domain.transaction do
       run_requirement_before_sequel(description, spec)
     end
   end
@@ -32,7 +32,7 @@ Picky::Loader.load_application
 
 # Silence Picky.
 #
-Picky.logger = Picky::Loggers::Silent.new
+Picky.logger = Picky::Loggers::Verbose.new
 
 def categories_of results
   results.allocations.map do |allocation|
@@ -51,6 +51,5 @@ Config = RbConfig
 
 # Load and prepare everything for the spec(s).
 #
-Picky::Indexes.index
+Picky::Indexes.index if ARGV[0] == 'index'
 Picky::Indexes.load
-CocoapodSearch.prepare # Needed to load the data for the rendered search results.
