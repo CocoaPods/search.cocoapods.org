@@ -78,7 +78,7 @@ class Search
                )
       category :author,
                similarity: few_similars,
-               partial: no_partial,
+               partial: full_partial,
                qualifiers: [:author, :authors, :written, :writer, :by],
                :from => :mapped_authors,
                :indexing => default_indexing.merge(
