@@ -18,7 +18,7 @@ describe 'Search Integration Tests' do
     
     query                  = 'easy'
     expected_results       = 20
-    expected_total_results = 311
+    expected_total_results = 253
 
     [
       # Convenience.
