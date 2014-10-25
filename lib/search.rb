@@ -189,7 +189,7 @@ class Search
     @index.reindex
     @splitting_index.reindex
     
-    @pods.reset
+    # @pods.reset
     
     # If we don't do this, Ruby will continue grabbing more and more memory.
     #

@@ -8,8 +8,8 @@ class Pods
     # @path  = pods_path
     # @view  = {}
     # @specs = {}
-    # @view_dump_file = File.join Picky.root, 'view.dump'
-    @cache = {}
+    @view_dump_file = File.join Picky.root, 'view.dump'
+    reset
   end
   
   # Pods are ordered by name.
@@ -34,11 +34,11 @@ class Pods
     all_ids.map { |id| @cache[id] }
   end
   
-  # def reset
-  #   @sets = nil
-  # end
-  #
-  # def prepare force = false
+  def reset
+    @cache = {}
+  end
+  
+  def prepare force = false
   #   # Getting the data.
   #   #
   #   if force || empty?
@@ -76,22 +76,22 @@ class Pods
   #     #
   #     @specs[pod.id] = specification
   #   end
-  # end
-  #
-  # def load
-  #   if File.exists? @view_dump_file
-  #     File.open @view_dump_file, 'r' do |file|
-  #       @view = Marshal.load file
-  #     end
-  #   end
-  # end
-  #
-  # def dump
-  #   File.open @view_dump_file, 'w' do |file|
-  #     Marshal.dump @view, file
-  #   end
-  # end
-  #
+  end
+ 
+  def load
+    # if File.exists? @view_dump_file
+    #   File.open @view_dump_file, 'r' do |file|
+    #     @cache = Marshal.load file
+    #   end
+    # end
+  end
+
+  def dump
+    # File.open @view_dump_file, 'w' do |file|
+    #   Marshal.dump @cache, file
+    # end
+  end
+ 
   # # Are there any specs to index?
   # #
   # def empty?
