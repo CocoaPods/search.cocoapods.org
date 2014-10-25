@@ -59,7 +59,7 @@ class Pod
   
   def last_version
     mapped_versions.
-      # sort_by { |v| Gem::Version.new(v) }.
+      sort_by { |v| Gem::Version.new(v) }.
       last
   end
   
@@ -75,7 +75,7 @@ class Pod
   end
   
   def dependencies
-    specification.dependencies.map(&:name)
+    specification['dependencies'].keys
   end
   
   def mapped_dependencies
@@ -220,8 +220,7 @@ class Pod
     xml
   }
   def tags
-    p specification.summary.downcase.scan(/\b(#{@@tags.join('|')})\w*\b/).flatten.uniq
-    specification.summary.downcase.scan(/\b(#{@@tags.join('|')})\w*\b/).flatten.uniq
+    specification['summary'].downcase.scan(/\b(#{@@tags.join('|')})\w*\b/).flatten.uniq
   rescue StandardError, SyntaxError
     []
   end
@@ -230,7 +229,7 @@ class Pod
     h = {
       :id => name, # We don't hand out ids.
       :platforms => platforms,
-      :version => mapped_versions.first.to_s,
+      :version => last_version,
       :summary => mapped_summary,
       :authors => authors,
       :link => homepage.to_s,
