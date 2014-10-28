@@ -120,22 +120,6 @@ class CocoapodSearch < Sinatra::Application
   #
   install_machine_api
 
-  # Temporary for CocoaDocs till we separate out API & html
-  #
-  # TODO Remove (ask orta).
-  #
-  get '/api/v1.5/pods/search' do
-    cors_allow_all
-
-    results = search.interface.search params[:query], params[:amount] || params[:ids] || 20, params[:'start-at'] || params[:offset] || 0
-    results = results.to_hash
-    results.extend Picky::Convenience
-    
-    results.amend_ids_with repo[results.ids].map { |pod| pod.to_h }
-
-    json results.entries
-  end
-
   # Pod API code.
   #
   # TODO Remove -> Trunk will handle this.
