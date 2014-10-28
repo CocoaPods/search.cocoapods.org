@@ -8,38 +8,29 @@ class Master
 
   # The :try_in_child option determines if work is pre-run in a child
   # before running it in a master. This makes the server
-  # more resistant against errors from the code that is run.
+  # more resistent against errors from the code that is run.
   #
   # The block work is a block that is called in the child/master.
   # it receives a true if it is a child index, a false if master.
   #
-  def initialize options = {}, &work
+  def initialize search
     @child, @parent = IO.pipe
-    @try_in_child = options[:try_in_child] != false
-    @work = work
+    @search = search
     start_master_process_thread
   end
 
-  # First tries to reindex in the child, and if
-  # successful, sends a message to the parent to
-  # do work there.
-  #
-  # Note: Currently one can only send 'reindex'.
+  # Sends a message to the parent to do work there.
   #
   # Note: This is the method one should use.
   #
-  def run message
+  def call action, message
     close_child # We close the child pipe lazily.
-    if @try_in_child
-      STDOUT.puts "Trying to run work in CHILD."
-      try_run # We may do a "try run".
-    end
-    write_parent message # Then we trigger reindexing in the parent.
-  rescue CouldNotRunError => e
-    # I need to die such that my broken state is never used.
-    #
-    STDOUT.puts "Child process #{Process.pid} performs harakiri because of errors in the 'try run'."
-    harakiri
+    write_parent action, message # Then we trigger reindexing in the parent.
+  # rescue CouldNotRunError => e
+  #   # I need to die such that my broken state is never used.
+  #   #
+  #   STDOUT.puts "Child process #{Process.pid} performs harakiri because of errors in the 'try run'."
+  #   harakiri
   end
 
   # This runs a thread that listens to child processes.
@@ -55,8 +46,6 @@ class Master
 
         # Get the result and decide what to do.
         #
-        # Note: Currently we do exactly one thing.
-        #
 
         # Get all data up and including ;;;.
         #
@@ -64,32 +53,15 @@ class Master
 
         # Get the child's PID and the message.
         #
-        pid, message = eval result
-        case message
-        when 'reindex' # TODO This is currently hardcoded, but needs to be dynamic.
-          STDOUT.puts "Trying to run work in MASTER."
-
-          # Try work in the master.
+        pid, action, message = eval result
+        case action
+        when 'search'
+          
+        when 'reindex'
+          # The message is a pod name.
           #
-          try_run
-
-          # Kill all kids except the one we already successfully reindexed.
-          #
-          # If we do not try in child, kill all.
-          #
-          kill_each_worker_except @try_in_child ? pid : 'nonexistent pid'
-
-          # Wait until they are restarted.
-          #
-          # Note: Yes I know, a sleep statement.
-          # The issue is that the indexing process including
-          # clearing the indexes is done before the children
-          # respawn if we don't wait here. In some cases,
-          # the children respawn only just after the indexes
-          # have been cleared, resulting in empty indexes in
-          # the children!
-          #
-          sleep 1
+          STDOUT.puts "Reindexing #{message} in MASTER."
+          try_indexing message
         end
 
         # Fails hard on an error.
@@ -132,8 +104,8 @@ class Master
   #
   # Note: The ;;; is the end marker for the message.
   #
-  def write_parent message
-    @parent.write "#{[Process.pid, message]};;;"
+  def write_parent action, message
+    @parent.write "#{[Process.pid, action, message]};;;"
   end
 
   # Close the child if it isn't yet closed.
@@ -144,12 +116,16 @@ class Master
 
   # Tries calling the work job in the child process or parent process.
   #
-  def try_run
+  def try_indexing name
     begin
-      @work.call @child.closed?
+      STDOUT.puts name
+      pod = Pod.all { |pods| pods.where(:name => name) }.first
+      @search.index.replace pod
+      STDOUT.puts "Reindexing #{name} in MASTER successful."
     rescue StandardError => e
       # Catch any error and reraise as a "could not run" error.
       #
+      STDOUT.puts "Reindexing #{name} in MASTER failed."
       raise CouldNotRunError.new
     end
   end

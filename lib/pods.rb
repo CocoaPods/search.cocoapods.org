@@ -17,7 +17,7 @@ class Pods
   # TODO Remove limit.
   #
   def each &block
-    pods = Pod.all { |pods| pods.order_by(:name.asc) }
+    pods = Pod.all { |pods| pods.limit(100).order_by(:name.asc) }
     if block_given?
       pods.each &block
     else
