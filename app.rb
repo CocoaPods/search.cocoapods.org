@@ -23,8 +23,8 @@ class CocoapodSearch < Sinatra::Application
 
   # Data container and search.
   #
-  pods = Pods.new Pathname.new ENV['COCOAPODS_SPECS_PATH'] || './tmp/specs'
-  search = Search.new pods
+  repo = Pods.new Pathname.new ENV['COCOAPODS_SPECS_PATH'] || './tmp/specs'
+  search = Search.new repo
 
   self.class.send :define_method, :prepare do |force = false|
     search.reindex force
@@ -85,35 +85,35 @@ class CocoapodSearch < Sinatra::Application
   #
   api nil, :flat, :ids, :json, accept: ['*/*', 'text/json', 'application/json'] do
     CocoapodSearch.track_view request, :'default-flat/ids/json'
-    json picky_result(search, pods, params) { |item| item.name }
+    json picky_result(search, repo, params) { |item| item.name }
   end
 
   # Returns a Picky style result with entries rendered as a hash.
   #
   api 1, :picky, :hash, :json, accept: ['application/vnd.cocoapods.org+picky.hash.json'] do
     CocoapodSearch.track_view request, :'picky/hash/json'
-    json picky_result(search, pods, params) { |item| item.to_h }
+    json picky_result(search, repo, params) { |item| item.to_h }
   end
 
   # Returns a Picky style result with just ids as entries.
   #
   api 1, :picky, :ids, :json, accept: ['application/vnd.cocoapods.org+picky.ids.json'] do
     CocoapodSearch.track_view request, :'picky/ids/json'
-    json picky_result(search, pods, params) { |item| item.name }
+    json picky_result(search, repo, params) { |item| item.name }
   end
 
   # Returns a flat list of results with entries rendered as a hash.
   #
   api 1, :flat, :hash, :json, accept: ['application/vnd.cocoapods.org+flat.hash.json'] do
     CocoapodSearch.track_view request, :'flat/hash/json'
-    json flat_result(search, pods, params) { |item| item.to_h }
+    json flat_result(search, repo, params) { |item| item.to_h }
   end
 
   # Returns a flat list of ids.
   #
   api 1, :flat, :ids, :json, accept: ['application/vnd.cocoapods.org+flat.ids.json'] do
     CocoapodSearch.track_view request, :'flat/ids/json'
-    json flat_result(search, pods, params) { |item| item.name }
+    json flat_result(search, repo, params) { |item| item.name }
   end
 
   # Installs API for calls using Accept.
@@ -130,8 +130,8 @@ class CocoapodSearch < Sinatra::Application
     results = search.interface.search params[:query], params[:amount] || params[:ids] || 20, params[:'start-at'] || params[:offset] || 0
     results = results.to_hash
     results.extend Picky::Convenience
-
-    results.amend_ids_with pods[results.ids].map { |pod| pod.to_h }
+    
+    results.amend_ids_with repo[results.ids].map { |pod| pod.to_h }
 
     json results.entries
   end
