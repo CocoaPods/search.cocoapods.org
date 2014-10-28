@@ -165,42 +165,61 @@ class CocoapodSearch < Sinatra::Application
     body json search.facets normalized_params
   end
 
-  # Code to reindex in the master.
+  # A message channel to the master process.
   #
-  reindexer = Master.new try_in_child: false do |child|
-    search.reindex true
-
-    if ENV['TRACE_RUBY_OBJECT_ALLOCATION']
-      # Profiling.
-      #
-      # Analyze using:
-      # cat heap.json |
-      # ruby -rjson -ne ' obj = JSON.parse($_).values_at("file","line","type"); puts obj.join(":") if obj.first ' |
-      # sort      |
-      # uniq -c   |
-      # sort -n   |
-      # tail -20
-      #
-      GC.start full_mark: true, immediate_sweep: true
-      ObjectSpace.dump_all output: File.open('heap.json', 'w')
-    end
-
-    # Hand over work to successor Unicorn master.
-    #
-    # Note: Not doing that currently as on Heroku, the restart in this manner does not work.
-    #
-    # Process.kill 'TERM', Process.pid
-  end
-
-  # Get and post hooks for triggering index updates.
+  master = Master.new search
+  # do |child|
+  #   search.reindex true
   #
+  #   if ENV['TRACE_RUBY_OBJECT_ALLOCATION']
+  #     # Profiling.
+  #     #
+  #     # Analyze using:
+  #     # cat heap.json |
+  #     # ruby -rjson -ne ' obj = JSON.parse($_).values_at("file","line","type"); puts obj.join(":") if obj.first ' |
+  #     # sort      |
+  #     # uniq -c   |
+  #     # sort -n   |
+  #     # tail -20
+  #     #
+  #     GC.start full_mark: true, immediate_sweep: true
+  #     ObjectSpace.dump_all output: File.open('heap.json', 'w')
+  #   end
+  #
+  #   # Hand over work to successor Unicorn master.
+  #   #
+  #   # Note: Not doing that currently as on Heroku, the restart in this manner does not work.
+  #   #
+  #   # Process.kill 'TERM', Process.pid
+  # end
+
+  # # Get and post hooks for triggering index updates.
+  # #
+  # [:get, :post].each do |type|
+  #   send type, "/post-receive-hook/#{ENV['HOOK_PATH']}" do
+  #     begin
+  #       master.run 'reindex'
+  #
+  #       status 200
+  #       body "REINDEXING"
+  #     rescue StandardError => e
+  #       status 500
+  #       body e.message
+  #     end
+  #   end
+  # end
+  
   [:get, :post].each do |type|
-    send type, "/post-receive-hook/#{ENV['HOOK_PATH']}" do
+    send type, "/hooks/trunk/:name" do # #{ENV['INCOMING_TRUNK_HOOK_PATH']}
       begin
-        reindexer.run 'reindex'
-
+        # data = JSON.parse(params['message'])
+        # name = data['pod']
+        name = params[:name]
+        
+        master.call 'reindex', name
+        
         status 200
-        body "REINDEXING"
+        body "REINDEXING #{name}"
       rescue StandardError => e
         status 500
         body e.message
