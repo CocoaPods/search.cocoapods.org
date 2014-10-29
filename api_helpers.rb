@@ -115,13 +115,15 @@ CocoapodSearch.helpers do
   def picky_result search, pods, params, &rendering
     query = params[:query]
     
-    results = Search.instance(Pods.instance).search query, params[:amount] || params[:ids] || 20, params[:'start-at'] || params[:offset] || 0
+    results = Search.instance.search query, params[:amount] || params[:ids] || 20, params[:'start-at'] || params[:offset] || 0
     results = results.to_hash
     results.extend Picky::Convenience
     
     CocoapodSearch.track_search query, results.total
     
-    results.amend_ids_with pods[results.ids].map &rendering
+    results.extend Picky::Convenience
+    
+    results.amend_ids_with pods.for(results.ids).map &rendering
     
     results
   end
@@ -131,14 +133,16 @@ CocoapodSearch.helpers do
   def flat_result search, pods, params, &rendering
     query = params[:query]
     
-    results = Search.instance(Pods.instance).search query,
+    results = Search.instance.search query,
       params[:amount] || params[:ids] || 20,
       params[:'start-at'] || params[:offset] || 0,
       unique: true
+      
+    results.extend Picky::Convenience
     
     CocoapodSearch.track_search query, results.total
     
-    pods[results.ids].map &rendering
+    pods.for(results.ids).map &rendering
   end
   
   # Allow all origins.

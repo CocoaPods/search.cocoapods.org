@@ -6,12 +6,9 @@ timeout           10
 worker_processes  3
 
 before_fork do |_, _|
-  Master.instance # For communication between parent/child processes.
+  Channel.instance # For communication between n worker - 1 search engine processes.
 end
 
 after_fork do |server, worker|
-  # Signal.trap 'TERM' do
-  #   puts 'Unicorn worker intercepting TERM and doing nothing. Wait for master to send QUIT'
-  # end
-  ::CHILD = true
+  CocoapodSearch.child = true
 end
