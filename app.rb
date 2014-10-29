@@ -12,19 +12,25 @@ Picky.root = 'tmp'
 #
 class CocoapodSearch < Sinatra::Application
 
-  def self.analytics
-    if defined?(Gabba)
-      @analytics_counter ||= 0
-      @analytics = Gabba::Gabba.new('UA-29866548-5', 'cocoapods.org') if @analytics_counter % 100 == 0
-      @analytics_counter += 1
+  class << self
+
+    attr_accessor :child
+
+    def analytics
+      if defined?(Gabba)
+        @analytics_counter ||= 0
+        @analytics = Gabba::Gabba.new('UA-29866548-5', 'cocoapods.org') if @analytics_counter % 100 == 0
+        @analytics_counter += 1
+      end
+      @analytics
     end
-    @analytics
+    
   end
 
   # Data container and search.
   #
   repo = Pods.new
-  search = Search.new repo
+  search = Search.new
 
   # self.class.send :define_method, :prepare do |force = false|
   #   search.reindex force
@@ -152,10 +158,6 @@ class CocoapodSearch < Sinatra::Application
     CocoapodSearch.track_facets request
     body json search.facets normalized_params
   end
-
-  # A message channel to the master process.
-  #
-  master = Master.instance
   
   [:get, :post].each do |type|
     send type, "/hooks/trunk/:name" do # #{ENV['INCOMING_TRUNK_HOOK_PATH']}
@@ -164,7 +166,7 @@ class CocoapodSearch < Sinatra::Application
         # name = data['pod']
         name = params[:name]
         
-        master.call 'reindex', name
+        Channel.instance.notify 'reindex', name
         
         status 200
         body "REINDEXING #{name}"

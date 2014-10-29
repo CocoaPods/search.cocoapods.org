@@ -12,7 +12,7 @@ require File.expand_path '../pod/specification', __FILE__
 #
 require File.expand_path '../pod/specification/wrapped_set', __FILE__
 
-# Load master child communication.
+# Load "models".
 #
 require File.expand_path '../db', __FILE__
 require File.expand_path '../domain', __FILE__
@@ -25,6 +25,6 @@ require File.expand_path '../pods', __FILE__
 #
 require File.expand_path '../search', __FILE__
 
-# Load master child communication.
+# Load worker - search engine process communication.
 #
-require File.expand_path '../master', __FILE__
+require File.expand_path '../channel', __FILE__

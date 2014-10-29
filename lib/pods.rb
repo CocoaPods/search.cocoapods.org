@@ -5,6 +5,10 @@ class Pods
     reset
   end
   
+  def reset
+    @cache = {}
+  end
+  
   def self.instance
     @instance ||= new
   end
@@ -24,15 +28,11 @@ class Pods
   
   # Load the ids, also uses a cache.
   #
-  def [] all_ids
+  def for all_ids
     cached_ids = all_ids.map { |id| pod = @cache[id]; pod && pod.id }.reject(&:nil?)
     loaded_pods = Pod.all { |pods| pods.where(Domain.pods[:id].in => (all_ids - cached_ids)) }
     loaded_pods.each { |pod| @cache[pod.id] = pod }
     all_ids.map { |id| @cache[id] }
-  end
-  
-  def reset
-    @cache = {}
   end
   
 end

@@ -11,9 +11,11 @@ class Search
 
   attr_reader :index, :interface, :splitter
 
-  def initialize pods
-    @pods = pods
-    
+  def self.instance
+    @instance ||= new
+  end
+
+  def initialize
     # http://nlp.stanford.edu/IR-book/html/htmledition/dropping-common-terms-stop-words-1.html
     #
     # "it" is a prefix but we still stopword it.
@@ -40,12 +42,6 @@ class Search
     # Define an index.
     #
     @index = Index.new :pods do
-      static
-      
-      # Use the cocoapods-specs repo for the data.
-      #
-      source { pods }
-      
       id :id
       
       # We use the ids.
@@ -145,12 +141,6 @@ class Search
     end
     
     @splitting_index = Index.new :splitting do
-      static
-      
-      # Use the cocoapods-specs repo for the data.
-      #
-      source { pods }
-      
       # We use the ids.
       #
       key_format :to_i
@@ -176,10 +166,6 @@ class Search
     @facet_keys = @index.categories.map(&:name).sort - [:id, :name, :author, :summary, :version, :dependencies]
   end
   
-  def self.instance pods
-    @instance ||= new(pods)
-  end
-  
   def full_index
     @pods.prepare force
     
@@ -193,7 +179,6 @@ class Search
     end
   end
   def replace pod
-    STDOUT.puts pod
     @index.replace pod
     @splitting_index.replace pod
   end
@@ -230,8 +215,8 @@ class Search
   #
   
   def search *args
-    if CHILD
-      Master.instance.call 'search', args
+    if CocoapodSearch.child
+      Channel.instance.call 'search', args
     else
       interface.search *args
     end
