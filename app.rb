@@ -23,20 +23,20 @@ class CocoapodSearch < Sinatra::Application
 
   # Data container and search.
   #
-  repo = Pods.new Pathname.new ENV['COCOAPODS_SPECS_PATH'] || './tmp/specs'
+  repo = Pods.new
   search = Search.new repo
 
-  self.class.send :define_method, :prepare do |force = false|
-    search.reindex force
-  end
-
-  self.class.send :define_method, :dump_indexes do
-    search.dump
-  end
-
-  self.class.send :define_method, :load_indexes do
-    search.load
-  end
+  # self.class.send :define_method, :prepare do |force = false|
+  #   search.reindex force
+  # end
+  #
+  # self.class.send :define_method, :dump_indexes do
+  #   search.dump
+  # end
+  #
+  # self.class.send :define_method, :load_indexes do
+  #   search.load
+  # end
 
   set :logging, false
 
@@ -120,18 +120,6 @@ class CocoapodSearch < Sinatra::Application
   #
   install_machine_api
 
-  # Pod API code.
-  #
-  # TODO Remove -> Trunk will handle this.
-  #
-  # Currently only used by @fjcaetano for badge handling.
-  #
-  get '/api/v1/pod/:name.json' do
-    pods = Pod.all { |pods| pods.where(Domain.pods[:name] => params[:name]) }
-    pod = pods.first
-    pod && json(pod.to_h) || status(404) && body("Pod not found.")
-  end
-
   # Returns a JSON hash with helpful content with "no results" specific to cocoapods.org.
   #
   # TODO Move this into an API?
@@ -167,47 +155,7 @@ class CocoapodSearch < Sinatra::Application
 
   # A message channel to the master process.
   #
-  master = Master.new search
-  # do |child|
-  #   search.reindex true
-  #
-  #   if ENV['TRACE_RUBY_OBJECT_ALLOCATION']
-  #     # Profiling.
-  #     #
-  #     # Analyze using:
-  #     # cat heap.json |
-  #     # ruby -rjson -ne ' obj = JSON.parse($_).values_at("file","line","type"); puts obj.join(":") if obj.first ' |
-  #     # sort      |
-  #     # uniq -c   |
-  #     # sort -n   |
-  #     # tail -20
-  #     #
-  #     GC.start full_mark: true, immediate_sweep: true
-  #     ObjectSpace.dump_all output: File.open('heap.json', 'w')
-  #   end
-  #
-  #   # Hand over work to successor Unicorn master.
-  #   #
-  #   # Note: Not doing that currently as on Heroku, the restart in this manner does not work.
-  #   #
-  #   # Process.kill 'TERM', Process.pid
-  # end
-
-  # # Get and post hooks for triggering index updates.
-  # #
-  # [:get, :post].each do |type|
-  #   send type, "/post-receive-hook/#{ENV['HOOK_PATH']}" do
-  #     begin
-  #       master.run 'reindex'
-  #
-  #       status 200
-  #       body "REINDEXING"
-  #     rescue StandardError => e
-  #       status 500
-  #       body e.message
-  #     end
-  #   end
-  # end
+  master = Master.instance
   
   [:get, :post].each do |type|
     send type, "/hooks/trunk/:name" do # #{ENV['INCOMING_TRUNK_HOOK_PATH']}

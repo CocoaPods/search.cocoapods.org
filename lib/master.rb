@@ -1,8 +1,14 @@
+require 'cod'
+
 # This is an interface that provides the user of
 # Picky with the possibility to change parameters
 # while the Application is running.
 #
 class Master
+  
+  def self.instance
+    @master ||= Master.new
+  end
 
   class CouldNotRunError < StandardError; end
 
@@ -13,9 +19,9 @@ class Master
   # The block work is a block that is called in the child/master.
   # it receives a true if it is a child index, a false if master.
   #
-  def initialize search
-    @child, @parent = IO.pipe
-    @search = search
+  def initialize
+    @up = Cod.pipe # For talking to the master process.
+    @down = Cod.pipe # For talking to a child process.
     start_master_process_thread
   end
 
@@ -24,13 +30,8 @@ class Master
   # Note: This is the method one should use.
   #
   def call action, message
-    close_child # We close the child pipe lazily.
-    write_parent action, message # Then we trigger reindexing in the parent.
-  # rescue CouldNotRunError => e
-  #   # I need to die such that my broken state is never used.
-  #   #
-  #   STDOUT.puts "Child process #{Process.pid} performs harakiri because of errors in the 'try run'."
-  #   harakiri
+    # close_child # We close the child pipe lazily.
+    write_parent action, message
   end
 
   # This runs a thread that listens to child processes.
@@ -39,24 +40,27 @@ class Master
     # This thread is implicitly stopped in the children.
     #
     Thread.new do
+      # Index the DB.
+      #
+      STDOUT.puts "Indexing DB in MASTER."
+      Search.instance.reindex
+      STDOUT.puts "Finished indexing DB in MASTER."
+      
       loop do
         # Wait for input from the child.
         #
-        IO.select([@child], nil) or next
-
-        # Get the result and decide what to do.
-        #
-
-        # Get all data up and including ;;;.
-        #
-        result = @child.gets ';;;'
-
-        # Get the child's PID and the message.
-        #
-        pid, action, message = eval result
+        down, pid, action, message = @up.get
+        STDOUT.puts [pid, action, message]
         case action
         when 'search'
-          
+          # The message is the parameters.
+          #
+          results = Search.instance(Pods.instance).search *message
+          begin
+            down.put results.to_hash
+          rescue StandardError => e
+            STDOUT.puts e.message
+          end
         when 'reindex'
           # The message is a pod name.
           #
@@ -70,57 +74,32 @@ class Master
     end
   end
 
-  # Taken from Unicorn.
-  #
-  def kill_each_worker_except pid
-    worker_pids.each do |wpid|
-      next if wpid == pid
-      kill_worker :KILL, wpid
-    end
-  end
-  def kill_worker signal, wpid
-    Process.kill signal, wpid
-    STDOUT.puts "Killing worker ##{wpid} with signal #{signal}."
-  rescue Errno::ESRCH
-    remove_worker wpid
-  end
-
-  # Unicorn-specific helper methods.
-  #
-  def worker_pids
-    Unicorn::HttpServer::WORKERS.keys
-  end
-  def remove_worker wpid
-    worker = Unicorn::HttpServer::WORKERS.delete(wpid) and worker.tmp.close rescue nil
-  end
-
-  # Kills itself, but still answering the current request honorably.
-  #
-  def harakiri
-    Process.kill :QUIT, Process.pid
-  end
-
   # Write the parent.
   #
-  # Note: The ;;; is the end marker for the message.
+  # Note: Sends itself so the parent can answer!
   #
   def write_parent action, message
-    @parent.write "#{[Process.pid, action, message]};;;"
+    p message
+    p [:up1, action, @up]
+    p [:down1, action, @down]
+    @up.put [@down, Process.pid, action, message]
+    p [:up2, action, @up]
+    p [:down2, action, @down]
+    @down.get
   end
 
   # Close the child if it isn't yet closed.
   #
-  def close_child
-    @child.close unless @child.closed?
-  end
+  # def close_child
+  #   @down.w.close # if @down.can_write?
+  # end
 
   # Tries calling the work job in the child process or parent process.
   #
   def try_indexing name
     begin
-      STDOUT.puts name
       pod = Pod.all { |pods| pods.where(:name => name) }.first
-      @search.index.replace pod
+      Search.instance.replace pod
       STDOUT.puts "Reindexing #{name} in MASTER successful."
     rescue StandardError => e
       # Catch any error and reraise as a "could not run" error.
