@@ -5,16 +5,4 @@ end
 
 require File.expand_path '../app', __FILE__
 
-#
-#
-CocoapodSearch.prepare
-
-# # On startup load the indexes, else create them.
-# #
-# begin
-#   # CocoapodSearch.load_indexes
-# rescue
-#   CocoapodSearch.prepare
-# end
-
 run CocoapodSearch

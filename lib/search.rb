@@ -176,24 +176,26 @@ class Search
     @facet_keys = @index.categories.map(&:name).sort - [:id, :name, :author, :summary, :version, :dependencies]
   end
   
-  def reindex force = false
-    @index.clear
-    @splitting_index.clear
-    
-    # If we don't do this, Ruby will continue grabbing more and more memory.
-    #
-    GC.start full_mark: true, immediate_sweep: true
-    
+  def self.instance pods
+    @instance ||= new(pods)
+  end
+  
+  def full_index
     @pods.prepare force
     
     @index.reindex
     @splitting_index.reindex
-    
-    # @pods.reset
-    
-    # If we don't do this, Ruby will continue grabbing more and more memory.
-    #
-    GC.start full_mark: true, immediate_sweep: true
+  end
+  
+  def reindex
+    Pods.instance.each do |pod|
+      replace pod
+    end
+  end
+  def replace pod
+    STDOUT.puts pod
+    @index.replace pod
+    @splitting_index.replace pod
   end
   
   def load
@@ -221,6 +223,17 @@ class Search
     keys.inject({}) do |result, key|
       result[key] = @facets_interface.facets key, options
       result
+    end
+  end
+  
+  # For child processes.
+  #
+  
+  def search *args
+    if CHILD
+      Master.instance.call 'search', args
+    else
+      interface.search *args
     end
   end
   
