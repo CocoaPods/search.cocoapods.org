@@ -10,6 +10,7 @@ gem 'sinatra', :require => 'sinatra/base'
 gem 'picky', '~> 4.22.0'
 gem 'picky-client', '~> 4.22.0' # Needed for Picky::Convenience
 gem 'procrastinate'
+gem 'cod'
 
 # Database.
 #
