@@ -27,56 +27,68 @@ class Channel
     fork do
       # Index the DB in the SE process.
       #
-      # TODO Move into loop.
-      #
-      STDOUT.puts "Indexing DB in INDEX PROCESS."
-      Search.instance.reindex
-      STDOUT.puts "Finished indexing DB in INDEX PROCESS."
       STDOUT.puts "Caching pods in INDEX PROCESS."
       Pods.instance.cache_all
       STDOUT.puts "Finished caching pods in INDEX PROCESS."
     
-      # TODO Before we enter the loop, we should empty the pipes.
-      #
+      pods_to_index = Pods.instance.each
     
       loop do
         # Wait for input from the child.
         #
-        action, parameters, worker = @to_engine.get
-        response = case action
-          when 'search'
-            # TODO Push into search.rb.
-            #
+        received = Cod.select(0.2, @to_engine)
+        if received
+          action, parameters, worker = received.get
+          response = case action
+            when 'search'
+              # TODO Push into search.rb.
+              #
             
-            sort = parameters.last.delete(:sort)
+              sort = parameters.last.delete(:sort)
             
-            # Search.
-            #
-            results = Search.instance.search *parameters
+              # Search.
+              #
+              results = Search.instance.search *parameters
             
-            # Sort results.
-            #
-            if sort
-              results.sort_by { |id| Pods.instance[id].send(sort) }
-            end
+              # Sort results.
+              #
+              if sort
+                results.sort_by { |id| Pods.instance[id].send(sort) }
+              end
             
-            begin
-              Hashie::Mash.new(results.to_hash)
-            rescue StandardError => e
-              STDERR.puts e.message
-            end
-          when 'reindex'
-            # The parameters are just a pod name.
-            #
-            STDOUT.puts "Reindexing #{message} in INDEX PROCESS."
-            try_indexing parameters
+              begin
+                Hashie::Mash.new(results.to_hash)
+              rescue StandardError => e
+                STDERR.puts e.message
+              end
+            when 'reindex'
+              # The parameters are just a pod name.
+              #
+              STDOUT.puts "Reindexing #{parameters} in INDEX PROCESS."
+              try_indexing parameters
+          end
+          worker.put response if worker
         end
-        worker.put response if worker
+        
+        # Index a few pods.
+        #
+        if pods_to_index.peek
+          10.times do
+            if pods_to_index.peek
+              pod = pods_to_index.next
+              # STDOUT.puts "Indexing #{pod.name}."
+              STDOUT.print ?.
+              Search.instance.replace pod
+            end
+          end
+        end
 
         # Fails hard on an error.
         #
       end
     end
+  rescue StandardError => e
+    puts e.message
   end
 
   # Write the search engine process,
