@@ -32,18 +32,6 @@ class CocoapodSearch < Sinatra::Application
   repo = Pods.new
   search = Search.new
 
-  # self.class.send :define_method, :prepare do |force = false|
-  #   search.reindex force
-  # end
-  #
-  # self.class.send :define_method, :dump_indexes do
-  #   search.dump
-  # end
-  #
-  # self.class.send :define_method, :load_indexes do
-  #   search.load
-  # end
-
   set :logging, false
 
   # search.cocoapods.org API 2.0
