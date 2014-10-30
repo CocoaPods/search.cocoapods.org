@@ -28,7 +28,7 @@ class Pod
   #
   def self.find
     entity.
-      join(Domain.versions).on(:id => :pod_id).
+      join(Domain.versions).on(Domain.pods[:id] => Domain.versions[:pod_id]).
       project(
         *Domain.pods.fields,
         'array_agg(pod_versions.name) AS versions'
@@ -130,8 +130,8 @@ class Pod
   #
   def specification_json
     result = Domain.commits.
-      join(Domain.versions).on(:pod_version_id => :id).anchor.
-      join(Domain.pods).on(:pod_id => :id).hoist.
+      join(Domain.versions).on(Domain.commits[:pod_version_id] => Domain.versions[:id]).anchor.
+      join(Domain.pods).on(Domain.versions[:pod_id] => Domain.pods[:id]).hoist.
       project(*Domain.commits[:specification_data]).
       where(
         Domain.pods[:id] => id,
