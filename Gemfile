@@ -7,8 +7,8 @@ ruby '2.1.3'
 gem 'bundler'
 gem 'sinatra', :require => 'sinatra/base'
 # gem 'cocoapods-core'
-gem 'picky', '~> 4.22.0'
-gem 'picky-client', '~> 4.22.0' # Needed for Picky::Convenience
+gem 'picky', '~> 4.23.0'
+gem 'picky-client', '~> 4.23.0' # Needed for Picky::Convenience
 gem 'cod'
 gem 'hashie'
 
