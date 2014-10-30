@@ -28,7 +28,7 @@ describe 'Search Integration Tests' do
   
   # Testing the format.
   #
-  ok { pods.search('on:osx kiwi').should == ["Kiwi", "MSSpec"] }
+  ok { pods.search('on:osx kiwi', sort: 'name').should == ["Kiwi", "MSSpec"] }
   
   # Error cases.
   #
@@ -38,7 +38,7 @@ describe 'Search Integration Tests' do
   
   # This is how results should look - a flat list of ids.
   #
-  ok { pods.search('on:ios 1.0.0', ids: 200).should == ["AAShareBubbles", "ABCalendarPicker", "ABGetMe", "ABMultiton", "ABStaticTableViewController", "ACColorKit", "ACEAutocompleteBar", "ACEDrawingView", "ACEExpandableTextCell", "ACETelPrompt", "ACPButton", "ACPReminder", "ACPScrollMenu", "ADBActors", "ADBBackgroundCells", "ADBDownloadManager", "ADBIndexedTableView", "ADBReasonableTextView", "ADCExtensions", "ADClusterMapView", "ADLivelyCollectionView", "ADNActivityCollection", "ADNLogin", "ADTransitionController", "ADiOSUtilities", "AFCSVRequestOperation", "AFDownloadRequestOperation", "AFImageDownloader", "AFJSONPRequestOperation", "AFJSONRPCClient", "AFNetworking-MUJSONResponseSerializer", "AFOAuthClient", "AFSignedHTTPRequestOperationManager", "AFURLConnectionByteSpeedMeasure", "AGEFlagIcons", "AGImageChecker", "AIVerification", "AKSegmentedControl", "ALAssetsLibrary-CustomPhotoAlbum", "ALDClock", "AMSlideMenu", "AMSlideOutController", "AMYServer", "AOCUDL", "AOTestCase", "APAutocompleteTextField", "APAvatarImageView", "APPaginalTableView", "APUtils", "ARASCIISwizzle", "ARChromeActivity", "ARCollectionViewMasonryLayout", "ARGenericTableViewController", "ARTableViewPager", "ARTiledImageView", "ASCRefreshControl", "ASCScreenBrightnessDetector", "ASDepthModal", "ASOAnimatedButton", "AVOSCloud", "AVOSCloudBeta", "AVOSCloudUI", "AVOSCloudUIBeta", "ActiveRecord", "AeroGear", "AeroGear-OTP", "AmazonSDB", "Amplitude-iOS", "Analytics", "Antenna", "AppPaoPaoSDK", "AppSettings", "Appacitive-iOS-SDK", "Appirater", "AppleGuice", "AshObjectiveC", "Ashton", "Aspects", "Asterism", "AstroCocoaPackage", "AsyncImageDownloader", "AutoDescribe", "AutoLayoutDSL", "AutoProperty", "AwesomeMenu", "BAPersistentOperationQueue", "BBlock", "BCVersionCheck", "BDBAttributedButton", "BDBOAuth1Manager", "BDBSpinKitRefreshControl", "BDBSplitViewController", "BDDROneFingerZoomGestureRecognizer", "BDDRScrollViewAdditions", "BDKGeometry", "BDKNotifyHUD", "BDToastAlert", "BEACONinsideSDK", "BFCropInterface", "BFNavigationBarDrawer", "BHTabBar", "BJRangeSliderWithProgress", "BMCredentials", "BMInitialsPlaceholderView", "BOZPongRefreshControl", "BPContextualHelp", "BPForms", "BPPhotoLibrarian", "BREnvironment", "BRFlabbyTable", "BRFullTextSearch", "BRYDescriptionBuilder", "BRYEmailAddressDetective", "BRYEqualsBuilder", "BRYHashCodeBuilder", "BRYMailToURIParser", "BRYSerialAnimationQueue", "BRYSoundEffectPlayer", "BScrollController", "BTBadgeView", "BTButton", "BTKInjector", "BTProgressView", "BTStoreView", "BVReorderTableView", "BVViewList", "BYLBadgeView", "BZGFormField", "BZGFormViewController", "BZGMailgunEmailValidation", "BZObjectStore", "BZipCompression", "Backbeam", "Bars", "Bestly", "Bitlyzer", "BlockAlertsAnd-ActionSheets", "BlocksKit", "BlurImageProcessor", "BlurryModalSegue", "Bolts", "Brett", "BrightCenterSDK", "BrightSDK", "BugButton", "BugSquasher", "ButtonIndicatorView", "C360PopoverBackgroundView", "C360SegmentedControl", "CBDCoreDataToolKit", "CCHLinkTextView", "CCHexagonFlowLayout", "CDI", "CDSTextFieldPicker", "CFShareCircle", "CINBouncyButton", "CJAAssociatedObject", "CJAMacros", "CJKit", "CKBasicAuthUrlUtilities", "CKCalendar", "CKRefreshControl", "CKSelectedTableViewCellFactory", "CKStringUtils", "CLLocation-FESCoordinates", "CLLocationManager-blocks", "CMDataStorage", "CMEnvironment", "CMFactory", "CMMapLauncher", "CMNavBarNotificationView", "CMPopTipView", "COSTouchVisualizer", "CPKenburnsSlideshowView", "CPKenburnsView", "CPPickerView", "CPSlider", "CRFAQTableViewController", "CRGradientLabel", "CRPixellatedView", "CSGrowingTextView", "CSHashKit", "CSLazyLoadController", "CSSSelectorConverter", "CUSLayout", "CUShareCenter", "CWLSynthesizeSingleton", "CXAdjustBlockView", "CXAlertView", "CXCardView", "CXPhotoBrowser", "Camouflage", "CaptainPass", "CardFlight", "CargoBay", "CocoaHTTPServer-Routing", "CocoaSPDY", "CocoaSoundCloudAPI", "CocoaSoundCloudUI", "CollectionUtils"] }
+  ok { pods.search('on:ios 1.0.0', ids: 200, sort: 'name').should == ["AAShareBubbles", "ABCalendarPicker", "ABGetMe", "ABMultiton", "ABStaticTableViewController", "ACColorKit", "ACEAutocompleteBar", "ACEDrawingView", "ACEExpandableTextCell", "ACETelPrompt", "ACPButton", "ACPReminder", "ACPScrollMenu", "ADBActors", "ADBBackgroundCells", "ADBDownloadManager", "ADBIndexedTableView", "ADBReasonableTextView", "ADCExtensions", "ADClusterMapView", "ADLivelyCollectionView", "ADNActivityCollection", "ADNLogin", "ADTransitionController", "ADiOSUtilities", "AFCSVRequestOperation", "AFDownloadRequestOperation", "AFImageDownloader", "AFJSONPRequestOperation", "AFJSONRPCClient", "AFNetworking-MUJSONResponseSerializer", "AFOAuthClient", "AFSignedHTTPRequestOperationManager", "AFURLConnectionByteSpeedMeasure", "AGEFlagIcons", "AGImageChecker", "AIVerification", "AKSegmentedControl", "ALAssetsLibrary-CustomPhotoAlbum", "ALDClock", "AMSlideMenu", "AMSlideOutController", "AMYServer", "AOCUDL", "AOTestCase", "APAutocompleteTextField", "APAvatarImageView", "APPaginalTableView", "APUtils", "ARASCIISwizzle", "ARChromeActivity", "ARCollectionViewMasonryLayout", "ARGenericTableViewController", "ARTableViewPager", "ARTiledImageView", "ASCRefreshControl", "ASCScreenBrightnessDetector", "ASDepthModal", "ASOAnimatedButton", "AVOSCloud", "AVOSCloudBeta", "AVOSCloudUI", "AVOSCloudUIBeta", "ActiveRecord", "AeroGear", "AeroGear-OTP", "AmazonSDB", "Amplitude-iOS", "Analytics", "Antenna", "AppPaoPaoSDK", "AppSettings", "Appacitive-iOS-SDK", "Appirater", "AppleGuice", "AshObjectiveC", "Ashton", "Aspects", "Asterism", "AstroCocoaPackage", "AsyncImageDownloader", "AutoDescribe", "AutoLayoutDSL", "AutoProperty", "AwesomeMenu", "BAPersistentOperationQueue", "BBlock", "BCVersionCheck", "BDBAttributedButton", "BDBOAuth1Manager", "BDBSpinKitRefreshControl", "BDBSplitViewController", "BDDROneFingerZoomGestureRecognizer", "BDDRScrollViewAdditions", "BDKGeometry", "BDKNotifyHUD", "BDToastAlert", "BEACONinsideSDK", "BFCropInterface", "BFNavigationBarDrawer", "BHTabBar", "BJRangeSliderWithProgress", "BMCredentials", "BMInitialsPlaceholderView", "BOZPongRefreshControl", "BPContextualHelp", "BPForms", "BPPhotoLibrarian", "BREnvironment", "BRFlabbyTable", "BRFullTextSearch", "BRYDescriptionBuilder", "BRYEmailAddressDetective", "BRYEqualsBuilder", "BRYHashCodeBuilder", "BRYMailToURIParser", "BRYSerialAnimationQueue", "BRYSoundEffectPlayer", "BScrollController", "BTBadgeView", "BTButton", "BTKInjector", "BTProgressView", "BTStoreView", "BVReorderTableView", "BVViewList", "BYLBadgeView", "BZGFormField", "BZGFormViewController", "BZGMailgunEmailValidation", "BZObjectStore", "BZipCompression", "Backbeam", "Bars", "Bestly", "Bitlyzer", "BlockAlertsAnd-ActionSheets", "BlocksKit", "BlurImageProcessor", "BlurryModalSegue", "Bolts", "Brett", "BrightCenterSDK", "BrightSDK", "BugButton", "BugSquasher", "ButtonIndicatorView", "C360PopoverBackgroundView", "C360SegmentedControl", "CBDCoreDataToolKit", "CCHLinkTextView", "CCHexagonFlowLayout", "CDI", "CDSTextFieldPicker", "CFShareCircle", "CINBouncyButton", "CJAAssociatedObject", "CJAMacros", "CJKit", "CKBasicAuthUrlUtilities", "CKCalendar", "CKRefreshControl", "CKSelectedTableViewCellFactory", "CKStringUtils", "CLLocation-FESCoordinates", "CLLocationManager-blocks", "CMDataStorage", "CMEnvironment", "CMFactory", "CMMapLauncher", "CMNavBarNotificationView", "CMPopTipView", "COSTouchVisualizer", "CPKenburnsSlideshowView", "CPKenburnsView", "CPPickerView", "CPSlider", "CRFAQTableViewController", "CRGradientLabel", "CRPixellatedView", "CSGrowingTextView", "CSHashKit", "CSLazyLoadController", "CSSSelectorConverter", "CUSLayout", "CUShareCenter", "CWLSynthesizeSingleton", "CXAdjustBlockView", "CXAlertView", "CXCardView", "CXPhotoBrowser", "Camouflage", "CaptainPass", "CardFlight", "CargoBay", "CocoaHTTPServer-Routing", "CocoaSPDY", "CocoaSoundCloudAPI", "CocoaSoundCloudUI", "CollectionUtils"] }
   
   # Testing a count of results.
   #
@@ -53,12 +53,12 @@ describe 'Search Integration Tests' do
   
   # Multiple results and uniqueness.
   #
-  ok { pods.search('kiwi').should == ["AZNSDateKiwiMatcher", "Kiwi", "Kiwi-KIF", "RKKiwiMatchers", "MSSpec", "MockInject", "OKSpecHelper", "AFImageDownloader", "ActiveTouch"] }
-  ok { pods.search('name:kiwi').should == ["AZNSDateKiwiMatcher", "Kiwi", "Kiwi-KIF", "RKKiwiMatchers"] }
+  ok { pods.search('kiwi', sort: 'name').should == ["AZNSDateKiwiMatcher", "Kiwi", "Kiwi-KIF", "RKKiwiMatchers", "MSSpec", "MockInject", "OKSpecHelper", "AFImageDownloader", "ActiveTouch"] }
+  ok { pods.search('name:kiwi', sort: 'name').should == ["AZNSDateKiwiMatcher", "Kiwi", "Kiwi-KIF", "RKKiwiMatchers"] }
 
   # Similarity on author.
   #
-  ok { pods.search('on:ios allan~').should == ["PWAlignView", "AQGridView", "AZColoredNavigationBar", "CCFScrollingTabBar", "CCFURLResponder", "ReactiveViewModel", "AFS3Client", "Kiwi", "NSDictionary+Accessors"] }
+  ok { pods.search('on:ios allan~', sort: 'name').should == ["PWAlignView", "AQGridView", "AZColoredNavigationBar", "CCFScrollingTabBar", "CCFURLResponder", "ReactiveViewModel", "AFS3Client", "Kiwi", "NSDictionary+Accessors"] }
   
   # Partial version search.
   #
@@ -71,7 +71,7 @@ describe 'Search Integration Tests' do
   # Platform constrained search (platforms are AND-ed).
   #
   ok { pods.search('on:osx allen').should == ["Kiwi"] }
-  ok { pods.search('on:ios allen').should == ["AFS3Client", "Kiwi", "NSDictionary+Accessors"] }
+  ok { pods.search('on:ios allen', sort: 'name').should == ["AFS3Client", "Kiwi", "NSDictionary+Accessors"] }
   ok { pods.search('on:osx on:ios allen').should == ["Kiwi"] }
   
   # Partial.
@@ -95,18 +95,18 @@ describe 'Search Integration Tests' do
   
   expected_dependencies = ["AFQiniuClient", "AWVersionAgent", "AppCoreKit", "CordovaLib", "FreshdeskSDK", "Geoloqi-iPhone-SDK", "MKStoreKit", "ObjectiveTumblr", "ShakeReport", "SinaWeibo", "TGJSBridge", "Tin", "XBToolkit", "adlibr", "drupal-ios-sdk", "foursquare-ios-api"]
   
-  ok { pods.search('dependency:JSONKit').should == expected_dependencies }
-  ok { pods.search('dependencies:JSONKit').should == expected_dependencies }
-  ok { pods.search('depends:JSONKit').should == expected_dependencies }
-  ok { pods.search('using:JSONKit').should == expected_dependencies }
-  ok { pods.search('uses:JSONKit').should == expected_dependencies }
-  ok { pods.search('use:JSONKit').should == expected_dependencies }
-  ok { pods.search('needs:JSONKit').should == expected_dependencies }
+  ok { pods.search('dependency:JSONKit', sort: 'name').should == expected_dependencies }
+  ok { pods.search('dependencies:JSONKit', sort: 'name').should == expected_dependencies }
+  ok { pods.search('depends:JSONKit', sort: 'name').should == expected_dependencies }
+  ok { pods.search('using:JSONKit', sort: 'name').should == expected_dependencies }
+  ok { pods.search('uses:JSONKit', sort: 'name').should == expected_dependencies }
+  ok { pods.search('use:JSONKit', sort: 'name').should == expected_dependencies }
+  ok { pods.search('needs:JSONKit', sort: 'name').should == expected_dependencies }
   
   ok { pods.search('platform:osx', ids: 10000).size.should == 834 }
   ok { pods.search('on:osx', ids: 10000).size.should == 834 }
   
-  ok { pods.search('summary:google').should == ["ARChromeActivity", "AdMob", "AlgoliaSearchOffline-OSX-SDK", "AlgoliaSearchOffline-iOS-SDK", "AnalyticsSDK", "DDGoogleAnalytics-OSX", "DZNPhotoPickerController", "ESTimePicker", "FTGooglePlacesAPI", "GAI-AutomaticSessionManagement", "GDFileManagerKit", "GTMHTTPFetcher", "GVGoogleBannerView", "Google-API-Client", "Google-AdMob-Ads-SDK", "Google-Maps-iOS-SDK", "Google-Maps-iOS-SDK-for-Business", "Google-Mobile-Ads-SDK", "GoogleAds-IMA-iOS-SDK", "GoogleAds-IMA-iOS-SDK-For-AdMob"] }
+  ok { pods.search('summary:google', sort: 'name').should == ["ARChromeActivity", "AdMob", "AlgoliaSearchOffline-OSX-SDK", "AlgoliaSearchOffline-iOS-SDK", "AnalyticsSDK", "DDGoogleAnalytics-OSX", "DZNPhotoPickerController", "ESTimePicker", "FTGooglePlacesAPI", "GAI-AutomaticSessionManagement", "GDFileManagerKit", "GTMHTTPFetcher", "GVGoogleBannerView", "Google-API-Client", "Google-AdMob-Ads-SDK", "Google-Maps-iOS-SDK", "Google-Maps-iOS-SDK-for-Business", "Google-Mobile-Ads-SDK", "GoogleAds-IMA-iOS-SDK", "GoogleAds-IMA-iOS-SDK-For-AdMob"] }
   
   # No single characters indexed.
   #
