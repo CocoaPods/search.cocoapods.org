@@ -43,8 +43,14 @@ class Channel
           response = case action
             when 'search'
               Search.instance.search *parameters
+            when 'search_facets'
+              Search.instance.search_facets *parameters
+            when 'index_facets'
+              Search.instance.index_facets *parameters
             when 'reindex'
               # The parameters are just a pod name.
+              #
+              # TODO Move to Search.
               #
               STDOUT.puts "Reindexing #{parameters} in INDEX PROCESS."
               try_indexing parameters
