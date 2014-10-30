@@ -12,8 +12,7 @@ end
 after_fork do |server, worker|
   # Load the DB after forking.
   #
-  require File.expand_path '../lib/db', __FILE__
-  require File.expand_path '../lib/domain', __FILE__
+  require File.expand_path '../lib/database', __FILE__
   
   # We are a child.
   #
