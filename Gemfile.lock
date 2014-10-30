@@ -1,12 +1,4 @@
 GIT
-  remote: git://github.com/technology-astronauts/dm-core.git
-  revision: 09333b3a1ea1c67736b2893316d18016d1621350
-  specs:
-    dm-core (1.3.0.beta)
-      addressable (~> 2.2.6)
-      coercible (~> 0.2.0)
-
-GIT
   remote: https://github.com/irrationalfab/PrettyBacon.git
   revision: 1eeb06f7d381acd65414b86b42fdf3538faae01c
   branch: master
@@ -23,25 +15,21 @@ GEM
       minitest (~> 5.1)
       thread_safe (~> 0.1)
       tzinfo (~> 1.1)
-    addressable (2.2.8)
+    addressable (2.3.6)
     aggregate (0.2.2)
     arel (5.0.1.20140414130214)
-    backports (3.6.3)
     bacon (1.2.0)
     cod (0.6.0)
-    coercible (0.2.0)
-      backports (~> 3.0, >= 3.1.0)
-      descendants_tracker (~> 0.0.1)
     connection_pool (2.0.0)
     data_objects (0.10.14)
       addressable (~> 2.1)
-    descendants_tracker (0.0.4)
-      thread_safe (~> 0.3, >= 0.3.1)
-    dm-do-adapter (1.3.0.beta)
+    dm-core (1.2.1)
+      addressable (~> 2.3)
+    dm-do-adapter (1.2.0)
       data_objects (~> 0.10.6)
-      dm-core (~> 1.3.0.beta)
-    dm-postgres-adapter (1.3.0.beta)
-      dm-do-adapter (~> 1.3.0.beta)
+      dm-core (~> 1.2.0)
+    dm-postgres-adapter (1.2.0)
+      dm-do-adapter (~> 1.2.0)
       do_postgres (~> 0.10.6)
     do_postgres (0.10.14)
       data_objects (= 0.10.14)
@@ -127,9 +115,9 @@ DEPENDENCIES
   bacon
   bundler
   cod
-  dm-core (>= 1.3.0.beta)!
-  dm-do-adapter (>= 1.3.0.beta)
-  dm-postgres-adapter (>= 1.3.0.beta)
+  dm-core
+  dm-do-adapter
+  dm-postgres-adapter
   flounder
   foreman
   gabba

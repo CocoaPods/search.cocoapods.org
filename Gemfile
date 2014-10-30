@@ -15,9 +15,9 @@ gem 'hashie'
 # Database.
 #
 gem 'pg'
-gem 'dm-core',             '>= 1.3.0.beta', require: true, github: 'technology-astronauts/dm-core'
-gem 'dm-do-adapter',       '>= 1.3.0.beta', require: true
-gem 'dm-postgres-adapter', '>= 1.3.0.beta', require: true
+gem 'dm-core', require: true #, '>= 1.3.0.beta', github: 'technology-astronauts/dm-core'
+gem 'dm-do-adapter', require: true
+gem 'dm-postgres-adapter', require: true
 gem 'flounder'
 
 # Auxiliary gems to make Picky faster/better.
