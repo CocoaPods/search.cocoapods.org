@@ -128,9 +128,10 @@ class CocoapodSearch < Sinatra::Application
     }
 
     if query
-      split = search.splitter.split query
-      result = search.interface.search split.join(' '), 0, 0
-      suggestions[:split] = [split, result.total]
+      split = search.split query
+      results = search.search split.join(' '), 0, 0
+      results.extend Picky::Convenience
+      suggestions[:split] = [split, results.total]
     end
 
     Yajl::Encoder.encode suggestions
