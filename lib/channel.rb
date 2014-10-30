@@ -36,6 +36,9 @@ class Channel
       Pods.instance.cache_all
       STDOUT.puts "Finished caching pods in INDEX PROCESS."
     
+      # TODO Before we enter the loop, we should empty the pipes.
+      #
+    
       loop do
         # Wait for input from the child.
         #
