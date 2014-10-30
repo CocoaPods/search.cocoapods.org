@@ -12,11 +12,6 @@ require File.expand_path '../pod/specification', __FILE__
 #
 require File.expand_path '../pod/specification/wrapped_set', __FILE__
 
-# Load "models".
-#
-require File.expand_path '../db', __FILE__
-require File.expand_path '../domain', __FILE__
-
 # Load pods data container.
 #
 require File.expand_path '../pods', __FILE__
