@@ -31,6 +31,7 @@ class Channel
       Pods.instance.cache_all
       STDOUT.puts "Finished caching pods in INDEX PROCESS."
     
+      not_loaded_yet = true
       pods_to_index = Pods.instance.each
     
       loop do
@@ -72,14 +73,16 @@ class Channel
         
         # Index a few pods.
         #
-        if pods_to_index.peek
-          10.times do
-            if pods_to_index.peek
+        if not_loaded_yet
+          begin
+            10.times do
               pod = pods_to_index.next
               # STDOUT.puts "Indexing #{pod.name}."
               STDOUT.print ?.
               Search.instance.replace pod
             end
+          rescue StopIteration
+            not_loaded_yet = false
           end
         end
 
