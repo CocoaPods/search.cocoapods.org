@@ -7,6 +7,7 @@ end
 ENV['RACK_ENV'] = 'test'
 
 require File.expand_path '../../lib/cocoapods.org', __FILE__
+require File.expand_path '../../lib/database', __FILE__
 
 # Tell CocoaPods where the specs are found.
 #
@@ -51,5 +52,10 @@ Config = RbConfig
 
 # Load and prepare everything for the spec(s).
 #
-Picky::Indexes.index if ENV['ALWAYS_INDEX']
-Picky::Indexes.load
+Pods.instance.cache_all
+every = 100
+puts "Indexing for a bit (Every . is #{every} pods). If it takes more than 20 seconds, you need a new machine ;)"
+Search.instance.reindex every do
+  print ?.
+end
+puts
