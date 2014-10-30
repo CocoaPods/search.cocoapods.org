@@ -149,11 +149,11 @@ class CocoapodSearch < Sinatra::Application
   end
   
   [:get, :post].each do |type|
-    send type, "/hooks/trunk/:name" do # #{ENV['INCOMING_TRUNK_HOOK_PATH']}
+    send type, "/hooks/trunk/#{ENV['HOOK_PATH']}" do
       begin
-        # data = JSON.parse(params['message'])
-        # name = data['pod']
-        name = params[:name]
+        data = JSON.parse(params['message'])
+        name = data['pod']
+        # name = params[:name] # For local testing.
         
         Channel.instance.notify 'reindex', name
         
