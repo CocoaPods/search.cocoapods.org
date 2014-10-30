@@ -33,7 +33,7 @@ describe 'Integration Tests' do
 
   # Testing a specific order of result ids.
   #
-  ok { pods.search('on:osx ki').ids.should == [1282, 819, 3836, 2158, 372, 3829, 30, 554, 3783, 5107, 4939, 3753, 614, 4552, 3113, 4940, 2108, 3404, 2908, 2322]
+  ok { pods.search('on:osx ki', sort: 'name').ids.should == [1282, 819, 3836, 2158, 372, 3829, 30, 554, 3783, 5107, 4939, 3753, 614, 4552, 3113, 4940, 2108, 3404, 2908, 2322]
     # ["ADNKit", "AFKissXMLRequestOperation", "AFKissXMLRequestOperation@aceontech", "AFKissXMLRequestOperation@tonyzonghui", "AZAppearanceKit", "AppKitActor"]
   }
   
@@ -41,12 +41,12 @@ describe 'Integration Tests' do
   #
   it 'is fast enough' do
     require 'benchmark'
-    Benchmark.realtime { pods.search('on:osx a* a') }.should < 0.005 # seconds
+    Benchmark.realtime { pods.search('on:osx a* a', sort: 'name') }.should < 0.01 # seconds
   end
 
   # Similarity on author.
   #
-  ok { pods.search('on:ios allan~').ids.should == [3163, 267, 2520, 1105, 2554, 2756, 5391, 13, 4847]
+  ok { pods.search('on:ios allan~', sort: 'name').ids.should == [3163, 267, 2520, 1105, 2554, 2756, 5391, 13, 4847]
     # was ["AQGridView", "AFS3Client"]
   }
   
@@ -60,9 +60,9 @@ describe 'Integration Tests' do
   
   # Platform constrained search (platforms are AND-ed).
   #
-  ok { pods.search('on:osx abmultiton').ids.should == [1285, 1940] } # ["ABMultiton"] }
-  ok { pods.search('on:ios abmultiton').ids.should == [1285, 1940] } # ["ABMultiton"] }
-  ok { pods.search('on:osx on:ios abmultiton').ids.should == [1285, 1940] } # ["ABMultiton"] }
+  ok { pods.search('on:osx abmultiton', sort: 'name').ids.should == [1285, 1940] } # ["ABMultiton"] }
+  ok { pods.search('on:ios abmultiton', sort: 'name').ids.should == [1285, 1940] } # ["ABMultiton"] }
+  ok { pods.search('on:osx on:ios abmultiton', sort: 'name').ids.should == [1285, 1940] } # ["ABMultiton"] }
   
   # Category boosting.
   #
@@ -95,22 +95,22 @@ describe 'Integration Tests' do
   ok { pods.search('writer:allen writer:jared').ids.should == [5391] } # ['AFS3Client'] }
   # ok { pods.search('by:allen by:jared').ids.should == [5391] } # ['AFS3Client'] }
   
-  ok { pods.search('version:1.0.0').ids.should == [3193, 1191, 356, 1285, 4482, 5419, 3401, 1618, 946, 1769, 4818, 2018, 4794, 2302, 5319, 1168, 2407, 745, 5318, 3356] } # ["AAShareBubbles", "ABCalendarPicker", "ABGetMe", "ABMultiton", "ABStaticTableViewController", "ACColorKit", "ACDCryptsyAPI", "ACEAutocompleteBar", "ACEDrawingView", "ACEExpandableTextCell", "ACETelPrompt", "ACPButton", "ACPReminder", "ACPScrollMenu", "ADBActors", "ADBBackgroundCells", "ADBDownloadManager", "ADBIndexedTableView", "ADBReasonableTextView", "ADCExtensions"] }
+  ok { pods.search('version:1.0.0', sort: 'name').ids.should == [3193, 1191, 356, 1285, 4482, 5419, 3401, 1618, 946, 1769, 4818, 2018, 4794, 2302, 5319, 1168, 2407, 745, 5318, 3356] } # ["AAShareBubbles", "ABCalendarPicker", "ABGetMe", "ABMultiton", "ABStaticTableViewController", "ACColorKit", "ACDCryptsyAPI", "ACEAutocompleteBar", "ACEDrawingView", "ACEExpandableTextCell", "ACETelPrompt", "ACPButton", "ACPReminder", "ACPScrollMenu", "ADBActors", "ADBBackgroundCells", "ADBDownloadManager", "ADBIndexedTableView", "ADBReasonableTextView", "ADCExtensions"] }
   
   expected_dependencies = [3322, 1209, 2335, 394, 1949, 2276, 193, 219, 2370, 854, 696, 1361, 2506, 1281, 1826, 643]
   
-  ok { pods.search('dependency:JSONKit').ids.should == expected_dependencies }
-  ok { pods.search('dependencies:JSONKit').ids.should == expected_dependencies }
-  ok { pods.search('depends:JSONKit').ids.should == expected_dependencies }
-  ok { pods.search('using:JSONKit').ids.should == expected_dependencies }
-  ok { pods.search('uses:JSONKit').ids.should == expected_dependencies }
-  ok { pods.search('use:JSONKit').ids.should == expected_dependencies }
-  ok { pods.search('needs:JSONKit').ids.should == expected_dependencies }
+  ok { pods.search('dependency:JSONKit', sort: 'name').ids.should == expected_dependencies }
+  ok { pods.search('dependencies:JSONKit', sort: 'name').ids.should == expected_dependencies }
+  ok { pods.search('depends:JSONKit', sort: 'name').ids.should == expected_dependencies }
+  ok { pods.search('using:JSONKit', sort: 'name').ids.should == expected_dependencies }
+  ok { pods.search('uses:JSONKit', sort: 'name').ids.should == expected_dependencies }
+  ok { pods.search('use:JSONKit', sort: 'name').ids.should == expected_dependencies }
+  ok { pods.search('needs:JSONKit', sort: 'name').ids.should == expected_dependencies }
   
   ok { pods.search('platform:osx').total.should == 834 }
   ok { pods.search('on:osx').total.should == 834 }
   
-  ok { pods.search('summary:google').ids.should == [1542, 203, 1435, 1434, 3228, 664, 3465, 3557, 4465, 3979, 2601, 1296, 2744, 1160, 551, 812, 5444, 2883, 2439, 4600] } # ["LARSAdController", "MTLocation", "MTStatusBarOverlay"] }
+  ok { pods.search('summary:google', sort: 'name').ids.should == [1542, 203, 1435, 1434, 3228, 664, 3465, 3557, 4465, 3979, 2601, 1296, 2744, 1160, 551, 812, 5444, 2883, 2439, 4600] } # ["LARSAdController", "MTLocation", "MTStatusBarOverlay"] }
   
   # No single characters indexed.
   #
