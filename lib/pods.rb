@@ -24,6 +24,17 @@ class Pods
     end
   end
   
+  def cache_all
+    each { |pod| self[pod.id] = pod }
+  end
+  
+  def [] id
+    @cache[id]
+  end
+  def []= id, pod
+    @cache[id] = pod
+  end
+  
   # Load the ids, also uses a cache.
   #
   def for all_ids
