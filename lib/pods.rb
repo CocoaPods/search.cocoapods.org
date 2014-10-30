@@ -1,6 +1,3 @@
-require File.expand_path '../db', __FILE__
-require File.expand_path '../domain', __FILE__
-
 class Pods
   
   def initialize
@@ -42,7 +39,7 @@ class Pods
   def for all_ids
     uncached_ids = all_ids.reject { |id| @cache[id] }
     loaded_pods = Pod.all { |pods| pods.where(Domain.pods[:id].in => uncached_ids) }
-    loaded_pods.each { |pod| p pod.nil?; p pod; @cache[pod.id] = pod }
+    loaded_pods.each { |pod| @cache[pod.id] = pod }
     all_ids.map { |id| @cache[id] }
   end
   
