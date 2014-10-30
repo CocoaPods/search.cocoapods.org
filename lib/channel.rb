@@ -34,7 +34,7 @@ class Channel
       pods_to_index = Pods.instance.each
     
       loop do
-        # Wait for input from the child for 0.2 seconds.
+        # Wait for input from the child for a sub-seconds.
         #
         received = Cod.select(0.2, @to_engine)
         if received
@@ -61,9 +61,11 @@ class Channel
         
         # Index a few pods at a time until all are indexed.
         #
+        # TODO Move elsewhere.
+        #
         if not_loaded_yet
           begin
-            10.times do
+            5.times do
               pod = pods_to_index.next
               # STDOUT.puts "Indexing #{pod.name}."
               STDOUT.print ?.

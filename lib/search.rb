@@ -1,3 +1,5 @@
+# TODO Split this class into a client and a server part.
+#
 class Search
     
   # We do this so we don't have to type
@@ -177,11 +179,11 @@ class Search
     @splitting_index.replace pod
   end
   
-  def split query
+  def split text
     if CocoapodSearch.child
-      Channel.instance.call 'split', query
+      Channel.instance.call 'split', text
     else
-      @splitter.split query
+      @splitter.split text
     end
   end
   
