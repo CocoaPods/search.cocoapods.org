@@ -1,9 +1,8 @@
 require 'cod'
 require 'hashie/mash'
 
-# This is an interface that provides the user of
-# Picky with the possibility to change parameters
-# while the Application is running.
+# This Channel connects the web worker processes with
+# the search engine process.
 #
 class Channel
   
@@ -35,7 +34,7 @@ class Channel
       pods_to_index = Pods.instance.each
     
       loop do
-        # Wait for input from the child.
+        # Wait for input from the child for 0.2 seconds.
         #
         received = Cod.select(0.2, @to_engine)
         if received
@@ -60,7 +59,7 @@ class Channel
           worker.put response if worker
         end
         
-        # Index a few pods.
+        # Index a few pods at a time until all are indexed.
         #
         if not_loaded_yet
           begin
@@ -98,7 +97,7 @@ class Channel
     @to_engine.put [action, message, nil]
   end
 
-  # Tries calling the work job in the child process or parent process.
+  # Try indexing a new pod.
   #
   def try_indexing name
     begin
