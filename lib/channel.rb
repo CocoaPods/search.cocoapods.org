@@ -11,8 +11,6 @@ class Channel
     @channel ||= new
   end
 
-  class CouldNotRunError < StandardError; end
-
   def initialize
     @to_engine   = Cod.pipe # For talking to the search index process.
     @from_engine = Cod.pipe # For talking to a worker process.
@@ -29,6 +27,8 @@ class Channel
     fork do
       # Index the DB in the SE process.
       #
+      # TODO Move into loop.
+      #
       STDOUT.puts "Indexing DB in INDEX PROCESS."
       Search.instance.reindex
       STDOUT.puts "Finished indexing DB in INDEX PROCESS."
@@ -39,18 +39,17 @@ class Channel
       loop do
         # Wait for input from the child.
         #
-        action, message, worker = @to_engine.get
+        action, parameters, worker = @to_engine.get
         response = case action
           when 'search'
             # TODO Push into search.rb.
             #
-            # The message is the parameters.
-            #
-            sort = message.last.delete(:sort)
+            
+            sort = parameters.last.delete(:sort)
             
             # Search.
             #
-            results = Search.instance.search *message
+            results = Search.instance.search *parameters
             
             # Sort results.
             #
@@ -64,10 +63,10 @@ class Channel
               STDERR.puts e.message
             end
           when 'reindex'
-            # The message is a pod name.
+            # The parameters are just a pod name.
             #
             STDOUT.puts "Reindexing #{message} in INDEX PROCESS."
-            try_indexing message
+            try_indexing parameters
         end
         worker.put response if worker
 
@@ -103,7 +102,6 @@ class Channel
       # Catch any error and reraise as a "could not run" error.
       #
       STDERR.puts "Reindexing #{name} in INDEX PROCESS failed."
-      raise CouldNotRunError.new
     end
   end
 
