@@ -1,7 +1,9 @@
+require File.expand_path '../db', __FILE__
+require File.expand_path '../domain', __FILE__
+
 class Pods
   
   def initialize
-    # @view_dump_file = File.join Picky.root, 'view.dump'
     reset
   end
   
@@ -20,7 +22,7 @@ class Pods
     if block_given?
       pods.each &block
     else
-      pods.all.each
+      pods.each
     end
   end
   
