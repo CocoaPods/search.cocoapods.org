@@ -29,8 +29,8 @@ class CocoapodSearch < Sinatra::Application
 
   # Data container and search.
   #
-  repo = Pods.new
-  search = Search.new
+  repo = Pods.instance
+  search = Search.instance
 
   set :logging, false
 
@@ -124,7 +124,7 @@ class CocoapodSearch < Sinatra::Application
     query = params[:query]
 
     suggestions = {
-      tag: search.index.facets(:tags)
+      tag: search.index_facets(:tags)
     }
 
     if query
@@ -144,7 +144,7 @@ class CocoapodSearch < Sinatra::Application
       result
     end
     CocoapodSearch.track_facets request
-    body json search.facets normalized_params
+    body json search.search_facets normalized_params
   end
   
   [:get, :post].each do |type|
