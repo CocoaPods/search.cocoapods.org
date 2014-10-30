@@ -44,9 +44,11 @@ class Channel
             when 'search'
               Search.instance.search *parameters
             when 'search_facets'
-              Search.instance.search_facets *parameters
+              Search.instance.search_facets parameters
             when 'index_facets'
-              Search.instance.index_facets *parameters
+              Search.instance.index_facets parameters
+            when 'split'
+              Search.instance.split parameters
             when 'reindex'
               # The parameters are just a pod name.
               #
