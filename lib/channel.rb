@@ -32,6 +32,9 @@ class Channel
       STDOUT.puts "Indexing DB in INDEX PROCESS."
       Search.instance.reindex
       STDOUT.puts "Finished indexing DB in INDEX PROCESS."
+      STDOUT.puts "Caching pods in INDEX PROCESS."
+      Pods.instance.cache_all
+      STDOUT.puts "Finished caching pods in INDEX PROCESS."
     
       loop do
         # Wait for input from the child.
@@ -39,11 +42,22 @@ class Channel
         action, message, worker = @to_engine.get
         response = case action
           when 'search'
-            # The message is the parameters.
-            #
             # TODO Push into search.rb.
             #
+            # The message is the parameters.
+            #
+            sort = message.last.delete(:sort)
+            
+            # Search.
+            #
             results = Search.instance.search *message
+            
+            # Sort results.
+            #
+            if sort
+              results.sort_by { |id| Pods.instance[id].send(sort) }
+            end
+            
             begin
               Hashie::Mash.new(results.to_hash)
             rescue StandardError => e
