@@ -184,14 +184,12 @@ class Search
     @splitting_index.replace pod
   end
   
-  def load
-    @index.load
-    @pods.load
-  end
-  
-  def dump
-    @index.dump
-    @pods.dump
+  def split query
+    if CocoapodSearch.child
+      Channel.instance.call 'split', query
+    else
+      @splitter.split query
+    end
   end
   
   def index_facets category_name
@@ -228,7 +226,9 @@ class Search
     if CocoapodSearch.child
       Channel.instance.call 'search', args
     else
-      sort = filter_sort args.last.delete(:sort)
+      sort = if args.last.respond_to?(:to_hash)
+        filter_sort args.last.delete(:sort)
+      end
       results = interface.search(*args)
       # Sort results.
       #
