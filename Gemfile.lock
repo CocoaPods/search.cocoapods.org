@@ -76,7 +76,6 @@ GEM
     mocha-on-bacon (0.2.1)
       mocha (>= 0.9.8)
     multi_json (1.10.1)
-    newrelic_rpm (3.7.2.192)
     notify (0.5.2)
     pg (0.17.1)
     pg-hstore (1.2.0)
@@ -136,7 +135,6 @@ DEPENDENCIES
   kicker
   mocha (~> 0.11.4)
   mocha-on-bacon
-  newrelic_rpm
   pg
   picky (~> 4.23.0)
   picky-client (~> 4.23.0)
