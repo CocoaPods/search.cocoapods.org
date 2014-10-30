@@ -15,7 +15,7 @@ gem 'hashie'
 # Database.
 #
 gem 'pg'
-gem 'dm-core',             '>= 1.3.0.beta', require: true, git: 'https://github.com/technology-astronauts/dm-core.git'
+gem 'dm-core',             '>= 1.3.0.beta', require: true, git: 'git://github.com/technology-astronauts/dm-core.git'
 gem 'dm-do-adapter',       '>= 1.3.0.beta', require: true
 gem 'dm-postgres-adapter', '>= 1.3.0.beta', require: true
 gem 'flounder'
