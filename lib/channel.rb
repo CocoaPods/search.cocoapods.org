@@ -16,10 +16,6 @@ class Channel
     @from_engine = Cod.pipe # For talking to a worker process.
     start_search_engine_process
   end
-  
-  def prepare
-    # @from_engine = @from_engine.dup
-  end
 
   # This runs a process/thread that listens to child processes.
   #
@@ -27,8 +23,7 @@ class Channel
     fork do
       # Load the DB.
       #
-      require File.expand_path '../db', __FILE__
-      require File.expand_path '../domain', __FILE__
+      require File.expand_path '../database', __FILE__
       
       # Index the DB in the SE process.
       #
@@ -47,26 +42,7 @@ class Channel
           action, parameters, worker = received.get
           response = case action
             when 'search'
-              # TODO Push into search.rb.
-              #
-            
-              sort = parameters.last.delete(:sort)
-            
-              # Search.
-              #
-              results = Search.instance.search *parameters
-            
-              # Sort results.
-              #
-              if sort
-                results.sort_by { |id| Pods.instance[id].send(sort) }
-              end
-            
-              begin
-                Hashie::Mash.new(results.to_hash)
-              rescue StandardError => e
-                STDERR.puts e.message
-              end
+              Search.instance.search *parameters
             when 'reindex'
               # The parameters are just a pod name.
               #
