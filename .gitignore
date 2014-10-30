@@ -7,3 +7,4 @@ tmp
 .DS_Store
 .sass-cache/
 *.log
+heroku.env
