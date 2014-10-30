@@ -14,4 +14,4 @@ Domain.entities.each do |entity|
   end
 end
 
-require File.expand_path '../models/pod', __FILE__
+require File.expand_path '../../models/pod', __FILE__
