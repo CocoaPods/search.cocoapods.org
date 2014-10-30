@@ -173,8 +173,9 @@ class Search
     @splitting_index.reindex
   end
   
-  def reindex
-    Pods.instance.each do |pod|
+  def reindex every = 100
+    Pods.instance.each.with_index do |pod, i|
+      yield i if block_given? && (i % every == 0)
       replace pod
     end
   end
@@ -211,14 +212,18 @@ class Search
     end
   end
   
-  # For child processes.
-  #
-  
   def search *args
     if CocoapodSearch.child
       Channel.instance.call 'search', args
     else
-      interface.search *args
+      sort = args.last.delete(:sort)
+      results = interface.search(*args)
+      # Sort results.
+      #
+      if sort
+        results.sort_by { |id| Pods.instance[id].send(sort) }
+      end
+      results.to_hash
     end
   end
   
