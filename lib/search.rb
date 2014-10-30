@@ -194,21 +194,33 @@ class Search
     @pods.dump
   end
   
-  def facets options = {}
-    only   = options[:only]
-    except = options[:except]
-    also   = options[:include]
+  def index_facets category_name
+    if CocoapodSearch.child
+      Channel.instance.call 'index_facets', category_name
+    else
+      @index.facets category_name
+    end
+  end
+  
+  def search_facets options = {}
+    if CocoapodSearch.child
+      Channel.instance.call 'search_facets', options
+    else
+      only   = options[:only]
+      except = options[:except]
+      also   = options[:include]
     
-    keys = @facet_keys
-    keys = keys + [*also].map(&:to_sym)   if also
-    keys = keys & [*only].map(&:to_sym)   if only
-    keys = keys - [*except].map(&:to_sym) if except
+      keys = @facet_keys
+      keys = keys + [*also].map(&:to_sym)   if also
+      keys = keys & [*only].map(&:to_sym)   if only
+      keys = keys - [*except].map(&:to_sym) if except
     
-    options[:counts] = options[:counts] != 'false'
+      options[:counts] = options[:counts] != 'false'
     
-    keys.inject({}) do |result, key|
-      result[key] = @facets_interface.facets key, options
-      result
+      keys.inject({}) do |result, key|
+        result[key] = @facets_interface.facets key, options
+        result
+      end
     end
   end
   
@@ -216,7 +228,7 @@ class Search
     if CocoapodSearch.child
       Channel.instance.call 'search', args
     else
-      sort = args.last.delete(:sort)
+      sort = filter_sort args.last.delete(:sort)
       results = interface.search(*args)
       # Sort results.
       #
@@ -225,6 +237,18 @@ class Search
       end
       results.to_hash
     end
+  end
+  
+  def filter_sort sort
+    if search_whitelist.include? sort
+      sort
+    else
+      'name'
+    end
+  end
+  
+  def search_whitelist
+    @search_whitelist ||= [nil, 'name']
   end
   
 end
