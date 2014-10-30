@@ -25,6 +25,11 @@ class Channel
   #
   def start_search_engine_process
     fork do
+      # Load the DB.
+      #
+      require File.expand_path '../db', __FILE__
+      require File.expand_path '../domain', __FILE__
+      
       # Index the DB in the SE process.
       #
       STDOUT.puts "Caching pods in INDEX PROCESS."
