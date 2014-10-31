@@ -11,15 +11,32 @@ class Channel
   end
 
   def initialize
-    @to_engine   = Cod.pipe # For talking to the search index process.
     @from_engine = Cod.pipe # For talking to a worker process.
     start_search_engine_process
+  end
+  
+  def master_setup_number_of_children amount
+    # For talking to the search index process.
+    @amount_of_children = amount
+    @to_engines = amount.times.inject([]) { |engines| engines << Cod.pipe }
+  end
+  
+  def child_choose_channel number
+    @channel_number = number
+    @to_engine = @to_engines[number]
   end
 
   # This runs a process/thread that listens to child processes.
   #
   def start_search_engine_process
-    fork do
+    @search_engine_process_pid = fork do
+      #
+      #
+      Signal.trap('INT') do
+        STDOUT.puts "Search Engine Process going down."
+        exit
+      end
+      
       # Load the DB.
       #
       require File.expand_path '../database', __FILE__
@@ -80,8 +97,11 @@ class Channel
         #
       end
     end
-  rescue StandardError => e
-    puts e.message
+    
+    Signal.trap('INT') do
+      Process.kill('INT', @search_engine_process_pid)
+      Process.wait
+    end
   end
 
   # Write the search engine process,
