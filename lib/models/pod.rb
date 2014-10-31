@@ -112,7 +112,7 @@ class Pod
     []
   end
   
-  # Summary with words already contained in
+  # Perhaps TODO: Summary with words already contained in
   # name removed such as to minimize
   # multiple results.
   #
@@ -233,15 +233,30 @@ class Pod
   end
   
   def to_h
+    # Was:
+    #
+    # @view[id] = {
+    #   :id => id,
+    #   :platforms => specification.available_platforms.map(&:name).to_a,
+    #   :version => set.versions.first.to_s,
+    #   :summary => specification.summary[0..139].to_s, # Cut down to 140 characters. TODO Duplicated code. See set.rb.
+    #   :authors => specification.authors.to_hash,
+    #   :link => specification.homepage.to_s,
+    #   :source => specification.source.to_hash,
+    #   :subspecs => specification.recursive_subspecs.map(&:to_s),
+    #   :tags => set.tags.to_a,
+    #   :deprecated => specification.deprecated?,
+    #   :deprecated_in_favor_of => specification.deprecated_in_favor_of
+    # }
     h = {
       :id => name, # We don't hand out ids.
       :platforms => platforms,
       :version => last_version,
-      :summary => mapped_summary,
+      :summary => mapped_summary[0..139],
       :authors => authors,
       :link => homepage.to_s,
       :source => source,
-      :subspecs => recursive_subspecs.map(&:to_s),
+      :subspecs => recursive_subspecs.map(&:to_s), # TODO Remove?
       :tags => tags.to_a,
       :deprecated => deprecated?,
       :deprecated_in_favor_of => deprecated_in_favor_of
