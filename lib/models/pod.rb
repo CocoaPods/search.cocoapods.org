@@ -147,6 +147,15 @@ class Pod
     JSON.parse(specification_json || '{}')
   end
   
+  def deprecated_in_favor_of
+    specification[:deprecated_in_favor_of]
+  end
+  
+  def deprecated?
+    p specification
+    specification[:deprecated]
+  end
+  
   
   # Returns not just the name, but also:
   #  * Separated uppercase/lowercase parts.
@@ -235,7 +244,9 @@ class Pod
       :link => homepage.to_s,
       :source => source,
       :subspecs => recursive_subspecs.map(&:to_s),
-      :tags => tags.to_a
+      :tags => tags.to_a,
+      :deprecated => deprecated?,
+      :deprecated_in_favor_of => deprecated_in_favor_of
     }
     h[:documentation_url] = pod.documentation_url if pod.documentation_url
     h
