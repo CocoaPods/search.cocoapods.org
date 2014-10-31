@@ -152,10 +152,8 @@ class Pod
   end
   
   def deprecated?
-    p specification
-    specification[:deprecated]
+    !!specification[:deprecated]
   end
-  
   
   # Returns not just the name, but also:
   #  * Separated uppercase/lowercase parts.
