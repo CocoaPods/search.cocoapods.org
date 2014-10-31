@@ -7,9 +7,14 @@ stdout_path       'tmp/unicorn.stdout.log'
 timeout           10
 worker_processes  number_of_worker_processes
 
+done = false
+
 before_fork do |_, _|
-  # For communication between n worker - 1 search engine processes.
-  Channel.instance.master_setup_number_of_children number_of_worker_processes
+  unless done
+    # For communication between n worker - 1 search engine processes.
+    Channel.instance.start_with_this_many_children number_of_worker_processes
+    done = true
+  end
 end
 
 after_fork do |server, worker|
