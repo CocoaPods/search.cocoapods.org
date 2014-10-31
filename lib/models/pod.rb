@@ -74,6 +74,16 @@ class Pod
     ''
   end
   
+  def rendered_authors
+    if authors.respond_to? :to_hash
+      authors
+    else
+      [*authors].inject({}) do |result, name|
+        result.tap { |r| r[name] = '' }
+      end
+    end
+  end
+  
   def dependencies
     specification['dependencies'].keys
   end
@@ -253,10 +263,9 @@ class Pod
       :platforms => platforms,
       :version => last_version,
       :summary => mapped_summary[0..139],
-      :authors => authors,
+      :authors => rendered_authors,
       :link => homepage.to_s,
       :source => source,
-      :subspecs => recursive_subspecs.map(&:to_s), # TODO Remove?
       :tags => tags.to_a,
       :deprecated => deprecated?,
       :deprecated_in_favor_of => deprecated_in_favor_of
