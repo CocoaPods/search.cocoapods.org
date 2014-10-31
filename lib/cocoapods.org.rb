@@ -4,14 +4,6 @@ Bundler.require *[:default, ENV['RACK_ENV']].compact
 #
 require File.expand_path '../platform', __FILE__
 
-# Extend Pod::Specification with the capability of ignoring bad specs.
-#
-require File.expand_path '../pod/specification', __FILE__
-
-# Wrap Pod::Specification::Set with a few needed methods for indexing.
-#
-require File.expand_path '../pod/specification/wrapped_set', __FILE__
-
 # Load pods data container.
 #
 require File.expand_path '../pods', __FILE__
