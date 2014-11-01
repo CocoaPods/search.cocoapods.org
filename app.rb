@@ -13,19 +13,7 @@ Picky.root = 'tmp'
 class CocoapodSearch < Sinatra::Application
 
   class << self
-
     attr_accessor :child
-
-    def analytics
-      if defined?(Gabba)
-        # STDOUT.puts "Using Gabba for Google Analytics."
-        @analytics_counter ||= 0
-        @analytics = Gabba::Gabba.new('UA-29866548-5', 'cocoapods.org') if @analytics_counter % 100 == 0
-        @analytics_counter += 1
-      end
-      @analytics
-    end
-    
   end
 
   # Data container and search.
@@ -156,7 +144,7 @@ class CocoapodSearch < Sinatra::Application
         name = data['pod']
         # name = params[:name] # For local testing.
         
-        Channel.instance.notify 'reindex', name
+        Channel.instance(:search).notify :reindex, name
         
         status 200
         body "REINDEXING #{name}"
@@ -170,13 +158,16 @@ class CocoapodSearch < Sinatra::Application
   # Tracking convenience methods.
   #
   def self.track_search query, total
-    analytics && analytics.event(:pods, :search, query, total)
+    analytics.notify :event, [:pods, :search, query, total]
   end
   def self.track_facets request
-    analytics && analytics.event(:pods, :facets, request.query_string)
+    analytics.notify :event, [:pods, :facets, request.query_string]
   end
   def self.track_view request, title
-    analytics && analytics.page_view(title, request.path)
+    analytics.notify :page_view, [title, request.path]
+  end
+  def self.analytics
+    @analytics ||= Channel.instance(:analytics)
   end
 
 end

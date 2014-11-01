@@ -12,13 +12,19 @@ done = false
 before_fork do |_, _|
   unless done
     # For communication between n worker - 1 search engine processes.
-    Channel.instance.start_with_this_many_children number_of_worker_processes
+    Channel.
+      instance(:search).
+      start children: number_of_worker_processes, worker: SearchWorker
+    Channel.
+      instance(:analytics).
+      start children: number_of_worker_processes, worker: AnalyticsWorker
     done = true
   end
 end
 
 after_fork do |server, worker|
-  Channel.instance.child_choose_channel worker.nr
+  Channel.instance(:search).choose_channel worker.nr
+  Channel.instance(:analytics).choose_channel worker.nr
   
   # Load the DB after forking.
   #
