@@ -137,6 +137,8 @@ class CocoapodSearch < Sinatra::Application
     body json search.search_facets normalized_params
   end
   
+  # Handles updating pod data.
+  #
   [:get, :post].each do |type|
     send type, "/hooks/trunk/#{ENV['HOOK_PATH']}" do
       begin

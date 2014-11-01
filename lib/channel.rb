@@ -45,7 +45,9 @@ class Channel
     STDOUT.puts "Child [#{Process.pid}] chose channel #{number} using to: #{@to_process} and from: #{@from_process}."
   end
   
-  # This runs a process/thread that listens to child processes.
+  # This forks a process/thread that listens to child processes.
+  #
+  # Call this method only in master.
   #
   def start_process
     process_pid = fork do
@@ -72,21 +74,27 @@ class Channel
       end
     end
     
+    # On an INT, INT the forked process.
+    #
     Signal.trap('INT') do
       Process.kill('INT', process_pid)
       Process.wait
     end
   end
   
+  # Check which channels have received something.
+  #
   def process_channels received
     @to_processes.each do |nr, channel|
       if received.has_key? nr
-        # STDOUT.puts "Received on #{nr} #{channel}."
         process_channel channel
       end
     end
   end
   
+  # Process a specific channel.
+  # Only answer if a back_channel is passed in.
+  #
   def process_channel channel
     *args, back_channel = channel.get
     response = @worker.process *args
@@ -97,7 +105,6 @@ class Channel
   # expecting an answer.
   #
   def call action, message
-    # STDOUT.puts "Child [#{Process.pid}] calls SE process with #{action}: #{message}."
     @to_process.put [action, message, @from_process] if @to_process
     @from_process.get if @from_process
   end
@@ -106,7 +113,6 @@ class Channel
   # not expecting an answer.
   #
   def notify action, message
-    # STDOUT.puts "Child [#{Process.pid}] notifies SE process with #{action}: #{message}."
     @to_process.put [action, message, nil] if @to_process
   end
 

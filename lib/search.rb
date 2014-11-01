@@ -168,6 +168,9 @@ class Search
     @facet_keys = @index.categories.map(&:name).sort - [:id, :name, :author, :summary, :version, :dependencies]
   end
   
+  # Reindex all pods.
+  # Calls a block every n pods.
+  #
   def reindex every = 100
     Pods.instance.each.with_index do |pod, i|
       yield i if block_given? && (i % every == 0)
