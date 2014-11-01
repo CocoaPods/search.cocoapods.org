@@ -181,7 +181,7 @@ class Search
   
   def split text
     if CocoapodSearch.child
-      Channel.instance.call 'split', text
+      Channel.instance(:search).call :split, text
     else
       @splitter.split text
     end
@@ -189,7 +189,7 @@ class Search
   
   def index_facets category_name
     if CocoapodSearch.child
-      Channel.instance.call 'index_facets', category_name
+      Channel.instance(:search).call :index_facets, category_name
     else
       @index.facets category_name
     end
@@ -197,7 +197,7 @@ class Search
   
   def search_facets options = {}
     if CocoapodSearch.child
-      Channel.instance.call 'search_facets', options
+      Channel.instance(:search).call :search_facets, options
     else
       only   = options[:only]
       except = options[:except]
@@ -219,7 +219,7 @@ class Search
   
   def search *args
     if CocoapodSearch.child
-      Channel.instance.call 'search', args
+      Channel.instance(:search).call :search, args
     else
       sort = if args.last.respond_to?(:to_hash)
         filter_sort args.last.delete(:sort)
