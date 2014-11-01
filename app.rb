@@ -18,6 +18,7 @@ class CocoapodSearch < Sinatra::Application
 
     def analytics
       if defined?(Gabba)
+        # STDOUT.puts "Using Gabba for Google Analytics."
         @analytics_counter ||= 0
         @analytics = Gabba::Gabba.new('UA-29866548-5', 'cocoapods.org') if @analytics_counter % 100 == 0
         @analytics_counter += 1
