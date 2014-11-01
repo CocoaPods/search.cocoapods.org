@@ -60,11 +60,12 @@ class Channel
         
         STDOUT.puts "SE process will select on #{@to_engines}."
     
+        STDOUT.puts "[#{Time.now}] Start indexing."
         loop do
           # Wait for input from the child for a sub-seconds.
           #
-          received = Cod.select 0.2, @to_engines
-          process_channels received
+          received = Cod.select 0.05, @to_engines
+          process_channels received if received
         
           # Index a few pods at a time until all are indexed.
           #
@@ -72,13 +73,13 @@ class Channel
           #
           if not_loaded_yet
             begin
-              5.times do
+              3.times do
                 pod = pods_to_index.next
-                # STDOUT.puts "Indexing #{pod.name}."
                 STDOUT.print ?.
                 Search.instance.replace pod
               end
             rescue StopIteration
+              STDOUT.puts "[#{Time.now}] Indexing finished."
               not_loaded_yet = false
             end
           end
@@ -98,19 +99,17 @@ class Channel
   end
   
   def process_channels received
-    if received
-      @to_engines.each do |nr, channel|
-        if received.has_key? nr
-          STDOUT.puts "Received on #{nr} #{channel}."
-          process_channel channel
-        end
+    @to_engines.each do |nr, channel|
+      if received.has_key? nr
+        # STDOUT.puts "Received on #{nr} #{channel}."
+        process_channel channel
       end
     end
   end
   
   def process_channel channel
     action, parameters, worker = channel.get
-    STDOUT.puts "Received #{action} with #{parameters} with return address #{worker}."
+    # STDOUT.puts "Received #{action} with #{parameters} with return address #{worker}."
     response = case action
       when 'search'
         Search.instance.search *parameters
@@ -135,7 +134,7 @@ class Channel
   # expecting an answer.
   #
   def call action, message
-    STDOUT.puts "Child [#{Process.pid}] calls SE process with #{action}: #{message}."
+    # STDOUT.puts "Child [#{Process.pid}] calls SE process with #{action}: #{message}."
     @to_engine.put [action, message, @from_engine]
     @from_engine.get
   end
@@ -144,7 +143,7 @@ class Channel
   # not expecting an answer.
   #
   def notify action, message
-    STDOUT.puts "Child [#{Process.pid}] notifies SE process with #{action}: #{message}."
+    # STDOUT.puts "Child [#{Process.pid}] notifies SE process with #{action}: #{message}."
     @to_engine.put [action, message, nil]
   end
 
