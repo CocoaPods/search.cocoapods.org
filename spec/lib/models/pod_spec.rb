@@ -3,7 +3,7 @@ require File.expand_path('../../../../lib/models/pod', __FILE__)
 
 describe Pod do
 
-  # TODO Rewrite.
+  # TODO: Rewrite.
   #
   # describe '#specification_json' do
   #   before do
