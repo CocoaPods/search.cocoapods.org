@@ -60,7 +60,7 @@ describe 'Search Integration Tests' do
       ['/api/pods', { query: query }, { 'HTTP_ACCEPT' => 'application/vnd.cocoapods.org+flat.ids.json; version=1' }],
     ].each do |params|
       it 'returns information on the API' do
-        get *params
+        get(*params)
 
         last_response.status.should == 200
         last_response.content_type.should == 'application/json;charset=utf-8'
@@ -91,7 +91,7 @@ describe 'Search Integration Tests' do
       ['/api/v0/pods.flat.ids.json',   { query: query }],
     ].each do |params|
       it 'returns information on the API' do
-        get *params
+        get(*params)
 
         last_response.status.should == 404
       end
@@ -118,7 +118,7 @@ describe 'Search Integration Tests' do
       ['/api/pods',   { query: query }, { 'HTTP_ACCEPT' => 'application/vnd.cocoapods.org+picky.hash.json; version=1.0.1' }],
     ].each do |params|
       it 'returns information on the API' do
-        get *params
+        get(*params)
 
         last_response.status.should == 406
       end
