@@ -98,8 +98,8 @@ class Channel
   #
   def call action, message
     # STDOUT.puts "Child [#{Process.pid}] calls SE process with #{action}: #{message}."
-    @to_process.put [action, message, @from_process]
-    @from_process.get
+    @to_process.put [action, message, @from_process] if @to_process
+    @from_process.get if @from_process
   end
   
   # Write the worker process,
@@ -107,7 +107,7 @@ class Channel
   #
   def notify action, message
     # STDOUT.puts "Child [#{Process.pid}] notifies SE process with #{action}: #{message}."
-    @to_process.put [action, message, nil]
+    @to_process.put [action, message, nil] if @to_process
   end
 
 end
