@@ -35,13 +35,13 @@ Picky::Loader.load_application
 #
 Picky.logger = Picky::Loggers::Verbose.new
 
-def categories_of results
+def categories_of(results)
   results.allocations.map do |allocation|
     allocation[3].map { |combination| combination[0] }
   end
 end
 
-def ok &block
+def ok(&block)
   should 'be correct', &block
 end
 
@@ -56,6 +56,6 @@ Pods.instance.cache_all
 every = 100
 puts "Indexing for a bit (Every . is #{every} pods). If it takes more than 20 seconds, you need a new machine ;)"
 Search.instance.reindex every do
-  print ?.
+  print '.'
 end
 puts

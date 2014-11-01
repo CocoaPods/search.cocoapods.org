@@ -1,11 +1,11 @@
 number_of_worker_processes = 3
 
-pid               'tmp/pids/unicorn.pid'
-preload_app       true # This means we need to reople DB connections etc.
-stderr_path       'tmp/unicorn.stderr.log'
-stdout_path       'tmp/unicorn.stdout.log'
-timeout           10
-worker_processes  number_of_worker_processes
+pid 'tmp/pids/unicorn.pid'
+preload_app true # This means we need to reople DB connections etc.
+stderr_path 'tmp/unicorn.stderr.log'
+stdout_path 'tmp/unicorn.stdout.log'
+timeout 10
+worker_processes number_of_worker_processes
 
 # Before forking off child workers, we start a
 # process each for searching and sending data
@@ -36,14 +36,14 @@ end
 # (usually just the one the worker had before).
 # So there won't ever be collisions.
 #
-after_fork do |server, worker|
+after_fork do |_server, worker|
   Channel.instance(:search).choose_channel worker.nr
   Channel.instance(:analytics).choose_channel worker.nr
-  
+
   # Load the DB after forking.
   #
   require File.expand_path '../lib/database', __FILE__
-  
+
   # We are a web worker child.
   # This is used to decide whether
   # a search request should be send to
