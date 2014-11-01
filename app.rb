@@ -11,7 +11,6 @@ Picky.root = 'tmp'
 #  * Index update URL for the Github update hook.
 #
 class CocoapodSearch < Sinatra::Application
-
   class << self
     attr_accessor :child
   end
@@ -108,12 +107,12 @@ class CocoapodSearch < Sinatra::Application
   # TODO Move this into an API?
   #
   get '/no_results.json' do
-    response["Access-Control-Allow-Origin"] = "*"
+    response['Access-Control-Allow-Origin'] = '*'
 
     query = params[:query]
 
     suggestions = {
-      tag: search.index_facets(:tags)
+      tag: search.index_facets(:tags),
     }
 
     if query
@@ -136,7 +135,7 @@ class CocoapodSearch < Sinatra::Application
     CocoapodSearch.track_facets request
     body json search.search_facets normalized_params
   end
-  
+
   # Handles updating pod data.
   #
   [:get, :post].each do |type|
@@ -145,9 +144,9 @@ class CocoapodSearch < Sinatra::Application
         data = JSON.parse(params['message'])
         name = data['pod']
         # name = params[:name] # For local testing.
-        
+
         Channel.instance(:search).notify :reindex, name
-        
+
         status 200
         body "REINDEXING #{name}"
       rescue StandardError => e
@@ -159,17 +158,16 @@ class CocoapodSearch < Sinatra::Application
 
   # Tracking convenience methods.
   #
-  def self.track_search query, total
+  def self.track_search(query, total)
     analytics.notify :event, [:pods, :search, query, total]
   end
-  def self.track_facets request
+  def self.track_facets(request)
     analytics.notify :event, [:pods, :facets, request.query_string]
   end
-  def self.track_view request, title
+  def self.track_view(request, title)
     analytics.notify :page_view, [title, request.path]
   end
   def self.analytics
     @analytics ||= Channel.instance(:analytics)
   end
-
 end

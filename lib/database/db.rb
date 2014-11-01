@@ -4,12 +4,13 @@ puts "[#{Process.pid}] Using DB: #{ENV['DATABASE_URL']}."
 
 #
 #
-uri = DataObjects::URI::parse(ENV['DATABASE_URL'])
+uri = DataObjects::URI.parse(ENV['DATABASE_URL'])
 options = {}
-[:host, :port, :user, :password].each { |key|
+[:host, :port, :user, :password].each do |key|
   val = uri.send(key)
-  options[key] = val if val }
-if socket_dir=ENV['POSTGRES_UNIX_SOCKET']
+  options[key] = val if val
+end
+if socket_dir = ENV['POSTGRES_UNIX_SOCKET']
   App.logger.debug "Using unix socket connection for flounder. (#{socket_dir})"
   options[:host] = socket_dir
 end

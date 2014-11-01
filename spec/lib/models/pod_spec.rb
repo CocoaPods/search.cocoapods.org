@@ -17,5 +17,5 @@ describe Pod do
   #     @pod.specification_json.should == 'data10'
   #   end
   # end
-  
+
 end
