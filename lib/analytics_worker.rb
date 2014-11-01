@@ -1,7 +1,7 @@
 class AnalyticsWorker
   def setup
     if defined?(Gabba)
-      @analytics_counter ||= 0
+      @analytics_counter = 0
       @analytics = maybe_create
     else
       # TODO: We don't need this process.
@@ -10,11 +10,12 @@ class AnalyticsWorker
   end
 
   def process(action, parameters)
+    return unless defined?(Gabba)
     case action
     when :event
-      @analytics.event *parameters
+      analytics.event *parameters
     when :page_view
-      @analytics.page_view *parameters
+      analytics.page_view *parameters
     end
   end
 
@@ -25,7 +26,7 @@ class AnalyticsWorker
   end
 
   def analytics
-    @analytics = maybe_create @analytics_counter
+    @analytics = maybe_create @analytics_counter || 0
     @analytics_counter += 1
     @analytics
   end
