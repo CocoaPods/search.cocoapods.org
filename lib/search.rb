@@ -1,4 +1,4 @@
-# TODO Split this class into a client and a server part.
+# TODO: Split this class into a client and a server part.
 #
 class Search
   # We do this so we don't have to type
@@ -22,7 +22,10 @@ class Search
     # "it" is a prefix but we still stopword it.
     # We do not stop "on" as it is used for qualifying the platform.
     #
-    stopwords = /\b(a|an|are|as|at|be|by|for|from|has|he|in|is|it|its|of|that|the|to|was|were|will|with)\b/i
+    words = %w(a an are as at be by for from) +
+            %w(has he in is it its of that the) +
+            %w(to was were will with)
+    stopwords = /\b(#{words.join('|')})\b/i
 
     # Set up similarity configurations.
     #
@@ -81,7 +84,8 @@ class Search
                indexing: default_indexing.merge(
                  # Some names have funky characters. Let's normalize.
                  #
-                 substitutes_characters_with: CharacterSubstituters::WestEuropean.new,
+                 substitutes_characters_with:
+                   CharacterSubstituters::WestEuropean.new,
                )
       category :version,
                partial: full_partial,
@@ -109,7 +113,8 @@ class Search
     # Define a search over the books index.
     #
     @interface = Search.new index do
-      searching substitutes_characters_with: CharacterSubstituters::WestEuropean.new,
+      searching substitutes_characters_with:
+                  CharacterSubstituters::WestEuropean.new,
                 removes_characters: false,
                 stopwords:          stopwords,
                 splits_text_on:     /\s/
@@ -135,7 +140,9 @@ class Search
     end
 
     @facets_interface = Search.new index do
-      searching substitutes_characters_with: CharacterSubstituters::WestEuropean.new, # Normalizes special user input, Ä -> Ae, ñ -> n etc.
+      searching substitutes_characters_with:
+                  # Normalizes special user input, Ä -> Ae, ñ -> n etc.
+                  CharacterSubstituters::WestEuropean.new,
                 removes_characters: false, # We don't remove characters.
                 stopwords:          stopwords,
                 splits_text_on:     /\s/
@@ -150,7 +157,7 @@ class Search
       #
       key_format :to_s
 
-      # TODO We need to work on this. This is still the Picky standard.
+      # TODO: We need to work on this. This is still the Picky standard.
       #
       indexing default_indexing
 
@@ -207,9 +214,9 @@ class Search
       also   = options[:include]
 
       keys = @facet_keys
-      keys = keys + [*also].map(&:to_sym)   if also
-      keys = keys & [*only].map(&:to_sym)   if only
-      keys = keys - [*except].map(&:to_sym) if except
+      keys += [*also].map(&:to_sym)   if also
+      keys &= [*only].map(&:to_sym)   if only
+      keys -= [*except].map(&:to_sym) if except
 
       options[:counts] = options[:counts] != 'false'
 

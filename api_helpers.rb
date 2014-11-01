@@ -101,7 +101,11 @@ CocoapodSearch.helpers do
     end
   end
   def self.install_nil_version_handlers
-    latest_version = @versioned_accepts.keys.select { |s| Integer(s) rescue nil }.sort.last
+    latest_version = @versioned_accepts.
+                     keys.
+                     select { |s| Integer(s) rescue nil }.
+                     sort.
+                     last
 
     @versioned_accepts[latest_version].each do |accept, search|
       @versioned_accepts[nil][accept] = search

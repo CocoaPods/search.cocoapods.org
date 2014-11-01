@@ -104,7 +104,7 @@ class CocoapodSearch < Sinatra::Application
 
   # Returns a JSON hash with helpful content with "no results" specific to cocoapods.org.
   #
-  # TODO Move this into an API?
+  # TODO: Move this into an API?
   #
   get '/no_results.json' do
     response['Access-Control-Allow-Origin'] = '*'

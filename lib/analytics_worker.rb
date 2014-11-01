@@ -4,17 +4,17 @@ class AnalyticsWorker
       @analytics_counter ||= 0
       @analytics = maybe_create
     else
-      # TODO We don't need this process.
+      # TODO: We don't need this process.
       # Process.kill 'QUIT', Process.pid
     end
   end
 
   def process(action, parameters)
     case action
-      when :event
-        @analytics.event *parameters
-      when :page_view
-        @analytics.page_view *parameters
+    when :event
+      @analytics.event *parameters
+    when :page_view
+      @analytics.page_view *parameters
     end
   end
 

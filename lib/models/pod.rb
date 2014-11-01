@@ -139,8 +139,12 @@ class Pod
   #
   def specification_json
     result = Domain.commits.
-             join(Domain.versions).on(Domain.commits[:pod_version_id] => Domain.versions[:id]).anchor.
-             join(Domain.pods).on(Domain.versions[:pod_id] => Domain.pods[:id]).hoist.
+             join(Domain.versions).
+             on(Domain.commits[:pod_version_id] => Domain.versions[:id]).
+             anchor.
+             join(Domain.pods).
+             on(Domain.versions[:pod_id] => Domain.pods[:id]).
+             hoist.
              project(*Domain.commits[:specification_data]).
              where(
         Domain.pods[:id] => id,
@@ -186,7 +190,7 @@ class Pod
   def split_name_for_automatic_splitting
     temp = name
     if temp
-      if temp.match /\A[A-Z]{3}[a-z]/
+      if temp.match(/\A[A-Z]{3}[a-z]/)
         temp = temp[2..-1]
       end
       (temp && temp.split(/([A-Z]?[a-z]+)/).map(&:downcase) || []).reject do |part|
@@ -236,7 +240,11 @@ class Pod
     xml
   )
   def tags
-    specification['summary'].downcase.scan(/\b(#{@@tags.join('|')})\w*\b/).flatten.uniq
+    specification['summary'].
+      downcase.
+      scan(/\b(#{@@tags.join('|')})\w*\b/).
+      flatten.
+      uniq
   rescue StandardError, SyntaxError
     []
   end
@@ -248,7 +256,7 @@ class Pod
     #   :id => id,
     #   :platforms => specification.available_platforms.map(&:name).to_a,
     #   :version => set.versions.first.to_s,
-    #   :summary => specification.summary[0..139].to_s, # Cut down to 140 characters. TODO Duplicated code. See set.rb.
+    #   :summary => specification.summary[0..139].to_s, # Cut down to 140 characters. TODO: Duplicated code. See set.rb.
     #   :authors => specification.authors.to_hash,
     #   :link => specification.homepage.to_s,
     #   :source => specification.source.to_hash,
