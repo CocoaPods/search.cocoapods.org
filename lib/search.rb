@@ -232,14 +232,22 @@ class Search
       Channel.instance(:search).call :search, args
     else
       sort = if args.last.respond_to?(:to_hash)
-               filter_sort args.last.delete(:sort)
+        filter_sort args.last.delete(:sort)
       end
+      
       results = interface.search(*args)
+      
       # Sort results.
       #
       if sort
-        results.sort_by { |id| Pods.instance[id].send(sort) }
+        negative = sort.gsub!(/^-/, '') # If we can take a - off.
+        if negative
+          results.sort_by { |id| -Pods.instance[id].send(sort) }
+        else
+          results.sort_by { |id| Pods.instance[id].send(sort) }
+        end
       end
+      
       results.to_hash
     end
   end
@@ -253,6 +261,14 @@ class Search
   end
 
   def search_whitelist
-    @search_whitelist ||= ['name']
+    @search_whitelist ||= [
+      'name',
+      'forks',
+      'stargazers',
+      'contributors',
+      '-forks',
+      '-stargazers',
+      '-contributors',
+    ]
   end
 end
