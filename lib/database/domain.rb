@@ -4,6 +4,7 @@ Domain = Flounder.domain(DB) do |dom|
   dom.entity(:commits, :commit, 'commits')
   dom.entity(:pods, :pod, 'pods')
   dom.entity(:versions, :version, 'pod_versions')
+  dom.entity(:github_metrics, :github_metric, 'github_pod_metrics')
 end
 
 # Define all tables as top-level methods on Domain.
