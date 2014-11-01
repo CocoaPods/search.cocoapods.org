@@ -243,7 +243,7 @@ class Search
   end
   
   def search_whitelist
-    @search_whitelist ||= [nil, 'name']
+    @search_whitelist ||= ['name']
   end
   
 end
