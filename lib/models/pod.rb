@@ -9,7 +9,7 @@ class Pod
 
   # Forward entities.
   #
-  def_delegators :row, :pod, :versions, :commits
+  def_delegators :row, :pod, :versions, :commits, :github_metric
 
   # Forward attributes.
   #
@@ -27,12 +27,19 @@ class Pod
   #
   def self.find
     entity.
-      join(Domain.versions).on(Domain.pods[:id] => Domain.versions[:pod_id]).
+      join(Domain.versions).
+      on(Domain.pods[:id] => Domain.versions[:pod_id]).
+      join(Domain.github_metrics).
+      on(Domain.pods[:id] => Domain.github_metrics[:pod_id]).
       project(
         *Domain.pods.fields,
         'array_agg(pod_versions.name) AS versions',
+        *Domain.github_metrics.fields(:forks, :stargazers, :contributors)
       ).
-      group_by(Domain.pods[:id])
+      group_by(
+        Domain.pods[:id],
+        *Domain.github_metrics.fields(:forks, :stargazers, :contributors)
+      )
   end
 
   #
@@ -43,6 +50,21 @@ class Pod
 
   def self.modelify_block
     ->(pod) { new pod }
+  end
+
+  # Sort specific methods
+  #
+  
+  def forks
+    github_metric.forks || 0
+  end
+  
+  def stargazers
+    github_metric.stargazers || 0
+  end
+  
+  def contributors
+    github_metric.contributors || 0
   end
 
   # Index specific methods.
