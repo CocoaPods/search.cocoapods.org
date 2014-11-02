@@ -16,9 +16,9 @@ describe 'Search Integration Tests' do
   describe 'expected successes' do
     extend Rack::Test::Methods
 
-    query                  = 'easy'
+    query                  = 'a'
     expected_results       = 20
-    expected_total_results = 253
+    expected_total_results = 150
 
     [
       # Convenience.
