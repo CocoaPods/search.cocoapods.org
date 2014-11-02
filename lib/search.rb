@@ -231,7 +231,7 @@ class Search
     if CocoapodSearch.child
       Channel.instance(:search).call :search, args
     else
-      sort = if args.last.respond_to?(:to_hash)
+      sorting = if args.last.respond_to?(:to_hash)
         filter_sort args.last.delete(:sort)
       end
       
@@ -239,36 +239,46 @@ class Search
       
       # Sort results.
       #
-      if sort
-        negative = sort.gsub!(/^-/, '') # If we can take a - off.
-        if negative
-          results.sort_by { |id| -Pods.instance[id].send(sort) }
-        else
-          results.sort_by { |id| Pods.instance[id].send(sort) }
-        end
-      end
+      results.sort_by &sorting if sorting
       
       results.to_hash
     end
   end
 
   def filter_sort(sort)
-    if search_whitelist.include? sort
-      sort
-    else
-      'name'
+    sort_map[sort] || sort_map['name']
+  end
+  
+  @@default_text_sort = ->(sort) do
+    ->(id) { Pods.instance[id].send(sort) }
+  end
+  @@default_numeric_sort = ->(sort, negative) do
+    neg = negative ? 1 : -1
+    ->(id) { neg*Pods.instance[id].send(sort) }
+  end
+  @@popularity_sort = ->(negative) do
+    neg = negative ? 1 : -1
+    ->(id) do
+      pod = Pods.instance[id]
+      neg*(
+        pod.stargazers +
+        pod.contributors * 90 +
+        pod.subscribers * 20 +
+        pod.forks * 10
+      )
     end
   end
-
-  def search_whitelist
-    @search_whitelist ||= [
-      'name',
-      'forks',
-      'stargazers',
-      'contributors',
-      '-forks',
-      '-stargazers',
-      '-contributors',
-    ]
+  def sort_map
+    @sort_map ||= {
+      'name'          => @@default_text_sort[:name],
+      'popularity'    => @@popularity_sort[false],
+      '-popularity'   => @@popularity_sort[true],
+      'forks'         => @@default_numeric_sort[:forks, false],
+      '-forks'        => @@default_numeric_sort[:forks, true],
+      'stargazers'    => @@default_numeric_sort[:stargazers, false],
+      '-stargazers'   => @@default_numeric_sort[:stargazers, true],
+      'contributors'  => @@default_numeric_sort[:contributors, false],
+      '-contributors' => @@default_numeric_sort[:contributors, true],
+    }
   end
 end

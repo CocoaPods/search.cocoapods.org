@@ -34,11 +34,21 @@ class Pod
       project(
         *Domain.pods.fields,
         'array_agg(pod_versions.name) AS versions',
-        *Domain.github_metrics.fields(:forks, :stargazers, :contributors)
+        *Domain.github_metrics.fields(
+          :forks,
+          :stargazers,
+          :contributors,
+          :subscribers
+        )
       ).
       group_by(
         Domain.pods[:id],
-        *Domain.github_metrics.fields(:forks, :stargazers, :contributors)
+        *Domain.github_metrics.fields(
+          :forks,
+          :stargazers,
+          :contributors,
+          :subscribers
+        )
       )
   end
 
@@ -65,6 +75,10 @@ class Pod
   
   def contributors
     github_metric.contributors || 0
+  end
+
+  def subscribers
+    github_metric.subscribers || 0
   end
 
   # Index specific methods.
