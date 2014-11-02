@@ -132,6 +132,8 @@ CocoapodSearch.helpers do
 
     results.amend_ids_with pods.for(results.ids).map &rendering
 
+    results.clear_ids
+
     results
   end
 
@@ -149,7 +151,11 @@ CocoapodSearch.helpers do
 
     CocoapodSearch.track_search query, results.total
 
-    pods.for(results.ids).map &rendering
+    result = pods.for(results.ids).map &rendering
+    
+    results.clear_ids
+    
+    result
   end
 
   # Allow all origins.
