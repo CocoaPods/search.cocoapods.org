@@ -62,14 +62,16 @@ class Channel
         # Wait for input from the child for a sub-second.
         #
         received = Cod.select 0.05, @to_processes
-        process_channels received if received
+        
+        begin
+          process_channels received if received
 
-        # Tell worker to post_process
-        #
-        @worker.post_process if post_process
-
-        # Fail hard on an error.
-        #
+          # Tell worker to post_process
+          #
+          @worker.post_process if post_process
+        rescue StandardError => e
+          STDOUT.puts e.message
+        end
       end
     end
 
