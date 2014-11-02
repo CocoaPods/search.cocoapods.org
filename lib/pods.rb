@@ -15,9 +15,16 @@ class Pods
   #
   def each(amount = nil, &block)
     pods = if amount
-      Pod.all { |pods| pods.limit(100).order_by(:name.asc) }
+      Pod.all do |pods|
+        pods.
+          limit(100).
+          order_by(:name.asc)
+      end
     else
-      Pod.all { |pods| pods.order_by(:name.asc) }
+      Pod.all do |pods|
+        pods.
+          order_by(:name.asc)
+      end
     end
     if block_given?
       pods.each &block

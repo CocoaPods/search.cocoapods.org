@@ -246,21 +246,21 @@ class Search
   end
 
   def filter_sort(sort)
-    sort_map[sort] || sort_map['name']
+    sort_map[sort] || sort_map['popularity']
   end
   
   @@default_text_sort = ->(sort) do
     ->(id) { Pods.instance[id].send(sort) }
   end
-  @@default_numeric_sort = ->(sort, negative) do
-    neg = negative ? 1 : -1
-    ->(id) { neg*Pods.instance[id].send(sort) }
+  @@default_numeric_sort = ->(sort, desc) do
+    desc = desc ? -1 : 1
+    ->(id) { desc*Pods.instance[id].send(sort) }
   end
-  @@popularity_sort = ->(negative) do
-    neg = negative ? -1 : 1
+  @@popularity_sort = ->(desc) do
+    desc = desc ? 1 : -1
     ->(id) do
       pod = Pods.instance[id]
-      neg*(
+      desc*(
         pod.stargazers +
         pod.contributors * 90 +
         pod.subscribers * 20 +

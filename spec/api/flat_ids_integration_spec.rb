@@ -69,9 +69,9 @@ describe 'Search Integration Tests' do
 
   # Platform constrained search (platforms are AND-ed).
   #
-  ok { pods.search('on:osx mattt').should == ["AFCoreImageResponseSerializer", "AFIncrementalStore", "AFJSONRPCClient", "AFKissXMLRequestOperation", "AFKissXMLRequestOperation@aceontech", "AFMsgPackSerialization", "AFNetworking"] }
+  ok { pods.search('on:osx mattt', sort: 'name').should == ["AFCoreImageResponseSerializer", "AFIncrementalStore", "AFJSONRPCClient", "AFKissXMLRequestOperation", "AFKissXMLRequestOperation@aceontech", "AFMsgPackSerialization", "AFNetworking"] }
   ok { pods.search('on:ios mattt', sort: 'name').should == ["AFCoreImageResponseSerializer", "AFIncrementalStore", "AFJSONRPCClient", "AFKissXMLRequestOperation", "AFKissXMLRequestOperation@aceontech", "AFMsgPackSerialization", "AFNetworkActivityLogger", "AFNetworking"] }
-  ok { pods.search('on:osx on:ios mattt').should == ["AFCoreImageResponseSerializer", "AFIncrementalStore", "AFJSONRPCClient", "AFKissXMLRequestOperation", "AFKissXMLRequestOperation@aceontech", "AFMsgPackSerialization", "AFNetworking"] }
+  ok { pods.search('on:osx on:ios mattt', sort: 'name').should == ["AFCoreImageResponseSerializer", "AFIncrementalStore", "AFJSONRPCClient", "AFKissXMLRequestOperation", "AFKissXMLRequestOperation@aceontech", "AFMsgPackSerialization", "AFNetworking"] }
 
   # Partial.
   #
@@ -87,10 +87,10 @@ describe 'Search Integration Tests' do
   ok { pods.search('pod:afnetworking mattt thompson').should == ["AFNetworking"] }
 
   expected = ["AFNetworking", "AFCoreImageResponseSerializer", "AFHTTPRequestOperationLogger", "AFIncrementalStore", "AFJSONRPCClient", "AFKissXMLRequestOperation", "AFKissXMLRequestOperation@aceontech", "AFMsgPackSerialization", "AFNetworkActivityLogger"]
-  ok { pods.search('afnetworking author:mattt author:thompson').should == expected }
-  ok { pods.search('afnetworking authors:mattt authors:thompson').should == expected }
-  ok { pods.search('afnetworking written:mattt written:thompson').should == expected }
-  ok { pods.search('afnetworking writer:mattt writer:thompson').should == expected }
+  ok { pods.search('afnetworking author:mattt author:thompson', sort: 'name').should == expected }
+  ok { pods.search('afnetworking authors:mattt authors:thompson', sort: 'name').should == expected }
+  ok { pods.search('afnetworking written:mattt written:thompson', sort: 'name').should == expected }
+  ok { pods.search('afnetworking writer:mattt writer:thompson', sort: 'name').should == expected }
   # ok { pods.search('kiwi by:allen by:ding').should == ['Kiwi'] } # by is removed by stopwords.
 
   expected_dependencies = ["ADNKit", "AFCSVRequestOperation", "AFCoreImageResponseSerializer", "AFDownloadRequestOperation", "AFFCCAPIClient", "AFHARchiver", "AFHTTPClientLogger", "AFHTTPFileUpdateOperation", "AFHTTPRequestOperationLogger", "AFIncrementalStore", "AFJSONPRequestOperation", "AFJSONRPCClient", "AFKissXMLRequestOperation", "AFKissXMLRequestOperation@aceontech", "AFKissXMLRequestOperation@tonyzonghui", "AFMsgPackSerialization", "AFNetworkActivityLogger", "AFNetworking+AutoRetry", "AFNetworking+streaming", "AFNetworking-MUJSONResponseSerializer"]
