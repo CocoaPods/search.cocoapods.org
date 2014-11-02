@@ -261,24 +261,28 @@ class Search
     ->(id) do
       pod = Pods.instance[id]
       desc*(
-        pod.stargazers +
         pod.contributors * 90 +
         pod.subscribers * 20 +
-        pod.forks * 10
+        pod.forks * 10 +
+        pod.stargazers
       )
     end
   end
   def sort_map
     @sort_map ||= {
       'name'          => @@default_text_sort[:name],
+      
       'popularity'    => @@popularity_sort[false],
       '-popularity'   => @@popularity_sort[true],
-      'forks'         => @@default_numeric_sort[:forks, false],
-      '-forks'        => @@default_numeric_sort[:forks, true],
-      'stargazers'    => @@default_numeric_sort[:stargazers, false],
-      '-stargazers'   => @@default_numeric_sort[:stargazers, true],
+      
       'contributors'  => @@default_numeric_sort[:contributors, false],
       '-contributors' => @@default_numeric_sort[:contributors, true],
+      'forks'         => @@default_numeric_sort[:forks, false],
+      '-forks'        => @@default_numeric_sort[:forks, true],
+      'stars'         => @@default_numeric_sort[:stargazers, false],
+      '-stars'        => @@default_numeric_sort[:stargazers, true],
+      'watchers'      => @@default_numeric_sort[:subscribers, false],
+      '-watchers'     => @@default_numeric_sort[:subscribers, true],
     }
   end
 end
