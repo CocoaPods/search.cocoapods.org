@@ -177,8 +177,8 @@ class Search
   # Reindex all pods.
   # Calls a block every n pods.
   #
-  def reindex(every = 100)
-    Pods.instance.each.with_index do |pod, i|
+  def reindex(every = 100, amount = nil)
+    Pods.instance.each(amount).with_index do |pod, i|
       yield i if block_given? && (i % every == 0)
       replace pod
     end
