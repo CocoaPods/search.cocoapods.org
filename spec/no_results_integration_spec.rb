@@ -12,13 +12,13 @@ describe 'Integration Tests' do
   end
 
   it 'will return the right tag facets' do
-    Yajl.load(no_results.send_search)['tag'].should == { 'api' => 241, 'image' => 206, 'view' => 516, 'button' => 85, 'controller' => 173, 'layout' => 69, 'manager' => 43, 'test' => 102, 'text' => 99, 'table' => 61, 'navigation' => 42, 'progress' => 71, 'http' => 79, 'network' => 55, 'logging' => 32, 'json' => 91, 'client' => 111, 'xml' => 40, 'authentication' => 14, 'picker' => 58, 'gesture' => 30, 'alert' => 24, 'rest' => 44, 'notification' => 54, 'analytics' => 35, 'communication' => 10, 'password' => 11, 'serialization' => 6, 'kit' => 17, 'payment' => 8, 'parser' => 43, 'widget' => 8 }
+    Yajl.load(no_results.send_search)['tag'].should == {"api"=>4, "image"=>5, "view"=>8, "button"=>3, "controller"=>3, "layout"=>1, "manager"=>3, "test"=>2, "text"=>1, "table"=>1, "navigation"=>1, "progress"=>2, "http"=>5, "network"=>3, "logging"=>2, "json"=>3, "client"=>1, "xml"=>3}
   end
   it 'will return a correctly split query' do
     Yajl.load(no_results.send_search(query: 'meow'))['split'].should == [[], 0]
   end
   it 'will return a correctly split query' do
-    Yajl.load(no_results.send_search(query: 'libcomponentlogging'))['split'].should == [%w(lib component logging), 23]
+    Yajl.load(no_results.send_search(query: 'afnetworking'))['split'].should == [["networking"], 10]
   end
 
 end

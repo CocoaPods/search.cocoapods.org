@@ -12,33 +12,24 @@ describe 'Special Cases' do
   end
 
   it 'will default to name with unrecognized sort orders' do
-    special_cases.search('test', sort: 'quack').should == ['ABTest', 'ABTestingVessel', 'AGAsyncTestHelper', 'AGWaitForAsyncTestHelper', 'AOTestCase', 'AsyncSenTest', 'AsyncTestSupporter', 'BenchmarkTestCase', 'DBMigrationTestKit', 'EXPMatchers+FBSnapshotTest', 'FBSnapshotTestCase', 'FOTestKit', 'FSJUnitTestLog', 'GenerateTestCoverageFor_iOS7', 'GoogleTest', 'IFATestingSupport', 'JSON-Schema-Test-Suite', 'KNMParametrizedTests', 'KPAViewControllerTestHelper', 'Keystone-TestData-iOS']
+    special_cases.search('a', sort: 'quack').should == ["500px-iOS-api", "A2DynamicDelegate", "A2StoryboardSegueContext", "A3GridTableView", "A3ParallaxScrollView", "AAActivityAction", "AAImageUtils", "AALaunchTransition", "AAPullToRefresh", "AAShareBubbles", "AAStoryboardInstantiate", "ABCalendarPicker", "ABContactHelper", "ABCustomUINavigationController", "ABFullScrollViewController", "ABGetMe", "ABMultiton", "ABPadLockScreen", "ABRequestManager", "ABSQLite"]
   end
 
-  it 'will correctly find _.m' do
-    special_cases.search('_.m').should == ['_.m']
-  end
-
-  it 'will correctly find JSONKit' do
-    special_cases.search('JSONKit very high library', sort: 'name').should == ['JSONKit', 'JSONKit-NoWarning']
-  end
+  # it 'will correctly find _.m' do
+  #   special_cases.search('_.m').should == ['_.m']
+  # end
 
   it 'will correctly find something split on @' do
-    special_cases.search('name:KGNoise', sort: 'name').should == ['KGNoise', 'KGNoise@tonyzonghui']
-    special_cases.search('name:KGNoise@tonyzonghui').should == ['KGNoise@tonyzonghui']
+    special_cases.search('name:AFKissXMLRequestOperation', sort: 'name').should == ["AFKissXMLRequestOperation", "AFKissXMLRequestOperation@aceontech", "AFKissXMLRequestOperation@tonyzonghui"]
+    special_cases.search('name:AFKissXMLRequestOperation@aceontech').should == ['AFKissXMLRequestOperation@aceontech']
   end
 
   it 'will correctly find something split on -' do
-    special_cases.search('name:kyoto').should == ['kyoto-cabinet']
-    special_cases.search('name:cabinet').should == ['kyoto-cabinet']
-    special_cases.search('name:kyoto-cabinet').should == ['kyoto-cabinet']
-    special_cases.search('name:kyoto name:cabinet').should == ['kyoto-cabinet']
-  end
-
-  it 'will correctly find something split on -' do
-    special_cases.search('name:mkmapview"', sort: 'name').should == ['MKMapView+AttributionView', 'MKMapView-Blocks', 'MKMapView-ZoomLevel']
-    special_cases.search('name:AttributionView"').should == ['MKMapView+AttributionView']
-    special_cases.search('name:mkmapview name:attributionview').should == ['MKMapView+AttributionView']
+    expected = ["AFNetworking-MUJSONResponseSerializer"]
+    special_cases.search('name:AFNetworking').should == ["AFNetworking", "AFNetworking+AutoRetry", "AFNetworking+streaming", "AFNetworking-MUJSONResponseSerializer", "AFNetworking-MUResponseSerializer", "AFNetworking-RACExtensions", "AFNetworking-ReactiveCocoa", "AFNetworking-Synchronous", "AFNetworking2-RACExtensions"]
+    special_cases.search('name:MUJSONResponseSerializer').should == expected
+    special_cases.search('name:AFNetworking-MUJSONResponseSerializer').should == expected
+    special_cases.search('name:AFNetworking name:MUJSONResponseSerializer').should == expected
   end
 
 end
