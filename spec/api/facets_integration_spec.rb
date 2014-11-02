@@ -13,7 +13,7 @@ describe 'Search Integration Tests' do
 
   ok do
     get '/api/v1/pods.facets.json', {}
-    Yajl.load(last_response.body).should == { 'platform' => { 'ios' => 4709, 'osx' => 834 }, 'tags' => { 'api' => 241, 'image' => 206, 'view' => 516, 'button' => 85, 'controller' => 173, 'layout' => 69, 'manager' => 43, 'test' => 102, 'text' => 99, 'table' => 61, 'navigation' => 42, 'progress' => 71, 'http' => 79, 'network' => 55, 'logging' => 32, 'json' => 91, 'client' => 111, 'xml' => 40, 'authentication' => 14, 'picker' => 58, 'gesture' => 30, 'alert' => 24, 'rest' => 44, 'notification' => 54, 'analytics' => 35, 'communication' => 10, 'password' => 11, 'serialization' => 6, 'kit' => 17, 'payment' => 8, 'parser' => 43, 'widget' => 8 } }
+    Yajl.load(last_response.body).should == {"platform"=>{"ios"=>4706, "osx"=>834}, "tags"=>{"api"=>241, "image"=>206, "view"=>516, "button"=>85, "controller"=>173, "layout"=>69, "manager"=>43, "test"=>102, "text"=>99, "table"=>61, "navigation"=>42, "progress"=>71, "http"=>79, "network"=>55, "logging"=>32, "json"=>91, "client"=>110, "xml"=>40, "authentication"=>14, "picker"=>58, "gesture"=>30, "alert"=>24, "rest"=>44, "notification"=>54, "analytics"=>35, "communication"=>10, "password"=>11, "serialization"=>6, "kit"=>17, "payment"=>8, "parser"=>43, "widget"=>8} }
   end
 
   ok do
