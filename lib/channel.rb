@@ -78,7 +78,6 @@ class Channel
     # On an INT, INT the forked process.
     #
     Signal.trap('INT') do
-      Process.kill('INT', process_pid)
       Process.wait(process_pid)
     end
   end
