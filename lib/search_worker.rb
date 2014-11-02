@@ -3,7 +3,7 @@ class SearchWorker
     # Set up clean exit.
     #
     Signal.trap('INT') do
-      STDOUT.puts 'Search Engine Process going down.'
+      STDOUT.puts "[#{Process.pid}] Search Engine process going down."
       exit
     end
 
