@@ -257,7 +257,7 @@ class Search
     ->(id) { neg*Pods.instance[id].send(sort) }
   end
   @@popularity_sort = ->(negative) do
-    neg = negative ? 1 : -1
+    neg = negative ? -1 : 1
     ->(id) do
       pod = Pods.instance[id]
       neg*(
