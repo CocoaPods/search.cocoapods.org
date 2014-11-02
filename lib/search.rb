@@ -117,7 +117,8 @@ class Search
                   CharacterSubstituters::WestEuropean.new,
                 removes_characters: false,
                 stopwords:          stopwords,
-                splits_text_on:     /\s/
+                splits_text_on:     /\s/,
+                max_words: 4
 
       ignore :id
 
@@ -145,7 +146,8 @@ class Search
                   CharacterSubstituters::WestEuropean.new,
                 removes_characters: false, # We don't remove characters.
                 stopwords:          stopwords,
-                splits_text_on:     /\s/
+                splits_text_on:     /\s/,
+                max_words: 4
     end
 
     @splitting_index = Index.new :splitting do
