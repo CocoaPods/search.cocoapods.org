@@ -77,7 +77,7 @@ class Channel
     #
     Signal.trap('INT') do
       Process.kill('INT', process_pid)
-      Process.wait
+      Process.wait(process_pid)
     end
   end
 
