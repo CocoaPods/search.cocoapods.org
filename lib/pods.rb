@@ -11,7 +11,7 @@ class Pods
     @instance ||= new
   end
 
-  # Pods are ordered by name.
+  # Pods are ordered by popularity initially.
   #
   def each(amount = nil, &block)
     order_by_popularity = <<-EXPR
