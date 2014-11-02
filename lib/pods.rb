@@ -13,8 +13,12 @@ class Pods
 
   # Pods are ordered by name.
   #
-  def each(&block)
-    pods = Pod.all { |pods| pods.order_by(:name.asc) }
+  def each(amount = nil, &block)
+    pods = if amount
+      Pod.all { |pods| pods.limit(100).order_by(:name.asc) }
+    else
+      Pod.all { |pods| pods.order_by(:name.asc) }
+    end
     if block_given?
       pods.each &block
     else
