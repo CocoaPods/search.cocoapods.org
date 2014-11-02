@@ -11,8 +11,8 @@ describe 'Special Cases' do
     Picky::TestClient.new CocoapodSearch, path: '/api/v1/pods.flat.ids.json'
   end
 
-  it 'will default to name with unrecognized sort orders' do
-    special_cases.search('a', sort: 'quack').should == ["500px-iOS-api", "A2DynamicDelegate", "A2StoryboardSegueContext", "A3GridTableView", "A3ParallaxScrollView", "AAActivityAction", "AAImageUtils", "AALaunchTransition", "AAPullToRefresh", "AAShareBubbles", "AAStoryboardInstantiate", "ABCalendarPicker", "ABContactHelper", "ABCustomUINavigationController", "ABFullScrollViewController", "ABGetMe", "ABMultiton", "ABPadLockScreen", "ABRequestManager", "ABSQLite"]
+  it 'will default to popularity with unrecognized sort orders' do
+    special_cases.search('a', sort: 'quack').should == ["AFNetworking", "AFIncrementalStore", "AFDownloadRequestOperation", "ADClusterMapView", "ABCalendarPicker", "ADTransitionController", "ADNKit", "AFAmazonS3Client", "ABPadLockScreen", "AFCache", "ACEDrawingView", "AFHTTPRequestOperationLogger", "ABCustomUINavigationController", "500px-iOS-api", "AFJSONRPCClient", "AFNetworking-RACExtensions", "AAShareBubbles", "ADLivelyCollectionView", "AFNetworkActivityLogger", "ACEView"]
   end
 
   # it 'will correctly find _.m' do
@@ -26,7 +26,7 @@ describe 'Special Cases' do
 
   it 'will correctly find something split on -' do
     expected = ["AFNetworking-MUJSONResponseSerializer"]
-    special_cases.search('name:AFNetworking').should == ["AFNetworking", "AFNetworking+AutoRetry", "AFNetworking+streaming", "AFNetworking-MUJSONResponseSerializer", "AFNetworking-MUResponseSerializer", "AFNetworking-RACExtensions", "AFNetworking-ReactiveCocoa", "AFNetworking-Synchronous", "AFNetworking2-RACExtensions"]
+    special_cases.search('name:AFNetworking', sort: 'name').should == ["AFNetworking", "AFNetworking+AutoRetry", "AFNetworking+streaming", "AFNetworking-MUJSONResponseSerializer", "AFNetworking-MUResponseSerializer", "AFNetworking-RACExtensions", "AFNetworking-ReactiveCocoa", "AFNetworking-Synchronous", "AFNetworking2-RACExtensions"]
     special_cases.search('name:MUJSONResponseSerializer').should == expected
     special_cases.search('name:AFNetworking-MUJSONResponseSerializer').should == expected
     special_cases.search('name:AFNetworking name:MUJSONResponseSerializer').should == expected
