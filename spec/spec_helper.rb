@@ -53,9 +53,10 @@ Config = RbConfig
 # Load and prepare everything for the spec(s).
 #
 Pods.instance.cache_all
-every = 100
-puts "Indexing for a bit (Every . is #{every} pods). If it takes more than 20 seconds, you need a new machine ;)"
-Search.instance.reindex every do
+every = 5
+amount = 200 # We only use 200 pods.
+puts "Indexing for a bit (Every . is #{every} pods)."
+Search.instance.reindex every, amount do
   print '.'
 end
 puts
