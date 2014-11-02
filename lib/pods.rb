@@ -14,16 +14,25 @@ class Pods
   # Pods are ordered by name.
   #
   def each(amount = nil, &block)
+    order_by_popularity = <<-EXPR
+      -1 * (
+        github_pod_metrics.stargazers +
+        github_pod_metrics.stargazers * 90 +
+        github_pod_metrics.stargazers * 20 +
+        github_pod_metrics.stargazers * 10
+      )
+    EXPR
+      
     pods = if amount
       Pod.all do |pods|
         pods.
           limit(100).
-          order_by(:name.asc)
+          order_by(order_by_popularity)
       end
     else
       Pod.all do |pods|
         pods.
-          order_by(:name.asc)
+          order_by(order_by_popularity)
       end
     end
     if block_given?
