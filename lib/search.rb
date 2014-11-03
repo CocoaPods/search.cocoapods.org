@@ -255,7 +255,7 @@ class Search
     ->(id) { Pods.instance[id].send(sort) }
   end
   @@default_numeric_sort = ->(sort, desc) do
-    desc = desc ? -1 : 1
+    desc = desc ? 1 : -1
     ->(id) { desc*Pods.instance[id].send(sort) }
   end
   def sort_map
