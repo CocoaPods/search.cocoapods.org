@@ -55,7 +55,7 @@ Config = RbConfig
 Pods.instance.cache_all
 every = 5
 amount = 200 # We only use 200 pods.
-puts "Indexing for a bit (Every . is #{every} pods)."
+puts "Indexing #{amount} pods (Every . is #{every} pods)."
 Search.instance.reindex every, amount do
   print '.'
 end
