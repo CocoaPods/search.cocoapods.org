@@ -13,7 +13,7 @@ describe 'Search Integration Tests' do
 
   ok do
     get '/api/v1/pods.facets.json', {}
-    Yajl.load(last_response.body).should == {"platform"=>{"ios"=>87, "osx"=>23}, "tags"=>{"api"=>4, "image"=>5, "view"=>8, "button"=>3, "controller"=>3, "layout"=>1, "manager"=>3, "test"=>2, "text"=>1, "table"=>1, "navigation"=>1, "progress"=>2, "http"=>5, "network"=>3, "logging"=>2, "json"=>3, "client"=>1, "xml"=>3}}
+    Yajl.load(last_response.body).should == {"platform"=>{"ios"=>168, "osx"=>42}, "tags"=>{"network"=>3, "rest"=>1, "image"=>5, "http"=>5, "json"=>5, "progress"=>4, "parser"=>4, "logging"=>1, "view"=>25, "controller"=>9, "client"=>2, "test"=>6, "button"=>2, "navigation"=>4, "notification"=>5, "table"=>6, "api"=>6, "kit"=>1, "text"=>1, "widget"=>1, "serialization"=>1, "xml"=>2, "manager"=>3, "layout"=>2}}
   end
 
   ok do
