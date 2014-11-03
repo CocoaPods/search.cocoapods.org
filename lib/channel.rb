@@ -50,7 +50,7 @@ class Channel
   #
   def start_process
     process_pid = fork do
-      STDOUT.puts "Worker process #{@type} will select on #{@to_processes}."
+      $stdout.puts "Worker process #{@type} will select on #{@to_processes}."
 
       # Tell worker to setup.
       #
@@ -70,7 +70,7 @@ class Channel
           #
           @worker.post_process if post_process
         rescue StandardError => e
-          STDOUT.puts e.message
+          $stderr.puts e.message
         end
       end
     end

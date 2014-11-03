@@ -3,7 +3,7 @@ class SearchWorker
     # Set up clean exit.
     #
     Signal.trap('INT') do
-      STDOUT.puts "[#{Process.pid}] Search Engine process going down."
+      $stdout.puts "[#{Process.pid}] Search Engine process going down."
       exit
     end
 
@@ -13,14 +13,14 @@ class SearchWorker
 
     # Index the DB in the SE process.
     #
-    STDOUT.puts 'Caching pods in INDEX PROCESS.'
+    $stdout.puts 'Caching pods in INDEX PROCESS.'
     Pods.instance.cache_all
-    STDOUT.puts 'Finished caching pods in INDEX PROCESS.'
+    $stdout.puts 'Finished caching pods in INDEX PROCESS.'
 
     @not_loaded_yet = true
     @pods_to_index = Pods.instance.each
 
-    STDOUT.puts "[#{Time.now}] Start indexing."
+    $stdout.puts "[#{Time.now}] Start indexing."
   end
 
   def process(action, parameters)
@@ -38,7 +38,7 @@ class SearchWorker
       #
       # TODO: Move to Search.
       #
-      STDOUT.puts "Reindexing #{parameters} in INDEX PROCESS."
+      $stdout.puts "Reindexing #{parameters} in INDEX PROCESS."
       try_indexing parameters
     end
   end
@@ -50,11 +50,11 @@ class SearchWorker
       begin
         3.times do
           pod = @pods_to_index.next
-          STDOUT.print '.'
+          $stdout.print '.'
           Search.instance.replace pod
         end
       rescue StopIteration
-        STDOUT.puts "[#{Time.now}] Indexing finished."
+        $stdout.puts "[#{Time.now}] Indexing finished."
         @not_loaded_yet = false
       end
     end
@@ -67,10 +67,10 @@ class SearchWorker
   def try_indexing(name)
     pod = Pod.all { |pods| pods.where(name: name) }.first
     Search.instance.replace pod
-    STDOUT.puts "Reindexing #{name} in INDEX PROCESS successful."
+    $stdout.puts "Reindexing #{name} in INDEX PROCESS successful."
   rescue StandardError => e
     # Catch any error and reraise as a "could not run" error.
     #
-    STDERR.puts "Reindexing #{name} in INDEX PROCESS failed."
+    $stderr.puts "Reindexing #{name} in INDEX PROCESS failed."
   end
 end
