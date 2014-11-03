@@ -14,13 +14,11 @@ class AnalyticsWorker
     return unless defined?(Gabba)
     case action
     when :event
-      analytics.event *parameters
+      self.analytics.event *parameters
     when :page_view
-      analytics.page_view *parameters
+      self.analytics.page_view *parameters
     end
   end
-
-  private
 
   def maybe_create(counter = 0)
     Gabba::Gabba.new('UA-29866548-5', 'cocoapods.org') if counter % 100 == 0
