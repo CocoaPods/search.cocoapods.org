@@ -301,19 +301,21 @@ class Pod
     #   :deprecated => specification.deprecated?,
     #   :deprecated_in_favor_of => specification.deprecated_in_favor_of
     # }
-    h = {
-      id: name, # We don't hand out ids.
-      platforms: platforms,
-      version: last_version,
-      summary: mapped_summary[0..139],
-      authors: rendered_authors,
-      link: homepage.to_s,
-      source: source,
-      tags: tags.to_a,
-      deprecated: deprecated?,
-      deprecated_in_favor_of: deprecated_in_favor_of,
-    }
-    h[:documentation_url] = pod.documentation_url if pod.documentation_url
-    h
+    @h ||= begin
+      h = {
+        id: name, # We don't hand out ids.
+        platforms: platforms,
+        version: last_version,
+        summary: mapped_summary[0..139],
+        authors: rendered_authors,
+        link: homepage.to_s,
+        source: source,
+        tags: tags.to_a,
+        deprecated: deprecated?,
+        deprecated_in_favor_of: deprecated_in_favor_of,
+      }
+      h[:documentation_url] = pod.documentation_url if pod.documentation_url
+      h
+    end
   end
 end
