@@ -7,7 +7,7 @@ require 'picky-client/spec'
 #
 # Uses the fixed set of pods from the ./data directory.
 #
-describe 'Search Integration Tests' do
+describe 'Flat Ids Integration Tests' do
 
   # In these tests we are abusing the Picky client a little.
   #
