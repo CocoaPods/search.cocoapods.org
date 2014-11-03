@@ -16,10 +16,10 @@ class Pods
   def each(amount = nil, &block)
     order_by_popularity = <<-EXPR
       -1 * (
-        github_pod_metrics.stargazers +
-        github_pod_metrics.stargazers * 90 +
-        github_pod_metrics.stargazers * 20 +
-        github_pod_metrics.stargazers * 10
+        github_pod_metrics.contributors * 90 +
+        github_pod_metrics.subscribers * 20 +
+        github_pod_metrics.forks * 10 +
+        github_pod_metrics.stargazers
       )
     EXPR
       
