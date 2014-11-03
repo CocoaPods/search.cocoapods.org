@@ -3,7 +3,7 @@
 require File.expand_path '../../spec_helper', __FILE__
 require 'rack/test'
 
-describe 'Search Integration Tests' do
+describe 'Facets Integration Tests' do
 
   extend Rack::Test::Methods
 

@@ -7,7 +7,7 @@ require 'rack/test'
 #
 # Uses the fixed set of pods from the ./data directory.
 #
-describe 'Search Integration Tests' do
+describe 'Accept Integration Tests' do
 
   def app
     CocoapodSearch
