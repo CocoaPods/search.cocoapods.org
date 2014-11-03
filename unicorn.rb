@@ -4,7 +4,8 @@ pid 'tmp/pids/unicorn.pid'
 preload_app true # This means we need to reople DB connections etc.
 stderr_path 'tmp/unicorn.stderr.log'
 stdout_path 'tmp/unicorn.stdout.log'
-timeout 15
+logger Logger.new(STDOUT)
+timeout 10
 worker_processes number_of_worker_processes
 
 # Before forking off child workers, we start a
