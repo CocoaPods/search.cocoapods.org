@@ -18,7 +18,7 @@ describe 'Accept Integration Tests' do
 
     query                  = 'a'
     expected_results       = 20
-    expected_total_results = 51
+    expected_total_results = 56
 
     [
       # Convenience.

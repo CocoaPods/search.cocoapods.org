@@ -12,7 +12,7 @@ describe 'Special Cases' do
   end
 
   it 'will default to popularity with unrecognized sort orders' do
-    special_cases.search('a', sort: 'quack').should == ["AFIncrementalStore", "AFNetworking", "AMScrollingNavbar", "AMWaveTransition", "AQGridView", "ASIHTTPRequest", "Appirater", "Aspects", "AwesomeMenu", "BlockAlertsAnd-ActionSheets", "CocoaAsyncSocket", "EKAlgorithms", "EZAudio", "INAppStoreWindow", "InAppSettingKit", "InAppSettingsKit", "MMAppSwitcher", "OHAttributedLabel", "RBBAnimation", "SIAlertView"]
+    special_cases.search('a', sort: 'quack').should == ["AFIncrementalStore", "AFNetworking", "AFOAuth2Client", "AQGridView", "ASIHTTPRequest", "AWSiOSSDK", "ActionSheetPicker", "Appirater", "AwesomeMenu", "BlockAlertsAnd-ActionSheets", "CocoaAsyncSocket", "EKAlgorithms", "INAppStoreWindow", "InAppSettingKit", "InAppSettingsKit", "NSDate+TimeAgo", "NXOAuth2Client", "OHAttributedLabel", "REActivityViewController", "SIAlertView"]
   end
 
   # it 'will correctly find _.m' do
