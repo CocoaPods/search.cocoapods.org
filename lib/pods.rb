@@ -26,7 +26,7 @@ class Pods
     pods = if amount
       Pod.all do |pods|
         pods.
-          limit(100).
+          limit(amount).
           order_by(order_by_popularity)
       end
     else
