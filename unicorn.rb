@@ -1,4 +1,4 @@
-number_of_worker_processes = 5
+number_of_worker_processes = 2
 
 pid 'tmp/pids/unicorn.pid'
 preload_app true # This means we need to reople DB connections etc.
