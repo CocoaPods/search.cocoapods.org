@@ -9,7 +9,7 @@ class Pod
 
   # Forward entities.
   #
-  def_delegators :row, :pod, :versions, :commits, :github_metric
+  def_delegators :row, :pod, :versions, :commits, :github_metric, :popularity
 
   # Forward attributes.
   #
@@ -34,6 +34,14 @@ class Pod
       project(
         *Domain.pods.fields,
         'array_agg(pod_versions.name) AS versions',
+        <<-EXPR,
+        (
+          github_pod_metrics.contributors * 90 +
+          github_pod_metrics.subscribers * 20 +
+          github_pod_metrics.forks * 10 +
+          github_pod_metrics.stargazers
+        ) AS popularity
+        EXPR
         *Domain.github_metrics.fields(
           :forks,
           :stargazers,
@@ -64,6 +72,10 @@ class Pod
 
   # Sort specific methods
   #
+  
+  def popularity
+    github_metric.popularity || 0
+  end
   
   def forks
     github_metric.forks || 0
