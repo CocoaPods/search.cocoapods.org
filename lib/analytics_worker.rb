@@ -1,6 +1,7 @@
 class AnalyticsWorker
   def setup
     if defined?(Gabba)
+      $stdout.puts "Setting up Gabba for analytics."
       @analytics_counter = 0
       @analytics = maybe_create
     else
