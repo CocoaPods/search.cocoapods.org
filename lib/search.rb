@@ -258,24 +258,12 @@ class Search
     desc = desc ? -1 : 1
     ->(id) { desc*Pods.instance[id].send(sort) }
   end
-  @@popularity_sort = ->(desc) do
-    desc = desc ? 1 : -1
-    ->(id) do
-      pod = Pods.instance[id]
-      desc*(
-        pod.contributors * 90 +
-        pod.subscribers * 20 +
-        pod.forks * 10 +
-        pod.stargazers
-      )
-    end
-  end
   def sort_map
     @sort_map ||= {
       'name'          => @@default_text_sort[:name],
       
-      'popularity'    => @@popularity_sort[false],
-      '-popularity'   => @@popularity_sort[true],
+      'popularity'    => @@default_numeric_sort[:popularity, false],
+      '-popularity'   => @@default_numeric_sort[:popularity, true],
       
       'contributors'  => @@default_numeric_sort[:contributors, false],
       '-contributors' => @@default_numeric_sort[:contributors, true],
