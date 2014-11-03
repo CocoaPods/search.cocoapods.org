@@ -9,7 +9,7 @@ class Pod
 
   # Forward entities.
   #
-  def_delegators :row, :pod, :versions, :commits, :github_metric, :popularity
+  def_delegators :row, :pod, :versions, :commits, :github_metric
 
   # Forward attributes.
   #
@@ -74,7 +74,7 @@ class Pod
   #
   
   def popularity
-    github_metric.popularity || 0
+    row.popularity || 0
   end
   
   def forks
