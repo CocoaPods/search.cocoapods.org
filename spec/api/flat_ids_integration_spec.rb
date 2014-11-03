@@ -36,11 +36,11 @@ describe 'Flat Ids Integration Tests' do
 
   # This is how results should look - a flat list of ids.
   #
-  ok { pods.search('on:ios 1.0.0', ids: 200, sort: 'name').should == ["Appirater", "Aspects", "AwesomeMenu", "BlockAlertsAnd-ActionSheets", "BlocksKit", "Bolts", "CMPopTipView", "CargoBay", "CocoaSPDY", "DTCoreText", "EAIntroView", "ECSlidingViewController", "GroundControl", "HPGrowingTextView", "JASidePanels", "KIF", "KVOController", "M13ProgressSuite", "MCSwipeTableViewCell", "MSDynamicsDrawerViewController", "MZFormSheetController", "MessageBarManager", "Nimbus", "ODRefreshControl", "Ono", "OpenUDID", "PHFComposeBarView", "PSTCollectionView", "ReactiveCocoa", "SMCalloutView", "SSToolkit", "Shimmer", "TMCache", "TimesSquare", "Tweaks", "UISS", "UIView+AutoLayout", "VCTransitionsLibrary", "ViewDeck", "WEPopover", "XLForm", "objc-TimesSquare", "pop", "scifihifi-iphone", "scifihifi-iphone-security"] }
+  ok { pods.search('on:ios 1.0.0', ids: 200, sort: 'name').should == ["Appirater", "AwesomeMenu", "BlockAlertsAnd-ActionSheets", "BlocksKit", "Bolts", "CMPopTipView", "CargoBay", "CocoaSPDY", "Cordova", "DTCoreText", "EAIntroView", "ECSlidingViewController", "GroundControl", "HPGrowingTextView", "JASidePanels", "KIF", "KVOController", "MCSwipeTableViewCell", "MSDynamicsDrawerViewController", "MZFormSheetController", "MapBox", "Mixpanel", "NSDate+TimeAgo", "Nimbus", "NoticeView", "ODRefreshControl", "OpenUDID", "PSTCollectionView", "ReactiveCocoa", "SSToolkit", "Shimmer", "TMCache", "TimesSquare", "Tweaks", "VCTransitionsLibrary", "ViewDeck", "WEPopover", "objc-TimesSquare", "pop", "scifihifi-iphone", "scifihifi-iphone-security"] }
 
   # Testing a count of results.
   #
-  ok { pods.search('on:ios 1.0.0', ids: 10_000).size.should == 45 }
+  ok { pods.search('on:ios 1.0.0', ids: 10_000).size.should == 41 }
 
   # Speed.
   #
@@ -51,11 +51,11 @@ describe 'Flat Ids Integration Tests' do
 
   # Multiple results and uniqueness.
   #
-  ok { pods.search('afnetworking', sort: 'name').should == ["AFNetworking", "AFIncrementalStore", "CargoBay", "GroundControl"] }
+  ok { pods.search('afnetworking', sort: 'name').should == ["AFNetworking", "AFIncrementalStore", "AFOAuth2Client", "CargoBay", "GroundControl", "REActivityViewController"] }
 
   # Similarity on author.
   #
-  ok { pods.search('on:ios mettt~', sort: 'name').should == ["AFIncrementalStore", "AFNetworking", "CargoBay", "GroundControl", "Ono", "TTTAttributedLabel"] }
+  ok { pods.search('on:ios mettt~', sort: 'name').should == ["AFIncrementalStore", "AFNetworking", "CargoBay", "GroundControl", "TTTAttributedLabel"] }
 
   # Partial version search.
   #
@@ -68,15 +68,15 @@ describe 'Flat Ids Integration Tests' do
 
   # Platform constrained search (platforms are AND-ed).
   #
-  ok { pods.search('on:osx mattt', sort: 'name').should == ["AFIncrementalStore", "AFNetworking", "CargoBay", "GroundControl", "Ono"] }
-  ok { pods.search('on:ios mattt', sort: 'name').should == ["AFIncrementalStore", "AFNetworking", "CargoBay", "GroundControl", "Ono", "TTTAttributedLabel"] }
-  ok { pods.search('on:osx on:ios mattt', sort: 'name').should == ["AFIncrementalStore", "AFNetworking", "CargoBay", "GroundControl", "Ono"] }
+  ok { pods.search('on:osx mattt', sort: 'name').should == ["AFIncrementalStore", "AFNetworking", "CargoBay", "GroundControl"] }
+  ok { pods.search('on:ios mattt', sort: 'name').should == ["AFIncrementalStore", "AFNetworking", "CargoBay", "GroundControl", "TTTAttributedLabel"] }
+  ok { pods.search('on:osx on:ios mattt', sort: 'name').should == ["AFIncrementalStore", "AFNetworking", "CargoBay", "GroundControl"] }
 
   # Partial.
   #
   # Platform is only found when fully mentioned (i.e. no partial).
   #
-  ok { pods.search('platform:osx', ids: 10_000).size.should == 42 }
+  ok { pods.search('platform:osx', ids: 10_000).size.should == 38 }
   ok { pods.search('platform:os').size.should == 0 }
   ok { pods.search('platform:o').size.should == 0 }
 
@@ -85,14 +85,14 @@ describe 'Flat Ids Integration Tests' do
   ok { pods.search('name:afnetworking mattt thompson').should == ["AFNetworking"] }
   ok { pods.search('pod:afnetworking mattt thompson').should == ["AFNetworking"] }
 
-  expected = ["AFNetworking", "AFIncrementalStore", "CargoBay", "GroundControl"]
+  expected = ["AFNetworking", "AFIncrementalStore", "AFOAuth2Client", "CargoBay", "GroundControl"]
   ok { pods.search('afnetworking author:mattt author:thompson', sort: 'name').should == expected }
   ok { pods.search('afnetworking authors:mattt authors:thompson', sort: 'name').should == expected }
   ok { pods.search('afnetworking written:mattt written:thompson', sort: 'name').should == expected }
   ok { pods.search('afnetworking writer:mattt writer:thompson', sort: 'name').should == expected }
   # ok { pods.search('kiwi by:allen by:ding').should == ['Kiwi'] } # by is removed by stopwords.
 
-  expected_dependencies = ["AFIncrementalStore", "CargoBay", "GroundControl"]
+  expected_dependencies = ["AFIncrementalStore", "AFOAuth2Client", "CargoBay", "GroundControl", "REActivityViewController"]
   ok { pods.search('dependency:AFNetworking', sort: 'name').should == expected_dependencies }
   ok { pods.search('dependencies:AFNetworking', sort: 'name').should == expected_dependencies }
   ok { pods.search('depends:AFNetworking', sort: 'name').should == expected_dependencies }
@@ -101,8 +101,8 @@ describe 'Flat Ids Integration Tests' do
   ok { pods.search('use:AFNetworking', sort: 'name').should == expected_dependencies }
   ok { pods.search('needs:AFNetworking', sort: 'name').should == expected_dependencies }
 
-  ok { pods.search('platform:osx', ids: 10_000).size.should == 42 }
-  ok { pods.search('on:osx', ids: 10_000).size.should == 42 }
+  ok { pods.search('platform:osx', ids: 10_000).size.should == 38 }
+  ok { pods.search('on:osx', ids: 10_000).size.should == 38 }
 
   ok { pods.search('summary:networking', sort: 'name').should == ["AFNetworking", "CocoaAsyncSocket"] }
 
