@@ -11,6 +11,10 @@ describe 'Special Cases' do
     Picky::TestClient.new CocoapodSearch, path: '/api/v1/pods.flat.ids.json'
   end
 
+  it 'will survive searching ORed' do
+    special_cases.search('ios|osx', sort: 'name').should == ["AFIncrementalStore", "AFNetworking", "AQGridView", "AWSiOSSDK", "ActionSheetPicker", "Appirater", "AwesomeMenu", "BlockAlertsAnd-ActionSheets", "BlocksKit", "Bolts", "CHTCollectionViewWaterfallLayout", "CMPopTipView", "CRToast", "Canvas", "CargoBay", "Cedar", "CocoaAsyncSocket", "CocoaHTTPServer", "CocoaLibSpotify", "CocoaLumberjack"]
+  end
+  
   it 'will default to popularity with unrecognized sort orders' do
     special_cases.search('a', sort: 'quack').should == ["AFIncrementalStore", "AFNetworking", "AFOAuth2Client", "AQGridView", "ASIHTTPRequest", "AWSiOSSDK", "ActionSheetPicker", "Appirater", "AwesomeMenu", "BlockAlertsAnd-ActionSheets", "CocoaAsyncSocket", "EKAlgorithms", "INAppStoreWindow", "InAppSettingKit", "InAppSettingsKit", "NSDate+TimeAgo", "NXOAuth2Client", "OHAttributedLabel", "REActivityViewController", "SIAlertView"]
   end
