@@ -84,6 +84,10 @@ class SearchWorker
     pod = Pod.all { |pods| pods.where(name: name) }.first
     Search.instance.replace pod # TODO Also replace the view.
     $stdout.puts "Reindexing #{name} in INDEX PROCESS successful."
+  rescue PG::UnableToSend
+    STDOUT.puts "PG::UnableToSend raised! Reconnecting to database."
+    load 'lib/database.rb'
+    retry
   rescue StandardError => e
     # Catch any error and reraise as a "could not run" error.
     #

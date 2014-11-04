@@ -65,5 +65,9 @@ class Pods
     loaded_pods = Pod.all { |pods| pods.where(Domain.pods[:id].in => uncached_ids) }
     loaded_pods.each { |pod| @cache[pod.id] = pod }
     all_ids.map { |id| @cache[id] }
+  rescue PG::UnableToSend
+    STDOUT.puts "PG::UnableToSend raised! Reconnecting to database."
+    load 'lib/database.rb'
+    retry
   end
 end
