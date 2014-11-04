@@ -53,6 +53,10 @@ class Pods
   def []=(id, pod)
     @cache[id] = pod
   end
+  
+  def reset pod
+    @cache[id] = nil
+  end
 
   # Load the ids, also uses a cache.
   #
