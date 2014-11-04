@@ -44,7 +44,7 @@ class SearchWorker
   end
 
   def post_process
-    # Index a few pods at a time until all are indexed.
+    # Initially index a few pods at a time until all are indexed.
     #
     if @not_loaded_yet
       begin
@@ -58,6 +58,11 @@ class SearchWorker
         @not_loaded_yet = false
       end
     end
+    
+    # Periodically index pods to update the metrics in memory.
+    #
+    # TODO
+    #
   end
 
   private
@@ -66,7 +71,7 @@ class SearchWorker
   #
   def try_indexing(name)
     pod = Pod.all { |pods| pods.where(name: name) }.first
-    Search.instance.replace pod
+    Search.instance.replace pod # TODO Also replace the view.
     $stdout.puts "Reindexing #{name} in INDEX PROCESS successful."
   rescue StandardError => e
     # Catch any error and reraise as a "could not run" error.
