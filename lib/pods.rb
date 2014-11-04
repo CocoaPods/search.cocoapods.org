@@ -54,7 +54,7 @@ class Pods
     @cache[id] = pod
   end
   
-  def reset pod
+  def reset_cache_for pod
     @cache[id] = nil
   end
 

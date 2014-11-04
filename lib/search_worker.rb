@@ -1,24 +1,14 @@
 class SearchWorker
   def setup
-    # Set up clean exit.
-    #
-    Signal.trap('INT') do
-      $stdout.puts "[#{Process.pid}] Search Engine process going down."
-      exit
-    end
+    setup_clean_exit
 
     # Load the DB.
     #
     require File.expand_path '../database', __FILE__
 
-    # Index the DB in the SE process.
-    #
-    $stdout.puts 'Caching pods in INDEX PROCESS.'
-    Pods.instance.cache_all
-    $stdout.puts 'Finished caching pods in INDEX PROCESS.'
+    cache_all_pods
 
-    @not_loaded_yet = true
-    @pods_to_index = Pods.instance.each
+    setup_indexing_all_pods
 
     $stdout.puts "[#{Time.now}] Start indexing."
   end
@@ -63,9 +53,30 @@ class SearchWorker
     #
     # TODO
     #
+    # setup_indexing_all_pods if every_so_often
   end
 
   private
+  
+  def setup_clean_exit
+    # Set up clean exit.
+    #
+    Signal.trap('INT') do
+      $stdout.puts "[#{Process.pid}] Search Engine process going down."
+      exit
+    end
+  end
+  
+  def cache_all_pods
+    $stdout.puts 'Caching pods in INDEX PROCESS.'
+    Pods.instance.cache_all
+    $stdout.puts 'Finished caching pods in INDEX PROCESS.'
+  end
+  
+  def setup_indexing_all_pods
+    @not_loaded_yet = true
+    @pods_to_index = Pods.instance.each
+  end
 
   # Try indexing a new pod.
   #
