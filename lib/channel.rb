@@ -69,8 +69,12 @@ class Channel
           # Tell worker to post_process
           #
           @worker.post_process if post_process
+          
         rescue StandardError => e
-          $stderr.puts e.message
+          # If anything goes wrong in the worker
+          # we print and ignore it.
+          #
+          $stderr.puts $!.inspect, $@
         end
       end
     end
