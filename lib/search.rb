@@ -248,7 +248,7 @@ class Search
   end
 
   def filter_sort(sort)
-    sort_map[sort] || sort_map['name'] # Should be 'popularity'.
+    sort_map[sort] || sort_map['popularity'] # Default is popularity.
   end
   
   @@default_text_sort = ->(sort) do
