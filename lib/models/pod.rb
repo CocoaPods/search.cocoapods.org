@@ -133,10 +133,10 @@ class Pod
   end
 
   def dependencies
-    (
-      [*specification['frameworks']] +
-      [*specification['dependencies'].keys]
-    ).compact
+    [
+      *specification['frameworks'],
+      *specification['dependencies'].keys
+    ].compact
   end
 
   def mapped_dependencies
