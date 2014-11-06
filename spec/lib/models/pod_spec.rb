@@ -41,7 +41,9 @@ describe Pod do
             {
               "name"=>"Security",
               "source_files"=>"AFNetworking/AFSecurityPolicy.{h,m}",
-              "frameworks"=>"Security"}, {"name"=>"Reachability",
+              "frameworks"=>"Security"
+            }, {
+              "name"=>"Reachability",
               "source_files"=>"AFNetworking/AFNetworkReachabilityManager.{h,m}",
               "frameworks"=>"SystemConfiguration"
             },
