@@ -204,6 +204,8 @@ class Pod
     result.commit.specification_data if result
   end
 
+  # TODO @specification ||= , then clear.
+  #
   def specification
     JSON.parse(specification_json || '{}')
   end
