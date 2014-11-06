@@ -9,11 +9,12 @@ class Pod
 
   # Forward entities.
   #
-  def_delegators :row, :pod, :versions, :commits, :github_metric
-
-  # Forward attributes.
-  #
-  def_delegators :pod, :id, :name
+  def_delegators :row,
+    :id,
+    :name,
+    :versions,
+    :commits,
+    :github_metric
 
   def initialize(row)
     @row = row
@@ -331,7 +332,7 @@ class Pod
         deprecated: deprecated?,
         deprecated_in_favor_of: deprecated_in_favor_of,
       }
-      h[:documentation_url] = pod.documentation_url if pod.documentation_url
+      h[:documentation_url] = row.documentation_url if row.documentation_url
       h
     end
   end
