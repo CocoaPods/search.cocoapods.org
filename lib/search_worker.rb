@@ -8,6 +8,7 @@ class SearchWorker
 
     cache_all_pods
 
+    setup_every_so_often
     setup_indexing_all_pods
 
     $stdout.puts "[#{Time.now}] Start indexing."
@@ -40,7 +41,7 @@ class SearchWorker
       begin
         3.times do
           pod = @pods_to_index.next
-          $stdout.print '.'
+          STDOUT.print '.'
           Search.instance.replace pod
         end
       rescue StopIteration
@@ -51,12 +52,29 @@ class SearchWorker
     
     # Periodically index pods to update the metrics in memory.
     #
-    # TODO
-    #
-    # setup_indexing_all_pods if every_so_often
+    setup_indexing_all_pods if every_so_often
   end
 
   private
+  
+  def setup_every_so_often
+    @looped = 0
+  end
+  
+  # Returns true very rarely.
+  #
+  def every_so_often
+    @looped += 1
+    if @looped % 50000 == 0
+      @looped = 0
+      true
+    end
+  end
+  
+  def setup_indexing_all_pods
+    @not_loaded_yet = true
+    @pods_to_index = Pods.instance.each
+  end
   
   def setup_clean_exit
     # Set up clean exit.
@@ -71,11 +89,6 @@ class SearchWorker
     $stdout.puts 'Caching pods in INDEX PROCESS.'
     Pods.instance.cache_all
     $stdout.puts 'Finished caching pods in INDEX PROCESS.'
-  end
-  
-  def setup_indexing_all_pods
-    @not_loaded_yet = true
-    @pods_to_index = Pods.instance.each
   end
 
   # Try indexing a new pod.
