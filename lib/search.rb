@@ -187,6 +187,7 @@ class Search
   end
 
   def replace(pod)
+    Pods.instance[pod.id] = pod # TODO: Move this elsewhere.
     @index.replace pod
     @splitting_index.replace pod
   end
