@@ -11,12 +11,16 @@ h3. Installation
 * @bundle install@
 * @gem install foreman@
 * Create a @trunk_cocoapods_org_test@ table in a Postgres DB.
-* Run @bundle exec rake db:bootstrap@. Runs @pg_restore -d trunk_cocoapods_org_test spec/trunk.dump@.
 
 h3. Run locally with foreman
 
 * @bundle exec foreman check@
 * @bundle exec foreman start@
+
+h3. Run tests
+
+* First time: @LOAD_TEST_DB=true bundle exec rake@
+* After that: @bundle exec rake@
 
 h3. Deploying to Heroku
 
