@@ -42,7 +42,7 @@ class SearchWorker
         3.times do
           pod = @pods_to_index.next
           STDOUT.print '.'
-          Search.instance.replace pod
+          Search.instance.replace pod, Pods.instance
         end
       rescue StopIteration
         $stdout.puts "[#{Time.now}] Indexing finished."
@@ -95,7 +95,7 @@ class SearchWorker
   #
   def try_indexing(name)
     pod = Pod.all { |pods| pods.where(name: name) }.first
-    Search.instance.replace pod # TODO Also replace the view.
+    Search.instance.replace pod, Pods.instance
     $stdout.puts "Reindexing #{name} in INDEX PROCESS successful."
   rescue PG::UnableToSend
     STDOUT.puts "PG::UnableToSend raised! Reconnecting to database."
