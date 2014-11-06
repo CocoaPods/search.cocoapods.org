@@ -6,13 +6,13 @@ end
 
 ENV['RACK_ENV'] = 'test'
 
+# Load the app.
+#
 require File.expand_path '../../lib/cocoapods.org', __FILE__
 require File.expand_path '../../lib/database', __FILE__
 
-# Tell CocoaPods where the specs are found.
+# Install some controller spec helpers.
 #
-ENV['COCOAPODS_SPECS_PATH'] = './spec/data'
-
 class Bacon::Context
   def test_controller!(app)
     extend Rack::Test::Methods
@@ -34,6 +34,9 @@ Picky::Loader.load_application
 # Silence Picky.
 #
 Picky.logger = Picky::Loggers::Verbose.new
+
+# Spec helper methods.
+#
 
 def categories_of(results)
   results.allocations.map do |allocation|
