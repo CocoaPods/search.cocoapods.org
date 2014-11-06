@@ -36,7 +36,7 @@ describe 'Flat Ids Integration Tests' do
 
   # This is how results should look - a flat list of ids.
   #
-  ok { pods.search('on:ios 1.0.0', ids: 200, sort: 'name').should == ["Appirater", "AwesomeMenu", "BlockAlertsAnd-ActionSheets", "BlocksKit", "Bolts", "CMPopTipView", "CargoBay", "CocoaSPDY", "Cordova", "DTCoreText", "EAIntroView", "ECSlidingViewController", "GroundControl", "HPGrowingTextView", "JASidePanels", "KIF", "KVOController", "MCSwipeTableViewCell", "MSDynamicsDrawerViewController", "MZFormSheetController", "MapBox", "Mixpanel", "NSDate+TimeAgo", "Nimbus", "NoticeView", "ODRefreshControl", "OpenUDID", "PSTCollectionView", "ReactiveCocoa", "SSToolkit", "Shimmer", "TMCache", "TimesSquare", "Tweaks", "VCTransitionsLibrary", "ViewDeck", "WEPopover", "objc-TimesSquare", "pop", "scifihifi-iphone", "scifihifi-iphone-security"] }
+  ok { pods.search('on:ios 1.0.0', ids: 200, sort: 'name').should == ["Appirater", "AwesomeMenu", "BlockAlertsAnd-ActionSheets", "BlocksKit", "CMPopTipView", "CargoBay", "CocoaSPDY", "Cordova", "DTCoreText", "EAIntroView", "ECSlidingViewController", "GroundControl", "HPGrowingTextView", "JASidePanels", "KIF", "KVOController", "MCSwipeTableViewCell", "MSDynamicsDrawerViewController", "MZFormSheetController", "MapBox", "Mapbox", "Mixpanel", "NSDate+TimeAgo", "Nimbus", "NoticeView", "OpenUDID", "PSTCollectionView", "ReactiveCocoa", "SSToolkit", "Shimmer", "TMCache", "TimesSquare", "Tweaks", "VCTransitionsLibrary", "ViewDeck", "WEPopover", "objc-TimesSquare", "pop", "scifihifi-iphone", "scifihifi-iphone-security"] }
 
   # Testing a count of results.
   #
