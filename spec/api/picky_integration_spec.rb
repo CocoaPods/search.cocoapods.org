@@ -27,7 +27,7 @@ describe 'Integration Tests' do
 
   # Testing a count of results.
   #
-  ok { pods.search('on:ios 1.0.0').total.should == 41 }
+  ok { pods.search('on:ios 1.0.0').total.should == 40 }
 
   # Testing the format.
   #
@@ -112,7 +112,7 @@ describe 'Integration Tests' do
   ok { pods.search('platform:osx').total.should == 38 }
   ok { pods.search('on:osx').total.should == 38 }
 
-  ok { names_for_search('summary:data', sort: 'name').should == ["AFIncrementalStore", "FCModel", "FXForms", "JSONModel", "MagicalRecord", "ObjectiveRecord", "RETableViewManager", "TTTAttributedLabel"] }
+  ok { names_for_search('summary:data', sort: 'name').should == ["AFIncrementalStore", "FCModel", "FXForms", "JSONModel", "MagicalRecord", "ObjectiveRecord", "PonyDebugger", "RETableViewManager", "TTTAttributedLabel"] }
 
   # No single characters indexed.
   #

@@ -12,7 +12,7 @@ describe 'Special Cases' do
   end
 
   it 'will survive searching ORed' do
-    special_cases.search('ios|osx', sort: 'name').should == ["AFIncrementalStore", "AFNetworking", "AQGridView", "AWSiOSSDK", "ActionSheetPicker", "Appirater", "AwesomeMenu", "BlockAlertsAnd-ActionSheets", "BlocksKit", "Bolts", "CHTCollectionViewWaterfallLayout", "CMPopTipView", "CRToast", "Canvas", "CargoBay", "Cedar", "CocoaAsyncSocket", "CocoaHTTPServer", "CocoaLibSpotify", "CocoaLumberjack"]
+    special_cases.search('ios|osx', sort: 'name').should == ["AFIncrementalStore", "AFNetworking", "AQGridView", "AWSiOSSDK", "ActionSheetPicker", "Appirater", "AwesomeMenu", "BlockAlertsAnd-ActionSheets", "BlocksKit", "CHTCollectionViewWaterfallLayout", "CMPopTipView", "CRToast", "Canvas", "CargoBay", "Cedar", "CocoaAsyncSocket", "CocoaHTTPServer", "CocoaLibSpotify", "CocoaLumberjack", "CocoaSPDY"]
   end
   
   it 'will default to popularity with unrecognized sort orders' do

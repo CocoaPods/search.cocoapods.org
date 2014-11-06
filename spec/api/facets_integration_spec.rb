@@ -13,7 +13,7 @@ describe 'Facets Integration Tests' do
 
   ok do
     get '/api/v1/pods.facets.json', {}
-    Yajl.load(last_response.body).should == {"platform"=>{"ios"=>159, "osx"=>38}, "tags"=>{"network"=>2, "rest"=>1, "image"=>6, "http"=>2, "json"=>5, "progress"=>2, "parser"=>4, "logging"=>1, "view"=>18, "controller"=>9, "client"=>3, "test"=>7, "api"=>7, "navigation"=>4, "button"=>2, "kit"=>1, "notification"=>2, "communication"=>1, "table"=>4, "text"=>3, "serialization"=>1, "layout"=>1, "widget"=>1, "xml"=>1, "manager"=>1, "analytics"=>1, "authentication"=>1}}
+    Yajl.load(last_response.body).should == {"platform"=>{"ios"=>159, "osx"=>38}, "tags"=>{"network"=>3, "rest"=>1, "image"=>5, "http"=>2, "json"=>5, "progress"=>2, "parser"=>4, "logging"=>1, "view"=>19, "controller"=>9, "client"=>3, "test"=>8, "api"=>7, "navigation"=>4, "button"=>2, "kit"=>1, "notification"=>2, "communication"=>1, "table"=>4, "text"=>3, "serialization"=>1, "layout"=>1, "widget"=>1, "xml"=>1, "manager"=>1, "analytics"=>1, "authentication"=>1}}
   end
 
   ok do
