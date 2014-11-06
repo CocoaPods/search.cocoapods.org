@@ -182,12 +182,12 @@ class Search
   def reindex(every = 100, amount = nil)
     Pods.instance.each(amount).with_index do |pod, i|
       yield i if block_given? && (i % every == 0)
-      replace pod
+      replace pod, Pods.instance
     end
   end
 
-  def replace(pod)
-    Pods.instance[pod.id] = pod # TODO: Move this elsewhere.
+  def replace(pod, pods) # TODO Redesign.
+    pods[pod.id] = pod
     @index.replace pod
     @splitting_index.replace pod
   end
