@@ -204,10 +204,13 @@ class Pod
     result.commit.specification_data if result
   end
 
-  # TODO @specification ||= , then clear.
+  # TODO Clear after using the specification.
+  #      with_specification do ?
+  #
+  # Caching the specification speeds up indexing considerably.
   #
   def specification
-    JSON.parse(specification_json || '{}')
+    @specification ||= JSON.parse(specification_json || '{}')
   end
 
   def deprecated_in_favor_of
