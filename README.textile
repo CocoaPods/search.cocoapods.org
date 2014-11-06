@@ -19,8 +19,8 @@ h3. Run locally with foreman
 
 h3. Run tests
 
-* First time: @LOAD_TEST_DB=true bundle exec rake@
-* After that: @bundle exec rake@
+* All tests: @bundle exec rake@
+* A single test: @LOAD_TEST_DB=absolutely bundle exec bacon spec/...../.._spec.rb@
 
 h3. Deploying to Heroku
 
