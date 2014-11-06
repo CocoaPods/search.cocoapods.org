@@ -11,6 +11,10 @@ describe 'Special Cases' do
     Picky::TestClient.new CocoapodSearch, path: '/api/v1/pods.flat.ids.json'
   end
 
+  it 'will find ObjectiveRecord via CoreData' do
+    special_cases.search('CoreData', sort: 'name').should == ["AFIncrementalStore", "ObjectiveRecord", "PonyDebugger"]
+  end
+
   it 'will survive searching ORed' do
     special_cases.search('ios|osx', sort: 'name').should == ["AFIncrementalStore", "AFNetworking", "AQGridView", "AWSiOSSDK", "ActionSheetPicker", "Appirater", "AwesomeMenu", "BlockAlertsAnd-ActionSheets", "BlocksKit", "CHTCollectionViewWaterfallLayout", "CMPopTipView", "CRToast", "Canvas", "CargoBay", "Cedar", "CocoaAsyncSocket", "CocoaHTTPServer", "CocoaLibSpotify", "CocoaLumberjack", "CocoaSPDY"]
   end
