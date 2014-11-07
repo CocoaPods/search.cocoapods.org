@@ -12,8 +12,8 @@ CocoapodSearch.helpers do
 
   # Return all API routes in their original form.
   #
-  def self.api_routes
-    @api_routes
+  class << self
+    attr_reader :api_routes
   end
 
   @versioned_accepts = {}
@@ -35,7 +35,7 @@ CocoapodSearch.helpers do
       get convenient_path do
         cors_allow_all
 
-        instance_eval &search
+        instance_eval(&search)
       end
 
       options convenient_path do
@@ -94,7 +94,7 @@ CocoapodSearch.helpers do
       request.accept.each do |accept|
         version = versioned_accepts[accept.params['version']] || next
         handler = version[accept.to_s] || next
-        halt (handler && instance_eval(&handler) || next)
+        halt(handler && instance_eval(&handler) || next)
       end
 
       halt 406
@@ -130,7 +130,7 @@ CocoapodSearch.helpers do
 
     results.extend Picky::Convenience
 
-    results.amend_ids_with pods.for(results.ids).map &rendering
+    results.amend_ids_with pods.for(results.ids).map(&rendering)
 
     results.clear_ids
 
@@ -151,10 +151,10 @@ CocoapodSearch.helpers do
 
     CocoapodSearch.track_search query, results.total
 
-    result = pods.for(results.ids).map &rendering
-    
+    result = pods.for(results.ids).map(&rendering)
+
     results.clear_ids
-    
+
     result
   end
 

@@ -1,4 +1,4 @@
-Bundler.require *[:default, ENV['RACK_ENV'].to_sym].compact
+Bundler.require(*[:default, ENV['RACK_ENV'].to_sym].compact)
 
 # Loads the helper class for extracting the searched platform.
 #

@@ -31,6 +31,7 @@ gem 'yajl-ruby', :require => 'yajl'
 group :development do
   gem 'rake'
   gem 'foreman'
+  gem 'rubocop'
 end
 
 # Pure production gems.
