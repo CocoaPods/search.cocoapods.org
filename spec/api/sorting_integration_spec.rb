@@ -8,26 +8,26 @@ require 'picky-client/spec'
 # Uses the fixed set of pods from the ./data directory.
 #
 describe 'Sorting Integration Tests' do
-  
+
   def pods
     @pods ||= Picky::TestClient.new CocoapodSearch, path: '/api/v1/pods.flat.ids.json'
   end
-  
-  ok { pods.search('on:osx mattt', sort: 'name').should == ["AFIncrementalStore", "AFNetworking", "CargoBay", "GroundControl"] }
-  
-  ok { pods.search('on:osx mattt', sort: 'popularity').should ==  ["AFNetworking", "AFIncrementalStore", "CargoBay", "GroundControl"] }
-  ok { pods.search('on:osx mattt', sort: '-popularity').should == ["GroundControl", "CargoBay", "AFIncrementalStore", "AFNetworking"] }
-  
-  ok { pods.search('on:osx mattt', sort: 'watchers').should ==  ["AFNetworking", "AFIncrementalStore", "GroundControl", "CargoBay"] }
-  ok { pods.search('on:osx mattt', sort: '-watchers').should == ["CargoBay", "GroundControl", "AFIncrementalStore", "AFNetworking"] }
-  
-  ok { pods.search('on:osx mattt', sort: 'forks').should ==  ["AFNetworking", "AFIncrementalStore", "CargoBay", "GroundControl"] }
-  ok { pods.search('on:osx mattt', sort: '-forks').should == ["GroundControl", "CargoBay", "AFIncrementalStore", "AFNetworking"] }
-  
-  ok { pods.search('on:osx mattt', sort: 'stars').should ==  ["AFNetworking", "AFIncrementalStore", "GroundControl", "CargoBay"] }
-  ok { pods.search('on:osx mattt', sort: '-stars').should == ["CargoBay", "GroundControl", "AFIncrementalStore", "AFNetworking"] }
-  
-  ok { pods.search('on:osx mattt', sort: 'contributors').should ==  ["AFNetworking", "AFIncrementalStore", "CargoBay", "GroundControl"] }
-  ok { pods.search('on:osx mattt', sort: '-contributors').should == ["GroundControl", "CargoBay", "AFIncrementalStore", "AFNetworking"] }
+
+  ok { pods.search('on:osx mattt', sort: 'name').should == %w(AFIncrementalStore AFNetworking CargoBay GroundControl) }
+
+  ok { pods.search('on:osx mattt', sort: 'popularity').should ==  %w(AFNetworking AFIncrementalStore CargoBay GroundControl) }
+  ok { pods.search('on:osx mattt', sort: '-popularity').should == %w(GroundControl CargoBay AFIncrementalStore AFNetworking) }
+
+  ok { pods.search('on:osx mattt', sort: 'watchers').should ==  %w(AFNetworking AFIncrementalStore GroundControl CargoBay) }
+  ok { pods.search('on:osx mattt', sort: '-watchers').should == %w(CargoBay GroundControl AFIncrementalStore AFNetworking) }
+
+  ok { pods.search('on:osx mattt', sort: 'forks').should ==  %w(AFNetworking AFIncrementalStore CargoBay GroundControl) }
+  ok { pods.search('on:osx mattt', sort: '-forks').should == %w(GroundControl CargoBay AFIncrementalStore AFNetworking) }
+
+  ok { pods.search('on:osx mattt', sort: 'stars').should ==  %w(AFNetworking AFIncrementalStore GroundControl CargoBay) }
+  ok { pods.search('on:osx mattt', sort: '-stars').should == %w(CargoBay GroundControl AFIncrementalStore AFNetworking) }
+
+  ok { pods.search('on:osx mattt', sort: 'contributors').should ==  %w(AFNetworking AFIncrementalStore CargoBay GroundControl) }
+  ok { pods.search('on:osx mattt', sort: '-contributors').should == %w(GroundControl CargoBay AFIncrementalStore AFNetworking) }
 
 end

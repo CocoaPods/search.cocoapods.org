@@ -68,7 +68,7 @@ describe 'Accept Integration Tests' do
         # If there is "flat" in there, check the resulting array size.
         #
         case params.first + (params.last['HTTP_ACCEPT'] || '')
-        when %r{flat}
+        when /flat/
           Yajl::Parser.parse(last_response.body).size.should == expected_results
         else
           Yajl::Parser.parse(last_response.body)['total'].should == expected_total_results

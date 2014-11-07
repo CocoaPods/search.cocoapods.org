@@ -41,7 +41,8 @@ class Channel
     @channel_number = number
     @to_process = @to_processes[number]
     @from_process = @from_processes[number]
-    STDOUT.puts "Child [#{Process.pid}] chose channel #{number} using to: #{@to_process} and from: #{@from_process}."
+    STDOUT.puts "Child [#{Process.pid}] chose channel #{number} using to: " \
+      "#{@to_process} and from: #{@from_process}."
   end
 
   # This forks a process/thread that listens to child processes.
@@ -62,19 +63,19 @@ class Channel
         # Wait for input from the child for a sub-second.
         #
         received = Cod.select 0.05, @to_processes
-        
+
         begin
           process_channels received if received
 
           # Tell worker to post_process
           #
           @worker.post_process if post_process
-          
+
         rescue StandardError => e
           # If anything goes wrong in the worker
           # we print and ignore it.
           #
-          $stderr.puts $!.inspect, $@
+          $stderr.puts e.inspect, e.backtrace
         end
       end
     end
@@ -101,7 +102,7 @@ class Channel
   #
   def process_channel(channel)
     *args, back_channel = channel.get
-    response = @worker.process *args
+    response = @worker.process(*args)
     back_channel.put response if back_channel
   end
 

@@ -39,7 +39,7 @@ class Search
     default_indexing = {
       removes_characters: /[^a-z0-9\s\/\-\_\:\"\&\.]/i,
       stopwords:          stopwords,
-      splits_text_on:     /[\s\/\-\_\:\"\&\/]/,
+      splits_text_on:     %r{[\s/\-\_\:\"\&/]},
       rejects_token_if:   lambda { |token| token.size < 2 },
     }
 
@@ -92,7 +92,8 @@ class Search
                from: :mapped_versions
       category :dependencies,
                partial: no_partial, # full_partial,
-               qualifiers: [:dependency, :dependencies, :depends, :using, :uses, :use, :needs],
+               qualifiers: [:dependency, :dependencies, :depends, :using, :uses,
+                            :use, :needs],
                from: :mapped_dependencies
       category :platform,
                partial: no_partial,
@@ -173,7 +174,9 @@ class Search
 
     @splitter = Picky::Splitters::Automatic.new @splitting_index[:split]
 
-    @facet_keys = @index.categories.map(&:name).sort - [:id, :name, :author, :summary, :version, :dependencies]
+    @facet_keys = @index.categories.map(&:name).sort - [:id, :name, :author,
+                                                        :summary, :version,
+                                                        :dependencies]
   end
 
   # Reindex all pods.
@@ -186,7 +189,7 @@ class Search
     end
   end
 
-  def replace(pod, pods) # TODO Redesign.
+  def replace(pod, pods) # TODO: Redesign.
     pods[pod.id] = pod
     @index.replace pod
     @splitting_index.replace pod
@@ -235,15 +238,15 @@ class Search
       Channel.instance(:search).call :search, args
     else
       sorting = if args.last.respond_to?(:to_hash)
-        filter_sort args.last.delete(:sort)
-      end
-      
+                  filter_sort args.last.delete(:sort)
+                end
+
       results = interface.search(*args)
-      
+
       # Sort results.
       #
-      results.sort_by &sorting if sorting
-      
+      results.sort_by(&sorting) if sorting
+
       results.to_hash
     end
   end
@@ -251,21 +254,23 @@ class Search
   def filter_sort(sort)
     sort_map[sort] || sort_map['popularity'] # Default is popularity.
   end
-  
+
   @@default_text_sort = ->(sort) do
     ->(id) { Pods.instance[id].send(sort) }
   end
+
   @@default_numeric_sort = ->(sort, desc) do
     desc = desc ? 1 : -1
-    ->(id) { desc*Pods.instance[id].send(sort) }
+    ->(id) { desc * Pods.instance[id].send(sort) }
   end
+
   def sort_map
     @sort_map ||= {
       'name'          => @@default_text_sort[:name],
-      
+
       'popularity'    => @@default_numeric_sort[:popularity, false],
       '-popularity'   => @@default_numeric_sort[:popularity, true],
-      
+
       'contributors'  => @@default_numeric_sort[:contributors, false],
       '-contributors' => @@default_numeric_sort[:contributors, true],
       'forks'         => @@default_numeric_sort[:forks, false],
