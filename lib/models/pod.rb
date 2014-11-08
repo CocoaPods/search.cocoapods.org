@@ -222,7 +222,7 @@ class Pod
   end
 
   def deprecated?
-    specification[:deprecated]
+    !!specification[:deprecated]
   end
 
   # Returns not just the name, but also:
