@@ -22,21 +22,21 @@ class Pods
         github_pod_metrics.stargazers
       )
     EXPR
-      
+
     pods = if amount
-      Pod.all do |pods|
-        pods.
-          limit(amount).
-          order_by(order_by_popularity)
-      end
-    else
-      Pod.all do |pods|
-        pods.
-          order_by(order_by_popularity)
-      end
-    end
+             Pod.all do |all_pods|
+               all_pods.
+               limit(amount).
+               order_by(order_by_popularity)
+             end
+           else
+             Pod.all do |all_pods|
+               all_pods.
+               order_by(order_by_popularity)
+             end
+           end
     if block_given?
-      pods.each &block
+      pods.each(&block)
     else
       pods.each
     end
@@ -58,11 +58,13 @@ class Pods
   #
   def for(all_ids)
     uncached_ids = all_ids.reject { |id| @cache[id] }
-    loaded_pods = Pod.all { |pods| pods.where(Domain.pods[:id].in => uncached_ids) }
+    loaded_pods = Pod.all do |pods|
+      pods.where(Domain.pods[:id].in => uncached_ids)
+    end
     loaded_pods.each { |pod| @cache[pod.id] = pod }
     all_ids.map { |id| @cache[id] }
   rescue PG::UnableToSend
-    STDOUT.puts "PG::UnableToSend raised! Reconnecting to database."
+    STDOUT.puts 'PG::UnableToSend raised! Reconnecting to database.'
     load 'lib/database.rb'
     retry
   end

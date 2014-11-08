@@ -10,11 +10,11 @@ class Pod
   # Forward entities.
   #
   def_delegators :row,
-    :id,
-    :name,
-    :versions,
-    :commits,
-    :github_metric
+                 :id,
+                 :name,
+                 :versions,
+                 :commits,
+                 :github_metric
 
   def initialize(row)
     @row = row
@@ -47,8 +47,8 @@ class Pod
           :forks,
           :stargazers,
           :contributors,
-          :subscribers
-        )
+          :subscribers,
+        ),
       ).
       group_by(
         Domain.pods[:id],
@@ -56,8 +56,8 @@ class Pod
           :forks,
           :stargazers,
           :contributors,
-          :subscribers
-        )
+          :subscribers,
+        ),
       )
   end
 
@@ -73,19 +73,19 @@ class Pod
 
   # Sort specific methods
   #
-  
+
   def popularity
     row.popularity || 0
   end
-  
+
   def forks
     github_metric.forks || 0
   end
-  
+
   def stargazers
     github_metric.stargazers || 0
   end
-  
+
   def contributors
     github_metric.contributors || 0
   end
@@ -135,7 +135,7 @@ class Pod
   def dependencies
     [
       *specification['frameworks'],
-      *specification['dependencies'].keys
+      *specification['dependencies'].keys,
     ].compact
   end
 
@@ -208,8 +208,8 @@ class Pod
     result.commit.specification_data if result
   end
 
-  # TODO Clear after using the specification.
-  #      with_specification do ?
+  # TODO: Clear after using the specification.
+  #       with_specification do ?
   #
   # Caching the specification speeds up indexing considerably.
   #
@@ -222,7 +222,7 @@ class Pod
   end
 
   def deprecated?
-    !!specification[:deprecated]
+    specification[:deprecated]
   end
 
   # Returns not just the name, but also:
@@ -250,9 +250,8 @@ class Pod
       if temp.match(/\A[A-Z]{3}[a-z]/)
         temp = temp[2..-1]
       end
-      (temp && temp.split(/([A-Z]?[a-z]+)/).map(&:downcase) || []).reject do |part|
-        part.size < 3
-      end
+      parts = temp && temp.split(/([A-Z]?[a-z]+)/).map(&:downcase) || []
+      parts.reject { |part| part.size < 3 }
     else
       []
     end
@@ -262,7 +261,7 @@ class Pod
   #
   # Note: http://search.cocoapods.org/api/v1/pods.facets.json?include=name&only=name&at-least=30
   #
-  @@tags = %w(
+  TAGS = %w(
     alert
     analytics
     api
@@ -295,11 +294,11 @@ class Pod
     view
     widget
     xml
-  )
+  ).freeze
   def tags
     specification['summary'].
       downcase.
-      scan(/\b(#{@@tags.join('|')})\w*\b/).
+      scan(/\b(#{TAGS.join('|')})\w*\b/).
       flatten.
       uniq
   rescue StandardError, SyntaxError
@@ -313,7 +312,8 @@ class Pod
     #   :id => id,
     #   :platforms => specification.available_platforms.map(&:name).to_a,
     #   :version => set.versions.first.to_s,
-    #   :summary => specification.summary[0..139].to_s, # Cut down to 140 characters. TODO: Duplicated code. See set.rb.
+    #   :summary => specification.summary[0..139].to_s,
+    #     # Cut down to 140 characters. TODO: Duplicated code. See set.rb.
     #   :authors => specification.authors.to_hash,
     #   :link => specification.homepage.to_s,
     #   :source => specification.source.to_hash,
