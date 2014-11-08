@@ -3,7 +3,7 @@ require File.expand_path('../../../../lib/models/pod', __FILE__)
 
 describe Pod do
   describe 'AFNetworking' do
-    
+
     def pod
       Pod.all { |pods| pods.where(name: 'AFNetworking') }.first
     end
