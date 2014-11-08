@@ -17,7 +17,7 @@ class SearchWorker
   def process(action, parameters)
     case action
     when :search
-      Search.instance.search *parameters
+      Search.instance.search(*parameters)
     when :search_facets
       Search.instance.search_facets parameters
     when :index_facets
@@ -49,33 +49,33 @@ class SearchWorker
         @not_loaded_yet = false
       end
     end
-    
+
     # Periodically index pods to update the metrics in memory.
     #
     setup_indexing_all_pods if every_so_often
   end
 
   private
-  
+
   def setup_every_so_often
     @looped = 0
   end
-  
+
   # Returns true very rarely.
   #
   def every_so_often
     @looped += 1
-    if @looped % 50000 == 0
+    if @looped % 50_000 == 0
       @looped = 0
       true
     end
   end
-  
+
   def setup_indexing_all_pods
     @not_loaded_yet = true
     @pods_to_index = Pods.instance.each
   end
-  
+
   def setup_clean_exit
     # Set up clean exit.
     #
@@ -84,7 +84,7 @@ class SearchWorker
       exit
     end
   end
-  
+
   def cache_all_pods
     $stdout.puts 'Caching pods in INDEX PROCESS.'
     Pods.instance.cache_all
@@ -98,10 +98,10 @@ class SearchWorker
     Search.instance.replace pod, Pods.instance
     $stdout.puts "Reindexing #{name} in INDEX PROCESS successful."
   rescue PG::UnableToSend
-    STDOUT.puts "PG::UnableToSend raised! Reconnecting to database."
+    STDOUT.puts 'PG::UnableToSend raised! Reconnecting to database.'
     load 'lib/database.rb'
     retry
-  rescue StandardError => e
+  rescue StandardError
     # Catch any error and reraise as a "could not run" error.
     #
     $stderr.puts "Reindexing #{name} in INDEX PROCESS failed."

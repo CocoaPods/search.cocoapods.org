@@ -11,16 +11,15 @@ Picky.root = 'tmp'
 #  * Index update URL for the Github update hook.
 #
 class CocoapodSearch < Sinatra::Application
-  
   # Allow a setting whether this app is a child or not.
   #
   class << self
     attr_accessor :child
   end
-  
+
   # Allow browsers to cache responses for a day.
   #
-  before { expires 86400, :public }
+  before { expires 86_400, :public }
 
   # Data container and search.
   #

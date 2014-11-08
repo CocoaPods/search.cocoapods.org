@@ -1,7 +1,7 @@
 class AnalyticsWorker
   def setup
     if defined?(Gabba)
-      $stdout.puts "Setting up Gabba for analytics."
+      $stdout.puts 'Setting up Gabba for analytics.'
       @analytics_counter = 0
       @analytics = create_analytics
     else
@@ -14,9 +14,9 @@ class AnalyticsWorker
     return unless defined?(Gabba)
     case action
     when :event
-      self.analytics.event *parameters
+      analytics.event(*parameters)
     when :page_view
-      self.analytics.page_view *parameters
+      analytics.page_view(*parameters)
     end
   end
 
@@ -24,7 +24,7 @@ class AnalyticsWorker
     Gabba::Gabba.new('UA-29866548-5', 'cocoapods.org')
   end
 
-  def maybe_reset counter
+  def maybe_reset(counter)
     @analytics = nil if counter % 100 == 0
   end
 
