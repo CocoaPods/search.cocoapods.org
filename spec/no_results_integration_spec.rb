@@ -6,19 +6,22 @@ require 'picky-client/spec'
 # Uses the fixed set of pods from the ./data directory.
 #
 describe 'Integration Tests' do
-  
+
   def no_results
-    @no_results ||= Picky::TestClient.new CocoapodSearch, :path => '/no_results.json'
+    @no_results ||= Picky::TestClient.new CocoapodSearch, path: '/no_results.json'
   end
-  
+
   it 'will return the right tag facets' do
-    Yajl.load(no_results.send_search)["tag"].should == {"serialization"=>3, "json"=>10, "view"=>43, "controller"=>23, "button"=>5, "notification"=>3, "image"=>15, "communication"=>1, "api"=>16, "table"=>6, "http"=>8, "progress"=>4, "layout"=>4, "network"=>5, "alert"=>3, "test"=>2, "manager"=>4, "navigation"=>5, "rest"=>3, "picker"=>4, "client"=>8, "logging"=>7, "parser"=>3, "xml"=>1, "authentication"=>1, "gesture"=>3, "text"=>2, "analytics"=>1}
+    Yajl.load(no_results.send_search)['tag'].should == { 'network' => 3, 'rest' => 1, 'image' => 5, 'http' => 2, 'json' => 5, 'progress' => 2, 'parser' => 4, 'logging' => 1, 'view' => 19, 'controller' => 9, 'client' => 3, 'test' => 8, 'api' => 7, 'navigation' => 4, 'button' => 2, 'kit' => 1, 'notification' => 2, 'communication' => 1, 'table' => 4, 'text' => 3, 'serialization' => 1, 'layout' => 1, 'widget' => 1, 'xml' => 1, 'manager' => 1, 'analytics' => 1, 'authentication' => 1 }
   end
   it 'will return a correctly split query' do
-    Yajl.load(no_results.send_search(query: "meow"))["split"].should == [[], 0]
+    Yajl.load(no_results.send_search(query: 'meow'))['split'].should == [[], 0]
   end
   it 'will return a correctly split query' do
-    Yajl.load(no_results.send_search(query: "libcomponentlogging"))["split"].should == [["lib", "component", "logging"], 22]
+    Yajl.load(no_results.send_search(query: 'afnetworking'))['split'].should == [['networking'], 3]
+  end
+  it 'will return a correctly split query' do
+    Yajl.load(no_results.send_search(query: 'groundcontrol'))['split'].should == [%w(ground control), 1]
   end
 
 end

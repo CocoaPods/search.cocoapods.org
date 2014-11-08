@@ -6,9 +6,19 @@ ruby '2.1.3'
 #
 gem 'bundler'
 gem 'sinatra', :require => 'sinatra/base'
-gem 'cocoapods-core', git: 'https://github.com/CocoaPods/Core.git', branch: 'master'
-gem 'picky', '~> 4.20'
-gem 'picky-client', '~> 4.20' # Needed for Picky::Convenience
+# gem 'cocoapods-core'
+gem 'picky', '~> 4.23.0'
+gem 'picky-client', '~> 4.23.0' # Needed for Picky::Convenience
+gem 'cod'
+gem 'hashie'
+
+# Database.
+#
+gem 'pg'
+gem 'dm-core', require: true #, '>= 1.3.0.beta', github: 'technology-astronauts/dm-core'
+gem 'dm-do-adapter', require: true
+gem 'dm-postgres-adapter', require: true
+gem 'flounder'
 
 # Auxiliary gems to make Picky faster/better.
 #
@@ -21,13 +31,13 @@ gem 'yajl-ruby', :require => 'yajl'
 group :development do
   gem 'rake'
   gem 'foreman'
+  gem 'rubocop'
 end
 
 # Pure production gems.
 #
 group :production do
   gem 'unicorn'
-  gem 'newrelic_rpm'
   gem 'gabba'
 end
 

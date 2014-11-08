@@ -1,15 +1,4 @@
 GIT
-  remote: https://github.com/CocoaPods/Core.git
-  revision: f971122dd0b94efcb872efbe85c2db9d0166e00f
-  branch: master
-  specs:
-    cocoapods-core (0.34.2)
-      activesupport (>= 3.2.15)
-      fuzzy_match (~> 2.0.4)
-      json_pure (~> 1.8)
-      nap (~> 0.8.0)
-
-GIT
   remote: https://github.com/irrationalfab/PrettyBacon.git
   revision: 1eeb06f7d381acd65414b86b42fdf3538faae01c
   branch: master
@@ -20,25 +9,51 @@ GIT
 GEM
   remote: http://rubygems.org/
   specs:
-    activesupport (4.1.6)
+    activesupport (4.1.7)
       i18n (~> 0.6, >= 0.6.9)
       json (~> 1.7, >= 1.7.7)
       minitest (~> 5.1)
       thread_safe (~> 0.1)
       tzinfo (~> 1.1)
+    addressable (2.3.6)
+    aggregate (0.2.2)
+    arel (5.0.1.20140414130214)
+    ast (2.0.0)
+    astrolabe (1.3.0)
+      parser (>= 2.2.0.pre.3, < 3.0)
     bacon (1.2.0)
+    cod (0.6.0)
+    connection_pool (2.0.0)
+    data_objects (0.10.14)
+      addressable (~> 2.1)
+    dm-core (1.2.1)
+      addressable (~> 2.3)
+    dm-do-adapter (1.2.0)
+      data_objects (~> 0.10.6)
+      dm-core (~> 1.2.0)
+    dm-postgres-adapter (1.2.0)
+      dm-do-adapter (~> 1.2.0)
+      do_postgres (~> 0.10.6)
+    do_postgres (0.10.14)
+      data_objects (= 0.10.14)
     dotenv (0.11.1)
       dotenv-deployment (~> 0.0.2)
     dotenv-deployment (0.0.2)
     ffi (1.9.6)
+    flounder (0.16.1)
+      aggregate (~> 0.2, >= 0.2.2)
+      arel (~> 5, > 5.0.1)
+      connection_pool (~> 2)
+      hashie (~> 3, >= 3.2)
+      pg (~> 0.17)
+      pg-hstore (~> 1.2, >= 1.2.0)
     foreman (0.75.0)
       dotenv (~> 0.11.1)
       thor (~> 0.19.1)
-    fuzzy_match (2.0.4)
     gabba (1.0.1)
+    hashie (3.3.1)
     i18n (0.6.11)
     json (1.8.1)
-    json_pure (1.8.1)
     kgio (2.9.2)
     kicker (3.0.0)
       listen (~> 1.3.0)
@@ -54,17 +69,21 @@ GEM
     mocha-on-bacon (0.2.1)
       mocha (>= 0.9.8)
     multi_json (1.10.1)
-    nap (0.8.0)
-    newrelic_rpm (3.9.5.251)
     notify (0.5.2)
-    picky (4.22.0)
+    parser (2.2.0.pre.7)
+      ast (>= 1.1, < 3.0)
+      slop (~> 3.4, >= 3.4.5)
+    pg (0.17.1)
+    pg-hstore (1.2.0)
+    picky (4.23.2)
       activesupport
       multi_json (~> 1.3)
       rack_fast_escape (~> 2009.0)
       text (~> 1.2)
-    picky-client (4.22.0)
+    picky-client (4.23.2)
       activesupport
       yajl-ruby (~> 1.2)
+    powerpack (0.0.9)
     rack (1.5.2)
     rack-protection (1.5.3)
       rack
@@ -72,6 +91,7 @@ GEM
       rack (>= 1.0)
     rack_fast_escape (2009.06.24)
       url_escape
+    rainbow (2.0.0)
     raindrops (0.13.0)
     rake (10.3.2)
     rb-fsevent (0.9.4)
@@ -79,10 +99,18 @@ GEM
       ffi (>= 0.5.0)
     rb-kqueue (0.2.3)
       ffi (>= 0.5.0)
+    rubocop (0.27.0)
+      astrolabe (~> 1.3)
+      parser (>= 2.2.0.pre.6, < 3.0)
+      powerpack (~> 0.0.6)
+      rainbow (>= 1.99.1, < 3.0)
+      ruby-progressbar (~> 1.4)
+    ruby-progressbar (1.7.0)
     sinatra (1.4.5)
       rack (~> 1.4)
       rack-protection (~> 1.4)
       tilt (~> 1.3, >= 1.3.4)
+    slop (3.6.0)
     text (1.3.0)
     thor (0.19.1)
     thread_safe (0.3.4)
@@ -102,19 +130,25 @@ PLATFORMS
 DEPENDENCIES
   bacon
   bundler
-  cocoapods-core!
+  cod
+  dm-core
+  dm-do-adapter
+  dm-postgres-adapter
+  flounder
   foreman
   gabba
+  hashie
   kicker
   mocha (~> 0.11.4)
   mocha-on-bacon
-  newrelic_rpm
-  picky (~> 4.20)
-  picky-client (~> 4.20)
+  pg
+  picky (~> 4.23.0)
+  picky-client (~> 4.23.0)
   prettybacon!
   rack-test
   rack_fast_escape (= 2009.06.24)
   rake
+  rubocop
   sinatra
   text
   unicorn

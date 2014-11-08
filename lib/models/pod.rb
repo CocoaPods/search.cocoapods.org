@@ -1,0 +1,342 @@
+require 'json'
+
+# Only for reading purposes.
+#
+class Pod
+  attr_reader :row
+
+  extend Forwardable
+
+  # Forward entities.
+  #
+  def_delegators :row,
+                 :id,
+                 :name,
+                 :versions,
+                 :commits,
+                 :github_metric
+
+  def initialize(row)
+    @row = row
+  end
+
+  def self.entity
+    Domain.pods
+  end
+
+  # Use e.g. Pod.find.where(…).all
+  #
+  def self.find
+    entity.
+      join(Domain.versions).
+      on(Domain.pods[:id] => Domain.versions[:pod_id]).
+      join(Domain.github_metrics).
+      on(Domain.pods[:id] => Domain.github_metrics[:pod_id]).
+      project(
+        *Domain.pods.fields,
+        'array_agg(pod_versions.name) AS versions',
+        <<-EXPR,
+        (
+          github_pod_metrics.contributors * 90 +
+          github_pod_metrics.subscribers * 20 +
+          github_pod_metrics.forks * 10 +
+          github_pod_metrics.stargazers
+        ) AS popularity
+        EXPR
+        *Domain.github_metrics.fields(
+          :forks,
+          :stargazers,
+          :contributors,
+          :subscribers,
+        ),
+      ).
+      group_by(
+        Domain.pods[:id],
+        *Domain.github_metrics.fields(
+          :forks,
+          :stargazers,
+          :contributors,
+          :subscribers,
+        ),
+      )
+  end
+
+  #
+  #
+  def self.all
+    yield(find).map(&modelify_block)
+  end
+
+  def self.modelify_block
+    ->(pod) { new pod }
+  end
+
+  # Sort specific methods
+  #
+
+  def popularity
+    row.popularity || 0
+  end
+
+  def forks
+    github_metric.forks || 0
+  end
+
+  def stargazers
+    github_metric.stargazers || 0
+  end
+
+  def contributors
+    github_metric.contributors || 0
+  end
+
+  def subscribers
+    github_metric.subscribers || 0
+  end
+
+  # Index specific methods.
+  #
+
+  def mapped_name
+    split_name.join ' '
+  end
+
+  def mapped_versions
+    versions.gsub(/[\{\}]/, '').split(',')
+  end
+
+  def last_version
+    mapped_versions.
+      sort_by { |v| Gem::Version.new(v) }.
+      last
+  end
+
+  def authors
+    specification['authors'] || {}
+  end
+
+  def mapped_authors
+    spec_authors = authors
+    spec_authors && spec_authors.keys.join(' ') || ''
+  rescue StandardError, SyntaxError
+    ''
+  end
+
+  def rendered_authors
+    if authors.respond_to? :to_hash
+      authors
+    else
+      [*authors].inject({}) do |result, name|
+        result.tap { |r| r[name] = '' }
+      end
+    end
+  end
+
+  def dependencies
+    [
+      *specification['frameworks'],
+      *specification['dependencies'].keys,
+    ].compact
+  end
+
+  def mapped_dependencies
+    dependencies.join ' '
+  rescue StandardError, SyntaxError
+    ''
+  end
+
+  def homepage
+    specification['homepage']
+  end
+
+  def platforms
+    (specification['platforms'] || {}).keys
+  rescue
+    specification['platforms']
+  end
+
+  def mapped_platform
+    platforms.join(' ')
+  rescue StandardError, SyntaxError
+    '' # i.e. never found.
+  end
+
+  def summary
+    (specification['summary'] || [])[0..139]
+  end
+
+  def source
+    specification['source'] || {}
+  end
+
+  def recursive_subspecs
+    []
+  end
+
+  # Perhaps TODO: Summary with words already contained in
+  # name removed such as to minimize
+  # multiple results.
+  #
+  def mapped_summary
+    summary
+  rescue StandardError, SyntaxError
+    ''
+  end
+
+  def documentation_url
+    specification['documentation_url']
+  end
+
+  # Just load the latest specification data.
+  #
+  def specification_json
+    result = Domain.commits.
+             join(Domain.versions).
+             on(Domain.commits[:pod_version_id] => Domain.versions[:id]).
+             anchor.
+             join(Domain.pods).
+             on(Domain.versions[:pod_id] => Domain.pods[:id]).
+             hoist.
+             project(*Domain.commits[:specification_data]).
+             where(
+        Domain.pods[:id] => id,
+        Domain.versions[:name] => last_version,
+      ).
+             limit(1).
+             order_by(Domain.commits[:pod_version_id]).
+             first
+    result.commit.specification_data if result
+  end
+
+  # TODO: Clear after using the specification.
+  #       with_specification do ?
+  #
+  # Caching the specification speeds up indexing considerably.
+  #
+  def specification
+    @specification ||= JSON.parse(specification_json || '{}')
+  end
+
+  def deprecated_in_favor_of
+    specification[:deprecated_in_favor_of]
+  end
+
+  def deprecated?
+    specification[:deprecated]
+  end
+
+  # Returns not just the name, but also:
+  #  * Separated uppercase/lowercase parts.
+  #  * Name without initials.
+  #
+  def split_name
+    first, *rest = name.split(/\b/)
+    initials, after_initials = first.split(/(?=[A-Z][a-z])/, 2)
+    [
+      name,
+      initials,
+      after_initials,
+      first,
+      *rest,
+      *name.split(/([A-Z]?[a-z]+)/),
+    ].compact.map(&:downcase).uniq.map(&:freeze)
+  end
+
+  # This is to provide helpful suggestions on long words.
+  #
+  def split_name_for_automatic_splitting
+    temp = name
+    if temp
+      if temp.match(/\A[A-Z]{3}[a-z]/)
+        temp = temp[2..-1]
+      end
+      parts = temp && temp.split(/([A-Z]?[a-z]+)/).map(&:downcase) || []
+      parts.reject { |part| part.size < 3 }
+    else
+      []
+    end
+  end
+
+  # Tag extracted from summary.
+  #
+  # Note: http://search.cocoapods.org/api/v1/pods.facets.json?include=name&only=name&at-least=30
+  #
+  TAGS = %w(
+    alert
+    analytics
+    api
+    authentication
+    button
+    client
+    communication
+    controller
+    gesture
+    http
+    image
+    json
+    kit
+    layout
+    logging
+    manager
+    navigation
+    network
+    notification
+    parser
+    password
+    payment
+    picker
+    progress
+    rest
+    serialization
+    table
+    test
+    text
+    view
+    widget
+    xml
+  ).freeze
+  def tags
+    specification['summary'].
+      downcase.
+      scan(/\b(#{TAGS.join('|')})\w*\b/).
+      flatten.
+      uniq
+  rescue StandardError, SyntaxError
+    []
+  end
+
+  def to_h
+    # Was:
+    #
+    # @view[id] = {
+    #   :id => id,
+    #   :platforms => specification.available_platforms.map(&:name).to_a,
+    #   :version => set.versions.first.to_s,
+    #   :summary => specification.summary[0..139].to_s,
+    #     # Cut down to 140 characters. TODO: Duplicated code. See set.rb.
+    #   :authors => specification.authors.to_hash,
+    #   :link => specification.homepage.to_s,
+    #   :source => specification.source.to_hash,
+    #   :subspecs => specification.recursive_subspecs.map(&:to_s),
+    #   :tags => set.tags.to_a,
+    #   :deprecated => specification.deprecated?,
+    #   :deprecated_in_favor_of => specification.deprecated_in_favor_of
+    # }
+    @h ||= begin
+      h = {
+        id: name, # We don't hand out ids.
+        platforms: platforms,
+        version: last_version,
+        summary: mapped_summary[0..139],
+        authors: rendered_authors,
+        link: homepage.to_s,
+        source: source,
+        tags: tags.to_a,
+        deprecated: deprecated?,
+        deprecated_in_favor_of: deprecated_in_favor_of,
+      }
+      h[:documentation_url] = row.documentation_url if row.documentation_url
+      h
+    end
+  end
+end
