@@ -1,78 +1,52 @@
-pid               'tmp/pids/unicorn.pid'
-preload_app       true
-stderr_path       'tmp/unicorn.stderr.log'
-stdout_path       'tmp/unicorn.stdout.log'
-timeout           10
-worker_processes  3
+number_of_worker_processes = 2
 
-once_upon_a_time = true
-before_fork do |server, worker|
-  # As an experiment:
-  #
-  # Before we fork (each child, sadly), we do
-  # a preflight request so that certain lazily
-  # instantiated Picky/other resources
-  # can be shared between workers.
-  #
-  if once_upon_a_time
-    CocoapodSearch.call 'REQUEST_METHOD' => 'GET',
-                        'PATH_INFO' => '/api/v1/pods.picky.hash.json',
-                        'QUERY_STRING' => 'query=test',
-                        'rack.input' => StringIO.new
-    once_upon_a_time = false
-  end
-  
-  # If our parent is an old unicorn, we will kill it off using WINCH, then QUIT.
-  #
-  # Note: This means a previous master used USR2 to start me.
-  #
-  
-  # Is there an old unicorn, waiting to be put down?
-  #
-  oldpid_path = 'tmp/pids/unicorn.pid.oldbin'
-  if File.exists? oldpid_path
-    File.open oldpid_path do |pidfile|
-      # Get the presumed old unicorn pid and the parent pid.
-      #
-      old_unicorn_pid = Integer(pidfile.read.chomp)
-      parent_pid      = Process.ppid
-      
-      # Is my parent actually that unicorn?
-      #
-      if old_unicorn_pid == parent_pid
+pid 'tmp/pids/unicorn.pid'
+preload_app true # This means we need to reople DB connections etc.
+timeout 10
+worker_processes number_of_worker_processes
 
-        # Patricide go!
-        #
-        Process.kill 'WINCH', parent_pid
-        Process.kill 'QUIT', parent_pid
-      end
-    end
-  end
-  
-  # We catch TERM from Heroku and try to do a no-downtime restart.
-  #
-  # We use a latch to only terminate it once.
-  #
-  terminated = false
-  Signal.trap 'TERM' do
-    unless terminated
-      terminated = true
-      
-      puts 'Unicorn master intercepting the Heroku TERM and sending myself USR2 instead.'
-    
-      # Dump the indexes to be picked up by the new Unicorn master.
-      #
-      CocoapodSearch.dump_indexes
-    
-      # USR2 will start a new master.
-      #
-      Process.kill 'USR2', Process.pid
-    end
+# Before forking off child workers, we start a
+# process each for searching and sending data
+# to analytics. (this opens up n pipes for communication)
+#
+done = false
+before_fork do |_, _|
+  unless done
+    # For communication between n worker - 1 search engine processes.
+    Channel.
+      instance(:search).
+      start children: number_of_worker_processes, worker: SearchWorker
+    Channel.
+      instance(:analytics).
+      start children: number_of_worker_processes, worker: AnalyticsWorker
+    done = true
   end
 end
 
-after_fork do |server, worker|
-  Signal.trap 'TERM' do
-    puts 'Unicorn worker intercepting TERM and doing nothing. Wait for master to send QUIT'
-  end
+# After working web worker, we mainly do:
+#
+# * Web worker chooses a channel each to
+#   communicate with the search and analytics
+#   process.
+#
+# If a worker is restarted, e.g. because of a
+# timeout, it gets one of the free numbers
+# (usually just the one the worker had before).
+# So there won't ever be collisions.
+#
+after_fork do |_server, worker|
+  Channel.instance(:search).choose_channel worker.nr
+  Channel.instance(:analytics).choose_channel worker.nr
+
+  # Load the DB after forking.
+  #
+  require File.expand_path '../lib/database', __FILE__
+
+  # We are a web worker child.
+  # This is used to decide whether
+  # a search request should be send to
+  # the search process (child) or not
+  # (not a child).
+  #
+  CocoapodSearch.child = true
 end

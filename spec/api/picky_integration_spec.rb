@@ -8,106 +8,112 @@ require 'picky-client/spec'
 # Uses the fixed set of pods from the ./data directory.
 #
 describe 'Integration Tests' do
-    
+
   def pod_ids
-    @pod_ids ||= Picky::TestClient.new CocoapodSearch, :path => '/api/v1/pods.picky.ids.json'
+    @pod_ids ||= Picky::TestClient.new CocoapodSearch, path: '/api/v1/pods.picky.ids.json'
   end
-  
+
+  def names_for_search(query, options = {})
+    pods.search(query, options).entries.map { |entry| entry[:id] }
+  end
+
   # Testing the format.
   #
-  ok { pod_ids.search('on:osx kiwi').entries.should == ['Kiwi'] }
-  
+  ok { pod_ids.search('on:osx afnetwork').entries.should == ['AFNetworking'] }
+
   def pods
-    @pods ||= Picky::TestClient.new CocoapodSearch, :path => '/api/v1/pods.picky.hash.json'
+    @pods ||= Picky::TestClient.new CocoapodSearch, path: '/api/v1/pods.picky.hash.json'
   end
 
   # Testing a count of results.
   #
-  ok { pods.search('on:ios 1.0.0').total.should == 66 }
-  
+  ok { pods.search('on:ios 1.0.0').total.should == 40 }
+
   # Testing the format.
   #
-  ok { pods.search('on:osx kiwi').entries.should == [{:id=>"Kiwi", :platforms=>["osx", "ios"], :version=>"2.1", :summary=>"A Behavior Driven Development library for iOS and OS X.", :authors=>{:"Allen Ding"=>"alding@gmail.com", :"Luke Redpath"=>"luke@lukeredpath.co.uk"}, :link=>"https://github.com/allending/Kiwi", :source=>{:git=>"https://github.com/allending/Kiwi.git", :tag=>"2.1"}, :subspecs=>[], :tags=>[], :deprecated => false, :deprecated_in_favor_of => nil}]}
-  ok { pods.search('on:ios adjust').entries.should == [{:id=>"AdjustIO", :platforms=>["ios"], :version=>"2.2.0", :summary=>"This is the iOS SDK of AdjustIo. You can read more about it at http://adjust.io.", :authors=>{:"Christian Wellenbrock"=>"welle@adeven.com"}, :link=>"http://adjust.io", :source=>{:git=>"https://github.com/adeven/adjust_ios_sdk.git", :tag=>"v2.2.0"}, :subspecs=>[], :tags=>["http"], :deprecated=>true, :deprecated_in_favor_of=>"Adjust"}] }
-  ok { pods.search('on:ios RMStepsController').entries.should == [{:id=>"RMStepsController", :platforms=>["ios"], :version=>"1.0.1", :summary=>"This is an iOS control for guiding users through a process step-by-step", :authors=>{:"Roland Moers"=>"snippets@cooperrs.de"}, :link=>"https://github.com/CooperRS/RMStepsController", :source=>{:git=>"https://github.com/CooperRS/RMStepsController.git", :tag=>"1.0.1"}, :subspecs=>[], :tags=>[], :deprecated=>true, :deprecated_in_favor_of=>nil}]}
+  ok { pods.search('on:osx afnetworking', sort: 'name').entries.should == [{ id: 'AFNetworking', platforms: %w(ios osx), version: '2.3.1', summary: 'A delightful iOS and OS X networking framework.', authors: { :"Mattt Thompson" => 'm@mattt.me' }, link: 'https://github.com/AFNetworking/AFNetworking', source: { git: 'https://github.com/AFNetworking/AFNetworking.git', tag: '2.3.1', submodules: true }, tags: ['network'], deprecated: false, deprecated_in_favor_of: nil }, { id: 'AFIncrementalStore', platforms: %w(ios osx), version: '0.5.1', summary: 'Core Data Persistence with AFNetworking, Done Right.', authors: { :"Mattt Thompson" => 'm@mattt.me' }, link: 'https://github.com/AFNetworking/AFIncrementalStore', source: { git: 'https://github.com/AFNetworking/AFIncrementalStore.git', tag: '0.5.1' }, tags: [], deprecated: false, deprecated_in_favor_of: nil }, { id: 'AFIncrementalStore', platforms: %w(ios osx), version: '0.5.1', summary: 'Core Data Persistence with AFNetworking, Done Right.', authors: { :"Mattt Thompson" => 'm@mattt.me' }, link: 'https://github.com/AFNetworking/AFIncrementalStore', source: { git: 'https://github.com/AFNetworking/AFIncrementalStore.git', tag: '0.5.1' }, tags: [], deprecated: false, deprecated_in_favor_of: nil }, { id: 'CargoBay', platforms: %w(ios osx), version: '2.1.0', summary: 'The Essential StoreKit Companion.', authors: { :"Mattt Thompson" => 'm@mattt.me' }, link: 'https://github.com/mattt/CargoBay', source: { git: 'https://github.com/mattt/CargoBay.git', tag: '2.1.0' }, tags: [], deprecated: false, deprecated_in_favor_of: nil }, { id: 'GroundControl', platforms: %w(ios osx), version: '2.1.0', summary: 'Remote configuration for iOS.', authors: { :"Mattt Thompson" => 'm@mattt.me' }, link: 'https://github.com/mattt/GroundControl', source: { git: 'https://github.com/mattt/GroundControl.git', tag: '2.1.0' }, tags: [], deprecated: false, deprecated_in_favor_of: nil }] }
 
   # Testing a specific order of result ids.
   #
-  ok { pods.search('on:osx ki').ids.should == ["JSONKit", "KISSmetrics", "KissXML", "Kiwi", "MKNetworkKit", "MacMapKit", "KISSmetrics", "KLExpandingSelect", "LibYAML", "MTDates", "MTGeometry", "MTJSONDictionary", "MTJSONUtils", "MTPocket", "MTQueue", "MTStringAttributes"] }
-  
+  ok do
+    names_for_search('on:osx ki', sort: 'name').should == %w(BlocksKit PromiseKit RestKit Expecta KVOController pop)
+  end
+
   # Speed.
   #
   it 'is fast enough' do
     require 'benchmark'
-    Benchmark.realtime { pods.search('on:osx k* a') }.should < 0.005 # seconds
+    Benchmark.realtime { pods.search('on:osx a* a', sort: 'name') }.should < 0.01 # seconds
   end
 
   # Similarity on author.
   #
-  ok { pods.search('on:ios allan~').ids.should == ["Kiwi"] }
-  
+  ok do
+    names_for_search('on:ios mettt~', sort: 'name').should == %w(AFIncrementalStore AFNetworking CargoBay GroundControl TTTAttributedLabel)
+  end
+
   # Partial version search.
   #
-  ok { pods.search('on:osx kiwi 1').ids.should == ['Kiwi'] }
-  ok { pods.search('on:osx kiwi 1.').ids.should == ['Kiwi'] }
-  ok { pods.search('on:osx kiwi 1.0').ids.should == ['Kiwi'] }
-  ok { pods.search('on:osx kiwi 1.0.').ids.should == ['Kiwi'] }
-  ok { pods.search('on:osx kiwi 1.0.0').ids.should == ['Kiwi'] }
-  
+  expected = %w(CargoBay GroundControl AFNetworking)
+  ok { names_for_search('on:osx afnetworking 2', sort: 'name').should == expected }
+  ok { names_for_search('on:osx afnetworking 2.', sort: 'name').should == expected }
+  ok { names_for_search('on:osx afnetworking 2.0', sort: 'name').should == expected }
+  ok { names_for_search('on:osx afnetworking 2.0.', sort: 'name').should == expected }
+  ok { names_for_search('on:osx afnetworking 2.0.0', sort: 'name').should == expected }
+
   # Platform constrained search (platforms are AND-ed).
   #
-  ok { pods.search('on:osx allen').ids.should == ["Kiwi"] }
-  ok { pods.search('on:ios allen').ids.should == ["Kiwi"] }
-  ok { pods.search('on:osx on:ios allen').ids.should == ["Kiwi"] }
-  
+  expected = %w(AFNetworking AFIncrementalStore AFIncrementalStore CargoBay GroundControl)
+  ok { names_for_search('on:osx afnetworking', sort: 'name').should == expected }
+  ok { names_for_search('on:ios afnetworking', sort: 'name').should == expected + ['REActivityViewController'] }
+  ok { names_for_search('on:osx on:ios afnetworking', sort: 'name').should == expected }
+
   # Category boosting.
   #
-  ok { categories_of(pods.search('on:osx k* a')).should == [["platform", "name"], ["platform", "author"]] }
-  ok { categories_of(pods.search('on:osx jsonkit')).should == [["platform", "name"]] }
-  
+  # ok { categories_of(pods.search('on:ios s* a*')).should == [%w(platform name), %w(platform author)] }
+  # ok { categories_of(pods.search('on:ios a*')).should == [%w(platform name), %w(platform dependencies)] }
+
   # Partial.
   #
   # Platform is only found when fully mentioned (i.e. no partial).
   #
-  ok { pods.search('platform:osx').total.should == 109 }
+  ok { pods.search('platform:osx').total.should == 38 }
   ok { pods.search('platform:os').total.should == 0 }
   ok { pods.search('platform:o').total.should == 0 }
-  
+
   # Rendering.
   #
-  pod_spec = "pod 'Kiwi', '~&gt; 1.0.0'"
-  ok {
-    pods.search('kiwi').entries.should == [{:id=>"Kiwi", :platforms=>["osx", "ios"], :version=>"2.1", :summary=>"A Behavior Driven Development library for iOS and OS X.", :authors=>{:"Allen Ding"=>"alding@gmail.com", :"Luke Redpath"=>"luke@lukeredpath.co.uk"}, :link=>"https://github.com/allending/Kiwi", :source=>{:git=>"https://github.com/allending/Kiwi.git", :tag=>"2.1"}, :subspecs=>[], :tags=>[], :deprecated=>false, :deprecated_in_favor_of=>nil}, {:id=>"MockInject", :platforms=>["ios"], :version=>"0.1.0", :summary=>"A library that allows developers to globally mock any ObjectiveC class' initialization method when testing with Kiwi.", :authors=>{:"Matt Ganski"=>"gantasygames@gmail.com"}, :link=>"https://github.com/gantaa/MockInject", :source=>{:git=>"https://github.com/gantaa/MockInject.git", :tag=>"0.1.0"}, :subspecs=>[], :tags=>["test"], :deprecated=>false, :deprecated_in_favor_of=>nil}, {:id=>"MockInject", :platforms=>["ios"], :version=>"0.1.0", :summary=>"A library that allows developers to globally mock any ObjectiveC class' initialization method when testing with Kiwi.", :authors=>{:"Matt Ganski"=>"gantasygames@gmail.com"}, :link=>"https://github.com/gantaa/MockInject", :source=>{:git=>"https://github.com/gantaa/MockInject.git", :tag=>"0.1.0"}, :subspecs=>[], :tags=>["test"], :deprecated=>false, :deprecated_in_favor_of=>nil}]
-  }
-  
+  ok { pods.search('afnetworking mattt thompson', sort: 'name').entries.should == [{ id: 'AFNetworking', platforms: %w(ios osx), version: '2.3.1', summary: 'A delightful iOS and OS X networking framework.', authors: { :"Mattt Thompson" => 'm@mattt.me' }, link: 'https://github.com/AFNetworking/AFNetworking', source: { git: 'https://github.com/AFNetworking/AFNetworking.git', tag: '2.3.1', submodules: true }, tags: ['network'], deprecated: false, deprecated_in_favor_of: nil }, { id: 'AFIncrementalStore', platforms: %w(ios osx), version: '0.5.1', summary: 'Core Data Persistence with AFNetworking, Done Right.', authors: { :"Mattt Thompson" => 'm@mattt.me' }, link: 'https://github.com/AFNetworking/AFIncrementalStore', source: { git: 'https://github.com/AFNetworking/AFIncrementalStore.git', tag: '0.5.1' }, tags: [], deprecated: false, deprecated_in_favor_of: nil }, { id: 'AFOAuth2Client', platforms: [], version: '0.1.2', summary: 'AFNetworking Extension for OAuth 2 Authentication.', authors: { :"Mattt Thompson" => 'm@mattt.me' }, link: 'https://github.com/AFNetworking/AFOAuth2Client', source: { git: 'https://github.com/AFNetworking/AFOAuth2Client.git', tag: '0.1.2' }, tags: ['authentication'], deprecated: false, deprecated_in_favor_of: nil }, { id: 'CargoBay', platforms: %w(ios osx), version: '2.1.0', summary: 'The Essential StoreKit Companion.', authors: { :"Mattt Thompson" => 'm@mattt.me' }, link: 'https://github.com/mattt/CargoBay', source: { git: 'https://github.com/mattt/CargoBay.git', tag: '2.1.0' }, tags: [], deprecated: false, deprecated_in_favor_of: nil }, { id: 'GroundControl', platforms: %w(ios osx), version: '2.1.0', summary: 'Remote configuration for iOS.', authors: { :"Mattt Thompson" => 'm@mattt.me' }, link: 'https://github.com/mattt/GroundControl', source: { git: 'https://github.com/mattt/GroundControl.git', tag: '2.1.0' }, tags: [], deprecated: false, deprecated_in_favor_of: nil }, { id: 'AFIncrementalStore', platforms: %w(ios osx), version: '0.5.1', summary: 'Core Data Persistence with AFNetworking, Done Right.', authors: { :"Mattt Thompson" => 'm@mattt.me' }, link: 'https://github.com/AFNetworking/AFIncrementalStore', source: { git: 'https://github.com/AFNetworking/AFIncrementalStore.git', tag: '0.5.1' }, tags: [], deprecated: false, deprecated_in_favor_of: nil }, { id: 'AFOAuth2Client', platforms: [], version: '0.1.2', summary: 'AFNetworking Extension for OAuth 2 Authentication.', authors: { :"Mattt Thompson" => 'm@mattt.me' }, link: 'https://github.com/AFNetworking/AFOAuth2Client', source: { git: 'https://github.com/AFNetworking/AFOAuth2Client.git', tag: '0.1.2' }, tags: ['authentication'], deprecated: false, deprecated_in_favor_of: nil }] }
+
   # Qualifiers.
   #
-  ok { pods.search('name:kiwi').ids.should == ["Kiwi"] }
-  ok { pods.search('pod:kiwi').ids.should == ["Kiwi"] }
-  
-  ok { pods.search('author:allen').ids.should == ['Kiwi'] }
-  ok { pods.search('authors:allen').ids.should == ['Kiwi'] }
-  ok { pods.search('written:allen').ids.should == ['Kiwi'] }
-  ok { pods.search('writer:allen').ids.should == ['Kiwi'] }
-  ok { pods.search('by:allen').ids.should == ['Kiwi'] }
-  
-  ok { pods.search('version:1.0.0').ids.should == ["JASidePanels", "JCDHTTPConnection", "JCNotificationBannerPresenter", "JDDroppableView", "JDFlipNumberView", "JGAFImageCache", "JJCachedAsyncViewDrawing", "JTTargetActionBlock", "JWT", "JXHTTP", "KGNoise", "KISSmetrics", "KJSimpleBinding", "KTOneFingerRotationGestureRecognizer", "KYArcTab", "KYCircleMenu", "Kiwi", "KoaPullToRefresh", "LARSBar", "LARSTorch", "LAWalkthrough", "LKbadgeView", "LLRoundSwitch", "LUKeychainAccess", "Lambda-Alert", "Lasagna-Cookies", "LastFm", "LibComponentLogging-Crashlytics", "LineKit", "LinqToObjectiveC", "LocationPickerView", "MACachedImageView", "MACalendarUI", "MACircleProgressIndicator", "MBAlertView", "MBMvc", "MCDateExtensions", "MCSwipeTableViewCell", "MCUIColorUtils", "MEActionSheet", "MEAlertView", "MFLicensing", "MFMathLib", "MGBox2", "MGSplitViewController", "MHPrettyDate", "MIHGradientView", "MIHSliderView", "MJGFoundation", "MKMapViewZoom", "MKReachableOperationQueue", "MLScreenshot", "MLUIColorAdditions", "MMRecord", "MNColorKit", "MNStaticTableViewController", "MPNotificationView", "MRCurrencyRound", "MSPullToRefreshController", "MSVCLeakHunter", "MTMultipleViewController", "MTRecursiveKVC", "MessagePack", "MessagesTableViewController", "Mixpanel", "RMStepsController", "libechonest"] }
-  
-  expected_dependencies = ["KeenClient"]
-  
-  ok { pods.search('dependency:JSONKit').ids.should == expected_dependencies }
-  ok { pods.search('dependencies:JSONKit').ids.should == expected_dependencies }
-  ok { pods.search('depends:JSONKit').ids.should == expected_dependencies }
-  ok { pods.search('using:JSONKit').ids.should == expected_dependencies }
-  ok { pods.search('uses:JSONKit').ids.should == expected_dependencies }
-  ok { pods.search('use:JSONKit').ids.should == expected_dependencies }
-  ok { pods.search('needs:JSONKit').ids.should == expected_dependencies }
-  
-  ok { pods.search('platform:osx').total.should == 109 }
-  ok { pods.search('on:osx').total.should == 109 }
-  
-  ok { pods.search('summary:google').ids.should == ["LARSAdController", "MTLocation", "MTStatusBarOverlay"] }
-  
+  expected = ['AFNetworking']
+  ok { names_for_search('name:afnetworking').should == expected }
+  ok { names_for_search('pod:afnetworking').should == expected }
+
+  expected = %w(AFIncrementalStore AFNetworking AFOAuth2Client CargoBay FormatterKit GroundControl TTTAttributedLabel)
+  ok { names_for_search('author:mattt author:thompson', sort: 'name').should == expected }
+  ok { names_for_search('authors:mattt authors:thompson', sort: 'name').should == expected }
+  ok { names_for_search('written:mattt written:thompson', sort: 'name').should == expected }
+  ok { names_for_search('writer:mattt writer:thompson', sort: 'name').should == expected }
+  # ok { names_for_search('writer:mattt writer:thompson').should == expected }
+
+  ok { names_for_search('version:1.0.0', sort: 'name').should == ['Appirater', 'AwesomeMenu', 'BlockAlertsAnd-ActionSheets', 'BlocksKit', 'Bolts', 'CMPopTipView', 'CargoBay', 'CocoaLumberjack', 'CocoaSPDY', 'Cordova', 'DTCoreText', 'EAIntroView', 'ECSlidingViewController', 'FMDB', 'FormatterKit', 'GroundControl', 'HPGrowingTextView', 'JASidePanels', 'KIF', 'KVOController'] }
+
+  expected_dependencies = %w(AFIncrementalStore AFOAuth2Client CargoBay GroundControl REActivityViewController)
+  ok { names_for_search('dependency:AFNetworking', sort: 'name').should == expected_dependencies }
+  ok { names_for_search('dependencies:AFNetworking', sort: 'name').should == expected_dependencies }
+  ok { names_for_search('depends:AFNetworking', sort: 'name').should == expected_dependencies }
+  ok { names_for_search('using:AFNetworking', sort: 'name').should == expected_dependencies }
+  ok { names_for_search('uses:AFNetworking', sort: 'name').should == expected_dependencies }
+  ok { names_for_search('use:AFNetworking', sort: 'name').should == expected_dependencies }
+  ok { names_for_search('needs:AFNetworking', sort: 'name').should == expected_dependencies }
+
+  ok { pods.search('platform:osx').total.should == 38 }
+  ok { pods.search('on:osx').total.should == 38 }
+
+  ok { names_for_search('summary:data', sort: 'name').should == %w(AFIncrementalStore FCModel FXForms JSONModel MagicalRecord ObjectiveRecord PonyDebugger RETableViewManager TTTAttributedLabel) }
+
   # No single characters indexed.
   #
   ok { pods.search('on:ios "a"').ids.should == [] }
