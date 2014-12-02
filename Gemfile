@@ -26,6 +26,10 @@ gem 'text'
 gem 'rack_fast_escape', '2009.06.24'
 gem 'yajl-ruby', :require => 'yajl'
 
+# API calling
+#
+gem 'nap', :git => 'https://github.com/alloy/nap.git', :branch => 'error'
+
 # Pure development gems.
 #
 group :development do

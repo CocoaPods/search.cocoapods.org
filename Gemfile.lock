@@ -1,4 +1,11 @@
 GIT
+  remote: https://github.com/alloy/nap.git
+  revision: 0b417cbd51c82392208f46db049f203b7067bf83
+  branch: error
+  specs:
+    nap (0.7.0)
+
+GIT
   remote: https://github.com/irrationalfab/PrettyBacon.git
   revision: 1eeb06f7d381acd65414b86b42fdf3538faae01c
   branch: master
@@ -141,6 +148,7 @@ DEPENDENCIES
   kicker
   mocha (~> 0.11.4)
   mocha-on-bacon
+  nap!
   pg
   picky (~> 4.23.0)
   picky-client (~> 4.23.0)
