@@ -1,3 +1,5 @@
+require_relative 'stats_sender'
+
 class SearchWorker
   def setup
     setup_clean_exit
@@ -105,14 +107,7 @@ class SearchWorker
   #
   def send_stats_to_status_page
     time, count = remove_oldest_count_from_stats
-    if time
-      # TODO: Remove this statement when implemented.
-      #
-      $stdout.puts "I would send #{count} at #{time} to our status page."
-      fork do
-        # TODO: Send data (time and associated count) to status page.
-      end
-    end
+    StatsSender.send(time, count) if time
   end
 
   def setup_every_so_often
