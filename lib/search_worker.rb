@@ -8,6 +8,8 @@ class SearchWorker
 
     cache_all_pods
 
+    setup_stats
+    setup_rarely
     setup_every_so_often
     setup_indexing_all_pods
 
@@ -17,12 +19,16 @@ class SearchWorker
   def process(action, parameters)
     case action
     when :search
+      add_one_query_to_stats
       Search.instance.search(*parameters)
     when :search_facets
+      add_one_query_to_stats
       Search.instance.search_facets parameters
     when :index_facets
+      add_one_query_to_stats
       Search.instance.index_facets parameters
     when :split
+      add_one_query_to_stats
       Search.instance.split parameters
     when :reindex
       # The parameters are just a pod name.
@@ -49,24 +55,88 @@ class SearchWorker
         @not_loaded_yet = false
       end
     end
+    
+    # Periodically send stats data.
+    #
+    send_stats_to_status_page if every_so_often
 
     # Periodically index pods to update the metrics in memory.
     #
-    setup_indexing_all_pods if every_so_often
+    setup_indexing_all_pods if rarely
   end
 
   private
 
-  def setup_every_so_often
-    @looped = 0
+  attr_reader :per_minute_stats
+
+  # Setup the stats counter hash.
+  #
+  def setup_stats
+    @per_minute_stats = Hash.new { 0 }
   end
 
-  # Returns true very rarely.
+  # Add a single query.
+  #
+  def add_one_query_to_stats
+    per_minute_stats[current_time_bucket] += 1
+  end
+
+  # Returns the current minute we are writing to.
+  #
+  def current_time_bucket
+    Time.at(Time.now.to_i / 60 * 60)
+  end
+
+  # Returns either nil or [time, count]
+  #
+  def remove_oldest_count_from_stats
+    # Get the oldest statistic.
+    time, count = per_minute_stats.first
+
+    # If the count is not ongoing anymore.
+    unless time == current_time_bucket
+      # Return the count for a time
+      [time, per_minute_stats.delete(time)]
+    end
+  end
+
+  # Send the stats to the status page,
+  # if there are any stats.
+  #
+  def send_stats_to_status_page
+    time, count = remove_oldest_count_from_stats
+    if time
+      # TODO: Remove this statement when implemented.
+      #
+      $stdout.puts "I would send #{count} at #{time} to our status page."
+      fork do
+        # TODO: Send data (time and associated count) to status page.
+      end
+    end
+  end
+
+  def setup_every_so_often
+    @every_so_often = 0
+  end
+  # Returns roughly every half minute.
   #
   def every_so_often
-    @looped += 1
-    if @looped % 50_000 == 0
-      @looped = 0
+    @every_so_often += 1
+    if @every_so_often % 300 == 0
+      @every_so_often = 0
+      true
+    end
+  end
+  
+  def setup_rarely
+    @rarely = 0
+  end
+  # Returns true roughly every 15 minutes.
+  #
+  def rarely
+    @rarely += 1
+    if @rarely % 9_000 == 0
+      @rarely = 0
       true
     end
   end
