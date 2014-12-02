@@ -28,7 +28,7 @@ gem 'yajl-ruby', :require => 'yajl'
 
 # API calling
 #
-gem 'nap', :git => 'https://github.com/alloy/nap.git', :branch => 'error'
+gem 'nap', '~> 0.8.0'
 
 # Pure development gems.
 #
