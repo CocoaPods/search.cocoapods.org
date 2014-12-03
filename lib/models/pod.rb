@@ -65,6 +65,10 @@ class Pod
   #
   def self.all
     yield(find).map(&modelify_block)
+  rescue PG::UnableToSend
+    STDOUT.puts 'PG::UnableToSend raised! Reconnecting to database.'
+    load 'lib/database.rb'
+    retry
   end
 
   def self.modelify_block
