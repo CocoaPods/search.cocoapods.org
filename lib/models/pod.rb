@@ -43,21 +43,11 @@ class Pod
           github_pod_metrics.stargazers
         ) AS popularity
         EXPR
-        *Domain.github_metrics.fields(
-          :forks,
-          :stargazers,
-          :contributors,
-          :subscribers,
-        ),
+        *Domain.github_metrics.fields(:forks, :stargazers, :contributors, :subscribers),
       ).
       group_by(
         Domain.pods[:id],
-        *Domain.github_metrics.fields(
-          :forks,
-          :stargazers,
-          :contributors,
-          :subscribers,
-        ),
+        *Domain.github_metrics.fields(:forks, :stargazers, :contributors, :subscribers),
       )
   end
 

@@ -7,9 +7,9 @@ class StatsSender
   
   def self.send time, count
     data = {
-      :data => {
-        :timestamp => time.to_i,
-        :value => count
+      data: {
+        timestamp: time.to_i,
+        value: count
       }
     }
     headers = {
@@ -18,8 +18,8 @@ class StatsSender
     }
     fork do
       REST.post(URL, data.to_json, headers) do |http|
-        http.open_timeout = 1
-        http.read_timeout = 1
+        http.open_timeout = 2
+        http.read_timeout = 2
       end
     end
   end
