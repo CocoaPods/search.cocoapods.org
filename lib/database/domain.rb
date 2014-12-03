@@ -1,6 +1,5 @@
 # Defines the domain.
 #
-Object.const_remove(:Domain) if Object.const_defined?(:Domain)
 Domain = Flounder.domain(DB) do |dom|
   dom.entity(:commits, :commit, 'commits')
   dom.entity(:pods, :pod, 'pods')
