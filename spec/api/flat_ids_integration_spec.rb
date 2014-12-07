@@ -18,7 +18,7 @@ describe 'Flat Ids Integration Tests' do
 
   # Testing the format.
   #
-  ok { pod_hash.search('on:osx afnetworking', sort: 'name').should == [{ id: 'AFNetworking', platforms: %w(ios osx), version: '2.3.1', summary: 'A delightful iOS and OS X networking framework.', authors: { :"Mattt Thompson" => 'm@mattt.me' }, link: 'https://github.com/AFNetworking/AFNetworking', source: { git: 'https://github.com/AFNetworking/AFNetworking.git', tag: '2.3.1', submodules: true }, tags: ['network'], deprecated: false, deprecated_in_favor_of: nil }, { id: 'AFIncrementalStore', platforms: %w(ios osx), version: '0.5.1', summary: 'Core Data Persistence with AFNetworking, Done Right.', authors: { :"Mattt Thompson" => 'm@mattt.me' }, link: 'https://github.com/AFNetworking/AFIncrementalStore', source: { git: 'https://github.com/AFNetworking/AFIncrementalStore.git', tag: '0.5.1' }, tags: [], deprecated: false, deprecated_in_favor_of: nil }, { id: 'CargoBay', platforms: %w(ios osx), version: '2.1.0', summary: 'The Essential StoreKit Companion.', authors: { :"Mattt Thompson" => 'm@mattt.me' }, link: 'https://github.com/mattt/CargoBay', source: { git: 'https://github.com/mattt/CargoBay.git', tag: '2.1.0' }, tags: [], deprecated: false, deprecated_in_favor_of: nil }, { id: 'GroundControl', platforms: %w(ios osx), version: '2.1.0', summary: 'Remote configuration for iOS.', authors: { :"Mattt Thompson" => 'm@mattt.me' }, link: 'https://github.com/mattt/GroundControl', source: { git: 'https://github.com/mattt/GroundControl.git', tag: '2.1.0' }, tags: [], deprecated: false, deprecated_in_favor_of: nil }] }
+  ok { pod_hash.search('on:osx afnetworking', sort: 'name').should == [{:id=>"AFNetworking", :platforms=>["ios", "osx"], :version=>"2.3.1", :summary=>"A delightful iOS and OS X networking framework.", :authors=>{:"Mattt Thompson"=>"m@mattt.me"}, :link=>"https://github.com/AFNetworking/AFNetworking", :source=>{:git=>"https://github.com/AFNetworking/AFNetworking.git", :tag=>"2.3.1", :submodules=>true}, :tags=>["network"], :deprecated=>false, :deprecated_in_favor_of=>nil}, {:id=>"AFIncrementalStore", :platforms=>["ios", "osx"], :version=>"0.5.1", :summary=>"Core Data Persistence with AFNetworking, Done Right.", :authors=>{:"Mattt Thompson"=>"m@mattt.me"}, :link=>"https://github.com/AFNetworking/AFIncrementalStore", :source=>{:git=>"https://github.com/AFNetworking/AFIncrementalStore.git", :tag=>"0.5.1"}, :tags=>[], :deprecated=>false, :deprecated_in_favor_of=>nil}, {:id=>"AFOAuth2Client", :platforms=>["osx", "ios"], :version=>"0.1.2", :summary=>"AFNetworking Extension for OAuth 2 Authentication.", :authors=>{:"Mattt Thompson"=>"m@mattt.me"}, :link=>"https://github.com/AFNetworking/AFOAuth2Client", :source=>{:git=>"https://github.com/AFNetworking/AFOAuth2Client.git", :tag=>"0.1.2"}, :tags=>["authentication"], :deprecated=>false, :deprecated_in_favor_of=>nil}, {:id=>"CargoBay", :platforms=>["ios", "osx"], :version=>"2.1.0", :summary=>"The Essential StoreKit Companion.", :authors=>{:"Mattt Thompson"=>"m@mattt.me"}, :link=>"https://github.com/mattt/CargoBay", :source=>{:git=>"https://github.com/mattt/CargoBay.git", :tag=>"2.1.0"}, :tags=>[], :deprecated=>false, :deprecated_in_favor_of=>nil}, {:id=>"GroundControl", :platforms=>["ios", "osx"], :version=>"2.1.0", :summary=>"Remote configuration for iOS.", :authors=>{:"Mattt Thompson"=>"m@mattt.me"}, :link=>"https://github.com/mattt/GroundControl", :source=>{:git=>"https://github.com/mattt/GroundControl.git", :tag=>"2.1.0"}, :tags=>[], :deprecated=>false, :deprecated_in_favor_of=>nil}] }
 
   def pods
     @pods ||= Picky::TestClient.new CocoapodSearch, path: '/api/v1/pods.flat.ids.json'
@@ -26,7 +26,7 @@ describe 'Flat Ids Integration Tests' do
 
   # Testing the format.
   #
-  ok { pods.search('on:osx afnetworking', sort: 'name').should == %w(AFNetworking AFIncrementalStore CargoBay GroundControl) }
+  ok { pods.search('on:osx afnetworking', sort: 'name').should == ["AFNetworking", "AFIncrementalStore", "AFOAuth2Client", "CargoBay", "GroundControl"] }
 
   # Error cases.
   #
@@ -36,11 +36,11 @@ describe 'Flat Ids Integration Tests' do
 
   # This is how results should look - a flat list of ids.
   #
-  ok { pods.search('on:ios 1.0.0', ids: 200, sort: 'name').should == ['Appirater', 'AwesomeMenu', 'BlockAlertsAnd-ActionSheets', 'BlocksKit', 'CMPopTipView', 'CargoBay', 'CocoaSPDY', 'Cordova', 'DTCoreText', 'EAIntroView', 'ECSlidingViewController', 'GroundControl', 'HPGrowingTextView', 'JASidePanels', 'KIF', 'KVOController', 'MCSwipeTableViewCell', 'MSDynamicsDrawerViewController', 'MZFormSheetController', 'MapBox', 'Mapbox', 'Mixpanel', 'NSDate+TimeAgo', 'Nimbus', 'NoticeView', 'OpenUDID', 'PSTCollectionView', 'ReactiveCocoa', 'SSToolkit', 'Shimmer', 'TMCache', 'TimesSquare', 'Tweaks', 'VCTransitionsLibrary', 'ViewDeck', 'WEPopover', 'objc-TimesSquare', 'pop', 'scifihifi-iphone', 'scifihifi-iphone-security'] }
+  ok { pods.search('on:ios 1.0.0', ids: 200, sort: 'name').should == ["Appirater", "AwesomeMenu", "BlockAlertsAnd-ActionSheets", "BlocksKit", "Bolts", "CMPopTipView", "CargoBay", "CocoaLumberjack", "CocoaSPDY", "Cordova", "DTCoreText", "EAIntroView", "ECSlidingViewController", "FMDB", "FormatterKit", "GroundControl", "HPGrowingTextView", "JASidePanels", "KIF", "KVOController", "MCSwipeTableViewCell", "MSDynamicsDrawerViewController", "MZFormSheetController", "MagicalRecord", "MapBox", "Mapbox", "Mixpanel", "NSDate+TimeAgo", "Nimbus", "NoticeView", "ODRefreshControl", "OpenUDID", "PSTCollectionView", "ReactiveCocoa", "SSToolkit", "Shimmer", "TMCache", "TimesSquare", "Tweaks", "VCTransitionsLibrary", "ViewDeck", "WEPopover", "XYPieChart", "objc-TimesSquare", "pop", "scifihifi-iphone", "scifihifi-iphone-security", "tuneup_js"] }
 
   # Testing a count of results.
   #
-  ok { pods.search('on:ios 1.0.0', ids: 10_000).size.should == 40 }
+  ok { pods.search('on:ios 1.0.0', ids: 10_000).size.should == 48 }
 
   # Speed.
   #
@@ -55,7 +55,7 @@ describe 'Flat Ids Integration Tests' do
 
   # Similarity on author.
   #
-  ok { pods.search('on:ios mettt~', sort: 'name').should == %w(AFIncrementalStore AFNetworking CargoBay GroundControl TTTAttributedLabel) }
+  ok { pods.search('on:ios mettt~', sort: 'name').should == ["AFIncrementalStore", "AFNetworking", "AFOAuth2Client", "CargoBay", "FormatterKit", "GroundControl", "TTTAttributedLabel"] }
 
   # Partial version search.
   #
@@ -68,15 +68,15 @@ describe 'Flat Ids Integration Tests' do
 
   # Platform constrained search (platforms are AND-ed).
   #
-  ok { pods.search('on:osx mattt', sort: 'name').should == %w(AFIncrementalStore AFNetworking CargoBay GroundControl) }
-  ok { pods.search('on:ios mattt', sort: 'name').should == %w(AFIncrementalStore AFNetworking CargoBay GroundControl TTTAttributedLabel) }
-  ok { pods.search('on:osx on:ios mattt', sort: 'name').should == %w(AFIncrementalStore AFNetworking CargoBay GroundControl) }
+  ok { pods.search('on:osx mattt', sort: 'name').should == ["AFIncrementalStore", "AFNetworking", "AFOAuth2Client", "CargoBay", "FormatterKit", "GroundControl"] }
+  ok { pods.search('on:ios mattt', sort: 'name').should == ["AFIncrementalStore", "AFNetworking", "AFOAuth2Client", "CargoBay", "FormatterKit", "GroundControl", "TTTAttributedLabel"] }
+  ok { pods.search('on:osx on:ios mattt', sort: 'name').should == ["AFIncrementalStore", "AFNetworking", "AFOAuth2Client", "CargoBay", "FormatterKit", "GroundControl"] }
 
   # Partial.
   #
   # Platform is only found when fully mentioned (i.e. no partial).
   #
-  ok { pods.search('platform:osx', ids: 10_000).size.should == 38 }
+  ok { pods.search('platform:osx', ids: 10_000).size.should == 75 }
   ok { pods.search('platform:os').size.should == 0 }
   ok { pods.search('platform:o').size.should == 0 }
 
@@ -101,8 +101,8 @@ describe 'Flat Ids Integration Tests' do
   ok { pods.search('use:AFNetworking', sort: 'name').should == expected_dependencies }
   ok { pods.search('needs:AFNetworking', sort: 'name').should == expected_dependencies }
 
-  ok { pods.search('platform:osx', ids: 10_000).size.should == 38 }
-  ok { pods.search('on:osx', ids: 10_000).size.should == 38 }
+  ok { pods.search('platform:osx', ids: 10_000).size.should == 75 }
+  ok { pods.search('on:osx', ids: 10_000).size.should == 75 }
 
   ok { pods.search('summary:networking', sort: 'name').should == %w(AFNetworking CocoaAsyncSocket) }
 

@@ -27,16 +27,16 @@ describe 'Integration Tests' do
 
   # Testing a count of results.
   #
-  ok { pods.search('on:ios 1.0.0').total.should == 40 }
+  ok { pods.search('on:ios 1.0.0').total.should == 48 }
 
   # Testing the format.
   #
-  ok { pods.search('on:osx afnetworking', sort: 'name').entries.should == [{ id: 'AFNetworking', platforms: %w(ios osx), version: '2.3.1', summary: 'A delightful iOS and OS X networking framework.', authors: { :"Mattt Thompson" => 'm@mattt.me' }, link: 'https://github.com/AFNetworking/AFNetworking', source: { git: 'https://github.com/AFNetworking/AFNetworking.git', tag: '2.3.1', submodules: true }, tags: ['network'], deprecated: false, deprecated_in_favor_of: nil }, { id: 'AFIncrementalStore', platforms: %w(ios osx), version: '0.5.1', summary: 'Core Data Persistence with AFNetworking, Done Right.', authors: { :"Mattt Thompson" => 'm@mattt.me' }, link: 'https://github.com/AFNetworking/AFIncrementalStore', source: { git: 'https://github.com/AFNetworking/AFIncrementalStore.git', tag: '0.5.1' }, tags: [], deprecated: false, deprecated_in_favor_of: nil }, { id: 'AFIncrementalStore', platforms: %w(ios osx), version: '0.5.1', summary: 'Core Data Persistence with AFNetworking, Done Right.', authors: { :"Mattt Thompson" => 'm@mattt.me' }, link: 'https://github.com/AFNetworking/AFIncrementalStore', source: { git: 'https://github.com/AFNetworking/AFIncrementalStore.git', tag: '0.5.1' }, tags: [], deprecated: false, deprecated_in_favor_of: nil }, { id: 'CargoBay', platforms: %w(ios osx), version: '2.1.0', summary: 'The Essential StoreKit Companion.', authors: { :"Mattt Thompson" => 'm@mattt.me' }, link: 'https://github.com/mattt/CargoBay', source: { git: 'https://github.com/mattt/CargoBay.git', tag: '2.1.0' }, tags: [], deprecated: false, deprecated_in_favor_of: nil }, { id: 'GroundControl', platforms: %w(ios osx), version: '2.1.0', summary: 'Remote configuration for iOS.', authors: { :"Mattt Thompson" => 'm@mattt.me' }, link: 'https://github.com/mattt/GroundControl', source: { git: 'https://github.com/mattt/GroundControl.git', tag: '2.1.0' }, tags: [], deprecated: false, deprecated_in_favor_of: nil }] }
+  ok { pods.search('on:osx afnetworking', sort: 'name').entries.should == [{:id=>"AFNetworking", :platforms=>["ios", "osx"], :version=>"2.3.1", :summary=>"A delightful iOS and OS X networking framework.", :authors=>{:"Mattt Thompson"=>"m@mattt.me"}, :link=>"https://github.com/AFNetworking/AFNetworking", :source=>{:git=>"https://github.com/AFNetworking/AFNetworking.git", :tag=>"2.3.1", :submodules=>true}, :tags=>["network"], :deprecated=>false, :deprecated_in_favor_of=>nil}, {:id=>"AFIncrementalStore", :platforms=>["ios", "osx"], :version=>"0.5.1", :summary=>"Core Data Persistence with AFNetworking, Done Right.", :authors=>{:"Mattt Thompson"=>"m@mattt.me"}, :link=>"https://github.com/AFNetworking/AFIncrementalStore", :source=>{:git=>"https://github.com/AFNetworking/AFIncrementalStore.git", :tag=>"0.5.1"}, :tags=>[], :deprecated=>false, :deprecated_in_favor_of=>nil}, {:id=>"AFOAuth2Client", :platforms=>["osx", "ios"], :version=>"0.1.2", :summary=>"AFNetworking Extension for OAuth 2 Authentication.", :authors=>{:"Mattt Thompson"=>"m@mattt.me"}, :link=>"https://github.com/AFNetworking/AFOAuth2Client", :source=>{:git=>"https://github.com/AFNetworking/AFOAuth2Client.git", :tag=>"0.1.2"}, :tags=>["authentication"], :deprecated=>false, :deprecated_in_favor_of=>nil}, {:id=>"AFIncrementalStore", :platforms=>["ios", "osx"], :version=>"0.5.1", :summary=>"Core Data Persistence with AFNetworking, Done Right.", :authors=>{:"Mattt Thompson"=>"m@mattt.me"}, :link=>"https://github.com/AFNetworking/AFIncrementalStore", :source=>{:git=>"https://github.com/AFNetworking/AFIncrementalStore.git", :tag=>"0.5.1"}, :tags=>[], :deprecated=>false, :deprecated_in_favor_of=>nil}, {:id=>"AFOAuth2Client", :platforms=>["osx", "ios"], :version=>"0.1.2", :summary=>"AFNetworking Extension for OAuth 2 Authentication.", :authors=>{:"Mattt Thompson"=>"m@mattt.me"}, :link=>"https://github.com/AFNetworking/AFOAuth2Client", :source=>{:git=>"https://github.com/AFNetworking/AFOAuth2Client.git", :tag=>"0.1.2"}, :tags=>["authentication"], :deprecated=>false, :deprecated_in_favor_of=>nil}, {:id=>"CargoBay", :platforms=>["ios", "osx"], :version=>"2.1.0", :summary=>"The Essential StoreKit Companion.", :authors=>{:"Mattt Thompson"=>"m@mattt.me"}, :link=>"https://github.com/mattt/CargoBay", :source=>{:git=>"https://github.com/mattt/CargoBay.git", :tag=>"2.1.0"}, :tags=>[], :deprecated=>false, :deprecated_in_favor_of=>nil}, {:id=>"GroundControl", :platforms=>["ios", "osx"], :version=>"2.1.0", :summary=>"Remote configuration for iOS.", :authors=>{:"Mattt Thompson"=>"m@mattt.me"}, :link=>"https://github.com/mattt/GroundControl", :source=>{:git=>"https://github.com/mattt/GroundControl.git", :tag=>"2.1.0"}, :tags=>[], :deprecated=>false, :deprecated_in_favor_of=>nil}] }
 
   # Testing a specific order of result ids.
   #
   ok do
-    names_for_search('on:osx ki', sort: 'name').should == %w(BlocksKit PromiseKit RestKit Expecta KVOController pop)
+    names_for_search('on:osx ki', sort: 'name').should == ["BlocksKit", "FormatterKit", "JSONKit", "PromiseKit", "QuincyKit", "RestKit", "Expecta", "KVOController", "pop", "tuneup_js"]
   end
 
   # Speed.
@@ -49,7 +49,7 @@ describe 'Integration Tests' do
   # Similarity on author.
   #
   ok do
-    names_for_search('on:ios mettt~', sort: 'name').should == %w(AFIncrementalStore AFNetworking CargoBay GroundControl TTTAttributedLabel)
+    names_for_search('on:ios mettt~', sort: 'name').should == ["AFIncrementalStore", "AFNetworking", "AFOAuth2Client", "CargoBay", "FormatterKit", "GroundControl", "TTTAttributedLabel"]
   end
 
   # Partial version search.
@@ -63,7 +63,7 @@ describe 'Integration Tests' do
 
   # Platform constrained search (platforms are AND-ed).
   #
-  expected = %w(AFNetworking AFIncrementalStore AFIncrementalStore CargoBay GroundControl)
+  expected = ["AFNetworking", "AFIncrementalStore", "AFOAuth2Client", "AFIncrementalStore", "AFOAuth2Client", "CargoBay", "GroundControl"]
   ok { names_for_search('on:osx afnetworking', sort: 'name').should == expected }
   ok { names_for_search('on:ios afnetworking', sort: 'name').should == expected + ['REActivityViewController'] }
   ok { names_for_search('on:osx on:ios afnetworking', sort: 'name').should == expected }
@@ -77,13 +77,13 @@ describe 'Integration Tests' do
   #
   # Platform is only found when fully mentioned (i.e. no partial).
   #
-  ok { pods.search('platform:osx').total.should == 38 }
+  ok { pods.search('platform:osx').total.should == 75 }
   ok { pods.search('platform:os').total.should == 0 }
   ok { pods.search('platform:o').total.should == 0 }
 
   # Rendering.
   #
-  ok { pods.search('afnetworking mattt thompson', sort: 'name').entries.should == [{ id: 'AFNetworking', platforms: %w(ios osx), version: '2.3.1', summary: 'A delightful iOS and OS X networking framework.', authors: { :"Mattt Thompson" => 'm@mattt.me' }, link: 'https://github.com/AFNetworking/AFNetworking', source: { git: 'https://github.com/AFNetworking/AFNetworking.git', tag: '2.3.1', submodules: true }, tags: ['network'], deprecated: false, deprecated_in_favor_of: nil }, { id: 'AFIncrementalStore', platforms: %w(ios osx), version: '0.5.1', summary: 'Core Data Persistence with AFNetworking, Done Right.', authors: { :"Mattt Thompson" => 'm@mattt.me' }, link: 'https://github.com/AFNetworking/AFIncrementalStore', source: { git: 'https://github.com/AFNetworking/AFIncrementalStore.git', tag: '0.5.1' }, tags: [], deprecated: false, deprecated_in_favor_of: nil }, { id: 'AFOAuth2Client', platforms: [], version: '0.1.2', summary: 'AFNetworking Extension for OAuth 2 Authentication.', authors: { :"Mattt Thompson" => 'm@mattt.me' }, link: 'https://github.com/AFNetworking/AFOAuth2Client', source: { git: 'https://github.com/AFNetworking/AFOAuth2Client.git', tag: '0.1.2' }, tags: ['authentication'], deprecated: false, deprecated_in_favor_of: nil }, { id: 'CargoBay', platforms: %w(ios osx), version: '2.1.0', summary: 'The Essential StoreKit Companion.', authors: { :"Mattt Thompson" => 'm@mattt.me' }, link: 'https://github.com/mattt/CargoBay', source: { git: 'https://github.com/mattt/CargoBay.git', tag: '2.1.0' }, tags: [], deprecated: false, deprecated_in_favor_of: nil }, { id: 'GroundControl', platforms: %w(ios osx), version: '2.1.0', summary: 'Remote configuration for iOS.', authors: { :"Mattt Thompson" => 'm@mattt.me' }, link: 'https://github.com/mattt/GroundControl', source: { git: 'https://github.com/mattt/GroundControl.git', tag: '2.1.0' }, tags: [], deprecated: false, deprecated_in_favor_of: nil }, { id: 'AFIncrementalStore', platforms: %w(ios osx), version: '0.5.1', summary: 'Core Data Persistence with AFNetworking, Done Right.', authors: { :"Mattt Thompson" => 'm@mattt.me' }, link: 'https://github.com/AFNetworking/AFIncrementalStore', source: { git: 'https://github.com/AFNetworking/AFIncrementalStore.git', tag: '0.5.1' }, tags: [], deprecated: false, deprecated_in_favor_of: nil }, { id: 'AFOAuth2Client', platforms: [], version: '0.1.2', summary: 'AFNetworking Extension for OAuth 2 Authentication.', authors: { :"Mattt Thompson" => 'm@mattt.me' }, link: 'https://github.com/AFNetworking/AFOAuth2Client', source: { git: 'https://github.com/AFNetworking/AFOAuth2Client.git', tag: '0.1.2' }, tags: ['authentication'], deprecated: false, deprecated_in_favor_of: nil }] }
+  ok { pods.search('afnetworking mattt thompson', sort: 'name').entries.should == [{:id=>"AFNetworking", :platforms=>["ios", "osx"], :version=>"2.3.1", :summary=>"A delightful iOS and OS X networking framework.", :authors=>{:"Mattt Thompson"=>"m@mattt.me"}, :link=>"https://github.com/AFNetworking/AFNetworking", :source=>{:git=>"https://github.com/AFNetworking/AFNetworking.git", :tag=>"2.3.1", :submodules=>true}, :tags=>["network"], :deprecated=>false, :deprecated_in_favor_of=>nil}, {:id=>"AFIncrementalStore", :platforms=>["ios", "osx"], :version=>"0.5.1", :summary=>"Core Data Persistence with AFNetworking, Done Right.", :authors=>{:"Mattt Thompson"=>"m@mattt.me"}, :link=>"https://github.com/AFNetworking/AFIncrementalStore", :source=>{:git=>"https://github.com/AFNetworking/AFIncrementalStore.git", :tag=>"0.5.1"}, :tags=>[], :deprecated=>false, :deprecated_in_favor_of=>nil}, {:id=>"AFOAuth2Client", :platforms=>["osx", "ios"], :version=>"0.1.2", :summary=>"AFNetworking Extension for OAuth 2 Authentication.", :authors=>{:"Mattt Thompson"=>"m@mattt.me"}, :link=>"https://github.com/AFNetworking/AFOAuth2Client", :source=>{:git=>"https://github.com/AFNetworking/AFOAuth2Client.git", :tag=>"0.1.2"}, :tags=>["authentication"], :deprecated=>false, :deprecated_in_favor_of=>nil}, {:id=>"CargoBay", :platforms=>["ios", "osx"], :version=>"2.1.0", :summary=>"The Essential StoreKit Companion.", :authors=>{:"Mattt Thompson"=>"m@mattt.me"}, :link=>"https://github.com/mattt/CargoBay", :source=>{:git=>"https://github.com/mattt/CargoBay.git", :tag=>"2.1.0"}, :tags=>[], :deprecated=>false, :deprecated_in_favor_of=>nil}, {:id=>"GroundControl", :platforms=>["ios", "osx"], :version=>"2.1.0", :summary=>"Remote configuration for iOS.", :authors=>{:"Mattt Thompson"=>"m@mattt.me"}, :link=>"https://github.com/mattt/GroundControl", :source=>{:git=>"https://github.com/mattt/GroundControl.git", :tag=>"2.1.0"}, :tags=>[], :deprecated=>false, :deprecated_in_favor_of=>nil}, {:id=>"AFIncrementalStore", :platforms=>["ios", "osx"], :version=>"0.5.1", :summary=>"Core Data Persistence with AFNetworking, Done Right.", :authors=>{:"Mattt Thompson"=>"m@mattt.me"}, :link=>"https://github.com/AFNetworking/AFIncrementalStore", :source=>{:git=>"https://github.com/AFNetworking/AFIncrementalStore.git", :tag=>"0.5.1"}, :tags=>[], :deprecated=>false, :deprecated_in_favor_of=>nil}, {:id=>"AFOAuth2Client", :platforms=>["osx", "ios"], :version=>"0.1.2", :summary=>"AFNetworking Extension for OAuth 2 Authentication.", :authors=>{:"Mattt Thompson"=>"m@mattt.me"}, :link=>"https://github.com/AFNetworking/AFOAuth2Client", :source=>{:git=>"https://github.com/AFNetworking/AFOAuth2Client.git", :tag=>"0.1.2"}, :tags=>["authentication"], :deprecated=>false, :deprecated_in_favor_of=>nil}] }
 
   # Qualifiers.
   #
@@ -109,8 +109,8 @@ describe 'Integration Tests' do
   ok { names_for_search('use:AFNetworking', sort: 'name').should == expected_dependencies }
   ok { names_for_search('needs:AFNetworking', sort: 'name').should == expected_dependencies }
 
-  ok { pods.search('platform:osx').total.should == 38 }
-  ok { pods.search('on:osx').total.should == 38 }
+  ok { pods.search('platform:osx').total.should == 75 }
+  ok { pods.search('on:osx').total.should == 75 }
 
   ok { names_for_search('summary:data', sort: 'name').should == %w(AFIncrementalStore FCModel FXForms JSONModel MagicalRecord ObjectiveRecord PonyDebugger RETableViewManager TTTAttributedLabel) }
 

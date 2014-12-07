@@ -12,11 +12,11 @@ describe 'Special Cases' do
   end
 
   it 'will find ObjectiveRecord via CoreData' do
-    special_cases.search('CoreData', sort: 'name').should == %w(AFIncrementalStore ObjectiveRecord PonyDebugger)
+    special_cases.search('CoreData', sort: 'name').should == ["AFIncrementalStore", "MagicalRecord", "ObjectiveRecord", "PonyDebugger"]
   end
 
   it 'will survive searching ORed' do
-    special_cases.search('ios|osx', sort: 'name').should == ['AFIncrementalStore', 'AFNetworking', 'AQGridView', 'AWSiOSSDK', 'ActionSheetPicker', 'Appirater', 'AwesomeMenu', 'BlockAlertsAnd-ActionSheets', 'BlocksKit', 'CHTCollectionViewWaterfallLayout', 'CMPopTipView', 'CRToast', 'Canvas', 'CargoBay', 'Cedar', 'CocoaAsyncSocket', 'CocoaHTTPServer', 'CocoaLibSpotify', 'CocoaLumberjack', 'CocoaSPDY']
+    special_cases.search('ios|osx', sort: 'name').should == ["AFIncrementalStore", "AFNetworking", "AFOAuth2Client", "AQGridView", "ASIHTTPRequest", "AWSiOSSDK", "ActionSheetPicker", "Appirater", "AwesomeMenu", "BlockAlertsAnd-ActionSheets", "BlocksKit", "Bolts", "CHTCollectionViewWaterfallLayout", "CMPopTipView", "CRToast", "Canvas", "CargoBay", "Cedar", "Chameleon", "CocoaAsyncSocket"]
   end
 
   it 'will default to popularity with unrecognized sort orders' do
