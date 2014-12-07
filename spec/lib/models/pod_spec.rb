@@ -30,5 +30,16 @@ describe Pod do
     ok { pod.subscribers.should == 1073 }
 
   end
+  
+  describe 'KGDiscreetAlertView' do
+
+    def pod
+      Pod.all { |pods| pods.where(name: 'KGDiscreetAlertView') }.first
+    end
+
+    ok { pod.platforms.should == %w(ios) }
+    ok { pod.mapped_platform.should == 'ios' }
+
+  end
 
 end
