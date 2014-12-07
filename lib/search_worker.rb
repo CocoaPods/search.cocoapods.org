@@ -57,7 +57,7 @@ class SearchWorker
         @not_loaded_yet = false
       end
     end
-    
+
     # Periodically send stats data.
     #
     send_stats_to_status_page if every_so_often
@@ -122,7 +122,7 @@ class SearchWorker
       true
     end
   end
-  
+
   def setup_rarely
     @rarely = 0
   end

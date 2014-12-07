@@ -142,7 +142,7 @@ class Pod
   def homepage
     specification['homepage']
   end
-  
+
   DEFAULT_PLATFORMS = [:osx, :ios]
   def platforms
     platforms_spec = specification['platforms']

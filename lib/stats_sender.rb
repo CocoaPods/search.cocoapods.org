@@ -1,16 +1,15 @@
 require 'rest'
 
 class StatsSender
-  
   URL = ENV['STATUSPAGE_URL']
   API_KEY = ENV['STATUSPAGE_API_KEY']
-  
-  def self.send time, count
+
+  def self.send(time, count)
     data = {
       data: {
         timestamp: time.to_i,
-        value: count
-      }
+        value: count,
+      },
     }
     headers = {
       'Content-Type' => 'application/json',
@@ -23,5 +22,4 @@ class StatsSender
       end
     end
   end
-  
 end
