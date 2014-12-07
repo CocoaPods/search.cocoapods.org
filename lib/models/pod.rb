@@ -148,7 +148,7 @@ class Pod
     platforms_spec = specification['platforms']
     platforms_spec && platforms_spec.keys || DEFAULT_PLATFORMS
   rescue
-    DEFAULT_PLATFORMS
+    specification['platforms']
   end
 
   def mapped_platform
