@@ -30,7 +30,7 @@ describe Pod do
     ok { pod.subscribers.should == 1073 }
 
   end
-  
+
   describe 'KGDiscreetAlertView' do
 
     def pod
