@@ -129,7 +129,7 @@ class Pod
   def dependencies
     [
       *specification['frameworks'],
-      *specification['dependencies'].keys,
+      *(specification['dependencies'] && specification['dependencies'].keys),
     ].compact
   end
 
