@@ -12,7 +12,7 @@ describe 'Special Cases' do
   end
 
   it 'will find ObjectiveRecord via CoreData' do
-    special_cases.search('CoreData', sort: 'name').should == %w(AFIncrementalStore MagicalRecord ObjectiveRecord PonyDebugger)
+    special_cases.search('CoreData', sort: 'name').should == ["AFIncrementalStore", "MagicalRecord", "ObjectiveRecord"]
   end
 
   it 'will survive searching ORed' do
@@ -21,6 +21,11 @@ describe 'Special Cases' do
 
   it 'will default to popularity with unrecognized sort orders' do
     special_cases.search('a', sort: 'quack').should == ['AFNetworking', 'TYPFontAwesome', 'ASIHTTPRequest', 'CocoaAsyncSocket', 'Appirater', 'AwesomeMenu', 'TTTAttributedLabel', 'AQGridView', 'InAppSettingKit', 'InAppSettingsKit', 'AFIncrementalStore', 'OHAttributedLabel', 'pubnub-api', 'TheAmazingAudioEngine', 'TPKeyboardAvoiding', 'SIAlertView', 'BlockAlertsAnd-ActionSheets', 'EKAlgorithms', 'INAppStoreWindow', 'NSDate+TimeAgo']
+  end
+  
+  it 'will not find EGOTableViewPullRefresh if on:osx is specified (it is ios only)' do
+    pod = Pod.all { |pods| pods.where(name: 'EGOTableViewPullRefresh') }.first
+    special_cases.search('on:osx EGOTableViewPullRefresh', sort: 'name').include?('EGOTableViewPullRefresh').should == false
   end
 
   # it 'will correctly find _.m' do
