@@ -142,11 +142,13 @@ class Pod
   def homepage
     specification['homepage']
   end
-
+  
+  DEFAULT_PLATFORMS = [:osx, :ios]
   def platforms
-    (specification['platforms'] || {}).keys
+    platforms_spec = specification['platforms']
+    platforms_spec && platforms_spec.keys || DEFAULT_PLATFORMS
   rescue
-    specification['platforms']
+    DEFAULT_PLATFORMS
   end
 
   def mapped_platform
