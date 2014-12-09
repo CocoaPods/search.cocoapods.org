@@ -4,7 +4,14 @@ class StatsSender
   URL = ENV['STATUSPAGE_URL']
   API_KEY = ENV['STATUSPAGE_API_KEY']
 
+  def self.cleanup
+    pid = @current_pids.shift
+    Process.waitpid(pid, Process::WNOHANG)
+  end
+
   def self.send(time, count)
+    cleanup
+    
     data = {
       data: {
         timestamp: time.to_i,
@@ -15,7 +22,8 @@ class StatsSender
       'Content-Type' => 'application/json',
       'Authorization' => "OAuth #{API_KEY}",
     }
-    fork do
+    @current_pids ||= []
+    @current_pids << fork do
       REST.post(URL, data.to_json, headers) do |http|
         http.open_timeout = 2
         http.read_timeout = 2
