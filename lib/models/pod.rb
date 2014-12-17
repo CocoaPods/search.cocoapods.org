@@ -32,6 +32,7 @@ class Pod
       on(Domain.pods[:id] => Domain.versions[:pod_id]).
       join(Domain.github_metrics).
       on(Domain.pods[:id] => Domain.github_metrics[:pod_id]).
+      where(Domain.pods[:deleted] => false).
       project(
         *Domain.pods.fields,
         'array_agg(pod_versions.name) AS versions',
