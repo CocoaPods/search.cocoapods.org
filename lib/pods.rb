@@ -23,18 +23,11 @@ class Pods
       )
     EXPR
 
-    pods = if amount
-             Pod.all do |all_pods|
-               all_pods.
-               limit(amount).
-               order_by(order_by_popularity)
-             end
-           else
-             Pod.all do |all_pods|
-               all_pods.
-               order_by(order_by_popularity)
-             end
-           end
+    pods = Pod.all do |all_pods|
+      all_pods.order_by(order_by_popularity)
+      all_pods.limit(amount) if amount
+      all_pods
+    end
     if block_given?
       pods.each(&block)
     else
