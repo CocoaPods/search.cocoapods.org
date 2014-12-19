@@ -51,5 +51,14 @@ describe 'Special Cases' do
   it 'will not crash the search engine' do
     special_cases.search('ääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääää').should == []
   end
+  
+  it "will find Kyle's beloved pods" do
+    query_kit = Pod.all { |pods| pods.where(name: 'CCLDefaults') }.first
+    
+    Search.instance.replace(query_kit, Pods.instance)
+    
+    special_cases.search('CCLDefaults', sort: 'name').should == %w(CCLDefaults)
+    special_cases.search('Kyle Fuller', sort: 'name').should == %w(CCLDefaults)
+  end
 
 end
