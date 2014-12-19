@@ -41,5 +41,15 @@ describe Pod do
     ok { pod.mapped_platform.should == 'ios' }
 
   end
+  
+  describe 'CCLDefaults' do
+
+    def pod
+      Pod.all { |pods| pods.where(name: 'CCLDefaults') }.first
+    end
+
+    ok { pod.mapped_authors.should == 'Kyle Fuller' }
+
+  end
 
 end
