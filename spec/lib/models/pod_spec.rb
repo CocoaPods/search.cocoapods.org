@@ -51,5 +51,15 @@ describe Pod do
     ok { pod.mapped_authors.should == 'Kyle Fuller' }
 
   end
+  
+  describe 'QueryKit' do
+
+    def pod
+      Pod.all { |pods| pods.where(name: 'QueryKit') }.first
+    end
+
+    ok { pod.mapped_authors.should == 'Kyle Fuller' }
+
+  end
 
 end
