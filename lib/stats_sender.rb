@@ -32,6 +32,8 @@ class StatsSender
         end
       end
     end
+  rescue StandardError => e
+    $stderr.puts e.inspect, e.backtrace
   end
   
   def self.init
