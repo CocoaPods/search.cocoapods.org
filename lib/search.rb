@@ -194,6 +194,11 @@ class Search
     @index.replace pod
     @splitting_index.replace pod
   end
+  
+  def remove(pod)
+    @index.remove pod
+    @splitting_index.remove pod
+  end
 
   def split(text)
     if CocoapodSearch.child
