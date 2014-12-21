@@ -52,13 +52,40 @@ describe 'Special Cases' do
     special_cases.search('ääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääää').should == []
   end
   
-  it "will find Kyle's beloved pods" do
-    query_kit = Pod.all { |pods| pods.where(name: 'CCLDefaults') }.first
+  def with_pod_added name, &block
+    pod = Pod.all { |pods| pods.where(name: name) }.first
+    Search.instance.replace(pod, Pods.instance)
     
-    Search.instance.replace(query_kit, Pods.instance)
+    block.call(pod)
     
-    special_cases.search('CCLDefaults', sort: 'name').should == %w(CCLDefaults)
-    special_cases.search('Kyle Fuller', sort: 'name').should == %w(CCLDefaults)
+    Search.instance.remove(pod.id)
+  end
+  
+  def find name
+    with_pod_added(name) do |pod|
+      special_cases.search(name, sort: 'name').should == [name]
+      special_cases.search('Kyle Fuller', sort: 'name').should == [name]
+    end
+  end
+  
+  describe "will find Kyle's beloved pods" do
+    [
+      'QueryKit',
+      'Stencil',
+      'CGFloatType',
+      'URITemplate',
+      'PathKit',
+      'ReactiveQueryKit',
+      'Expecta+ReactiveCocoa',
+      'NSAttributedString+CCLFormat',
+      'CCLDefaults',
+      'CCLHTTPServer',
+      'KFData'
+    ].each do |name|
+      it "finds #{name}" do
+        find(name)
+      end
+    end
   end
 
 end
