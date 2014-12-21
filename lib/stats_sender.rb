@@ -24,10 +24,12 @@ class StatsSender
       'Content-Type' => 'application/json',
       'Authorization' => "OAuth #{API_KEY}",
     }
-    @current_pids << fork do
-      REST.post(URL, data.to_json, headers) do |http|
-        http.open_timeout = 2
-        http.read_timeout = 2
+    if URL
+      @current_pids << fork do
+        REST.post(URL, data.to_json, headers) do |http|
+          http.open_timeout = 2
+          http.read_timeout = 2
+        end
       end
     end
   end
