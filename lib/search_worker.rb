@@ -135,9 +135,11 @@ class SearchWorker
   end
 
   def setup_indexing_all_pods
-    @not_loaded_yet = true
-    @pods_to_index = Pods.instance.each
-    $stdout.puts "[#{Time.now}] Start indexing."
+    unless @not_loaded_yet
+      @not_loaded_yet = true
+      @pods_to_index = Pods.instance.each
+      $stdout.puts "[#{Time.now}] Start indexing."
+    end
   end
 
   def setup_clean_exit
