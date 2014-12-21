@@ -14,8 +14,6 @@ class SearchWorker
     setup_rarely
     setup_every_so_often
     setup_indexing_all_pods
-
-    $stdout.puts "[#{Time.now}] Start indexing."
   end
 
   def process(action, parameters)
@@ -126,11 +124,11 @@ class SearchWorker
   def setup_rarely
     @rarely = 0
   end
-  # Returns true roughly every 15 minutes.
+  # Returns true roughly every 20 minutes.
   #
   def rarely
     @rarely += 1
-    if @rarely % 9_000 == 0
+    if @rarely % 12_000 == 0
       @rarely = 0
       true
     end
@@ -139,6 +137,7 @@ class SearchWorker
   def setup_indexing_all_pods
     @not_loaded_yet = true
     @pods_to_index = Pods.instance.each
+    $stdout.puts "[#{Time.now}] Start indexing."
   end
 
   def setup_clean_exit
@@ -159,8 +158,10 @@ class SearchWorker
   # Try indexing a new pod.
   #
   def try_indexing(name)
+    STDOUT.puts "Trying to index #{name}"
     pod = Pod.all { |pods| pods.where(name: name) }.first
     Search.instance.replace pod, Pods.instance
+    STDOUT.puts "Indexed #{name}"
     $stdout.puts "Reindexing #{name} in INDEX PROCESS successful."
   rescue PG::UnableToSend
     STDOUT.puts 'PG::UnableToSend raised! Reconnecting to database.'
