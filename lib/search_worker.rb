@@ -159,11 +159,10 @@ class SearchWorker
   # Try indexing a new pod.
   #
   def try_indexing(name)
-    $stdout.puts "Trying to index #{name}"
+    $stdout.puts "Indexing: #{name}"
     pod = Pod.all { |pods| pods.where(name: name) }.first
     Search.instance.replace pod, Pods.instance
     STDOUT.print '.'
-    $stdout.puts "Reindexing #{name} in INDEX PROCESS successful."
   rescue PG::UnableToSend
     $stdout.puts 'PG::UnableToSend raised! Reconnecting to database.'
     load 'lib/database.rb'
@@ -171,6 +170,6 @@ class SearchWorker
   rescue StandardError
     # Catch any error and reraise as a "could not run" error.
     #
-    $stderr.puts "Reindexing #{name} in INDEX PROCESS failed."
+    $stderr.puts "Error: Reindexing #{name} in INDEX PROCESS has failed."
   end
 end
