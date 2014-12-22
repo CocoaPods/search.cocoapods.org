@@ -10,17 +10,21 @@ describe 'Special Cases' do
   def special_cases
     Picky::TestClient.new CocoapodSearch, path: '/api/v1/pods.flat.ids.json'
   end
+  
+  def first_three_names_for_search(query, options = {})
+    special_cases.search(query, options).first(3)
+  end
 
   it 'will find ObjectiveRecord via CoreData' do
-    special_cases.search('CoreData', sort: 'name').should == %w(AFIncrementalStore MagicalRecord ObjectiveRecord PonyDebugger)
+    first_three_names_for_search('CoreData', sort: 'name').should == %w(AFIncrementalStore MagicalRecord ObjectiveRecord)
   end
 
   it 'will survive searching ORed' do
-    special_cases.search('ios|osx', sort: 'name').should == ['AFIncrementalStore', 'AFNetworking', 'AFOAuth2Client', 'AQGridView', 'ASIHTTPRequest', 'AWSiOSSDK', 'ActionSheetPicker', 'Appirater', 'AwesomeMenu', 'BlockAlertsAnd-ActionSheets', 'BlocksKit', 'Bolts', 'CHTCollectionViewWaterfallLayout', 'CMPopTipView', 'CRToast', 'Canvas', 'CargoBay', 'Cedar', 'Chameleon', 'CocoaAsyncSocket']
+    first_three_names_for_search('ios|osx', sort: 'name').should == %w(AFIncrementalStore AFNetworking AMScrollingNavbar)
   end
 
   it 'will default to popularity with unrecognized sort orders' do
-    special_cases.search('a', sort: 'quack').should == ['AFNetworking', 'TYPFontAwesome', 'ASIHTTPRequest', 'CocoaAsyncSocket', 'Appirater', 'AwesomeMenu', 'TTTAttributedLabel', 'AQGridView', 'InAppSettingKit', 'InAppSettingsKit', 'AFIncrementalStore', 'OHAttributedLabel', 'pubnub-api', 'TheAmazingAudioEngine', 'TPKeyboardAvoiding', 'SIAlertView', 'BlockAlertsAnd-ActionSheets', 'EKAlgorithms', 'INAppStoreWindow', 'NSDate+TimeAgo']
+    first_three_names_for_search('a', sort: 'quack').should == %w(AFNetworking TYPFontAwesome ASIHTTPRequest)
   end
 
   it 'will not find EGOTableViewPullRefresh if on:osx is specified (it is ios only)' do
