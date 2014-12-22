@@ -47,8 +47,7 @@ class SearchWorker
       begin
         3.times do
           pod = @pods_to_index.next
-          STDOUT.print '.'
-          Search.instance.replace pod, Pods.instance
+          try_indexing(pod.name)
         end
       rescue StopIteration
         $stdout.puts "[#{Time.now}] Indexing finished."
@@ -160,13 +159,13 @@ class SearchWorker
   # Try indexing a new pod.
   #
   def try_indexing(name)
-    STDOUT.puts "Trying to index #{name}"
+    $stdout.puts "Trying to index #{name}"
     pod = Pod.all { |pods| pods.where(name: name) }.first
     Search.instance.replace pod, Pods.instance
-    STDOUT.puts "Indexed #{name}"
+    STDOUT.print '.'
     $stdout.puts "Reindexing #{name} in INDEX PROCESS successful."
   rescue PG::UnableToSend
-    STDOUT.puts 'PG::UnableToSend raised! Reconnecting to database.'
+    $stdout.puts 'PG::UnableToSend raised! Reconnecting to database.'
     load 'lib/database.rb'
     retry
   rescue StandardError
