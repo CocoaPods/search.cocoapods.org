@@ -10,7 +10,7 @@ describe 'Special Cases' do
   def special_cases
     Picky::TestClient.new CocoapodSearch, path: '/api/v1/pods.flat.ids.json'
   end
-  
+
   def first_three_names_for_search(query, options = {})
     special_cases.search(query, options).first(3)
   end
@@ -55,23 +55,23 @@ describe 'Special Cases' do
   it 'will not crash the search engine' do
     special_cases.search('ääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääää').should == []
   end
-  
-  def with_pod_added name, &block
+
+  def with_pod_added(name, &block)
     pod = Pod.all { |pods| pods.where(name: name) }.first
     Search.instance.replace(pod, Pods.instance)
-    
+
     block.call(pod)
-    
+
     Search.instance.remove(pod.id)
   end
-  
-  def find name
-    with_pod_added(name) do |pod|
+
+  def find(name)
+    with_pod_added(name) do |_pod|
       special_cases.search(name, sort: 'name').should == [name]
       special_cases.search('Kyle Fuller', sort: 'name').should == [name]
     end
   end
-  
+
   describe "will find Kyle's beloved pods" do
     [
       'QueryKit',
@@ -84,7 +84,7 @@ describe 'Special Cases' do
       'NSAttributedString+CCLFormat',
       'CCLDefaults',
       'CCLHTTPServer',
-      'KFData'
+      'KFData',
     ].each do |name|
       it "finds #{name}" do
         find(name)

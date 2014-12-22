@@ -13,7 +13,7 @@ class StatsSender
 
   def self.send(time, count)
     cleanup
-    
+
     data = {
       data: {
         timestamp: time.to_i,
@@ -35,7 +35,7 @@ class StatsSender
   rescue StandardError => e
     $stderr.puts e.inspect, e.backtrace
   end
-  
+
   def self.init
     @current_pids ||= []
   end

@@ -12,7 +12,7 @@ describe 'Sorting Integration Tests' do
   def pods
     @pods ||= Picky::TestClient.new CocoapodSearch, path: '/api/v1/pods.flat.ids.json'
   end
-  
+
   def first_three_names_for_search(query, options = {})
     pods.search(query, options).first(3)
   end

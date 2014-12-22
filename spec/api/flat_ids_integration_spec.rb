@@ -15,14 +15,14 @@ describe 'Flat Ids Integration Tests' do
   def pod_hash
     @pod_hash ||= Picky::TestClient.new CocoapodSearch, path: '/api/v1/pods.flat.hash.json'
   end
-  
+
   def first_three_names_for_search(query, options = {})
     pods.search(query, options).first(3)
   end
 
   # Testing the format.
   #
-  ok { pod_hash.search('on:osx afnetworking', sort: 'name').first.should == {:id=>"AFNetworking", :platforms=>["ios", "osx"], :version=>"2.5.0", :summary=>"A delightful iOS and OS X networking framework.", :authors=>{:"Mattt Thompson"=>"m@mattt.me"}, :link=>"https://github.com/AFNetworking/AFNetworking", :source=>{:git=>"https://github.com/AFNetworking/AFNetworking.git", :tag=>"2.5.0", :submodules=>true}, :tags=>["network"], :deprecated=>false, :deprecated_in_favor_of=>nil} }
+  ok { pod_hash.search('on:osx afnetworking', sort: 'name').first.should == { id: 'AFNetworking', platforms: %w(ios osx), version: '2.5.0', summary: 'A delightful iOS and OS X networking framework.', authors: { :"Mattt Thompson" => 'm@mattt.me' }, link: 'https://github.com/AFNetworking/AFNetworking', source: { git: 'https://github.com/AFNetworking/AFNetworking.git', tag: '2.5.0', submodules: true }, tags: ['network'], deprecated: false, deprecated_in_favor_of: nil } }
 
   def pods
     @pods ||= Picky::TestClient.new CocoapodSearch, path: '/api/v1/pods.flat.ids.json'

@@ -12,7 +12,7 @@ describe 'Integration Tests' do
   end
 
   it 'will return the right tag facets' do
-    Yajl.load(no_results.send_search)['tag'].keys.sort.should == ["analytics", "api", "button", "client", "communication", "controller", "http", "image", "json", "kit", "layout", "logging", "manager", "navigation", "network", "notification", "parser", "progress", "rest", "serialization", "table", "test", "text", "view", "widget", "xml"]
+    Yajl.load(no_results.send_search)['tag'].keys.sort.should == %w(analytics api button client communication controller http image json kit layout logging manager navigation network notification parser progress rest serialization table test text view widget xml)
   end
   it 'will return a correctly split query' do
     Yajl.load(no_results.send_search(query: 'meow'))['split'].should == [[], 0]
