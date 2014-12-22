@@ -24,10 +24,11 @@ describe Pod do
 
     ok { pod.summary.should == 'A delightful iOS and OS X networking framework.' }
 
-    ok { pod.popularity.should == 71_326 }
-    ok { pod.forks.should == 3463 }
-    ok { pod.contributors.should == 30 }
-    ok { pod.subscribers.should == 1073 }
+    # This is just a rough sanity check.
+    ok { pod.popularity.should >= 70_000 }
+    ok { pod.forks.should >= 3400 }
+    ok { pod.contributors.should >= 30 }
+    ok { pod.subscribers.should >= 1000 }
 
   end
 
