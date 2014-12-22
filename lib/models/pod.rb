@@ -344,7 +344,7 @@ class Pod
         deprecated: deprecated?,
         deprecated_in_favor_of: deprecated_in_favor_of,
       }
-      h[:documentation_url] = row.documentation_url if row.documentation_url
+      h[:documentation_url] = row.documentation_url if row.respond_to?(:documentation_url)
       h
     end
   end
