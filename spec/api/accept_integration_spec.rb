@@ -16,9 +16,9 @@ describe 'Accept Integration Tests' do
   describe 'expected successes' do
     extend Rack::Test::Methods
 
-    query                  = 'a'
-    expected_results       = 20
-    expected_total_results = 55
+    query                           = 'a'
+    expected_results                = 20
+    expected_at_least_total_results = 55
 
     [
       # Convenience.
@@ -71,7 +71,7 @@ describe 'Accept Integration Tests' do
         when /flat/
           Yajl::Parser.parse(last_response.body).size.should == expected_results
         else
-          Yajl::Parser.parse(last_response.body)['total'].should == expected_total_results
+          Yajl::Parser.parse(last_response.body)['total'].should >= expected_at_least_total_results
         end
       end
     end
