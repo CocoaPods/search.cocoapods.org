@@ -140,10 +140,18 @@ class Pod
   end
 
   def dependencies
+    deps = specification['dependencies']
+    deps = if deps.respond_to?(:to_hash)
+      deps.keys
+    else
+      deps
+    end
     [
       *specification['frameworks'],
-      *(specification['dependencies'] && specification['dependencies'].keys),
+      *(deps),
     ].compact
+  rescue StandardError, SyntaxError
+    
   end
 
   def mapped_dependencies
@@ -154,14 +162,18 @@ class Pod
 
   def homepage
     specification['homepage']
+  rescue StandardError, SyntaxError
+    
   end
 
   DEFAULT_PLATFORMS = [:osx, :ios]
   def platforms
     platforms_spec = specification['platforms']
-    platforms_spec && platforms_spec.keys || DEFAULT_PLATFORMS
-  rescue
-    specification['platforms']
+    if platforms_spec.respond_to?(:to_hash)
+      platforms_spec.keys
+    else
+      DEFAULT_PLATFORMS
+    end
   end
 
   def mapped_platform
@@ -211,9 +223,9 @@ class Pod
         Domain.pods[:id] => id,
         Domain.versions[:name] => last_version,
       ).
-             limit(1).
-             order_by(Domain.commits[:pod_version_id]).
-             first
+      limit(1).
+      order_by(Domain.commits[:pod_version_id]).
+      first
     result.commit.specification_data if result
   end
 
