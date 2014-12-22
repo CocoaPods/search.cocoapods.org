@@ -112,9 +112,21 @@ class Pod
 
   def mapped_authors
     spec_authors = authors
-    spec_authors && spec_authors.keys.join(' ') || ''
+    if spec_authors
+      if spec_authors.respond_to? :to_hash
+        spec_authors.keys.join(' ') || ''
+      else
+        if spec_authors.respond_to? :to_ary
+          spec_authors.join(' ')
+        else
+          spec_authors
+        end
+      end 
+    else
+      ''
+    end
   rescue StandardError, SyntaxError
-    ''
+    spec_authors
   end
 
   def rendered_authors
