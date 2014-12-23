@@ -13,21 +13,25 @@ describe 'Sorting Integration Tests' do
     @pods ||= Picky::TestClient.new CocoapodSearch, path: '/api/v1/pods.flat.ids.json'
   end
 
-  ok { pods.search('on:osx mattt', sort: 'name').should == %w(AFIncrementalStore AFNetworking CargoBay GroundControl) }
+  def first_three_names_for_search(query, options = {})
+    pods.search(query, options).first(3)
+  end
 
-  ok { pods.search('on:osx mattt', sort: 'popularity').should ==  %w(AFNetworking AFIncrementalStore CargoBay GroundControl) }
-  ok { pods.search('on:osx mattt', sort: '-popularity').should == %w(GroundControl CargoBay AFIncrementalStore AFNetworking) }
+  ok { first_three_names_for_search('on:osx mattt', sort: 'name').should == %w(AFIncrementalStore AFNetworking CargoBay) }
 
-  ok { pods.search('on:osx mattt', sort: 'watchers').should ==  %w(AFNetworking AFIncrementalStore GroundControl CargoBay) }
-  ok { pods.search('on:osx mattt', sort: '-watchers').should == %w(CargoBay GroundControl AFIncrementalStore AFNetworking) }
+  ok { first_three_names_for_search('on:osx mattt', sort: 'popularity').should ==  %w(AFNetworking FormatterKit AFIncrementalStore) }
+  ok { first_three_names_for_search('on:osx mattt', sort: '-popularity').should == %w(GroundControl CargoBay AFIncrementalStore) }
 
-  ok { pods.search('on:osx mattt', sort: 'forks').should ==  %w(AFNetworking AFIncrementalStore CargoBay GroundControl) }
-  ok { pods.search('on:osx mattt', sort: '-forks').should == %w(GroundControl CargoBay AFIncrementalStore AFNetworking) }
+  ok { first_three_names_for_search('on:osx mattt', sort: 'watchers').should ==  %w(AFNetworking AFIncrementalStore FormatterKit) }
+  ok { first_three_names_for_search('on:osx mattt', sort: '-watchers').should == %w(CargoBay GroundControl FormatterKit) }
 
-  ok { pods.search('on:osx mattt', sort: 'stars').should ==  %w(AFNetworking AFIncrementalStore GroundControl CargoBay) }
-  ok { pods.search('on:osx mattt', sort: '-stars').should == %w(CargoBay GroundControl AFIncrementalStore AFNetworking) }
+  ok { first_three_names_for_search('on:osx mattt', sort: 'forks').should ==  %w(AFNetworking AFIncrementalStore FormatterKit) }
+  ok { first_three_names_for_search('on:osx mattt', sort: '-forks').should == %w(GroundControl CargoBay FormatterKit) }
 
-  ok { pods.search('on:osx mattt', sort: 'contributors').should ==  %w(AFNetworking AFIncrementalStore CargoBay GroundControl) }
-  ok { pods.search('on:osx mattt', sort: '-contributors').should == %w(GroundControl CargoBay AFIncrementalStore AFNetworking) }
+  ok { first_three_names_for_search('on:osx mattt', sort: 'stars').should ==  %w(AFNetworking FormatterKit AFIncrementalStore) }
+  ok { first_three_names_for_search('on:osx mattt', sort: '-stars').should == %w(CargoBay GroundControl AFIncrementalStore) }
+
+  ok { first_three_names_for_search('on:osx mattt', sort: 'contributors').should ==  %w(AFNetworking FormatterKit AFIncrementalStore) }
+  ok { first_three_names_for_search('on:osx mattt', sort: '-contributors').should == %w(GroundControl CargoBay AFIncrementalStore) }
 
 end

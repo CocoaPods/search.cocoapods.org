@@ -32,6 +32,7 @@ class Pod
       on(Domain.pods[:id] => Domain.versions[:pod_id]).
       join(Domain.github_metrics).
       on(Domain.pods[:id] => Domain.github_metrics[:pod_id]).
+      where(Domain.pods[:deleted] => false).
       project(
         *Domain.pods.fields,
         'array_agg(pod_versions.name) AS versions',
@@ -43,21 +44,11 @@ class Pod
           github_pod_metrics.stargazers
         ) AS popularity
         EXPR
-        *Domain.github_metrics.fields(
-          :forks,
-          :stargazers,
-          :contributors,
-          :subscribers,
-        ),
+        *Domain.github_metrics.fields(:forks, :stargazers, :contributors, :subscribers),
       ).
       group_by(
         Domain.pods[:id],
-        *Domain.github_metrics.fields(
-          :forks,
-          :stargazers,
-          :contributors,
-          :subscribers,
-        ),
+        *Domain.github_metrics.fields(:forks, :stargazers, :contributors, :subscribers),
       )
   end
 
@@ -65,6 +56,10 @@ class Pod
   #
   def self.all
     yield(find).map(&modelify_block)
+  rescue PG::UnableToSend
+    STDOUT.puts 'PG::UnableToSend raised! Reconnecting to database.'
+    load 'lib/database.rb'
+    retry
   end
 
   def self.modelify_block
@@ -98,7 +93,7 @@ class Pod
   #
 
   def mapped_name
-    split_name.join ' '
+    split_name.join(' ')
   end
 
   def mapped_versions
@@ -117,9 +112,21 @@ class Pod
 
   def mapped_authors
     spec_authors = authors
-    spec_authors && spec_authors.keys.join(' ') || ''
+    if spec_authors
+      if spec_authors.respond_to? :to_hash
+        spec_authors.keys.join(' ') || ''
+      else
+        if spec_authors.respond_to? :to_ary
+          spec_authors.join(' ')
+        else
+          spec_authors
+        end
+      end
+    else
+      ''
+    end
   rescue StandardError, SyntaxError
-    ''
+    spec_authors
   end
 
   def rendered_authors
@@ -133,26 +140,38 @@ class Pod
   end
 
   def dependencies
-    [
-      *specification['frameworks'],
-      *specification['dependencies'].keys,
-    ].compact
+    [*recursive_subspecs, specification].
+      map { |spec| spec['dependencies'] }.compact.
+      flat_map { |deps| deps.respond_to?(:keys) ? deps.keys : deps }.
+      map { |dependency| dependency.split('/', 2).first }.  # Strips subspec (QueryKit/Attribute)
+      uniq.reject { |dependency| dependency == specification['name'] } # Remove current spec, might be used to depend on subspecs
+  end
+
+  def frameworks
+    [*recursive_subspecs, specification].
+      flat_map { |spec| spec['frameworks'] }.
+      compact.uniq
   end
 
   def mapped_dependencies
-    dependencies.join ' '
+    (dependencies + frameworks).join ' '
   rescue StandardError, SyntaxError
     ''
   end
 
   def homepage
     specification['homepage']
+  rescue StandardError, SyntaxError
   end
 
+  DEFAULT_PLATFORMS = [:osx, :ios]
   def platforms
-    (specification['platforms'] || {}).keys
-  rescue
-    specification['platforms']
+    platforms_spec = specification['platforms']
+    if platforms_spec.respond_to?(:to_hash)
+      platforms_spec.keys
+    else
+      DEFAULT_PLATFORMS
+    end
   end
 
   def mapped_platform
@@ -170,7 +189,13 @@ class Pod
   end
 
   def recursive_subspecs
-    []
+    mapper = lambda do |spec|
+      spec['subspecs'].flat_map do |subspec|
+        [subspec, *mapper.call(subspec)]
+      end if spec['subspecs']
+    end
+
+    mapper.call(specification) || []
   end
 
   # Perhaps TODO: Summary with words already contained in
@@ -222,7 +247,7 @@ class Pod
   end
 
   def deprecated?
-    specification[:deprecated]
+    specification[:deprecated] == true
   end
 
   # Returns not just the name, but also:
@@ -335,7 +360,7 @@ class Pod
         deprecated: deprecated?,
         deprecated_in_favor_of: deprecated_in_favor_of,
       }
-      h[:documentation_url] = row.documentation_url if row.documentation_url
+      h[:documentation_url] = row.documentation_url if row.respond_to?(:documentation_url)
       h
     end
   end

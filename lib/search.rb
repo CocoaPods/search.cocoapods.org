@@ -91,7 +91,7 @@ class Search
                partial: full_partial,
                from: :mapped_versions
       category :dependencies,
-               partial: no_partial, # full_partial,
+               partial: full_partial,
                qualifiers: [:dependency, :dependencies, :depends, :using, :uses,
                             :use, :needs],
                from: :mapped_dependencies
@@ -118,7 +118,7 @@ class Search
                   CharacterSubstituters::WestEuropean.new,
                 removes_characters: false,
                 stopwords:          stopwords,
-                splits_text_on:     /\s/,
+                splits_text_on:     /[\s\/]/,
                 max_words: 4
 
       ignore :id
@@ -147,7 +147,7 @@ class Search
                   CharacterSubstituters::WestEuropean.new,
                 removes_characters: false, # We don't remove characters.
                 stopwords:          stopwords,
-                splits_text_on:     /\s/,
+                splits_text_on:     /[\s\/]/,
                 max_words: 4
     end
 
@@ -193,6 +193,11 @@ class Search
     pods[pod.id] = pod
     @index.replace pod
     @splitting_index.replace pod
+  end
+
+  def remove(pod)
+    @index.remove pod
+    @splitting_index.remove pod
   end
 
   def split(text)

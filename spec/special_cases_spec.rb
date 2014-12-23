@@ -11,16 +11,24 @@ describe 'Special Cases' do
     Picky::TestClient.new CocoapodSearch, path: '/api/v1/pods.flat.ids.json'
   end
 
+  def first_three_names_for_search(query, options = {})
+    special_cases.search(query, options).first(3)
+  end
+
   it 'will find ObjectiveRecord via CoreData' do
-    special_cases.search('CoreData', sort: 'name').should == %w(AFIncrementalStore ObjectiveRecord PonyDebugger)
+    first_three_names_for_search('CoreData', sort: 'name').should == %w(AFIncrementalStore MagicalRecord ObjectiveRecord)
   end
 
   it 'will survive searching ORed' do
-    special_cases.search('ios|osx', sort: 'name').should == ['AFIncrementalStore', 'AFNetworking', 'AQGridView', 'AWSiOSSDK', 'ActionSheetPicker', 'Appirater', 'AwesomeMenu', 'BlockAlertsAnd-ActionSheets', 'BlocksKit', 'CHTCollectionViewWaterfallLayout', 'CMPopTipView', 'CRToast', 'Canvas', 'CargoBay', 'Cedar', 'CocoaAsyncSocket', 'CocoaHTTPServer', 'CocoaLibSpotify', 'CocoaLumberjack', 'CocoaSPDY']
+    first_three_names_for_search('ios|osx', sort: 'name').should == %w(AFIncrementalStore AFNetworking AMScrollingNavbar)
   end
 
   it 'will default to popularity with unrecognized sort orders' do
-    special_cases.search('a', sort: 'quack').should == ['AFNetworking', 'TYPFontAwesome', 'ASIHTTPRequest', 'CocoaAsyncSocket', 'Appirater', 'AwesomeMenu', 'TTTAttributedLabel', 'AQGridView', 'InAppSettingKit', 'InAppSettingsKit', 'AFIncrementalStore', 'OHAttributedLabel', 'pubnub-api', 'TheAmazingAudioEngine', 'TPKeyboardAvoiding', 'SIAlertView', 'BlockAlertsAnd-ActionSheets', 'EKAlgorithms', 'INAppStoreWindow', 'NSDate+TimeAgo']
+    first_three_names_for_search('a', sort: 'quack').should == %w(AFNetworking TYPFontAwesome ASIHTTPRequest)
+  end
+
+  it 'will not find EGOTableViewPullRefresh if on:osx is specified (it is ios only)' do
+    special_cases.search('on:osx EGOTableViewPullRefresh', sort: 'name').include?('EGOTableViewPullRefresh').should == false
   end
 
   # it 'will correctly find _.m' do
@@ -46,6 +54,42 @@ describe 'Special Cases' do
 
   it 'will not crash the search engine' do
     special_cases.search('ääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääääää').should == []
+  end
+
+  def with_pod_added(name, &block)
+    pod = Pod.all { |pods| pods.where(name: name) }.first
+    Search.instance.replace(pod, Pods.instance)
+
+    block.call(pod)
+
+    Search.instance.remove(pod.id)
+  end
+
+  def find(name)
+    with_pod_added(name) do |_pod|
+      special_cases.search(name, sort: 'name').should == [name]
+      special_cases.search('Kyle Fuller', sort: 'name').should == [name]
+    end
+  end
+
+  describe "will find Kyle's beloved pods" do
+    [
+      'QueryKit',
+      'Stencil',
+      'CGFloatType',
+      'URITemplate',
+      'PathKit',
+      'ReactiveQueryKit',
+      'Expecta+ReactiveCocoa',
+      'NSAttributedString+CCLFormat',
+      'CCLDefaults',
+      'CCLHTTPServer',
+      'KFData',
+    ].each do |name|
+      it "finds #{name}" do
+        find(name)
+      end
+    end
   end
 
 end

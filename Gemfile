@@ -26,6 +26,10 @@ gem 'text'
 gem 'rack_fast_escape', '2009.06.24'
 gem 'yajl-ruby', :require => 'yajl'
 
+# API calling
+#
+gem 'nap', '~> 0.8.0'
+
 # Pure development gems.
 #
 group :development do
