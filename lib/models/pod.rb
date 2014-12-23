@@ -93,7 +93,7 @@ class Pod
   #
 
   def mapped_name
-    split_name.join ' '
+    split_name.join(' ')
   end
 
   def mapped_versions
@@ -154,7 +154,7 @@ class Pod
   end
 
   def mapped_dependencies
-    (dependencies + frameworks + recursive_subspec_names).join ' '
+    (dependencies + frameworks).join ' '
   rescue StandardError, SyntaxError
     ''
   end
@@ -198,8 +198,19 @@ class Pod
     mapper.call(specification) || []
   end
 
+  def mapped_subspec_names
+    recursive_subspec_names.join(' ').downcase
+  end
+
   def recursive_subspec_names
-    recursive_subspecs.map { |ss| ss['name'] }.compact
+    mapper = lambda do |spec, name|
+      spec['subspecs'].flat_map do |subspec|
+        subspec_name = "#{name}/#{subspec['name']}"
+        [subspec_name, *mapper.call(subspec, subspec_name)]
+      end.compact.uniq if spec['subspecs']
+    end
+
+    mapper.call(specification, specification['name']) || []
   end
 
   # Perhaps TODO: Summary with words already contained in
