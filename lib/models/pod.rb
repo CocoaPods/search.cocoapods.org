@@ -93,7 +93,7 @@ class Pod
   #
 
   def mapped_name
-    split_name.join ' '
+    split_name.join(' ')
   end
 
   def mapped_versions
@@ -140,21 +140,21 @@ class Pod
   end
 
   def dependencies
-    deps = specification['dependencies']
-    deps = if deps.respond_to?(:to_hash)
-             deps.keys
-           else
-             deps
-    end
-    [
-      *specification['frameworks'],
-      *(deps),
-    ].compact
-  rescue StandardError, SyntaxError
+    [*recursive_subspecs, specification].
+      map { |spec| spec['dependencies'] }.compact.
+      flat_map { |deps| deps.respond_to?(:keys) ? deps.keys : deps }.
+      map { |dependency| dependency.split('/', 2).first }.  # Strips subspec (QueryKit/Attribute)
+      uniq.reject { |dependency| dependency == specification['name'] } # Remove current spec, might be used to depend on subspecs
+  end
+
+  def frameworks
+    [*recursive_subspecs, specification].
+      flat_map { |spec| spec['frameworks'] }.
+      compact.uniq
   end
 
   def mapped_dependencies
-    dependencies.join ' '
+    (dependencies + frameworks).join ' '
   rescue StandardError, SyntaxError
     ''
   end
@@ -189,7 +189,13 @@ class Pod
   end
 
   def recursive_subspecs
-    []
+    mapper = lambda do |spec|
+      spec['subspecs'].flat_map do |subspec|
+        [subspec, *mapper.call(subspec)]
+      end if spec['subspecs']
+    end
+
+    mapper.call(specification) || []
   end
 
   # Perhaps TODO: Summary with words already contained in
