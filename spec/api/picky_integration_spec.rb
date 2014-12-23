@@ -19,7 +19,7 @@ describe 'Integration Tests' do
 
   # Testing the format.
   #
-  ok { pod_ids.search('on:osx afnetwork').entries.should == ['AFNetworking'] }
+  ok { pod_ids.search('on:osx afnetwork').entries.first.should == 'AFNetworking' }
 
   def pods
     @pods ||= Picky::TestClient.new CocoapodSearch, path: '/api/v1/pods.picky.hash.json'
@@ -117,5 +117,9 @@ describe 'Integration Tests' do
   # No single characters indexed.
   #
   ok { pods.search('on:ios "a"').ids.should == [] }
+
+  it 'will find a podspec searched by a full subspec name' do
+    first_three_names_for_search('RestKit/CoreData', sort: 'name').should == %w(RestKit)
+  end
 
 end

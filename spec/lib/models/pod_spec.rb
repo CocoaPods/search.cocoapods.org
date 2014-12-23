@@ -22,6 +22,10 @@ describe Pod do
 
     ok { pod.dependencies.should == [] }
 
+    ok { pod.mapped_dependencies.should == %(Security SystemConfiguration) }
+    ok { pod.frameworks.should == %w(Security SystemConfiguration) }
+    ok { pod.mapped_subspec_names.should == %(afnetworking/serialization afnetworking/security afnetworking/reachability afnetworking/nsurlconnection afnetworking/nsurlsession afnetworking/uikit) }
+
     ok { pod.summary.should == 'A delightful iOS and OS X networking framework.' }
 
     # This is just a rough sanity check.
