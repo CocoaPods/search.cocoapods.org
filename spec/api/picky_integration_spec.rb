@@ -119,7 +119,7 @@ describe 'Integration Tests' do
   ok { pods.search('on:ios "a"').ids.should == [] }
 
   it 'will find a podspec searched by a full subspec name' do
-    first_three_names_for_search('RestKit/CoreData', sort: 'name').should == %w(RestKit)
+    first_three_names_for_search('RestKit/CoreData', sort: 'name').should == %w(RestKit RestKit)
   end
 
 end
