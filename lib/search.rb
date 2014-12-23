@@ -109,10 +109,6 @@ class Search
                partial: no_partial,
                qualifiers: [:tag, :tags],
                tokenize: false
-      # category :subspecs,
-      #          partial: full_partial,
-      #          qualifiers: [:subspec, :subspecs],
-      #          from: :mapped_subspec_names
     end
 
     # Define a search over the books index.
@@ -135,7 +131,6 @@ class Search
             [:name, :summary] => -3,
             [:summary]        => -3,
             [:dependencies]   => -4,
-            # [:subspecs]       => -5,
             [:platform, :name, :author]  => +2,
             [:platform, :name]           => +3,
             [:platform, :tags]           => +1,

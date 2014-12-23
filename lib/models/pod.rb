@@ -198,21 +198,6 @@ class Pod
     mapper.call(specification) || []
   end
 
-  def mapped_subspec_names
-    recursive_subspec_names.join(' ').downcase
-  end
-
-  def recursive_subspec_names
-    mapper = lambda do |spec, name|
-      spec['subspecs'].flat_map do |subspec|
-        subspec_name = "#{name}/#{subspec['name']}"
-        [subspec_name, *mapper.call(subspec, subspec_name)]
-      end.compact.uniq if spec['subspecs']
-    end
-
-    mapper.call(specification, specification['name']) || []
-  end
-
   # Perhaps TODO: Summary with words already contained in
   # name removed such as to minimize
   # multiple results.
