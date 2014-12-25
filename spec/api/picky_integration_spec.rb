@@ -66,7 +66,6 @@ describe 'Integration Tests' do
   expected = %w(AFNetworking AFIncrementalStore CargoBay)
   ok { first_three_names_for_search('on:osx afnetworking', sort: 'name').should == expected }
   ok { first_three_names_for_search('on:osx on:ios afnetworking', sort: 'name').should == expected }
-  expected = %w(AFNetworking MRProgress AFIncrementalStore)
   ok { first_three_names_for_search('on:ios afnetworking', sort: 'name').should == expected }
 
   # Category boosting.
