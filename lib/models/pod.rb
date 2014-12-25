@@ -159,6 +159,10 @@ class Pod
     ''
   end
 
+  def mapped_subspec_names
+    recursive_subspecs.map { |ss| ss['name'] }.join(' ')
+  end
+
   def homepage
     specification['homepage']
   rescue StandardError, SyntaxError
