@@ -65,8 +65,9 @@ describe 'Integration Tests' do
   #
   expected = %w(AFNetworking AFIncrementalStore CargoBay)
   ok { first_three_names_for_search('on:osx afnetworking', sort: 'name').should == expected }
-  ok { first_three_names_for_search('on:ios afnetworking', sort: 'name').should == expected }
   ok { first_three_names_for_search('on:osx on:ios afnetworking', sort: 'name').should == expected }
+  expected = %w(AFNetworking MRProgress AFIncrementalStore)
+  ok { first_three_names_for_search('on:ios afnetworking', sort: 'name').should == expected }
 
   # Category boosting.
   #
@@ -119,7 +120,8 @@ describe 'Integration Tests' do
   ok { pods.search('on:ios "a"').ids.should == [] }
 
   it 'will find a podspec searched by a full subspec name' do
-    first_three_names_for_search('RestKit/CoreData', sort: 'name').should == %w(RestKit RestKit)
+    first_three_names_for_search('RestKit/CoreData', sort: 'name').should == %w(RestKit RestKit RestKit)
+    first_three_names_for_search('AFNetworking/NSURLSession', sort: 'name').should == %w(AFNetworking)
   end
 
 end
