@@ -54,7 +54,7 @@ describe 'Integration Tests' do
 
   # Partial version search.
   #
-  expected = %w(CargoBay GroundControl AFNetworking)
+  expected = %w(AFNetworking CargoBay GroundControl)
   ok { first_three_names_for_search('on:osx afnetworking 2', sort: 'name').should == expected }
   ok { first_three_names_for_search('on:osx afnetworking 2.', sort: 'name').should == expected }
   ok { first_three_names_for_search('on:osx afnetworking 2.0', sort: 'name').should == expected }
