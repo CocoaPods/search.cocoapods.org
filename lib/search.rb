@@ -143,7 +143,8 @@ class Search
             [:platform, :name, :tags]    => +2,
             [:platform, :name, :summary] => -3,
             [:platform, :summary]        => -3,
-            [:platform, :dependencies]   => -4
+            [:platform, :dependencies]   => -4,
+            [:platform, :subspecs]       => -6
     end
 
     @facets_interface = Search.new index do
