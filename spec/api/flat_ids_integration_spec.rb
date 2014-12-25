@@ -63,7 +63,7 @@ describe 'Flat Ids Integration Tests' do
 
   # Partial version search.
   #
-  expected_results_pre_1_0_0 = %w(CargoBay GroundControl AFNetworking)
+  expected_results_pre_1_0_0 = %w(AFNetworking CargoBay GroundControl)
   ok { first_three_names_for_search('on:osx afnetworking 1', sort: 'name').should == expected_results_pre_1_0_0 }
   ok { first_three_names_for_search('on:osx afnetworking 1.', sort: 'name').should == expected_results_pre_1_0_0 }
   ok { first_three_names_for_search('on:osx afnetworking 1.0', sort: 'name').should == expected_results_pre_1_0_0 }
