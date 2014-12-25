@@ -66,8 +66,13 @@ class Search
       #            removes_characters: false,
       #            splits_text_on: /\./
       #          )
-
+      
+      def boost(amount)
+        Weights::Logarithmic.new(amount)
+      end
+      
       category :name,
+               weight: boost(+2),
                similarity: few_similars,
                partial: full_partial,
                qualifiers: [:name, :pod],
@@ -77,6 +82,7 @@ class Search
                  splits_text_on:     /\s/,
                )
       category :author,
+               # weight: boost(+0),
                similarity: few_similars,
                partial: full_partial,
                qualifiers: [:author, :authors, :written, :writer, :by],
@@ -88,28 +94,34 @@ class Search
                    CharacterSubstituters::WestEuropean.new,
                )
       category :version,
+               # weight: boost(+0),
                partial: full_partial,
                from: :mapped_versions
       category :dependencies,
+               weight: boost(-4),
                partial: full_partial,
                qualifiers: [:dependency, :dependencies, :depends, :using, :uses,
                             :use, :needs],
                from: :mapped_dependencies
       category :platform,
+               # weight: boost(+0),
                partial: no_partial,
                qualifiers: [:platform, :on],
                from: :mapped_platform
       category :summary,
+               weight: boost(-3),
                partial: no_partial, # full_partial,
                from: :mapped_summary,
                indexing: default_indexing.merge(
                  removes_characters: /[^a-z0-9\s\-]/i # We remove special characters.
                )
       category :tags,
+               weight: boost(+1),
                partial: no_partial,
                qualifiers: [:tag, :tags],
                tokenize: false
       category :subspecs,
+               weight: boost(-6),
                partial: full_partial,
                qualifiers: %i(subspec subspecs),
                from: :mapped_subspec_names
@@ -126,25 +138,6 @@ class Search
                 max_words: 4
 
       ignore :id
-
-      boost [:name, :author]  => +2,
-            [:name]           => +3,
-            [:tags]           => +1,
-            [:tags, :name]    => +2,
-            [:name, :tags]    => +2,
-            [:name, :summary] => -3,
-            [:summary]        => -3,
-            [:dependencies]   => -4,
-            [:subspecs]       => -6,
-            [:platform, :name, :author]  => +2,
-            [:platform, :name]           => +3,
-            [:platform, :tags]           => +1,
-            [:platform, :tags, :name]    => +2,
-            [:platform, :name, :tags]    => +2,
-            [:platform, :name, :summary] => -3,
-            [:platform, :summary]        => -3,
-            [:platform, :dependencies]   => -4,
-            [:platform, :subspecs]       => -6
     end
 
     @facets_interface = Search.new index do
