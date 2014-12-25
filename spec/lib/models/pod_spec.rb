@@ -25,6 +25,8 @@ describe Pod do
     ok { pod.mapped_dependencies.should == %(Security SystemConfiguration) }
     ok { pod.frameworks.should == %w(Security SystemConfiguration) }
 
+    ok { pod.mapped_subspec_names.should == %(Serialization Security Reachability NSURLConnection NSURLSession UIKit) }
+
     ok { pod.summary.should == 'A delightful iOS and OS X networking framework.' }
 
     # This is just a rough sanity check.
