@@ -159,10 +159,9 @@ class SearchWorker
   # Try indexing a new pod.
   #
   def try_indexing(name)
-    $stdout.print "Indexing #{name}"
     pod = Pod.all { |pods| pods.where(name: name) }.first
     Search.instance.replace pod, Pods.instance
-    $stdout.puts ' ✓'
+    $stdout.print ?✓
   rescue PG::UnableToSend
     $stdout.puts 'PG::UnableToSend raised! Reconnecting to database.'
     load 'lib/database.rb'
