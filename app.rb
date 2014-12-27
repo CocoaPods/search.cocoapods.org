@@ -17,9 +17,10 @@ class CocoapodSearch < Sinatra::Application
     attr_accessor :child
   end
 
-  # Allow browsers to cache responses for a day.
+  # Allow browsers to cache responses for a minute.
+  # This helps with backspacing.
   #
-  before { expires 86_400, :public }
+  before { expires 60, :public }
 
   # Data container and search.
   #
