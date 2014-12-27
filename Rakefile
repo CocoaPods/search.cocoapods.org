@@ -1,5 +1,3 @@
-require 'picky/tasks'
-
 namespace :db do
   namespace :test do
 
@@ -26,10 +24,7 @@ namespace :spec do
   end
 end
 
-require 'rubocop/rake_task'
-RuboCop::RakeTask.new(:rubocop)
-
 desc "Run all specs"
-task :spec => ['spec:all', 'rubocop']
+task :spec => 'spec:all'
 
 task :default => :spec
