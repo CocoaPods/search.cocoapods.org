@@ -27,9 +27,10 @@ describe 'Special Cases' do
     first_three_names_for_search('a', sort: 'quack').should == %w(AFNetworking TYPFontAwesome ASIHTTPRequest)
   end
 
-  it 'will not find EGOTableViewPullRefresh if on:osx is specified (it is ios only)' do
-    special_cases.search('on:osx EGOTableViewPullRefresh', sort: 'name').include?('EGOTableViewPullRefresh').should == false
-  end
+  # This case is removed as there are two versions: 0.1 and 0.1.0 – and they are different.
+  # it 'will not find EGOTableViewPullRefresh if on:osx is specified (it is ios only)' do
+  #   special_cases.search('on:osx EGOTableViewPullRefresh', sort: 'name').include?('EGOTableViewPullRefresh').should == false
+  # end
 
   # it 'will correctly find _.m' do
   #   special_cases.search('_.m').should == ['_.m']
