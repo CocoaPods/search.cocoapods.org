@@ -50,7 +50,7 @@ end
 
 # Make LibComponentLogging shut up.
 #
-Object.send :remove_const, :Config
+Object.send :remove_const, :Config if defined?(::Config)
 Config = RbConfig
 
 # Load and prepare everything for the spec(s).
