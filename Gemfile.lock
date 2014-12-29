@@ -84,7 +84,7 @@ GEM
       activesupport
       yajl-ruby (~> 1.2)
     powerpack (0.0.9)
-    rack (1.5.2)
+    rack (1.6.0)
     rack-protection (1.5.3)
       rack
     rack-test (0.6.2)
