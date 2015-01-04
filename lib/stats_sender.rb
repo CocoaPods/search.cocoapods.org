@@ -6,6 +6,7 @@ class StatsSender
 
   def self.cleanup
     init
+    $stdout.puts "Stat PIDs: #{@current_pids}"
     if pid = @current_pids.shift
       Process.waitpid(pid, Process::WNOHANG)
     end
