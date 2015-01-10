@@ -107,6 +107,7 @@ class Channel
   rescue
     # Always return _something_.
     #
+    $stderr.puts "Processing #{args} in worker #{@worker} failed."
     back_channel.put [] if back_channel
   end
 
