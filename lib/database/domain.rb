@@ -1,5 +1,6 @@
 # Defines the domain.
 #
+Object.send :remove_const, :Domain if defined? Domain
 Domain = Flounder.domain(DB) do |dom|
   dom.entity(:commits, :commit, 'commits')
   dom.entity(:pods, :pod, 'pods')

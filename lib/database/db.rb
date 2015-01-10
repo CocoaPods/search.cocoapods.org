@@ -17,4 +17,5 @@ if socket_dir = ENV['POSTGRES_UNIX_SOCKET']
 end
 options[:dbname] = uri.path[1..-1]
 
+Object.send :remove_const, :DB if defined? DB
 DB = Flounder.connect options
