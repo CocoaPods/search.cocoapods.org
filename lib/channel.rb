@@ -104,6 +104,10 @@ class Channel
     *args, back_channel = channel.get
     response = @worker.process(*args)
     back_channel.put response if back_channel
+  rescue
+    # Always return _something_.
+    #
+    back_channel.put [] if back_channel
   end
 
   # Write the worker process,
