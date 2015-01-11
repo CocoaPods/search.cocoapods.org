@@ -47,7 +47,7 @@ class SearchWorker
     #
     if @not_loaded_yet
       begin
-        3.times do
+        2.times do
           pod = @pods_to_index.next
           try_indexing(pod.name)
         end
