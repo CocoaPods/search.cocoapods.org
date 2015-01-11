@@ -236,8 +236,8 @@ class Search
       end
     end
   end
-
-  def search(*args)
+  
+  def picky_search(*args)
     if CocoapodSearch.child
       Channel.instance(:search).call :search, args
     else
@@ -254,22 +254,32 @@ class Search
       #
       results.sort_by(&sorting) if sorting
       
+      if block_given?
+        yield results, format, rendering
+      else
+        results
+      end
+    end
+  end
+
+  def search(*args)
+    picky_search(*args) do |results, format, rendering|
       # Render.
       #
       render_block = case rendering
-        when :to_h
+        when :hash
           ->(item) { item.to_h }
         when :ids
           ->(item) { item.name }
         end
-        case format
-      when :flat
-        results = Pods.instance.for(results.ids).map(&render_block)
-      when :picky
-        results = results.to_hash
-        results.extend Picky::Convenience
-        results.amend_ids_with Pods.instance.for(results.ids).map(&render_block)
-        results.clear_ids
+      case format
+        when :flat
+          results = Pods.instance.for(results.ids).map(&render_block)
+        when :picky
+          results = results.to_hash
+          results.extend Picky::Convenience
+          results.amend_ids_with Pods.instance.for(results.ids).map(&render_block)
+          results.clear_ids
       end
       results
     end
