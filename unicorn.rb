@@ -6,8 +6,8 @@ timeout 10
 worker_processes number_of_worker_processes
 
 # Before forking off child workers, we start a
-# process each for searching and sending data
-# to analytics. (this opens up n pipes for communication)
+# process for searching.
+# (this opens up n pipes for communication)
 #
 done = false
 before_fork do |_, _|
@@ -16,17 +16,14 @@ before_fork do |_, _|
     Channel.
       instance(:search).
       start children: number_of_worker_processes, worker: SearchWorker
-    Channel.
-      instance(:analytics).
-      start children: number_of_worker_processes, worker: AnalyticsWorker
     done = true
   end
 end
 
 # After working web worker, we mainly do:
 #
-# * Web worker chooses a channel each to
-#   communicate with the search and analytics
+# * Web worker chooses a channel to
+#   communicate with the search
 #   process.
 #
 # If a worker is restarted, e.g. because of a
@@ -36,7 +33,6 @@ end
 #
 after_fork do |_server, worker|
   Channel.instance(:search).choose_channel worker.nr
-  Channel.instance(:analytics).choose_channel worker.nr
 
   # Load the DB after forking.
   #

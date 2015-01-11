@@ -16,10 +16,6 @@ require File.expand_path '../search', __FILE__
 #
 require File.expand_path '../search_worker', __FILE__
 
-# Load analytics process.
-#
-require File.expand_path '../analytics_worker', __FILE__
-
 # Load web worker - worker process communication.
 #
 require File.expand_path '../channel', __FILE__

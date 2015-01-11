@@ -126,8 +126,6 @@ CocoapodSearch.helpers do
                                      format: :picky,
                                      rendering: rendering
 
-    CocoapodSearch.track_search query, results.total
-
     results
   end
 
@@ -146,8 +144,6 @@ CocoapodSearch.helpers do
 
     
 
-    CocoapodSearch.track_search query, results.total
-    
     results
   end
 
