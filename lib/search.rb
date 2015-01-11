@@ -269,8 +269,8 @@ class Search
         results = results.to_hash
         results.extend Picky::Convenience
         results.amend_ids_with Pods.instance.for(results.ids).map(&render_block)
+        results.clear_ids
       end
-      results.clear_ids
       results
     end
   end
