@@ -119,14 +119,12 @@ CocoapodSearch.helpers do
   def picky_result(params, rendering)
     query = params[:query]
 
-    results = Search.instance.search query,
-                                     params[:amount] || params[:ids] || 20,
-                                     params[:'start-at'] || params[:offset] || 0,
-                                     sort: params[:sort],
-                                     format: :picky,
-                                     rendering: rendering
-
-    results
+    Search.instance.search query,
+                           params[:amount] || params[:ids] || 20,
+                           params[:'start-at'] || params[:offset] || 0,
+                           sort: params[:sort],
+                           format: :picky,
+                           rendering: rendering
   end
 
   # Returns a list style search result – just a list of results (in your rendered format).
@@ -134,17 +132,13 @@ CocoapodSearch.helpers do
   def flat_result(params, rendering)
     query = params[:query]
 
-    results = Search.instance.search query,
-                                     params[:amount] || params[:ids] || 20,
-                                     params[:'start-at'] || params[:offset] || 0,
-                                     unique: true,
-                                     sort: params[:sort],
-                                     format: :flat,
-                                     rendering: rendering
-
-    
-
-    results
+    Search.instance.search query,
+                           params[:amount] || params[:ids] || 20,
+                           params[:'start-at'] || params[:offset] || 0,
+                           unique: true,
+                           sort: params[:sort],
+                           format: :flat,
+                           rendering: rendering
   end
 
   # Allow all origins.

@@ -74,31 +74,31 @@ class CocoapodSearch < Sinatra::Application
   # Default endpoint returns the latest picky hash version.
   #
   api nil, :flat, :ids, :json, accept: ['*/*', 'text/json', 'application/json'] do
-    json picky_result(params) { |item| item.name }
+    json picky_result(params, :ids)
   end
 
   # Returns a Picky style result with entries rendered as a hash.
   #
   api 1, :picky, :hash, :json, accept: ['application/vnd.cocoapods.org+picky.hash.json'] do
-    json picky_result(params) { |item| item.to_h }
+    json picky_result(params, :hash)
   end
 
   # Returns a Picky style result with just ids as entries.
   #
   api 1, :picky, :ids, :json, accept: ['application/vnd.cocoapods.org+picky.ids.json'] do
-    json picky_result(params) { |item| item.name }
+    json picky_result(params, :ids)
   end
 
   # Returns a flat list of results with entries rendered as a hash.
   #
   api 1, :flat, :hash, :json, accept: ['application/vnd.cocoapods.org+flat.hash.json'] do
-    json flat_result(params) { |item| item.to_h }
+    json flat_result(params, :hash)
   end
 
   # Returns a flat list of ids.
   #
   api 1, :flat, :ids, :json, accept: ['application/vnd.cocoapods.org+flat.ids.json'] do
-    json flat_result(params) { |item| item.name }
+    json flat_result(params, :ids)
   end
 
   # Installs API for calls using Accept.
@@ -120,8 +120,7 @@ class CocoapodSearch < Sinatra::Application
 
     if query
       split = search.split query
-      results = search.search split.join(' '), 0, 0
-      results.extend Picky::Convenience
+      results = search.picky_search split.join(' '), 0, 0
       suggestions[:split] = [split, results.total]
     end
 
