@@ -17,6 +17,8 @@ class AnalyticsWorker
     when :page_view
       analytics.page_view(*parameters)
     end
+  rescue StandardError => e
+    $stderr.puts "Analytics worker could not process action #{action} with #{parameters}: #{e.message}"
   end
 
   def create_analytics
