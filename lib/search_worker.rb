@@ -40,7 +40,7 @@ class SearchWorker
       $stderr.puts "Search worker could not process action #{action} with #{parameters}."
     end
   end
-
+  
   def post_process
     # Initially index a few pods at a time until all are indexed.
     #

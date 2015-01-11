@@ -273,7 +273,7 @@ class Search
       if block_given?
         yield results, format, rendering
       else
-        results
+        results.to_hash
       end
     end
   end
