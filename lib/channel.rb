@@ -104,10 +104,10 @@ class Channel
     *args, back_channel = channel.get
     response = @worker.process(*args)
     back_channel.put response if back_channel
-  rescue
+  rescue StandardError => e
     # Always return _something_.
     #
-    $stderr.puts "Processing #{args} in worker #{@worker} failed."
+    $stderr.puts "Processing #{args} in worker #{@worker} failed: #{e.message}"
     back_channel.put [] if back_channel
   end
 

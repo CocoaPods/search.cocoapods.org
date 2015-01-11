@@ -74,36 +74,31 @@ class CocoapodSearch < Sinatra::Application
   # Default endpoint returns the latest picky hash version.
   #
   api nil, :flat, :ids, :json, accept: ['*/*', 'text/json', 'application/json'] do
-    CocoapodSearch.track_view request, :'default-flat/ids/json'
-    json picky_result(params, :ids)
+    json picky_result(params) { |item| item.name }
   end
 
   # Returns a Picky style result with entries rendered as a hash.
   #
   api 1, :picky, :hash, :json, accept: ['application/vnd.cocoapods.org+picky.hash.json'] do
-    CocoapodSearch.track_view request, :'picky/hash/json'
-    json picky_result(params, :to_h)
+    json picky_result(params) { |item| item.to_h }
   end
 
   # Returns a Picky style result with just ids as entries.
   #
   api 1, :picky, :ids, :json, accept: ['application/vnd.cocoapods.org+picky.ids.json'] do
-    CocoapodSearch.track_view request, :'picky/ids/json'
-    json picky_result(params, :ids)
+    json picky_result(params) { |item| item.name }
   end
 
   # Returns a flat list of results with entries rendered as a hash.
   #
   api 1, :flat, :hash, :json, accept: ['application/vnd.cocoapods.org+flat.hash.json'] do
-    CocoapodSearch.track_view request, :'flat/hash/json'
-    json flat_result(params, :to_h)
+    json flat_result(params) { |item| item.to_h }
   end
 
   # Returns a flat list of ids.
   #
   api 1, :flat, :ids, :json, accept: ['application/vnd.cocoapods.org+flat.ids.json'] do
-    CocoapodSearch.track_view request, :'flat/ids/json'
-    json flat_result(params, :ids)
+    json flat_result(params) { |item| item.name }
   end
 
   # Installs API for calls using Accept.
@@ -140,7 +135,6 @@ class CocoapodSearch < Sinatra::Application
       result[param.gsub(/\-/, '_').to_sym] = Integer(value) rescue value
       result
     end
-    CocoapodSearch.track_facets request
     body json search.search_facets normalized_params
   end
 
@@ -163,19 +157,5 @@ class CocoapodSearch < Sinatra::Application
       end
     end
   end
-
-  # Tracking convenience methods.
-  #
-  def self.track_search(query, total)
-    analytics.notify :event, [:pods, :search, query, total]
-  end
-  def self.track_facets(request)
-    analytics.notify :event, [:pods, :facets, request.query_string]
-  end
-  def self.track_view(request, title)
-    analytics.notify :page_view, [title, request.path]
-  end
-  def self.analytics
-    @analytics ||= Channel.instance(:analytics)
-  end
+  
 end
