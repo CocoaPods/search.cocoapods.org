@@ -121,6 +121,7 @@ class CocoapodSearch < Sinatra::Application
     if query
       split = search.split query
       results = search.picky_search split.join(' '), 0, 0
+      results.extend Picky::Convenience
       suggestions[:split] = [split, results.total]
     end
 
