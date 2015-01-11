@@ -126,10 +126,6 @@ CocoapodSearch.helpers do
     results = results.to_hash
     results.extend Picky::Convenience
 
-    CocoapodSearch.track_search query, results.total
-
-    results.extend Picky::Convenience
-
     results.amend_ids_with pods.for(results.ids).map(&rendering)
 
     results.clear_ids
@@ -148,8 +144,6 @@ CocoapodSearch.helpers do
                                      unique: true, sort: params[:sort]
 
     results.extend Picky::Convenience
-
-    CocoapodSearch.track_search query, results.total
 
     result = pods.for(results.ids).map(&rendering)
 
