@@ -59,7 +59,7 @@ Pods.instance.cache_all
 every = 5
 amount = 200 # We only use 200 pods.
 puts "Indexing #{amount} pods (Every . is #{every} pods)."
-Search.instance.reindex every, amount do
+Search.instance.reindex_all every, amount do
   print '.'
 end
 puts

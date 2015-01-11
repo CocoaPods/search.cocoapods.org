@@ -18,6 +18,9 @@ class SearchWorker
 
   def process(action, parameters)
     case action
+    when :picky_search
+      add_one_query_to_stats
+      Search.instance.picky_search(*parameters)
     when :search
       add_one_query_to_stats
       Search.instance.search(*parameters)
@@ -31,12 +34,8 @@ class SearchWorker
       add_one_query_to_stats
       Search.instance.split parameters
     when :reindex
-      # The parameters are just a pod name.
-      #
-      # TODO: Move to Search.
-      #
       $stdout.puts "Reindexing #{parameters} in INDEX PROCESS."
-      try_indexing parameters
+      Search.instance.reindex parameters
     else
       $stderr.puts "Search worker could not process action #{action} with #{parameters}."
     end
@@ -49,7 +48,7 @@ class SearchWorker
       begin
         2.times do
           pod = @pods_to_index.next
-          try_indexing(pod.name)
+          Search.instance.reindex pod.name
         end
       rescue StopIteration
         $stdout.puts "[#{Time.now}] Indexing finished."
@@ -156,21 +155,5 @@ class SearchWorker
     $stdout.puts 'Caching pods in INDEX PROCESS.'
     Pods.instance.cache_all
     $stdout.puts 'Finished caching pods in INDEX PROCESS.'
-  end
-
-  # Try indexing a new pod.
-  #
-  def try_indexing(name)
-    pod = Pod.all { |pods| pods.where(name: name) }.first
-    Search.instance.replace pod, Pods.instance
-    $stdout.print ?✓
-  rescue PG::UnableToSend
-    $stdout.puts 'PG::UnableToSend raised! Reconnecting to database.'
-    load 'lib/database.rb'
-    retry
-  rescue StandardError
-    # Catch any error and reraise as a "could not run" error.
-    #
-    $stderr.puts "Error: Reindexing #{name} in INDEX PROCESS has failed."
   end
 end
