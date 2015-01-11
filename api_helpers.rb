@@ -116,13 +116,15 @@ CocoapodSearch.helpers do
   #
   # More info here: https://github.com/floere/picky/wiki/Results-format-and-structure.
   #
-  def picky_result(params, &rendering)
+  def picky_result(params, rendering)
     query = params[:query]
 
     results = Search.instance.search query,
                                      params[:amount] || params[:ids] || 20,
                                      params[:'start-at'] || params[:offset] || 0,
-                                     sort: params[:sort]
+                                     sort: params[:sort],
+                                     format: :picky,
+                                     rendering: rendering
 
     CocoapodSearch.track_search query, results.total
 
@@ -139,7 +141,8 @@ CocoapodSearch.helpers do
                                      params[:'start-at'] || params[:offset] || 0,
                                      unique: true,
                                      sort: params[:sort],
-                                     format: :flat
+                                     format: :flat,
+                                     rendering: rendering
 
     
 
