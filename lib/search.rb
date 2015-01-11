@@ -181,11 +181,27 @@ class Search
   # Reindex all pods.
   # Calls a block every n pods.
   #
-  def reindex(every = 100, amount = nil)
+  def reindex_all(every = 100, amount = nil)
     Pods.instance.each(amount).with_index do |pod, i|
       yield i if block_given? && (i % every == 0)
       replace pod, Pods.instance
     end
+  end
+  
+  # Try indexing a new pod.
+  #
+  def reindex(name)
+    pod = Pod.all { |pods| pods.where(name: name) }.first
+    replace pod, Pods.instance
+    $stdout.print ?✓
+  rescue PG::UnableToSend
+    $stdout.puts 'PG::UnableToSend raised! Reconnecting to database.'
+    load 'lib/database.rb'
+    retry
+  rescue StandardError
+    # Catch any error and reraise as a "could not run" error.
+    #
+    $stderr.puts "Error: Reindexing #{name} in INDEX PROCESS has failed."
   end
 
   def replace(pod, pods) # TODO: Redesign.
@@ -239,7 +255,7 @@ class Search
   
   def picky_search(*args)
     if CocoapodSearch.child
-      Channel.instance(:search).call :search, args
+      Channel.instance(:search).call :picky_search, args
     else
       if args.last.respond_to?(:to_hash)
         options = args.last
@@ -263,25 +279,29 @@ class Search
   end
 
   def search(*args)
-    picky_search(*args) do |results, format, rendering|
-      # Render.
-      #
-      render_block = case rendering
-        when :hash
-          ->(item) { item.to_h }
-        when :ids
-          ->(item) { item.name }
+    if CocoapodSearch.child
+      Channel.instance(:search).call :search, args
+    else
+      picky_search(*args) do |results, format, rendering|
+        # Render.
+        #
+        render_block = case rendering
+          when :hash
+            ->(item) { item.to_h }
+          when :ids
+            ->(item) { item.name }
+          end
+        case format
+          when :flat
+            results = Pods.instance.for(results.ids).map(&render_block)
+          when :picky
+            results = results.to_hash
+            results.extend Picky::Convenience
+            results.amend_ids_with Pods.instance.for(results.ids).map(&render_block)
+            results.clear_ids
         end
-      case format
-        when :flat
-          results = Pods.instance.for(results.ids).map(&render_block)
-        when :picky
-          results = results.to_hash
-          results.extend Picky::Convenience
-          results.amend_ids_with Pods.instance.for(results.ids).map(&render_block)
-          results.clear_ids
+        results
       end
-      results
     end
   end
 
