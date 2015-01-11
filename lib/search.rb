@@ -241,17 +241,37 @@ class Search
     if CocoapodSearch.child
       Channel.instance(:search).call :search, args
     else
-      sorting = if args.last.respond_to?(:to_hash)
-                  filter_sort args.last.delete(:sort)
-                end
+      if args.last.respond_to?(:to_hash)
+        options = args.last
+        sorting = filter_sort options.delete(:sort)
+        format = options.delete(:format)
+        rendering = options.delete(:rendering)
+      end
 
       results = interface.search(*args)
 
       # Sort results.
       #
       results.sort_by(&sorting) if sorting
-
-      results.to_hash
+      
+      # Render.
+      #
+      render_block = case rendering
+        when :to_h
+          ->(item) { item.to_h }
+        when :ids
+          ->(item) { item.name }
+        end
+        case format
+      when :flat
+        results = Pods.instance.for(results.ids).map(&render_block)
+      when :picky
+        results = results.to_hash
+        results.extend Picky::Convenience
+        results.amend_ids_with Pods.instance.for(results.ids).map(&render_block)
+      end
+      results.clear_ids
+      results
     end
   end
 

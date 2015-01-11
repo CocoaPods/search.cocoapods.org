@@ -16,16 +16,17 @@ class CocoapodSearch < Sinatra::Application
   class << self
     attr_accessor :child
   end
+  
+  # Search instance.
+  #
+  # TODO Remove.
+  #
+  search = Search.instance
 
   # Allow browsers to cache responses for a minute.
   # This helps with backspacing.
   #
   before { expires 60, :public }
-
-  # Data container and search.
-  #
-  repo = Pods.instance
-  search = Search.instance
 
   set :logging, false
 
@@ -74,35 +75,35 @@ class CocoapodSearch < Sinatra::Application
   #
   api nil, :flat, :ids, :json, accept: ['*/*', 'text/json', 'application/json'] do
     CocoapodSearch.track_view request, :'default-flat/ids/json'
-    json picky_result(search, repo, params) { |item| item.name }
+    json picky_result(params, :ids)
   end
 
   # Returns a Picky style result with entries rendered as a hash.
   #
   api 1, :picky, :hash, :json, accept: ['application/vnd.cocoapods.org+picky.hash.json'] do
     CocoapodSearch.track_view request, :'picky/hash/json'
-    json picky_result(search, repo, params) { |item| item.to_h }
+    json picky_result(params, :to_h)
   end
 
   # Returns a Picky style result with just ids as entries.
   #
   api 1, :picky, :ids, :json, accept: ['application/vnd.cocoapods.org+picky.ids.json'] do
     CocoapodSearch.track_view request, :'picky/ids/json'
-    json picky_result(search, repo, params) { |item| item.name }
+    json picky_result(params, :ids)
   end
 
   # Returns a flat list of results with entries rendered as a hash.
   #
   api 1, :flat, :hash, :json, accept: ['application/vnd.cocoapods.org+flat.hash.json'] do
     CocoapodSearch.track_view request, :'flat/hash/json'
-    json flat_result(search, repo, params) { |item| item.to_h }
+    json flat_result(params, :to_h)
   end
 
   # Returns a flat list of ids.
   #
   api 1, :flat, :ids, :json, accept: ['application/vnd.cocoapods.org+flat.ids.json'] do
     CocoapodSearch.track_view request, :'flat/ids/json'
-    json flat_result(search, repo, params) { |item| item.name }
+    json flat_result(params, :ids)
   end
 
   # Installs API for calls using Accept.
