@@ -103,7 +103,9 @@ class Channel
   def process_channel(channel)
     *args, back_channel = channel.get
     response = @worker.process(*args)
-    back_channel.put response if back_channel
+    if back_channel && back_channel.can_write?
+      back_channel.put response
+    end
   rescue StandardError => e
     # Always return _something_.
     #
