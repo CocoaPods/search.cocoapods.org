@@ -41,6 +41,12 @@ class Channel
     @channel_number = number
     @to_process = @to_processes[number]
     @from_process = @from_processes[number]
+    
+    # Discard whatever is still in the pipe.
+    if stuff_that_was_in_the_pipe = Cod.select(0, @from_process)
+      $stderr.puts "[Warning] There was still data in the pipe when choosing a channel: #{stuff_that_was_in_the_pipe}"
+    end
+    
     STDOUT.puts "Child [#{Process.pid}] chose channel #{number} using to: " \
       "#{@to_process} and from: #{@from_process}."
   end
@@ -103,9 +109,7 @@ class Channel
   def process_channel(channel)
     *args, back_channel = channel.get
     response = @worker.process(*args)
-    if back_channel && back_channel.can_write?
-      back_channel.put response
-    end
+    back_channel.put response if back_channel
   rescue StandardError => e
     # Always return _something_.
     #
