@@ -42,9 +42,11 @@ class Channel
     @to_process = @to_processes[number]
     @from_process = @from_processes[number]
     
-    # Discard whatever is still in the pipe.
+    # Discard whatever is still in the pipe for this number.
     if stuff_that_was_in_the_pipe = Cod.select(0, @from_process)
-      $stderr.puts "[Warning] There was still data in the pipe when choosing a channel: #{stuff_that_was_in_the_pipe}"
+      if stuff_that_was_in_the_pipe.key? @channel_number
+        $stderr.puts "[Warning] There was still data in the pipe when choosing a channel: #{stuff_that_was_in_the_pipe.get}"
+      end
     end
     
     STDOUT.puts "Child [#{Process.pid}] chose channel #{number} using to: " \
