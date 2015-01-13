@@ -1,6 +1,6 @@
 source 'http://rubygems.org'
 
-ruby '2.1.3'
+ruby '2.2.0'
 
 # Main gems used in all the application.
 #
