@@ -43,7 +43,7 @@ class Channel
     @from_process = @from_processes[number]
     
     # Discard whatever is still in the pipe for this number.
-    if stuff_that_was_in_the_pipe = Cod.select(0, @from_process)
+    if @from_process.select(0.2)
       stuff = @from_process.get
       $stderr.puts "[Warning] There was still data in pipe #{@channel_number} when choosing a channel: #{stuff}"
     end
