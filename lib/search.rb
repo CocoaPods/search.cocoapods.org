@@ -198,10 +198,10 @@ class Search
     $stdout.puts 'PG::UnableToSend raised! Reconnecting to database.'
     load 'lib/database.rb'
     retry
-  rescue StandardError
+  rescue StandardError => e
     # Catch any error and reraise as a "could not run" error.
     #
-    $stderr.puts "[Warning] Reindexing #{name} in INDEX PROCESS has failed."
+    $stderr.puts "[Warning] Reindexing #{name} in INDEX PROCESS has failed: #{e.message}"
   end
 
   def replace(pod, pods) # TODO: Redesign.
