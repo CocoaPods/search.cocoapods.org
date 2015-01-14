@@ -28,10 +28,12 @@ class StatsSender
     if URL
       @current_pids << fork do
         begin
+          $stdout.puts "[Stats] Sending #{data}."
           REST.post(URL, data.to_json, headers) do |http|
             http.open_timeout = 5
             http.read_timeout = 5
           end
+          $stdout.puts "[Stats] Sent #{data}."
         rescue REST::Error => e
           $stderr.puts "[Warning] Timeout when sending stats with #{data}: #{e.message}."
         end
