@@ -126,6 +126,9 @@ class Channel
     if @from_process
       response_timestamp = 0
       # The response timestamp can never be larger than the timestamp.
+      # Therefore we can discard until we get "our" answer.
+      # We assume that the search process will eventually answer.
+      # -> This is optimistic code ;)
       until response_timestamp == timestamp
         response_timestamp, response = @from_process.get
       end
