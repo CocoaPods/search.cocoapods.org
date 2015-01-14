@@ -110,7 +110,7 @@ class Channel
   rescue StandardError => e
     # Always return _something_.
     #
-    $stderr.puts "Processing #{args} in worker #{@worker} failed: #{e.message}"
+    $stderr.puts "[Warning] Processing #{args} in worker #{@worker} failed: #{e.message}"
     back_channel.put [] if back_channel
   end
 

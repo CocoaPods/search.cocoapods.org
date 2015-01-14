@@ -37,7 +37,7 @@ class SearchWorker
       $stdout.puts "Reindexing #{parameters} in INDEX PROCESS."
       Search.instance.reindex parameters
     else
-      $stderr.puts "Search worker could not process action #{action} with #{parameters}."
+      $stderr.puts "[Warning] Search worker could not process action #{action} with #{parameters}."
     end
   end
   

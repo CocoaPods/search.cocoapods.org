@@ -33,12 +33,12 @@ class StatsSender
             http.read_timeout = 5
           end
         rescue REST::Error => e
-          $stderr.puts "[warning] Timeout when sending stats with #{data}: #{e.message}."
+          $stderr.puts "[Warning] Timeout when sending stats with #{data}: #{e.message}."
         end
       end
     end
   rescue StandardError => e
-    $stderr.puts e.inspect, e.backtrace
+    $stderr.puts "[Warning] #{e.inspect}: #{e.backtrace}"
   end
 
   def self.init
