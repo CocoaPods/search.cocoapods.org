@@ -201,7 +201,7 @@ class Search
   rescue StandardError
     # Catch any error and reraise as a "could not run" error.
     #
-    $stderr.puts "Error: Reindexing #{name} in INDEX PROCESS has failed."
+    $stderr.puts "[Warning] Reindexing #{name} in INDEX PROCESS has failed."
   end
 
   def replace(pod, pods) # TODO: Redesign.
