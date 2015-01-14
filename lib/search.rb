@@ -122,7 +122,7 @@ class Search
                tokenize: false
       category :subspecs,
                weight: boost(-6),
-               partial: full_partial,
+               partial: no_partial,
                qualifiers: %i(subspec subspecs),
                from: :mapped_subspec_names
     end
