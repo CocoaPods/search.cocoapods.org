@@ -42,12 +42,6 @@ class Channel
     @to_process = @to_processes[number]
     @from_process = @from_processes[number]
     
-    # Discard whatever is still in the pipe for this number.
-    if @from_process.select(0.2)
-      stuff = @from_process.get
-      $stderr.puts "[Warning] There was still data in pipe #{@channel_number} when choosing a channel: #{stuff}"
-    end
-    
     STDOUT.puts "Child [#{Process.pid}] chose channel #{number} using to: " \
       "#{@to_process} and from: #{@from_process}."
   end
@@ -107,10 +101,12 @@ class Channel
   # Process a specific channel.
   # Only answer if a back_channel is passed in.
   #
+  # It simply returns the timestamp it gets from the channel.
+  #
   def process_channel(channel)
-    *args, back_channel = channel.get
-    response = @worker.process(*args)
-    back_channel.put response if back_channel
+    timestamp, action, message, back_channel = channel.get
+    response = @worker.process(action, message)
+    back_channel.put [timestamp, response] if back_channel
   rescue StandardError => e
     # Always return _something_.
     #
@@ -121,15 +117,26 @@ class Channel
   # Write the worker process,
   # expecting an answer.
   #
+  # This checks if the timestamp is the one we sent.
+  # If not, discard the response.
+  #
   def call(action, message)
-    @to_process.put [action, message, @from_process] if @to_process
-    @from_process.get if @from_process
+    timestamp = Time.now
+    @to_process.put [timestamp, action, message, @from_process] if @to_process
+    if @from_process
+      response_timestamp = 0
+      # The response timestamp can never be larger than the timestamp.
+      until response_timestamp == timestamp
+        response_timestamp, response = @from_process.get
+      end
+      response
+    end
   end
 
   # Write the worker process,
   # not expecting an answer.
   #
   def notify(action, message)
-    @to_process.put [action, message, nil] if @to_process
+    @to_process.put [nil, action, message, nil] if @to_process
   end
 end
