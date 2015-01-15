@@ -105,7 +105,6 @@ class SearchWorker
   # if there are any stats.
   #
   def send_stats_to_status_page
-    per_minute_stats[Time.now-1] = 13
     time, count = remove_oldest_count_from_stats
     @stats.notify(:send, [time, count]) if time
   end
