@@ -58,7 +58,7 @@ class SearchWorker
 
     # Periodically send stats data.
     #
-    send_stats_to_status_page # if every_so_often
+    send_stats_to_status_page if every_so_often
 
     # Periodically index pods to update the metrics in memory.
     #
