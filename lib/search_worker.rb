@@ -2,6 +2,7 @@ require_relative 'stats_sender'
 
 class SearchWorker
   def setup
+    setup_stats
     setup_clean_exit
 
     # Load the DB.
@@ -10,7 +11,6 @@ class SearchWorker
 
     cache_all_pods
 
-    setup_stats
     setup_rarely
     setup_every_so_often
     setup_indexing_all_pods
@@ -58,7 +58,7 @@ class SearchWorker
 
     # Periodically send stats data.
     #
-    send_stats_to_status_page if every_so_often
+    send_stats_to_status_page # if every_so_often
 
     # Periodically index pods to update the metrics in memory.
     #
@@ -72,6 +72,7 @@ class SearchWorker
   # Setup the stats counter hash.
   #
   def setup_stats
+    @stats = StatsSender.start # Starts a new channel.
     @per_minute_stats = Hash.new { 0 }
   end
 
@@ -104,8 +105,9 @@ class SearchWorker
   # if there are any stats.
   #
   def send_stats_to_status_page
+    per_minute_stats[Time.now-1] = 13
     time, count = remove_oldest_count_from_stats
-    StatsSender.send(time, count) if time
+    @stats.notify(:send, [time, count]) if time
   end
 
   def setup_every_so_often
@@ -144,6 +146,8 @@ class SearchWorker
 
   def setup_clean_exit
     # Set up clean exit.
+    #
+    # TODO Close pipes.
     #
     Signal.trap('INT') do
       $stdout.puts "[#{Process.pid}] Search Engine process going down."
