@@ -20,7 +20,7 @@ class Channel
   # Start in master.
   #
   def start(children:, worker:)
-    STDOUT.puts "Channel [#{@type}] will fork #{children} children."
+    $stdout.puts "Channel [#{@type}] will fork #{children} children."
 
     @amount_of_children = children
     @to_processes = children.times.inject({}) do |engines, i|
@@ -42,7 +42,7 @@ class Channel
     @to_process = @to_processes[number]
     @from_process = @from_processes[number]
     
-    STDOUT.puts "Child [#{Process.pid}] chose channel #{number} using to: " \
+    $stdout.puts "Child [#{Process.pid}] chose channel #{number} using to: " \
       "#{@to_process} and from: #{@from_process}."
   end
 
@@ -61,22 +61,22 @@ class Channel
       post_process = @worker.respond_to? :post_process
 
       loop do
-        # Wait for input from the child for a sub-second.
-        #
-        received = Cod.select 0.05, @to_processes
-
         begin
+          # Wait for input from the child for a sub-second.
+          #
+          received = Cod.select 0.05, @to_processes
+
+          #
+          #
           process_channels received if received
 
           # Tell worker to post_process
           #
           @worker.post_process if post_process
-
         rescue StandardError => e
-          # If anything goes wrong in the worker
-          # we print and ignore it.
+          # If anything goes wrong we print and ignore it.
           #
-          $stderr.puts e.inspect, e.backtrace
+          $stderr.puts "[Warning] #{e.inspect}, #{e.backtrace}"
         end
       end
     end
@@ -86,6 +86,11 @@ class Channel
     Signal.trap('INT') do
       Process.wait(process_pid)
     end
+  rescue StandardError => e
+    # Always return _something_.
+    #
+    $stderr.puts "[Warning] Calling #{action} with #{message} failed: #{e.message}"
+    back_channel.put [] if back_channel
   end
 
   # Check which channels have received something.
@@ -134,6 +139,8 @@ class Channel
       end
       response
     end
+  rescue StandardError => e
+    $stderr.puts "[Warning] Calling #{action} with #{message} failed: #{e.message}"
   end
 
   # Write the worker process,
@@ -141,5 +148,7 @@ class Channel
   #
   def notify(action, message)
     @to_process.put [nil, action, message, nil] if @to_process
+  rescue StandardError => e
+    $stderr.puts "[Warning] Notifying #{action} with #{message} failed: #{e.message}"
   end
 end
