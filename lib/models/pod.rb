@@ -237,13 +237,15 @@ class Pod
     result.commit.specification_data if result
   end
 
-  # TODO: Clear after using the specification.
-  #       with_specification do ?
-  #
   # Caching the specification speeds up indexing considerably.
   #
   def specification
     @specification ||= JSON.parse(specification_json || '{}')
+  end
+  # Use to GC e.g. the specification after having used it.
+  #
+  def release_indexing_memory
+    @specification = nil
   end
 
   def deprecated_in_favor_of
@@ -334,23 +336,9 @@ class Pod
     []
   end
 
+  # Throws the row away.
+  #
   def to_h
-    # Was:
-    #
-    # @view[id] = {
-    #   :id => id,
-    #   :platforms => specification.available_platforms.map(&:name).to_a,
-    #   :version => set.versions.first.to_s,
-    #   :summary => specification.summary[0..139].to_s,
-    #     # Cut down to 140 characters. TODO: Duplicated code. See set.rb.
-    #   :authors => specification.authors.to_hash,
-    #   :link => specification.homepage.to_s,
-    #   :source => specification.source.to_hash,
-    #   :subspecs => specification.recursive_subspecs.map(&:to_s),
-    #   :tags => set.tags.to_a,
-    #   :deprecated => specification.deprecated?,
-    #   :deprecated_in_favor_of => specification.deprecated_in_favor_of
-    # }
     @h ||= begin
       h = {
         id: name, # We don't hand out ids.
@@ -365,6 +353,8 @@ class Pod
         deprecated_in_favor_of: deprecated_in_favor_of,
       }
       h[:documentation_url] = row.documentation_url if row.respond_to?(:documentation_url)
+      # Throw the row away if this pod has been rendered.
+      # TODO Think about: @row = nil
       h
     end
   end

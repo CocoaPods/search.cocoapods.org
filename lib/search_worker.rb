@@ -44,21 +44,14 @@ class SearchWorker
   def post_process
     # Initially index a few pods at a time until all are indexed.
     #
-    if @not_loaded_yet
-      begin
-        2.times do
-          pod = @pods_to_index.next
-          Search.instance.reindex pod.name
-        end
-      rescue StopIteration
-        $stdout.puts "[#{Time.now}] Indexing finished."
-        @not_loaded_yet = false
-      end
-    end
+    index_some_pods if @not_loaded_yet
 
     # Periodically send stats data.
     #
-    send_stats_to_status_page if every_so_often
+    if every_so_often
+      send_stats_to_status_page
+      garbage_collect
+    end
 
     # Periodically index pods to update the metrics in memory.
     #
@@ -68,6 +61,20 @@ class SearchWorker
   private
 
   attr_reader :per_minute_stats
+
+  def garbage_collect
+    GC.start
+  end
+
+  def index_some_pods
+    2.times do
+      pod = @pods_to_index.next
+      Search.instance.reindex pod.name
+    end
+  rescue StopIteration
+    $stdout.puts "[#{Time.now}] Indexing finished."
+    @not_loaded_yet = false
+  end
 
   # Setup the stats counter hash.
   #
