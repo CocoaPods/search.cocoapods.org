@@ -193,6 +193,7 @@ class Search
   def reindex(name)
     pod = Pod.all { |pods| pods.where(name: name) }.first
     replace pod, Pods.instance
+    pod.release_indexing_memory
     $stdout.print ?✓
   rescue PG::UnableToSend
     $stdout.puts 'PG::UnableToSend raised! Reconnecting to database.'
