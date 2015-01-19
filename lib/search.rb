@@ -47,6 +47,7 @@ class Search
     #
     @index = Index.new :pods do
       id :id
+      symbol_keys true
 
       # We use the ids.
       #
@@ -130,6 +131,7 @@ class Search
     # Define a search over the books index.
     #
     @interface = Search.new index do
+      symbol_keys
       searching substitutes_characters_with:
                   CharacterSubstituters::WestEuropean.new,
                 removes_characters: false,
@@ -141,6 +143,7 @@ class Search
     end
 
     @facets_interface = Search.new index do
+      symbol_keys
       searching substitutes_characters_with:
                   # Normalizes special user input, Ä -> Ae, ñ -> n etc.
                   CharacterSubstituters::WestEuropean.new,
@@ -151,6 +154,8 @@ class Search
     end
 
     @splitting_index = Index.new :splitting do
+      symbol_keys
+      
       # We use the ids.
       #
       key_format :to_i
