@@ -2,6 +2,10 @@ source 'http://rubygems.org'
 
 ruby '2.2.0'
 
+# Debug.
+#
+# gem 'memory_profiler'
+
 # Main gems used in all the application.
 #
 gem 'bundler'
@@ -15,14 +19,11 @@ gem 'hashie'
 # Database.
 #
 gem 'pg'
-gem 'dm-core', require: true #, '>= 1.3.0.beta', github: 'technology-astronauts/dm-core'
-gem 'dm-do-adapter', require: true
 gem 'dm-postgres-adapter', require: true
 gem 'flounder'
 
 # Auxiliary gems to make Picky faster/better.
 #
-gem 'text'
 gem 'rack_fast_escape', '2009.06.24'
 gem 'yajl-ruby', :require => 'yajl'
 
