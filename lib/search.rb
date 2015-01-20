@@ -27,10 +27,6 @@ class Search
             %w(to was were will with)
     stopwords = /\b(#{words.join('|')})\b/i
 
-    # Set up similarity configurations.
-    #
-    few_similars = Similarity::DoubleMetaphone.new 2
-
     # Set up partial configurations.
     #
     no_partial   = Partial::None.new
@@ -47,7 +43,7 @@ class Search
     #
     @index = Index.new :pods do
       id :id
-      symbol_keys true
+      # symbol_keys true
 
       # We use the ids.
       #
@@ -74,7 +70,7 @@ class Search
       
       category :name,
                weight: boost(+2),
-               similarity: few_similars,
+               # similarity: few_similars,
                partial: full_partial,
                qualifiers: [:name, :pod],
                from: :mapped_name,
@@ -84,7 +80,7 @@ class Search
                )
       category :author,
                # weight: boost(+0),
-               similarity: few_similars,
+               # similarity: few_similars,
                partial: full_partial,
                qualifiers: [:author, :authors, :written, :writer, :by],
                from: :mapped_authors,
@@ -131,7 +127,7 @@ class Search
     # Define a search over the books index.
     #
     @interface = Search.new index do
-      symbol_keys
+      # symbol_keys
       searching substitutes_characters_with:
                   CharacterSubstituters::WestEuropean.new,
                 removes_characters: false,
@@ -143,7 +139,7 @@ class Search
     end
 
     @facets_interface = Search.new index do
-      symbol_keys
+      # symbol_keys
       searching substitutes_characters_with:
                   # Normalizes special user input, Ä -> Ae, ñ -> n etc.
                   CharacterSubstituters::WestEuropean.new,
@@ -154,7 +150,7 @@ class Search
     end
 
     @splitting_index = Index.new :splitting do
-      symbol_keys
+      # symbol_keys
       
       # We use the ids.
       #
