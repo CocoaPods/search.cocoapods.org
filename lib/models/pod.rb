@@ -14,7 +14,8 @@ class Pod
                  :name,
                  :versions,
                  :commits,
-                 :github_metric
+                 :github_metric,
+                 :cocoadocs_pod_metric
 
   def initialize(row)
     @row = row
@@ -34,6 +35,9 @@ class Pod
       join(Domain.github_metrics).
       on(Domain.pods[:id] => Domain.github_metrics[:pod_id]).
       
+      outer_join(Domain.cocoadocs_pod_metrics).
+      on(Domain.pods[:id] => Domain.cocoadocs_pod_metrics[:pod_id]).
+      
       where(Domain.pods[:deleted] => false).
       
       project(
@@ -48,11 +52,13 @@ class Pod
         ) AS popularity
         EXPR
         *Domain.github_metrics.fields(:forks, :stargazers, :contributors, :subscribers),
+        Domain.cocoadocs_pod_metrics[:id]
       ).
       
       group_by(
         Domain.pods[:id],
         *Domain.github_metrics.fields(:forks, :stargazers, :contributors, :subscribers),
+        *Domain.cocoadocs_pod_metrics[:id],
       )
   end
 
@@ -219,6 +225,10 @@ class Pod
   def documentation_url
     specification['documentation_url']
   end
+  
+  def cocoadocs?
+    !!cocoadocs_pod_metric.id
+  end
 
   # Just load the latest specification data.
   #
@@ -366,6 +376,7 @@ class Pod
         deprecated_in_favor_of: deprecated_in_favor_of,
       }
       h[:documentation_url] = row.documentation_url if row.respond_to?(:documentation_url)
+      h[:cocoadocs] = true if cocoadocs?
       # Throw the row away if this pod has been rendered.
       # TODO Think about: @row = nil
       h
