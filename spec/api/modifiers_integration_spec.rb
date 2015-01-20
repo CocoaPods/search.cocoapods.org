@@ -19,7 +19,7 @@ describe 'Modifier Tests' do
 
   # Has been removed.
   #
-  # The "text" gem used 20 MB itself, and the index used another 100 or so.
+  # The "text" gem used 20 MB itself, and the index used another 40 or so.
   # ok { pod_ids.search('afnutworking~').entries.first.should == 'AFNetworking' }
   
 end
