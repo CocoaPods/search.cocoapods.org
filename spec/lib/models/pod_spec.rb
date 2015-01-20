@@ -29,6 +29,8 @@ describe Pod do
 
     ok { pod.summary.should == 'A delightful iOS and OS X networking framework.' }
 
+    ok { pod.cocoadocs?.should == false }
+
     # This is just a rough sanity check.
     ok { pod.popularity.should >= 70_000 }
     ok { pod.forks.should >= 3400 }
