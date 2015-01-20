@@ -30,9 +30,12 @@ class Pod
     entity.
       join(Domain.versions).
       on(Domain.pods[:id] => Domain.versions[:pod_id]).
+      
       join(Domain.github_metrics).
       on(Domain.pods[:id] => Domain.github_metrics[:pod_id]).
+      
       where(Domain.pods[:deleted] => false).
+      
       project(
         *Domain.pods.fields,
         'array_agg(pod_versions.name) AS versions',
@@ -46,6 +49,7 @@ class Pod
         EXPR
         *Domain.github_metrics.fields(:forks, :stargazers, :contributors, :subscribers),
       ).
+      
       group_by(
         Domain.pods[:id],
         *Domain.github_metrics.fields(:forks, :stargazers, :contributors, :subscribers),
@@ -220,19 +224,28 @@ class Pod
   #
   def specification_json
     result = Domain.commits.
+             
              join(Domain.versions).
              on(Domain.commits[:pod_version_id] => Domain.versions[:id]).
              anchor.
+             
              join(Domain.pods).
              on(Domain.versions[:pod_id] => Domain.pods[:id]).
              hoist.
+             
              project(*Domain.commits[:specification_data]).
+             
              where(
-        Domain.pods[:id] => id,
-        Domain.versions[:name] => last_version,
-      ).
+               Domain.pods[:id] => id,
+               Domain.versions[:name] => last_version,
+             ).
+             
              limit(1).
-             order_by(Domain.commits[:pod_version_id]).
+             
+             order_by(
+               Domain.commits[:created_at].desc,
+             ).
+             
              first
     result.commit.specification_data if result
   end
