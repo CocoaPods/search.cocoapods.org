@@ -1,0 +1,787 @@
+Total allocated 2162
+Total retained 161
+
+allocated memory by gem
+-----------------------------------
+picky-4.25.2 x 27174
+text-1.3.0 x 22758
+arel-5.0.1.20140414130214 x 19994
+search.cocoapods.org/lib x 13794
+json-1.8.2 x 12826
+rubygems x 12609
+ruby-2.2.0-preview1/lib x 12204
+flounder-1.0.1 x 12012
+activesupport-4.2.0 x 1156
+
+allocated memory by file
+-----------------------------------
+/Users/hanke/.gem/ruby/2.2.0/gems/text-1.3.0/lib/text/double_metaphone.rb x 22438
+/Users/hanke/.gem/ruby/2.2.0/gems/arel-5.0.1.20140414130214/lib/arel/visitors/to_sql.rb x 17732
+/Users/hanke/temp/cocoapods/search.cocoapods.org/lib/models/pod.rb x 13634
+/Users/hanke/.gem/ruby/2.2.0/gems/json-1.8.2/lib/json/common.rb x 12826
+/Users/hanke/.rubies/ruby-2.2.0-preview1/lib/ruby/2.2.0/rubygems/version.rb x 12609
+/Users/hanke/.gem/ruby/2.2.0/gems/picky-4.25.2/lib/picky/tokenizer.rb x 11694
+/Users/hanke/.gem/ruby/2.2.0/gems/picky-4.25.2/lib/picky/splitter.rb x 7273
+/Users/hanke/.rubies/ruby-2.2.0-preview1/lib/ruby/2.2.0/benchmark.rb x 6980
+/Users/hanke/.gem/ruby/2.2.0/gems/picky-4.25.2/lib/picky/extensions/symbol.rb x 5400
+/Users/hanke/.gem/ruby/2.2.0/gems/flounder-1.0.1/lib/flounder/connection.rb x 5320
+/Users/hanke/.rubies/ruby-2.2.0-preview1/lib/ruby/2.2.0/logger.rb x 5224
+/Users/hanke/.gem/ruby/2.2.0/gems/flounder-1.0.1/lib/flounder/query/select.rb x 4480
+/Users/hanke/.gem/ruby/2.2.0/gems/arel-5.0.1.20140414130214/lib/arel/alias_predication.rb x 2088
+/Users/hanke/.gem/ruby/2.2.0/gems/flounder-1.0.1/lib/flounder/postgres_utils.rb x 1600
+/Users/hanke/.gem/ruby/2.2.0/gems/picky-4.25.2/lib/picky/category_realtime.rb x 1560
+/Users/hanke/.gem/ruby/2.2.0/gems/activesupport-4.2.0/lib/active_support/multibyte/unicode.rb x 756
+/Users/hanke/.gem/ruby/2.2.0/gems/flounder-1.0.1/lib/flounder/domain.rb x 532
+/Users/hanke/.gem/ruby/2.2.0/gems/picky-4.25.2/lib/picky/extensions/array.rb x 520
+/Users/hanke/.gem/ruby/2.2.0/gems/picky-4.25.2/lib/picky/character_substituters/west_european.rb x 487
+/Users/hanke/.gem/ruby/2.2.0/gems/activesupport-4.2.0/lib/active_support/multibyte/chars.rb x 400
+/Users/hanke/.gem/ruby/2.2.0/gems/text-1.3.0/lib/text/levenshtein.rb x 320
+/Users/hanke/.gem/ruby/2.2.0/gems/picky-4.25.2/lib/picky/bundle_realtime.rb x 240
+/Users/hanke/.gem/ruby/2.2.0/gems/arel-5.0.1.20140414130214/lib/arel/select_manager.rb x 174
+/Users/hanke/temp/cocoapods/search.cocoapods.org/lib/search.rb x 160
+/Users/hanke/.gem/ruby/2.2.0/gems/flounder-1.0.1/lib/flounder/field.rb x 80
+
+allocated memory by location
+-----------------------------------
+/Users/hanke/.gem/ruby/2.2.0/gems/json-1.8.2/lib/json/common.rb:155 x 12826
+/Users/hanke/.gem/ruby/2.2.0/gems/text-1.3.0/lib/text/double_metaphone.rb:34 x 7638
+/Users/hanke/.gem/ruby/2.2.0/gems/picky-4.25.2/lib/picky/splitter.rb:19 x 6935
+/Users/hanke/.gem/ruby/2.2.0/gems/picky-4.25.2/lib/picky/tokenizer.rb:240 x 6164
+/Users/hanke/temp/cocoapods/search.cocoapods.org/lib/models/pod.rb:332 x 4698
+/Users/hanke/temp/cocoapods/search.cocoapods.org/lib/models/pod.rb:100 x 4430
+/Users/hanke/.rubies/ruby-2.2.0-preview1/lib/ruby/2.2.0/rubygems/version.rb:163 x 4400
+/Users/hanke/.rubies/ruby-2.2.0-preview1/lib/ruby/2.2.0/logger.rb:507 x 4040
+/Users/hanke/.gem/ruby/2.2.0/gems/arel-5.0.1.20140414130214/lib/arel/visitors/to_sql.rb:156 x 3844
+/Users/hanke/.gem/ruby/2.2.0/gems/arel-5.0.1.20140414130214/lib/arel/visitors/to_sql.rb:184 x 3844
+/Users/hanke/.rubies/ruby-2.2.0-preview1/lib/ruby/2.2.0/rubygems/version.rb:306 x 3689
+/Users/hanke/.gem/ruby/2.2.0/gems/flounder-1.0.1/lib/flounder/query/select.rb:74 x 3520
+/Users/hanke/.gem/ruby/2.2.0/gems/arel-5.0.1.20140414130214/lib/arel/visitors/to_sql.rb:540 x 3274
+/Users/hanke/.gem/ruby/2.2.0/gems/text-1.3.0/lib/text/double_metaphone.rb:50 x 2560
+/Users/hanke/.gem/ruby/2.2.0/gems/arel-5.0.1.20140414130214/lib/arel/alias_predication.rb:4 x 2088
+/Users/hanke/.gem/ruby/2.2.0/gems/picky-4.25.2/lib/picky/tokenizer.rb:89 x 2070
+/Users/hanke/.rubies/ruby-2.2.0-preview1/lib/ruby/2.2.0/rubygems/version.rb:209 x 2000
+/Users/hanke/.gem/ruby/2.2.0/gems/picky-4.25.2/lib/picky/extensions/symbol.rb:31 x 1920
+/Users/hanke/.gem/ruby/2.2.0/gems/picky-4.25.2/lib/picky/extensions/symbol.rb:33 x 1920
+/Users/hanke/.gem/ruby/2.2.0/gems/picky-4.25.2/lib/picky/tokenizer.rb:69 x 1770
+/Users/hanke/.gem/ruby/2.2.0/gems/picky-4.25.2/lib/picky/tokenizer.rb:75 x 1690
+/Users/hanke/.rubies/ruby-2.2.0-preview1/lib/ruby/2.2.0/benchmark.rb:500 x 1636
+/Users/hanke/.rubies/ruby-2.2.0-preview1/lib/ruby/2.2.0/benchmark.rb:497 x 1636
+/Users/hanke/.rubies/ruby-2.2.0-preview1/lib/ruby/2.2.0/benchmark.rb:501 x 1636
+/Users/hanke/.gem/ruby/2.2.0/gems/arel-5.0.1.20140414130214/lib/arel/visitors/to_sql.rb:515 x 1564
+/Users/hanke/.rubies/ruby-2.2.0-preview1/lib/ruby/2.2.0/rubygems/version.rb:307 x 1560
+/Users/hanke/.gem/ruby/2.2.0/gems/flounder-1.0.1/lib/flounder/connection.rb:43 x 1360
+/Users/hanke/.gem/ruby/2.2.0/gems/flounder-1.0.1/lib/flounder/connection.rb:33 x 1360
+/Users/hanke/.gem/ruby/2.2.0/gems/text-1.3.0/lib/text/double_metaphone.rb:18 x 1320
+/Users/hanke/.gem/ruby/2.2.0/gems/picky-4.25.2/lib/picky/category_realtime.rb:95 x 1320
+/Users/hanke/.gem/ruby/2.2.0/gems/picky-4.25.2/lib/picky/extensions/symbol.rb:42 x 1280
+/Users/hanke/.rubies/ruby-2.2.0-preview1/lib/ruby/2.2.0/benchmark.rb:496 x 1236
+/Users/hanke/.gem/ruby/2.2.0/gems/arel-5.0.1.20140414130214/lib/arel/visitors/to_sql.rb:453 x 1064
+/Users/hanke/temp/cocoapods/search.cocoapods.org/lib/models/pod.rb:273 x 1040
+/Users/hanke/.gem/ruby/2.2.0/gems/flounder-1.0.1/lib/flounder/postgres_utils.rb:110 x 1040
+/Users/hanke/.gem/ruby/2.2.0/gems/flounder-1.0.1/lib/flounder/connection.rb:56 x 1038
+/Users/hanke/.gem/ruby/2.2.0/gems/text-1.3.0/lib/text/double_metaphone.rb:51 x 1000
+/Users/hanke/.gem/ruby/2.2.0/gems/arel-5.0.1.20140414130214/lib/arel/visitors/to_sql.rb:441 x 924
+/Users/hanke/.gem/ruby/2.2.0/gems/arel-5.0.1.20140414130214/lib/arel/visitors/to_sql.rb:198 x 900
+/Users/hanke/.gem/ruby/2.2.0/gems/arel-5.0.1.20140414130214/lib/arel/visitors/to_sql.rb:440 x 890
+/Users/hanke/.gem/ruby/2.2.0/gems/text-1.3.0/lib/text/double_metaphone.rb:22 x 880
+/Users/hanke/.rubies/ruby-2.2.0-preview1/lib/ruby/2.2.0/logger.rb:513 x 864
+/Users/hanke/temp/cocoapods/search.cocoapods.org/lib/models/pod.rb:284 x 800
+/Users/hanke/.gem/ruby/2.2.0/gems/arel-5.0.1.20140414130214/lib/arel/visitors/to_sql.rb:462 x 788
+/Users/hanke/.gem/ruby/2.2.0/gems/text-1.3.0/lib/text/double_metaphone.rb:275 x 720
+/Users/hanke/.gem/ruby/2.2.0/gems/text-1.3.0/lib/text/double_metaphone.rb:292 x 720
+/Users/hanke/.gem/ruby/2.2.0/gems/text-1.3.0/lib/text/double_metaphone.rb:277 x 680
+/Users/hanke/.rubies/ruby-2.2.0-preview1/lib/ruby/2.2.0/benchmark.rb:494 x 676
+/Users/hanke/.gem/ruby/2.2.0/gems/flounder-1.0.1/lib/flounder/connection.rb:79 x 560
+/Users/hanke/.gem/ruby/2.2.0/gems/flounder-1.0.1/lib/flounder/domain.rb:107 x 532
+
+allocated objects by gem
+-----------------------------------
+text-1.3.0 x 498
+picky-4.25.2 x 424
+rubygems x 312
+flounder-1.0.1 x 270
+search.cocoapods.org/lib x 219
+arel-5.0.1.20140414130214 x 162
+ruby-2.2.0-preview1/lib x 160
+json-1.8.2 x 101
+activesupport-4.2.0 x 16
+
+allocated objects by file
+-----------------------------------
+/Users/hanke/.gem/ruby/2.2.0/gems/text-1.3.0/lib/text/double_metaphone.rb x 490
+/Users/hanke/.rubies/ruby-2.2.0-preview1/lib/ruby/2.2.0/rubygems/version.rb x 312
+/Users/hanke/temp/cocoapods/search.cocoapods.org/lib/models/pod.rb x 215
+/Users/hanke/.gem/ruby/2.2.0/gems/picky-4.25.2/lib/picky/splitter.rb x 145
+/Users/hanke/.gem/ruby/2.2.0/gems/arel-5.0.1.20140414130214/lib/arel/visitors/to_sql.rb x 136
+/Users/hanke/.gem/ruby/2.2.0/gems/picky-4.25.2/lib/picky/extensions/symbol.rb x 135
+/Users/hanke/.rubies/ruby-2.2.0-preview1/lib/ruby/2.2.0/benchmark.rb x 120
+/Users/hanke/.gem/ruby/2.2.0/gems/flounder-1.0.1/lib/flounder/query/select.rb x 112
+/Users/hanke/.gem/ruby/2.2.0/gems/flounder-1.0.1/lib/flounder/connection.rb x 112
+/Users/hanke/.gem/ruby/2.2.0/gems/json-1.8.2/lib/json/common.rb x 101
+/Users/hanke/.gem/ruby/2.2.0/gems/picky-4.25.2/lib/picky/tokenizer.rb x 74
+/Users/hanke/.gem/ruby/2.2.0/gems/flounder-1.0.1/lib/flounder/postgres_utils.rb x 40
+/Users/hanke/.rubies/ruby-2.2.0-preview1/lib/ruby/2.2.0/logger.rb x 40
+/Users/hanke/.gem/ruby/2.2.0/gems/picky-4.25.2/lib/picky/category_realtime.rb x 39
+/Users/hanke/.gem/ruby/2.2.0/gems/arel-5.0.1.20140414130214/lib/arel/alias_predication.rb x 24
+/Users/hanke/.gem/ruby/2.2.0/gems/picky-4.25.2/lib/picky/extensions/array.rb x 13
+/Users/hanke/.gem/ruby/2.2.0/gems/picky-4.25.2/lib/picky/character_substituters/west_european.rb x 12
+/Users/hanke/.gem/ruby/2.2.0/gems/activesupport-4.2.0/lib/active_support/multibyte/chars.rb x 10
+/Users/hanke/.gem/ruby/2.2.0/gems/text-1.3.0/lib/text/levenshtein.rb x 8
+/Users/hanke/.gem/ruby/2.2.0/gems/picky-4.25.2/lib/picky/bundle_realtime.rb x 6
+/Users/hanke/.gem/ruby/2.2.0/gems/activesupport-4.2.0/lib/active_support/multibyte/unicode.rb x 6
+/Users/hanke/.gem/ruby/2.2.0/gems/flounder-1.0.1/lib/flounder/domain.rb x 4
+/Users/hanke/temp/cocoapods/search.cocoapods.org/lib/search.rb x 4
+/Users/hanke/.gem/ruby/2.2.0/gems/flounder-1.0.1/lib/flounder/field.rb x 2
+/Users/hanke/.gem/ruby/2.2.0/gems/arel-5.0.1.20140414130214/lib/arel/select_manager.rb x 2
+
+allocated objects by location
+-----------------------------------
+/Users/hanke/.gem/ruby/2.2.0/gems/picky-4.25.2/lib/picky/splitter.rb:19 x 143
+/Users/hanke/.gem/ruby/2.2.0/gems/text-1.3.0/lib/text/double_metaphone.rb:34 x 120
+/Users/hanke/.rubies/ruby-2.2.0-preview1/lib/ruby/2.2.0/rubygems/version.rb:163 x 110
+/Users/hanke/.gem/ruby/2.2.0/gems/json-1.8.2/lib/json/common.rb:155 x 101
+/Users/hanke/.rubies/ruby-2.2.0-preview1/lib/ruby/2.2.0/rubygems/version.rb:306 x 89
+/Users/hanke/temp/cocoapods/search.cocoapods.org/lib/models/pod.rb:100 x 89
+/Users/hanke/.gem/ruby/2.2.0/gems/flounder-1.0.1/lib/flounder/query/select.rb:74 x 88
+/Users/hanke/.gem/ruby/2.2.0/gems/text-1.3.0/lib/text/double_metaphone.rb:50 x 64
+/Users/hanke/.gem/ruby/2.2.0/gems/arel-5.0.1.20140414130214/lib/arel/visitors/to_sql.rb:540 x 56
+/Users/hanke/.rubies/ruby-2.2.0-preview1/lib/ruby/2.2.0/rubygems/version.rb:209 x 50
+/Users/hanke/.gem/ruby/2.2.0/gems/picky-4.25.2/lib/picky/extensions/symbol.rb:31 x 48
+/Users/hanke/.gem/ruby/2.2.0/gems/picky-4.25.2/lib/picky/extensions/symbol.rb:33 x 48
+/Users/hanke/.rubies/ruby-2.2.0-preview1/lib/ruby/2.2.0/rubygems/version.rb:307 x 39
+/Users/hanke/.gem/ruby/2.2.0/gems/picky-4.25.2/lib/picky/tokenizer.rb:240 x 38
+/Users/hanke/.gem/ruby/2.2.0/gems/flounder-1.0.1/lib/flounder/connection.rb:43 x 34
+/Users/hanke/.gem/ruby/2.2.0/gems/flounder-1.0.1/lib/flounder/connection.rb:33 x 34
+/Users/hanke/.gem/ruby/2.2.0/gems/picky-4.25.2/lib/picky/category_realtime.rb:95 x 33
+/Users/hanke/.gem/ruby/2.2.0/gems/text-1.3.0/lib/text/double_metaphone.rb:18 x 33
+/Users/hanke/.gem/ruby/2.2.0/gems/picky-4.25.2/lib/picky/extensions/symbol.rb:42 x 32
+/Users/hanke/.rubies/ruby-2.2.0-preview1/lib/ruby/2.2.0/benchmark.rb:496 x 28
+/Users/hanke/.rubies/ruby-2.2.0-preview1/lib/ruby/2.2.0/benchmark.rb:500 x 28
+/Users/hanke/.rubies/ruby-2.2.0-preview1/lib/ruby/2.2.0/benchmark.rb:501 x 28
+/Users/hanke/.rubies/ruby-2.2.0-preview1/lib/ruby/2.2.0/benchmark.rb:497 x 28
+/Users/hanke/.gem/ruby/2.2.0/gems/flounder-1.0.1/lib/flounder/postgres_utils.rb:110 x 26
+/Users/hanke/temp/cocoapods/search.cocoapods.org/lib/models/pod.rb:273 x 26
+/Users/hanke/.gem/ruby/2.2.0/gems/text-1.3.0/lib/text/double_metaphone.rb:51 x 25
+/Users/hanke/.gem/ruby/2.2.0/gems/arel-5.0.1.20140414130214/lib/arel/alias_predication.rb:4 x 24
+/Users/hanke/.gem/ruby/2.2.0/gems/text-1.3.0/lib/text/double_metaphone.rb:22 x 22
+/Users/hanke/temp/cocoapods/search.cocoapods.org/lib/models/pod.rb:332 x 21
+/Users/hanke/temp/cocoapods/search.cocoapods.org/lib/models/pod.rb:284 x 20
+/Users/hanke/.gem/ruby/2.2.0/gems/arel-5.0.1.20140414130214/lib/arel/visitors/to_sql.rb:515 x 20
+/Users/hanke/.gem/ruby/2.2.0/gems/text-1.3.0/lib/text/double_metaphone.rb:292 x 18
+/Users/hanke/.gem/ruby/2.2.0/gems/text-1.3.0/lib/text/double_metaphone.rb:275 x 18
+/Users/hanke/.gem/ruby/2.2.0/gems/text-1.3.0/lib/text/double_metaphone.rb:277 x 17
+/Users/hanke/.rubies/ruby-2.2.0-preview1/lib/ruby/2.2.0/logger.rb:507 x 16
+/Users/hanke/.rubies/ruby-2.2.0-preview1/lib/ruby/2.2.0/logger.rb:513 x 16
+/Users/hanke/.gem/ruby/2.2.0/gems/picky-4.25.2/lib/picky/tokenizer.rb:89 x 14
+/Users/hanke/.gem/ruby/2.2.0/gems/flounder-1.0.1/lib/flounder/connection.rb:79 x 14
+/Users/hanke/.gem/ruby/2.2.0/gems/text-1.3.0/lib/text/double_metaphone.rb:257 x 12
+/Users/hanke/temp/cocoapods/search.cocoapods.org/lib/models/pod.rb:272 x 12
+/Users/hanke/.rubies/ruby-2.2.0-preview1/lib/ruby/2.2.0/rubygems/version.rb:172 x 12
+/Users/hanke/.gem/ruby/2.2.0/gems/text-1.3.0/lib/text/double_metaphone.rb:269 x 12
+/Users/hanke/.gem/ruby/2.2.0/gems/flounder-1.0.1/lib/flounder/query/select.rb:65 x 12
+/Users/hanke/.gem/ruby/2.2.0/gems/picky-4.25.2/lib/picky/tokenizer.rb:69 x 12
+/Users/hanke/.gem/ruby/2.2.0/gems/flounder-1.0.1/lib/flounder/connection.rb:56 x 12
+/Users/hanke/.rubies/ruby-2.2.0-preview1/lib/ruby/2.2.0/rubygems/version.rb:198 x 12
+/Users/hanke/.gem/ruby/2.2.0/gems/text-1.3.0/lib/text/double_metaphone.rb:279 x 12
+/Users/hanke/.gem/ruby/2.2.0/gems/flounder-1.0.1/lib/flounder/query/select.rb:71 x 12
+/Users/hanke/.gem/ruby/2.2.0/gems/text-1.3.0/lib/text/double_metaphone.rb:299 x 12
+/Users/hanke/.gem/ruby/2.2.0/gems/picky-4.25.2/lib/picky/extensions/array.rb:26 x 11
+
+retained memory by gem
+-----------------------------------
+picky-4.25.2 x 3834
+rubygems x 1409
+flounder-1.0.1 x 1120
+json-1.8.2 x 641
+search.cocoapods.org/lib x 544
+text-1.3.0 x 120
+arel-5.0.1.20140414130214 x 87
+ruby-2.2.0-preview1/lib x 40
+
+retained memory by file
+-----------------------------------
+/Users/hanke/.gem/ruby/2.2.0/gems/picky-4.25.2/lib/picky/extensions/symbol.rb x 1560
+/Users/hanke/.gem/ruby/2.2.0/gems/picky-4.25.2/lib/picky/category_realtime.rb x 1480
+/Users/hanke/.rubies/ruby-2.2.0-preview1/lib/ruby/2.2.0/rubygems/version.rb x 1409
+/Users/hanke/.gem/ruby/2.2.0/gems/json-1.8.2/lib/json/common.rb x 641
+/Users/hanke/.gem/ruby/2.2.0/gems/flounder-1.0.1/lib/flounder/query/select.rb x 560
+/Users/hanke/temp/cocoapods/search.cocoapods.org/lib/models/pod.rb x 544
+/Users/hanke/.gem/ruby/2.2.0/gems/picky-4.25.2/lib/picky/splitter.rb x 507
+/Users/hanke/.gem/ruby/2.2.0/gems/flounder-1.0.1/lib/flounder/postgres_utils.rb x 360
+/Users/hanke/.gem/ruby/2.2.0/gems/picky-4.25.2/lib/picky/bundle_realtime.rb x 240
+/Users/hanke/.gem/ruby/2.2.0/gems/flounder-1.0.1/lib/flounder/connection.rb x 200
+/Users/hanke/.gem/ruby/2.2.0/gems/text-1.3.0/lib/text/double_metaphone.rb x 120
+/Users/hanke/.gem/ruby/2.2.0/gems/arel-5.0.1.20140414130214/lib/arel/select_manager.rb x 87
+/Users/hanke/.gem/ruby/2.2.0/gems/picky-4.25.2/lib/picky/character_substituters/west_european.rb x 47
+/Users/hanke/.rubies/ruby-2.2.0-preview1/lib/ruby/2.2.0/benchmark.rb x 40
+
+retained memory by location
+-----------------------------------
+/Users/hanke/.gem/ruby/2.2.0/gems/picky-4.25.2/lib/picky/category_realtime.rb:95 x 1320
+/Users/hanke/.gem/ruby/2.2.0/gems/picky-4.25.2/lib/picky/extensions/symbol.rb:42 x 1280
+/Users/hanke/.gem/ruby/2.2.0/gems/json-1.8.2/lib/json/common.rb:155 x 641
+/Users/hanke/.gem/ruby/2.2.0/gems/picky-4.25.2/lib/picky/splitter.rb:19 x 507
+/Users/hanke/.rubies/ruby-2.2.0-preview1/lib/ruby/2.2.0/rubygems/version.rb:198 x 480
+/Users/hanke/.rubies/ruby-2.2.0-preview1/lib/ruby/2.2.0/rubygems/version.rb:209 x 480
+/Users/hanke/.gem/ruby/2.2.0/gems/flounder-1.0.1/lib/flounder/query/select.rb:71 x 400
+/Users/hanke/.gem/ruby/2.2.0/gems/picky-4.25.2/lib/picky/extensions/symbol.rb:10 x 280
+/Users/hanke/.gem/ruby/2.2.0/gems/flounder-1.0.1/lib/flounder/postgres_utils.rb:117 x 280
+/Users/hanke/temp/cocoapods/search.cocoapods.org/lib/models/pod.rb:100 x 264
+/Users/hanke/.rubies/ruby-2.2.0-preview1/lib/ruby/2.2.0/rubygems/version.rb:306 x 249
+/Users/hanke/.gem/ruby/2.2.0/gems/flounder-1.0.1/lib/flounder/connection.rb:43 x 200
+/Users/hanke/.rubies/ruby-2.2.0-preview1/lib/ruby/2.2.0/rubygems/version.rb:307 x 160
+/Users/hanke/.gem/ruby/2.2.0/gems/flounder-1.0.1/lib/flounder/query/select.rb:65 x 160
+/Users/hanke/temp/cocoapods/search.cocoapods.org/lib/models/pod.rb:284 x 160
+/Users/hanke/.gem/ruby/2.2.0/gems/picky-4.25.2/lib/picky/category_realtime.rb:94 x 160
+/Users/hanke/.gem/ruby/2.2.0/gems/picky-4.25.2/lib/picky/bundle_realtime.rb:79 x 120
+/Users/hanke/.gem/ruby/2.2.0/gems/picky-4.25.2/lib/picky/bundle_realtime.rb:72 x 120
+/Users/hanke/.gem/ruby/2.2.0/gems/arel-5.0.1.20140414130214/lib/arel/select_manager.rb:157 x 87
+/Users/hanke/.gem/ruby/2.2.0/gems/text-1.3.0/lib/text/double_metaphone.rb:51 x 80
+/Users/hanke/.gem/ruby/2.2.0/gems/flounder-1.0.1/lib/flounder/postgres_utils.rb:110 x 80
+/Users/hanke/.gem/ruby/2.2.0/gems/picky-4.25.2/lib/picky/character_substituters/west_european.rb:39 x 47
+/Users/hanke/.rubies/ruby-2.2.0-preview1/lib/ruby/2.2.0/rubygems/version.rb:172 x 40
+/Users/hanke/.rubies/ruby-2.2.0-preview1/lib/ruby/2.2.0/benchmark.rb:497 x 40
+/Users/hanke/temp/cocoapods/search.cocoapods.org/lib/models/pod.rb:182 x 40
+/Users/hanke/.gem/ruby/2.2.0/gems/text-1.3.0/lib/text/double_metaphone.rb:110 x 40
+/Users/hanke/temp/cocoapods/search.cocoapods.org/lib/models/pod.rb:188 x 40
+/Users/hanke/temp/cocoapods/search.cocoapods.org/lib/models/pod.rb:96 x 40
+
+retained objects by gem
+-----------------------------------
+picky-4.25.2 x 86
+rubygems x 32
+flounder-1.0.1 x 28
+search.cocoapods.org/lib x 9
+text-1.3.0 x 3
+ruby-2.2.0-preview1/lib x 1
+json-1.8.2 x 1
+arel-5.0.1.20140414130214 x 1
+
+retained objects by file
+-----------------------------------
+/Users/hanke/.gem/ruby/2.2.0/gems/picky-4.25.2/lib/picky/extensions/symbol.rb x 39
+/Users/hanke/.gem/ruby/2.2.0/gems/picky-4.25.2/lib/picky/category_realtime.rb x 37
+/Users/hanke/.rubies/ruby-2.2.0-preview1/lib/ruby/2.2.0/rubygems/version.rb x 32
+/Users/hanke/.gem/ruby/2.2.0/gems/flounder-1.0.1/lib/flounder/query/select.rb x 14
+/Users/hanke/temp/cocoapods/search.cocoapods.org/lib/models/pod.rb x 9
+/Users/hanke/.gem/ruby/2.2.0/gems/flounder-1.0.1/lib/flounder/postgres_utils.rb x 9
+/Users/hanke/.gem/ruby/2.2.0/gems/picky-4.25.2/lib/picky/bundle_realtime.rb x 6
+/Users/hanke/.gem/ruby/2.2.0/gems/flounder-1.0.1/lib/flounder/connection.rb x 5
+/Users/hanke/.gem/ruby/2.2.0/gems/text-1.3.0/lib/text/double_metaphone.rb x 3
+/Users/hanke/.gem/ruby/2.2.0/gems/picky-4.25.2/lib/picky/splitter.rb x 3
+/Users/hanke/.gem/ruby/2.2.0/gems/picky-4.25.2/lib/picky/character_substituters/west_european.rb x 1
+/Users/hanke/.gem/ruby/2.2.0/gems/json-1.8.2/lib/json/common.rb x 1
+/Users/hanke/.rubies/ruby-2.2.0-preview1/lib/ruby/2.2.0/benchmark.rb x 1
+/Users/hanke/.gem/ruby/2.2.0/gems/arel-5.0.1.20140414130214/lib/arel/select_manager.rb x 1
+
+retained objects by location
+-----------------------------------
+/Users/hanke/.gem/ruby/2.2.0/gems/picky-4.25.2/lib/picky/category_realtime.rb:95 x 33
+/Users/hanke/.gem/ruby/2.2.0/gems/picky-4.25.2/lib/picky/extensions/symbol.rb:42 x 32
+/Users/hanke/.rubies/ruby-2.2.0-preview1/lib/ruby/2.2.0/rubygems/version.rb:198 x 12
+/Users/hanke/.rubies/ruby-2.2.0-preview1/lib/ruby/2.2.0/rubygems/version.rb:209 x 12
+/Users/hanke/.gem/ruby/2.2.0/gems/flounder-1.0.1/lib/flounder/query/select.rb:71 x 10
+/Users/hanke/.gem/ruby/2.2.0/gems/picky-4.25.2/lib/picky/extensions/symbol.rb:10 x 7
+/Users/hanke/.gem/ruby/2.2.0/gems/flounder-1.0.1/lib/flounder/postgres_utils.rb:117 x 7
+/Users/hanke/.gem/ruby/2.2.0/gems/flounder-1.0.1/lib/flounder/connection.rb:43 x 5
+/Users/hanke/.gem/ruby/2.2.0/gems/picky-4.25.2/lib/picky/category_realtime.rb:94 x 4
+/Users/hanke/temp/cocoapods/search.cocoapods.org/lib/models/pod.rb:284 x 4
+/Users/hanke/.gem/ruby/2.2.0/gems/flounder-1.0.1/lib/flounder/query/select.rb:65 x 4
+/Users/hanke/.rubies/ruby-2.2.0-preview1/lib/ruby/2.2.0/rubygems/version.rb:307 x 4
+/Users/hanke/.gem/ruby/2.2.0/gems/picky-4.25.2/lib/picky/bundle_realtime.rb:72 x 3
+/Users/hanke/.gem/ruby/2.2.0/gems/picky-4.25.2/lib/picky/splitter.rb:19 x 3
+/Users/hanke/.rubies/ruby-2.2.0-preview1/lib/ruby/2.2.0/rubygems/version.rb:306 x 3
+/Users/hanke/.gem/ruby/2.2.0/gems/picky-4.25.2/lib/picky/bundle_realtime.rb:79 x 3
+/Users/hanke/.gem/ruby/2.2.0/gems/flounder-1.0.1/lib/flounder/postgres_utils.rb:110 x 2
+/Users/hanke/temp/cocoapods/search.cocoapods.org/lib/models/pod.rb:100 x 2
+/Users/hanke/.gem/ruby/2.2.0/gems/text-1.3.0/lib/text/double_metaphone.rb:51 x 2
+/Users/hanke/temp/cocoapods/search.cocoapods.org/lib/models/pod.rb:96 x 1
+/Users/hanke/.gem/ruby/2.2.0/gems/picky-4.25.2/lib/picky/character_substituters/west_european.rb:39 x 1
+/Users/hanke/.gem/ruby/2.2.0/gems/json-1.8.2/lib/json/common.rb:155 x 1
+/Users/hanke/.gem/ruby/2.2.0/gems/text-1.3.0/lib/text/double_metaphone.rb:110 x 1
+/Users/hanke/.rubies/ruby-2.2.0-preview1/lib/ruby/2.2.0/benchmark.rb:497 x 1
+/Users/hanke/.rubies/ruby-2.2.0-preview1/lib/ruby/2.2.0/rubygems/version.rb:172 x 1
+/Users/hanke/temp/cocoapods/search.cocoapods.org/lib/models/pod.rb:182 x 1
+/Users/hanke/temp/cocoapods/search.cocoapods.org/lib/models/pod.rb:188 x 1
+/Users/hanke/.gem/ruby/2.2.0/gems/arel-5.0.1.20140414130214/lib/arel/select_manager.rb:157 x 1
+
+
+Allocated String Report
+-----------------------------------
+"" x 155
+    /Users/hanke/.gem/ruby/2.2.0/gems/picky-4.25.2/lib/picky/splitter.rb:19 x 73
+    /Users/hanke/.gem/ruby/2.2.0/gems/text-1.3.0/lib/text/double_metaphone.rb:34 x 22
+    /Users/hanke/temp/cocoapods/search.cocoapods.org/lib/models/pod.rb:284 x 8
+    /Users/hanke/.rubies/ruby-2.2.0-preview1/lib/ruby/2.2.0/logger.rb:507 x 8
+    /Users/hanke/temp/cocoapods/search.cocoapods.org/lib/models/pod.rb:273 x 5
+    /Users/hanke/.rubies/ruby-2.2.0-preview1/lib/ruby/2.2.0/benchmark.rb:286 x 4
+    /Users/hanke/.rubies/ruby-2.2.0-preview1/lib/ruby/2.2.0/benchmark.rb:501 x 4
+    /Users/hanke/.gem/ruby/2.2.0/gems/picky-4.25.2/lib/picky/tokenizer.rb:89 x 4
+    /Users/hanke/temp/cocoapods/search.cocoapods.org/lib/models/pod.rb:100 x 4
+    /Users/hanke/.rubies/ruby-2.2.0-preview1/lib/ruby/2.2.0/benchmark.rb:496 x 4
+    /Users/hanke/.rubies/ruby-2.2.0-preview1/lib/ruby/2.2.0/benchmark.rb:497 x 4
+    /Users/hanke/.rubies/ruby-2.2.0-preview1/lib/ruby/2.2.0/benchmark.rb:500 x 4
+    /Users/hanke/temp/cocoapods/search.cocoapods.org/lib/models/pod.rb:272 x 3
+    /Users/hanke/.gem/ruby/2.2.0/gems/arel-5.0.1.20140414130214/lib/arel/visitors/to_sql.rb:335 x 2
+    /Users/hanke/temp/cocoapods/search.cocoapods.org/lib/models/pod.rb:157 x 2
+    /Users/hanke/temp/cocoapods/search.cocoapods.org/lib/models/pod.rb:163 x 2
+    /Users/hanke/.gem/ruby/2.2.0/gems/picky-4.25.2/lib/picky/tokenizer.rb:69 x 2
+"3" x 43
+    /Users/hanke/.gem/ruby/2.2.0/gems/picky-4.25.2/lib/picky/extensions/symbol.rb:33 x 19
+    /Users/hanke/.rubies/ruby-2.2.0-preview1/lib/ruby/2.2.0/rubygems/version.rb:306 x 12
+    /Users/hanke/.rubies/ruby-2.2.0-preview1/lib/ruby/2.2.0/rubygems/version.rb:307 x 12
+" " x 36
+    /Users/hanke/.gem/ruby/2.2.0/gems/text-1.3.0/lib/text/double_metaphone.rb:50 x 7
+    /Users/hanke/.gem/ruby/2.2.0/gems/text-1.3.0/lib/text/double_metaphone.rb:265 x 5
+    /Users/hanke/.gem/ruby/2.2.0/gems/arel-5.0.1.20140414130214/lib/arel/visitors/to_sql.rb:440 x 4
+    /Users/hanke/.gem/ruby/2.2.0/gems/arel-5.0.1.20140414130214/lib/arel/visitors/to_sql.rb:441 x 4
+    /Users/hanke/temp/cocoapods/search.cocoapods.org/lib/models/pod.rb:163 x 2
+    /Users/hanke/temp/cocoapods/search.cocoapods.org/lib/models/pod.rb:182 x 2
+    /Users/hanke/temp/cocoapods/search.cocoapods.org/lib/models/pod.rb:157 x 2
+    /Users/hanke/.gem/ruby/2.2.0/gems/text-1.3.0/lib/text/double_metaphone.rb:306 x 2
+    /Users/hanke/.gem/ruby/2.2.0/gems/arel-5.0.1.20140414130214/lib/arel/visitors/to_sql.rb:186 x 2
+    /Users/hanke/temp/cocoapods/search.cocoapods.org/lib/models/pod.rb:96 x 2
+    /Users/hanke/.gem/ruby/2.2.0/gems/text-1.3.0/lib/text/double_metaphone.rb:238 x 1
+    /Users/hanke/temp/cocoapods/search.cocoapods.org/lib/models/pod.rb:117 x 1
+    /Users/hanke/.gem/ruby/2.2.0/gems/text-1.3.0/lib/text/double_metaphone.rb:245 x 1
+    /Users/hanke/.gem/ruby/2.2.0/gems/text-1.3.0/lib/text/double_metaphone.rb:309 x 1
+"3.2.1" x 35
+    /Users/hanke/.rubies/ruby-2.2.0-preview1/lib/ruby/2.2.0/rubygems/version.rb:163 x 31
+    /Users/hanke/temp/cocoapods/search.cocoapods.org/lib/models/pod.rb:100 x 2
+    /Users/hanke/.gem/ruby/2.2.0/gems/picky-4.25.2/lib/picky/splitter.rb:19 x 1
+    /Users/hanke/.gem/ruby/2.2.0/gems/picky-4.25.2/lib/picky/extensions/symbol.rb:31 x 1
+"R" x 34
+    /Users/hanke/.gem/ruby/2.2.0/gems/text-1.3.0/lib/text/double_metaphone.rb:34 x 16
+    /Users/hanke/.gem/ruby/2.2.0/gems/text-1.3.0/lib/text/double_metaphone.rb:257 x 6
+    /Users/hanke/.gem/ruby/2.2.0/gems/text-1.3.0/lib/text/double_metaphone.rb:50 x 6
+    /Users/hanke/.gem/ruby/2.2.0/gems/text-1.3.0/lib/text/double_metaphone.rb:22 x 4
+    /Users/hanke/.gem/ruby/2.2.0/gems/text-1.3.0/lib/text/double_metaphone.rb:306 x 1
+    /Users/hanke/.gem/ruby/2.2.0/gems/text-1.3.0/lib/text/double_metaphone.rb:63 x 1
+"E" x 31
+    /Users/hanke/.gem/ruby/2.2.0/gems/text-1.3.0/lib/text/double_metaphone.rb:51 x 12
+    /Users/hanke/.gem/ruby/2.2.0/gems/text-1.3.0/lib/text/double_metaphone.rb:50 x 12
+    /Users/hanke/.gem/ruby/2.2.0/gems/text-1.3.0/lib/text/double_metaphone.rb:239 x 3
+    /Users/hanke/.gem/ruby/2.2.0/gems/text-1.3.0/lib/text/double_metaphone.rb:257 x 3
+    /Users/hanke/.gem/ruby/2.2.0/gems/text-1.3.0/lib/text/double_metaphone.rb:22 x 1
+"S" x 25
+    /Users/hanke/.gem/ruby/2.2.0/gems/text-1.3.0/lib/text/double_metaphone.rb:292 x 12
+    /Users/hanke/.gem/ruby/2.2.0/gems/text-1.3.0/lib/text/double_metaphone.rb:50 x 6
+    /Users/hanke/.gem/ruby/2.2.0/gems/text-1.3.0/lib/text/double_metaphone.rb:22 x 5
+    /Users/hanke/.gem/ruby/2.2.0/gems/text-1.3.0/lib/text/double_metaphone.rb:63 x 2
+"I" x 25
+    /Users/hanke/.rubies/ruby-2.2.0-preview1/lib/ruby/2.2.0/logger.rb:506 x 8
+    /Users/hanke/.gem/ruby/2.2.0/gems/text-1.3.0/lib/text/double_metaphone.rb:277 x 5
+    /Users/hanke/.gem/ruby/2.2.0/gems/text-1.3.0/lib/text/double_metaphone.rb:51 x 4
+    /Users/hanke/.gem/ruby/2.2.0/gems/text-1.3.0/lib/text/double_metaphone.rb:50 x 4
+    /Users/hanke/.gem/ruby/2.2.0/gems/text-1.3.0/lib/text/double_metaphone.rb:292 x 3
+    /Users/hanke/.gem/ruby/2.2.0/gems/text-1.3.0/lib/text/double_metaphone.rb:132 x 1
+"%10.6f" x 24
+    /Users/hanke/.rubies/ruby-2.2.0-preview1/lib/ruby/2.2.0/benchmark.rb:497 x 8
+    /Users/hanke/.rubies/ruby-2.2.0-preview1/lib/ruby/2.2.0/benchmark.rb:496 x 8
+    /Users/hanke/.rubies/ruby-2.2.0-preview1/lib/ruby/2.2.0/benchmark.rb:500 x 8
+"4" x 22
+    /Users/hanke/.gem/ruby/2.2.0/gems/picky-4.25.2/lib/picky/extensions/symbol.rb:33 x 8
+    /Users/hanke/.rubies/ruby-2.2.0-preview1/lib/ruby/2.2.0/rubygems/version.rb:306 x 7
+    /Users/hanke/.rubies/ruby-2.2.0-preview1/lib/ruby/2.2.0/rubygems/version.rb:307 x 7
+"name" x 22
+    /Users/hanke/.gem/ruby/2.2.0/gems/flounder-1.0.1/lib/flounder/connection.rb:43 x 6
+    /Users/hanke/.gem/ruby/2.2.0/gems/flounder-1.0.1/lib/flounder/connection.rb:33 x 6
+    /Users/hanke/.gem/ruby/2.2.0/gems/arel-5.0.1.20140414130214/lib/arel/visitors/to_sql.rb:133 x 4
+    /Users/hanke/.gem/ruby/2.2.0/gems/json-1.8.2/lib/json/common.rb:155 x 4
+    /Users/hanke/.gem/ruby/2.2.0/gems/flounder-1.0.1/lib/flounder/postgres_utils.rb:110 x 2
+"M" x 21
+    /Users/hanke/.gem/ruby/2.2.0/gems/text-1.3.0/lib/text/double_metaphone.rb:34 x 10
+    /Users/hanke/.gem/ruby/2.2.0/gems/text-1.3.0/lib/text/double_metaphone.rb:50 x 5
+    /Users/hanke/.gem/ruby/2.2.0/gems/text-1.3.0/lib/text/double_metaphone.rb:239 x 5
+    /Users/hanke/.gem/ruby/2.2.0/gems/text-1.3.0/lib/text/double_metaphone.rb:22 x 1
+"1" x 21
+    /Users/hanke/.gem/ruby/2.2.0/gems/flounder-1.0.1/lib/flounder/connection.rb:56 x 6
+    /Users/hanke/.rubies/ruby-2.2.0-preview1/lib/ruby/2.2.0/rubygems/version.rb:307 x 5
+    /Users/hanke/.rubies/ruby-2.2.0-preview1/lib/ruby/2.2.0/rubygems/version.rb:306 x 5
+    /Users/hanke/.gem/ruby/2.2.0/gems/picky-4.25.2/lib/picky/extensions/symbol.rb:33 x 3
+    /Users/hanke/.gem/ruby/2.2.0/gems/arel-5.0.1.20140414130214/lib/arel/visitors/to_sql.rb:330 x 2
+"4.0" x 21
+    /Users/hanke/.rubies/ruby-2.2.0-preview1/lib/ruby/2.2.0/rubygems/version.rb:163 x 14
+    /Users/hanke/.rubies/ruby-2.2.0-preview1/lib/ruby/2.2.0/rubygems/version.rb:306 x 3
+    /Users/hanke/temp/cocoapods/search.cocoapods.org/lib/models/pod.rb:100 x 2
+    /Users/hanke/.gem/ruby/2.2.0/gems/picky-4.25.2/lib/picky/extensions/symbol.rb:31 x 1
+    /Users/hanke/.gem/ruby/2.2.0/gems/picky-4.25.2/lib/picky/splitter.rb:19 x 1
+"O" x 20
+    /Users/hanke/.gem/ruby/2.2.0/gems/text-1.3.0/lib/text/double_metaphone.rb:51 x 5
+    /Users/hanke/.gem/ruby/2.2.0/gems/text-1.3.0/lib/text/double_metaphone.rb:50 x 5
+    /Users/hanke/.gem/ruby/2.2.0/gems/text-1.3.0/lib/text/double_metaphone.rb:277 x 4
+    /Users/hanke/.gem/ruby/2.2.0/gems/text-1.3.0/lib/text/double_metaphone.rb:257 x 3
+    /Users/hanke/.gem/ruby/2.2.0/gems/text-1.3.0/lib/text/double_metaphone.rb:292 x 2
+    /Users/hanke/.gem/ruby/2.2.0/gems/text-1.3.0/lib/text/double_metaphone.rb:239 x 1
+"4.0.7" x 19
+    /Users/hanke/.rubies/ruby-2.2.0-preview1/lib/ruby/2.2.0/rubygems/version.rb:163 x 4
+    /Users/hanke/.rubies/ruby-2.2.0-preview1/lib/ruby/2.2.0/rubygems/version.rb:306 x 4
+    /Users/hanke/.gem/ruby/2.2.0/gems/json-1.8.2/lib/json/common.rb:155 x 2
+    /Users/hanke/.rubies/ruby-2.2.0-preview1/lib/ruby/2.2.0/rubygems/version.rb:209 x 2
+    /Users/hanke/temp/cocoapods/search.cocoapods.org/lib/models/pod.rb:100 x 2
+    /Users/hanke/.rubies/ruby-2.2.0-preview1/lib/ruby/2.2.0/rubygems/version.rb:198 x 1
+    /Users/hanke/.gem/ruby/2.2.0/gems/picky-4.25.2/lib/picky/extensions/symbol.rb:31 x 1
+    /Users/hanke/.gem/ruby/2.2.0/gems/picky-4.25.2/lib/picky/category_realtime.rb:95 x 1
+    /Users/hanke/.rubies/ruby-2.2.0-preview1/lib/ruby/2.2.0/rubygems/version.rb:172 x 1
+    /Users/hanke/.gem/ruby/2.2.0/gems/picky-4.25.2/lib/picky/splitter.rb:19 x 1
+"3.3.1" x 19
+    /Users/hanke/.rubies/ruby-2.2.0-preview1/lib/ruby/2.2.0/rubygems/version.rb:163 x 6
+    /Users/hanke/.rubies/ruby-2.2.0-preview1/lib/ruby/2.2.0/rubygems/version.rb:306 x 4
+    /Users/hanke/temp/cocoapods/search.cocoapods.org/lib/models/pod.rb:100 x 2
+    /Users/hanke/.rubies/ruby-2.2.0-preview1/lib/ruby/2.2.0/rubygems/version.rb:209 x 2
+    /Users/hanke/.gem/ruby/2.2.0/gems/picky-4.25.2/lib/picky/category_realtime.rb:95 x 1
+    /Users/hanke/.rubies/ruby-2.2.0-preview1/lib/ruby/2.2.0/rubygems/version.rb:198 x 1
+    /Users/hanke/.rubies/ruby-2.2.0-preview1/lib/ruby/2.2.0/rubygems/version.rb:172 x 1
+    /Users/hanke/.gem/ruby/2.2.0/gems/picky-4.25.2/lib/picky/extensions/symbol.rb:31 x 1
+    /Users/hanke/.gem/ruby/2.2.0/gems/picky-4.25.2/lib/picky/splitter.rb:19 x 1
+"3.1.5" x 18
+    /Users/hanke/.rubies/ruby-2.2.0-preview1/lib/ruby/2.2.0/rubygems/version.rb:163 x 5
+    /Users/hanke/.rubies/ruby-2.2.0-preview1/lib/ruby/2.2.0/rubygems/version.rb:306 x 4
+    /Users/hanke/temp/cocoapods/search.cocoapods.org/lib/models/pod.rb:100 x 2
+    /Users/hanke/.rubies/ruby-2.2.0-preview1/lib/ruby/2.2.0/rubygems/version.rb:209 x 2
+    /Users/hanke/.gem/ruby/2.2.0/gems/picky-4.25.2/lib/picky/splitter.rb:19 x 1
+    /Users/hanke/.rubies/ruby-2.2.0-preview1/lib/ruby/2.2.0/rubygems/version.rb:172 x 1
+    /Users/hanke/.gem/ruby/2.2.0/gems/picky-4.25.2/lib/picky/category_realtime.rb:95 x 1
+    /Users/hanke/.gem/ruby/2.2.0/gems/picky-4.25.2/lib/picky/extensions/symbol.rb:31 x 1
+    /Users/hanke/.rubies/ruby-2.2.0-preview1/lib/ruby/2.2.0/rubygems/version.rb:198 x 1
+"3.1.1" x 18
+    /Users/hanke/.rubies/ruby-2.2.0-preview1/lib/ruby/2.2.0/rubygems/version.rb:163 x 14
+    /Users/hanke/temp/cocoapods/search.cocoapods.org/lib/models/pod.rb:100 x 2
+    /Users/hanke/.gem/ruby/2.2.0/gems/picky-4.25.2/lib/picky/splitter.rb:19 x 1
+    /Users/hanke/.gem/ruby/2.2.0/gems/picky-4.25.2/lib/picky/extensions/symbol.rb:31 x 1
+"4.0.4" x 18
+    /Users/hanke/.rubies/ruby-2.2.0-preview1/lib/ruby/2.2.0/rubygems/version.rb:163 x 5
+    /Users/hanke/.rubies/ruby-2.2.0-preview1/lib/ruby/2.2.0/rubygems/version.rb:306 x 4
+    /Users/hanke/temp/cocoapods/search.cocoapods.org/lib/models/pod.rb:100 x 2
+    /Users/hanke/.rubies/ruby-2.2.0-preview1/lib/ruby/2.2.0/rubygems/version.rb:209 x 2
+    /Users/hanke/.gem/ruby/2.2.0/gems/picky-4.25.2/lib/picky/extensions/symbol.rb:31 x 1
+    /Users/hanke/.rubies/ruby-2.2.0-preview1/lib/ruby/2.2.0/rubygems/version.rb:198 x 1
+    /Users/hanke/.rubies/ruby-2.2.0-preview1/lib/ruby/2.2.0/rubygems/version.rb:172 x 1
+    /Users/hanke/.gem/ruby/2.2.0/gems/picky-4.25.2/lib/picky/category_realtime.rb:95 x 1
+    /Users/hanke/.gem/ruby/2.2.0/gems/picky-4.25.2/lib/picky/splitter.rb:19 x 1
+"0" x 17
+    /Users/hanke/.rubies/ruby-2.2.0-preview1/lib/ruby/2.2.0/rubygems/version.rb:307 x 7
+    /Users/hanke/.rubies/ruby-2.2.0-preview1/lib/ruby/2.2.0/rubygems/version.rb:306 x 7
+    /Users/hanke/.gem/ruby/2.2.0/gems/picky-4.25.2/lib/picky/extensions/symbol.rb:33 x 3
+"%10.6" x 16
+    /Users/hanke/.rubies/ruby-2.2.0-preview1/lib/ruby/2.2.0/benchmark.rb:497 x 4
+    /Users/hanke/.rubies/ruby-2.2.0-preview1/lib/ruby/2.2.0/benchmark.rb:496 x 4
+    /Users/hanke/.rubies/ruby-2.2.0-preview1/lib/ruby/2.2.0/benchmark.rb:501 x 4
+    /Users/hanke/.rubies/ruby-2.2.0-preview1/lib/ruby/2.2.0/benchmark.rb:500 x 4
+"3.2.4" x 15
+    /Users/hanke/.rubies/ruby-2.2.0-preview1/lib/ruby/2.2.0/rubygems/version.rb:306 x 4
+    /Users/hanke/temp/cocoapods/search.cocoapods.org/lib/models/pod.rb:100 x 2
+    /Users/hanke/.rubies/ruby-2.2.0-preview1/lib/ruby/2.2.0/rubygems/version.rb:209 x 2
+    /Users/hanke/.rubies/ruby-2.2.0-preview1/lib/ruby/2.2.0/rubygems/version.rb:163 x 2
+    /Users/hanke/.rubies/ruby-2.2.0-preview1/lib/ruby/2.2.0/rubygems/version.rb:198 x 1
+    /Users/hanke/.rubies/ruby-2.2.0-preview1/lib/ruby/2.2.0/rubygems/version.rb:172 x 1
+    /Users/hanke/.gem/ruby/2.2.0/gems/picky-4.25.2/lib/picky/extensions/symbol.rb:31 x 1
+    /Users/hanke/.gem/ruby/2.2.0/gems/picky-4.25.2/lib/picky/category_realtime.rb:95 x 1
+    /Users/hanke/.gem/ruby/2.2.0/gems/picky-4.25.2/lib/picky/splitter.rb:19 x 1
+"CK" x 15
+    /Users/hanke/.gem/ruby/2.2.0/gems/text-1.3.0/lib/text/double_metaphone.rb:110 x 6
+    /Users/hanke/.gem/ruby/2.2.0/gems/text-1.3.0/lib/text/double_metaphone.rb:95 x 3
+    /Users/hanke/.gem/ruby/2.2.0/gems/text-1.3.0/lib/text/double_metaphone.rb:99 x 3
+    /Users/hanke/.gem/ruby/2.2.0/gems/text-1.3.0/lib/text/double_metaphone.rb:74 x 3
+"T" x 15
+    /Users/hanke/.gem/ruby/2.2.0/gems/text-1.3.0/lib/text/double_metaphone.rb:34 x 12
+    /Users/hanke/.gem/ruby/2.2.0/gems/text-1.3.0/lib/text/double_metaphone.rb:50 x 3
+"3.2.3" x 14
+    /Users/hanke/.rubies/ruby-2.2.0-preview1/lib/ruby/2.2.0/rubygems/version.rb:306 x 4
+    /Users/hanke/temp/cocoapods/search.cocoapods.org/lib/models/pod.rb:100 x 2
+    /Users/hanke/.rubies/ruby-2.2.0-preview1/lib/ruby/2.2.0/rubygems/version.rb:209 x 2
+    /Users/hanke/.gem/ruby/2.2.0/gems/picky-4.25.2/lib/picky/splitter.rb:19 x 1
+    /Users/hanke/.rubies/ruby-2.2.0-preview1/lib/ruby/2.2.0/rubygems/version.rb:198 x 1
+    /Users/hanke/.rubies/ruby-2.2.0-preview1/lib/ruby/2.2.0/rubygems/version.rb:172 x 1
+    /Users/hanke/.gem/ruby/2.2.0/gems/picky-4.25.2/lib/picky/extensions/symbol.rb:31 x 1
+    /Users/hanke/.gem/ruby/2.2.0/gems/picky-4.25.2/lib/picky/category_realtime.rb:95 x 1
+    /Users/hanke/.rubies/ruby-2.2.0-preview1/lib/ruby/2.2.0/rubygems/version.rb:163 x 1
+"id" x 14
+    /Users/hanke/.gem/ruby/2.2.0/gems/flounder-1.0.1/lib/flounder/connection.rb:43 x 6
+    /Users/hanke/.gem/ruby/2.2.0/gems/flounder-1.0.1/lib/flounder/connection.rb:33 x 6
+    /Users/hanke/.gem/ruby/2.2.0/gems/flounder-1.0.1/lib/flounder/postgres_utils.rb:110 x 2
+"side" x 14
+    /Users/hanke/.gem/ruby/2.2.0/gems/text-1.3.0/lib/text/levenshtein.rb:119 x 3
+    /Users/hanke/temp/cocoapods/search.cocoapods.org/lib/models/pod.rb:273 x 2
+    /Users/hanke/.gem/ruby/2.2.0/gems/picky-4.25.2/lib/picky/splitter.rb:19 x 2
+    /Users/hanke/.gem/ruby/2.2.0/gems/picky-4.25.2/lib/picky/extensions/symbol.rb:31 x 1
+    /Users/hanke/.gem/ruby/2.2.0/gems/picky-4.25.2/lib/picky/extensions/array.rb:28 x 1
+    /Users/hanke/.gem/ruby/2.2.0/gems/picky-4.25.2/lib/picky/extensions/array.rb:26 x 1
+    /Users/hanke/.gem/ruby/2.2.0/gems/text-1.3.0/lib/text/double_metaphone.rb:18 x 1
+    /Users/hanke/.gem/ruby/2.2.0/gems/picky-4.25.2/lib/picky/bundle_realtime.rb:79 x 1
+    /Users/hanke/.gem/ruby/2.2.0/gems/picky-4.25.2/lib/picky/bundle_realtime.rb:72 x 1
+    /Users/hanke/temp/cocoapods/search.cocoapods.org/lib/models/pod.rb:284 x 1
+"3.1.4" x 14
+    /Users/hanke/.rubies/ruby-2.2.0-preview1/lib/ruby/2.2.0/rubygems/version.rb:306 x 4
+    /Users/hanke/.rubies/ruby-2.2.0-preview1/lib/ruby/2.2.0/rubygems/version.rb:209 x 2
+    /Users/hanke/temp/cocoapods/search.cocoapods.org/lib/models/pod.rb:100 x 2
+    /Users/hanke/.rubies/ruby-2.2.0-preview1/lib/ruby/2.2.0/rubygems/version.rb:198 x 1
+    /Users/hanke/.rubies/ruby-2.2.0-preview1/lib/ruby/2.2.0/rubygems/version.rb:172 x 1
+    /Users/hanke/.gem/ruby/2.2.0/gems/picky-4.25.2/lib/picky/splitter.rb:19 x 1
+    /Users/hanke/.gem/ruby/2.2.0/gems/picky-4.25.2/lib/picky/extensions/symbol.rb:31 x 1
+    /Users/hanke/.gem/ruby/2.2.0/gems/picky-4.25.2/lib/picky/category_realtime.rb:95 x 1
+    /Users/hanke/.rubies/ruby-2.2.0-preview1/lib/ruby/2.2.0/rubygems/version.rb:163 x 1
+"created_at" x 14
+    /Users/hanke/.gem/ruby/2.2.0/gems/flounder-1.0.1/lib/flounder/connection.rb:43 x 6
+    /Users/hanke/.gem/ruby/2.2.0/gems/flounder-1.0.1/lib/flounder/connection.rb:33 x 6
+    /Users/hanke/.gem/ruby/2.2.0/gems/flounder-1.0.1/lib/flounder/postgres_utils.rb:110 x 2
+"4.0.2" x 14
+    /Users/hanke/.rubies/ruby-2.2.0-preview1/lib/ruby/2.2.0/rubygems/version.rb:306 x 4
+    /Users/hanke/temp/cocoapods/search.cocoapods.org/lib/models/pod.rb:100 x 2
+    /Users/hanke/.rubies/ruby-2.2.0-preview1/lib/ruby/2.2.0/rubygems/version.rb:209 x 2
+    /Users/hanke/.rubies/ruby-2.2.0-preview1/lib/ruby/2.2.0/rubygems/version.rb:163 x 1
+    /Users/hanke/.rubies/ruby-2.2.0-preview1/lib/ruby/2.2.0/rubygems/version.rb:198 x 1
+    /Users/hanke/.rubies/ruby-2.2.0-preview1/lib/ruby/2.2.0/rubygems/version.rb:172 x 1
+    /Users/hanke/.gem/ruby/2.2.0/gems/picky-4.25.2/lib/picky/extensions/symbol.rb:31 x 1
+    /Users/hanke/.gem/ruby/2.2.0/gems/picky-4.25.2/lib/picky/category_realtime.rb:95 x 1
+    /Users/hanke/.gem/ruby/2.2.0/gems/picky-4.25.2/lib/picky/splitter.rb:19 x 1
+"3.3.3" x 14
+    /Users/hanke/.rubies/ruby-2.2.0-preview1/lib/ruby/2.2.0/rubygems/version.rb:306 x 4
+    /Users/hanke/temp/cocoapods/search.cocoapods.org/lib/models/pod.rb:100 x 2
+    /Users/hanke/.rubies/ruby-2.2.0-preview1/lib/ruby/2.2.0/rubygems/version.rb:209 x 2
+    /Users/hanke/.rubies/ruby-2.2.0-preview1/lib/ruby/2.2.0/rubygems/version.rb:163 x 1
+    /Users/hanke/.rubies/ruby-2.2.0-preview1/lib/ruby/2.2.0/rubygems/version.rb:198 x 1
+    /Users/hanke/.rubies/ruby-2.2.0-preview1/lib/ruby/2.2.0/rubygems/version.rb:172 x 1
+    /Users/hanke/.gem/ruby/2.2.0/gems/picky-4.25.2/lib/picky/extensions/symbol.rb:31 x 1
+    /Users/hanke/.gem/ruby/2.2.0/gems/picky-4.25.2/lib/picky/category_realtime.rb:95 x 1
+    /Users/hanke/.gem/ruby/2.2.0/gems/picky-4.25.2/lib/picky/splitter.rb:19 x 1
+"updated_at" x 14
+    /Users/hanke/.gem/ruby/2.2.0/gems/flounder-1.0.1/lib/flounder/connection.rb:43 x 6
+    /Users/hanke/.gem/ruby/2.2.0/gems/flounder-1.0.1/lib/flounder/connection.rb:33 x 6
+    /Users/hanke/.gem/ruby/2.2.0/gems/flounder-1.0.1/lib/flounder/postgres_utils.rb:110 x 2
+"0.2.0" x 14
+    /Users/hanke/.rubies/ruby-2.2.0-preview1/lib/ruby/2.2.0/rubygems/version.rb:306 x 4
+    /Users/hanke/.rubies/ruby-2.2.0-preview1/lib/ruby/2.2.0/rubygems/version.rb:209 x 2
+    /Users/hanke/temp/cocoapods/search.cocoapods.org/lib/models/pod.rb:100 x 2
+    /Users/hanke/.gem/ruby/2.2.0/gems/picky-4.25.2/lib/picky/extensions/symbol.rb:31 x 1
+    /Users/hanke/.gem/ruby/2.2.0/gems/picky-4.25.2/lib/picky/splitter.rb:19 x 1
+    /Users/hanke/.rubies/ruby-2.2.0-preview1/lib/ruby/2.2.0/rubygems/version.rb:163 x 1
+    /Users/hanke/.rubies/ruby-2.2.0-preview1/lib/ruby/2.2.0/rubygems/version.rb:198 x 1
+    /Users/hanke/.gem/ruby/2.2.0/gems/picky-4.25.2/lib/picky/category_realtime.rb:95 x 1
+    /Users/hanke/.rubies/ruby-2.2.0-preview1/lib/ruby/2.2.0/rubygems/version.rb:172 x 1
+"3.1.6" x 13
+    /Users/hanke/.rubies/ruby-2.2.0-preview1/lib/ruby/2.2.0/rubygems/version.rb:306 x 4
+    /Users/hanke/temp/cocoapods/search.cocoapods.org/lib/models/pod.rb:100 x 2
+    /Users/hanke/.rubies/ruby-2.2.0-preview1/lib/ruby/2.2.0/rubygems/version.rb:209 x 2
+    /Users/hanke/.rubies/ruby-2.2.0-preview1/lib/ruby/2.2.0/rubygems/version.rb:172 x 1
+    /Users/hanke/.rubies/ruby-2.2.0-preview1/lib/ruby/2.2.0/rubygems/version.rb:198 x 1
+    /Users/hanke/.gem/ruby/2.2.0/gems/picky-4.25.2/lib/picky/splitter.rb:19 x 1
+    /Users/hanke/.gem/ruby/2.2.0/gems/picky-4.25.2/lib/picky/extensions/symbol.rb:31 x 1
+    /Users/hanke/.gem/ruby/2.2.0/gems/picky-4.25.2/lib/picky/category_realtime.rb:95 x 1
+"SocketRocket" x 13
+    /Users/hanke/temp/cocoapods/search.cocoapods.org/lib/models/pod.rb:264 x 4
+    /Users/hanke/.gem/ruby/2.2.0/gems/flounder-1.0.1/lib/flounder/postgres_utils.rb:117 x 2
+    /Users/hanke/temp/cocoapods/search.cocoapods.org/lib/models/pod.rb:265 x 2
+    /Users/hanke/temp/cocoapods/search.cocoapods.org/lib/models/pod.rb:272 x 2
+    /Users/hanke/temp/cocoapods/search.cocoapods.org/lib/models/pod.rb:284 x 2
+    /Users/hanke/.gem/ruby/2.2.0/gems/json-1.8.2/lib/json/common.rb:155 x 1
+"2" x 13
+    /Users/hanke/.rubies/ruby-2.2.0-preview1/lib/ruby/2.2.0/rubygems/version.rb:306 x 5
+    /Users/hanke/.rubies/ruby-2.2.0-preview1/lib/ruby/2.2.0/rubygems/version.rb:307 x 5
+    /Users/hanke/.gem/ruby/2.2.0/gems/picky-4.25.2/lib/picky/extensions/symbol.rb:33 x 3
+"N" x 12
+    /Users/hanke/.gem/ruby/2.2.0/gems/text-1.3.0/lib/text/double_metaphone.rb:34 x 6
+    /Users/hanke/.gem/ruby/2.2.0/gems/text-1.3.0/lib/text/double_metaphone.rb:50 x 3
+    /Users/hanke/.gem/ruby/2.2.0/gems/text-1.3.0/lib/text/double_metaphone.rb:245 x 3
+"deleted" x 12
+    /Users/hanke/.gem/ruby/2.2.0/gems/flounder-1.0.1/lib/flounder/connection.rb:43 x 4
+    /Users/hanke/.gem/ruby/2.2.0/gems/flounder-1.0.1/lib/flounder/connection.rb:33 x 4
+    /Users/hanke/.gem/ruby/2.2.0/gems/flounder-1.0.1/lib/flounder/postgres_utils.rb:110 x 2
+    /Users/hanke/.gem/ruby/2.2.0/gems/arel-5.0.1.20140414130214/lib/arel/visitors/to_sql.rb:133 x 2
+"\"pods\".\"id\"" x 12
+    /Users/hanke/.gem/ruby/2.2.0/gems/arel-5.0.1.20140414130214/lib/arel/visitors/to_sql.rb:540 x 12
+"RESideMenu" x 12
+    /Users/hanke/temp/cocoapods/search.cocoapods.org/lib/models/pod.rb:264 x 4
+    /Users/hanke/.gem/ruby/2.2.0/gems/flounder-1.0.1/lib/flounder/postgres_utils.rb:117 x 2
+    /Users/hanke/.gem/ruby/2.2.0/gems/json-1.8.2/lib/json/common.rb:155 x 2
+    /Users/hanke/temp/cocoapods/search.cocoapods.org/lib/models/pod.rb:272 x 2
+    /Users/hanke/temp/cocoapods/search.cocoapods.org/lib/models/pod.rb:281 x 1
+    /Users/hanke/temp/cocoapods/search.cocoapods.org/lib/models/pod.rb:265 x 1
+".pre." x 12
+    /Users/hanke/.rubies/ruby-2.2.0-preview1/lib/ruby/2.2.0/rubygems/version.rb:209 x 12
+"-" x 12
+    /Users/hanke/.rubies/ruby-2.2.0-preview1/lib/ruby/2.2.0/rubygems/version.rb:209 x 12
+"menu" x 11
+    /Users/hanke/.gem/ruby/2.2.0/gems/picky-4.25.2/lib/picky/splitter.rb:19 x 2
+    /Users/hanke/temp/cocoapods/search.cocoapods.org/lib/models/pod.rb:273 x 2
+    /Users/hanke/.gem/ruby/2.2.0/gems/picky-4.25.2/lib/picky/extensions/array.rb:26 x 1
+    /Users/hanke/.gem/ruby/2.2.0/gems/picky-4.25.2/lib/picky/extensions/symbol.rb:31 x 1
+    /Users/hanke/.gem/ruby/2.2.0/gems/picky-4.25.2/lib/picky/category_realtime.rb:95 x 1
+    /Users/hanke/.gem/ruby/2.2.0/gems/text-1.3.0/lib/text/double_metaphone.rb:18 x 1
+    /Users/hanke/.gem/ruby/2.2.0/gems/picky-4.25.2/lib/picky/bundle_realtime.rb:79 x 1
+    /Users/hanke/.gem/ruby/2.2.0/gems/picky-4.25.2/lib/picky/bundle_realtime.rb:72 x 1
+    /Users/hanke/temp/cocoapods/search.cocoapods.org/lib/models/pod.rb:284 x 1
+"rocket" x 11
+    /Users/hanke/temp/cocoapods/search.cocoapods.org/lib/models/pod.rb:273 x 3
+    /Users/hanke/.gem/ruby/2.2.0/gems/text-1.3.0/lib/text/double_metaphone.rb:18 x 1
+    /Users/hanke/.gem/ruby/2.2.0/gems/picky-4.25.2/lib/picky/extensions/symbol.rb:31 x 1
+    /Users/hanke/.gem/ruby/2.2.0/gems/picky-4.25.2/lib/picky/extensions/array.rb:26 x 1
+    /Users/hanke/.gem/ruby/2.2.0/gems/picky-4.25.2/lib/picky/splitter.rb:19 x 1
+    /Users/hanke/.gem/ruby/2.2.0/gems/picky-4.25.2/lib/picky/category_realtime.rb:95 x 1
+    /Users/hanke/.gem/ruby/2.2.0/gems/picky-4.25.2/lib/picky/bundle_realtime.rb:79 x 1
+    /Users/hanke/.gem/ruby/2.2.0/gems/picky-4.25.2/lib/picky/bundle_realtime.rb:72 x 1
+    /Users/hanke/temp/cocoapods/search.cocoapods.org/lib/models/pod.rb:284 x 1
+"ios" x 11
+    /Users/hanke/.gem/ruby/2.2.0/gems/json-1.8.2/lib/json/common.rb:155 x 6
+    /Users/hanke/temp/cocoapods/search.cocoapods.org/lib/models/pod.rb:182 x 2
+    /Users/hanke/.gem/ruby/2.2.0/gems/picky-4.25.2/lib/picky/splitter.rb:19 x 2
+    /Users/hanke/.gem/ruby/2.2.0/gems/picky-4.25.2/lib/picky/tokenizer.rb:75 x 1
+"X" x 11
+    /Users/hanke/.gem/ruby/2.2.0/gems/text-1.3.0/lib/text/double_metaphone.rb:22 x 11
+"  0.000000" x 10
+    /Users/hanke/.rubies/ruby-2.2.0-preview1/lib/ruby/2.2.0/benchmark.rb:496 x 4
+    /Users/hanke/.rubies/ruby-2.2.0-preview1/lib/ruby/2.2.0/benchmark.rb:497 x 3
+    /Users/hanke/.rubies/ruby-2.2.0-preview1/lib/ruby/2.2.0/benchmark.rb:500 x 3
+"2.0.1" x 10
+    /Users/hanke/.rubies/ruby-2.2.0-preview1/lib/ruby/2.2.0/rubygems/version.rb:163 x 6
+    /Users/hanke/temp/cocoapods/search.cocoapods.org/lib/models/pod.rb:100 x 2
+    /Users/hanke/.gem/ruby/2.2.0/gems/picky-4.25.2/lib/picky/splitter.rb:19 x 1
+    /Users/hanke/.gem/ruby/2.2.0/gems/picky-4.25.2/lib/picky/extensions/symbol.rb:31 x 1
+"versions" x 10
+    /Users/hanke/.gem/ruby/2.2.0/gems/flounder-1.0.1/lib/flounder/query/select.rb:71 x 4
+    /Users/hanke/.gem/ruby/2.2.0/gems/flounder-1.0.1/lib/flounder/query/select.rb:65 x 4
+    /Users/hanke/.gem/ruby/2.2.0/gems/flounder-1.0.1/lib/flounder/postgres_utils.rb:110 x 2
+
+Retained String Report
+-----------------------------------
+"versions" x 10
+    /Users/hanke/.gem/ruby/2.2.0/gems/flounder-1.0.1/lib/flounder/query/select.rb:71 x 4
+    /Users/hanke/.gem/ruby/2.2.0/gems/flounder-1.0.1/lib/flounder/query/select.rb:65 x 4
+    /Users/hanke/.gem/ruby/2.2.0/gems/flounder-1.0.1/lib/flounder/postgres_utils.rb:110 x 2
+"rocket" x 4
+    /Users/hanke/.gem/ruby/2.2.0/gems/picky-4.25.2/lib/picky/category_realtime.rb:95 x 1
+    /Users/hanke/.gem/ruby/2.2.0/gems/picky-4.25.2/lib/picky/bundle_realtime.rb:79 x 1
+    /Users/hanke/.gem/ruby/2.2.0/gems/picky-4.25.2/lib/picky/bundle_realtime.rb:72 x 1
+    /Users/hanke/temp/cocoapods/search.cocoapods.org/lib/models/pod.rb:284 x 1
+"3.1.6" x 4
+    /Users/hanke/.rubies/ruby-2.2.0-preview1/lib/ruby/2.2.0/rubygems/version.rb:172 x 1
+    /Users/hanke/.rubies/ruby-2.2.0-preview1/lib/ruby/2.2.0/rubygems/version.rb:198 x 1
+    /Users/hanke/.rubies/ruby-2.2.0-preview1/lib/ruby/2.2.0/rubygems/version.rb:209 x 1
+    /Users/hanke/.gem/ruby/2.2.0/gems/picky-4.25.2/lib/picky/category_realtime.rb:95 x 1
+"menu" x 4
+    /Users/hanke/.gem/ruby/2.2.0/gems/picky-4.25.2/lib/picky/category_realtime.rb:95 x 1
+    /Users/hanke/.gem/ruby/2.2.0/gems/picky-4.25.2/lib/picky/bundle_realtime.rb:79 x 1
+    /Users/hanke/.gem/ruby/2.2.0/gems/picky-4.25.2/lib/picky/bundle_realtime.rb:72 x 1
+    /Users/hanke/temp/cocoapods/search.cocoapods.org/lib/models/pod.rb:284 x 1
+"3.3.1" x 3
+    /Users/hanke/.rubies/ruby-2.2.0-preview1/lib/ruby/2.2.0/rubygems/version.rb:198 x 1
+    /Users/hanke/.rubies/ruby-2.2.0-preview1/lib/ruby/2.2.0/rubygems/version.rb:209 x 1
+    /Users/hanke/.gem/ruby/2.2.0/gems/picky-4.25.2/lib/picky/category_realtime.rb:95 x 1
+"pods" x 3
+    /Users/hanke/.gem/ruby/2.2.0/gems/flounder-1.0.1/lib/flounder/query/select.rb:71 x 3
+"3.2.4" x 3
+    /Users/hanke/.rubies/ruby-2.2.0-preview1/lib/ruby/2.2.0/rubygems/version.rb:198 x 1
+    /Users/hanke/.rubies/ruby-2.2.0-preview1/lib/ruby/2.2.0/rubygems/version.rb:209 x 1
+    /Users/hanke/.gem/ruby/2.2.0/gems/picky-4.25.2/lib/picky/category_realtime.rb:95 x 1
+"3.2.3" x 3
+    /Users/hanke/.rubies/ruby-2.2.0-preview1/lib/ruby/2.2.0/rubygems/version.rb:198 x 1
+    /Users/hanke/.rubies/ruby-2.2.0-preview1/lib/ruby/2.2.0/rubygems/version.rb:209 x 1
+    /Users/hanke/.gem/ruby/2.2.0/gems/picky-4.25.2/lib/picky/category_realtime.rb:95 x 1
+"3.3.3" x 3
+    /Users/hanke/.rubies/ruby-2.2.0-preview1/lib/ruby/2.2.0/rubygems/version.rb:198 x 1
+    /Users/hanke/.rubies/ruby-2.2.0-preview1/lib/ruby/2.2.0/rubygems/version.rb:209 x 1
+    /Users/hanke/.gem/ruby/2.2.0/gems/picky-4.25.2/lib/picky/category_realtime.rb:95 x 1
+"0.2.0" x 3
+    /Users/hanke/.gem/ruby/2.2.0/gems/picky-4.25.2/lib/picky/category_realtime.rb:95 x 1
+    /Users/hanke/.rubies/ruby-2.2.0-preview1/lib/ruby/2.2.0/rubygems/version.rb:198 x 1
+    /Users/hanke/.rubies/ruby-2.2.0-preview1/lib/ruby/2.2.0/rubygems/version.rb:209 x 1
+"4.0.2" x 3
+    /Users/hanke/.rubies/ruby-2.2.0-preview1/lib/ruby/2.2.0/rubygems/version.rb:198 x 1
+    /Users/hanke/.rubies/ruby-2.2.0-preview1/lib/ruby/2.2.0/rubygems/version.rb:209 x 1
+    /Users/hanke/.gem/ruby/2.2.0/gems/picky-4.25.2/lib/picky/category_realtime.rb:95 x 1
+"side" x 3
+    /Users/hanke/.gem/ruby/2.2.0/gems/picky-4.25.2/lib/picky/bundle_realtime.rb:79 x 1
+    /Users/hanke/.gem/ruby/2.2.0/gems/picky-4.25.2/lib/picky/bundle_realtime.rb:72 x 1
+    /Users/hanke/temp/cocoapods/search.cocoapods.org/lib/models/pod.rb:284 x 1
+"4.0.7" x 3
+    /Users/hanke/.rubies/ruby-2.2.0-preview1/lib/ruby/2.2.0/rubygems/version.rb:198 x 1
+    /Users/hanke/.rubies/ruby-2.2.0-preview1/lib/ruby/2.2.0/rubygems/version.rb:209 x 1
+    /Users/hanke/.gem/ruby/2.2.0/gems/picky-4.25.2/lib/picky/category_realtime.rb:95 x 1
+"3.1.5" x 3
+    /Users/hanke/.rubies/ruby-2.2.0-preview1/lib/ruby/2.2.0/rubygems/version.rb:198 x 1
+    /Users/hanke/.rubies/ruby-2.2.0-preview1/lib/ruby/2.2.0/rubygems/version.rb:209 x 1
+    /Users/hanke/.gem/ruby/2.2.0/gems/picky-4.25.2/lib/picky/category_realtime.rb:95 x 1
+"4.0.4" x 3
+    /Users/hanke/.rubies/ruby-2.2.0-preview1/lib/ruby/2.2.0/rubygems/version.rb:198 x 1
+    /Users/hanke/.rubies/ruby-2.2.0-preview1/lib/ruby/2.2.0/rubygems/version.rb:209 x 1
+    /Users/hanke/.gem/ruby/2.2.0/gems/picky-4.25.2/lib/picky/category_realtime.rb:95 x 1
+"3.1.4" x 3
+    /Users/hanke/.rubies/ruby-2.2.0-preview1/lib/ruby/2.2.0/rubygems/version.rb:198 x 1
+    /Users/hanke/.rubies/ruby-2.2.0-preview1/lib/ruby/2.2.0/rubygems/version.rb:209 x 1
+    /Users/hanke/.gem/ruby/2.2.0/gems/picky-4.25.2/lib/picky/category_realtime.rb:95 x 1
+"{1.0,1.0.1,1.1.1,2.0,2.0.1,2.0.2,3.0,3.1,3.1.1,3.1.2,3.1.3,3.1.4,3.1.5,3.1.6,3.1.7,3.2,3.2.1,3.2.2,3.2.3,3.2.4,3.3,3.3.1,3.3.2,3.3.3,3.4,4.0,4.0.1,4.0.2,4.0.3,4.0.4,4.0.5,4.0.6,4.0.7}" x 2
+    /Users/hanke/temp/cocoapods/search.cocoapods.org/lib/models/pod.rb:100 x 1
+    /Users/hanke/.gem/ruby/2.2.0/gems/flounder-1.0.1/lib/flounder/postgres_utils.rb:117 x 1
+"square" x 2
+    /Users/hanke/.gem/ruby/2.2.0/gems/picky-4.25.2/lib/picky/category_realtime.rb:95 x 1
+    /Users/hanke/.gem/ruby/2.2.0/gems/picky-4.25.2/lib/picky/character_substituters/west_european.rb:39 x 1
+"{\n  \"name\": \"SocketRocket\",\n  \"version\": \"0.3.1-beta2\",\n  \"summary\": \"A conforming WebSocket (RFC 6455) client library.\",\n  \"homepage\": \"https://github.com/square/SocketRocket\",\n  \"authors\": \"Square\",\n" x 2
+    /Users/hanke/.gem/ruby/2.2.0/gems/json-1.8.2/lib/json/common.rb:155 x 1
+    /Users/hanke/.gem/ruby/2.2.0/gems/flounder-1.0.1/lib/flounder/postgres_utils.rb:117 x 1
+"SocketRocket" x 2
+    /Users/hanke/.gem/ruby/2.2.0/gems/flounder-1.0.1/lib/flounder/postgres_utils.rb:117 x 2
+"0.3.1-beta2" x 2
+    /Users/hanke/.rubies/ruby-2.2.0-preview1/lib/ruby/2.2.0/rubygems/version.rb:198 x 1
+    /Users/hanke/temp/cocoapods/search.cocoapods.org/lib/models/pod.rb:100 x 1
+"91" x 2
+    /Users/hanke/.gem/ruby/2.2.0/gems/picky-4.25.2/lib/picky/category_realtime.rb:94 x 2
+" conforming WebSocket RFC 6455 client library" x 2
+    /Users/hanke/.gem/ruby/2.2.0/gems/picky-4.25.2/lib/picky/splitter.rb:19 x 1
+    /Users/hanke/temp/cocoapods/search.cocoapods.org/lib/models/pod.rb:188 x 1
+"socketrocket socket rocket " x 2
+    /Users/hanke/.gem/ruby/2.2.0/gems/picky-4.25.2/lib/picky/splitter.rb:19 x 1
+    /Users/hanke/temp/cocoapods/search.cocoapods.org/lib/models/pod.rb:96 x 1
+"osx ios" x 2
+    /Users/hanke/.gem/ruby/2.2.0/gems/picky-4.25.2/lib/picky/splitter.rb:19 x 1
+    /Users/hanke/temp/cocoapods/search.cocoapods.org/lib/models/pod.rb:182 x 1
+"1810" x 2
+    /Users/hanke/.gem/ruby/2.2.0/gems/picky-4.25.2/lib/picky/category_realtime.rb:94 x 2
+"github_metrics" x 2
+    /Users/hanke/.gem/ruby/2.2.0/gems/flounder-1.0.1/lib/flounder/query/select.rb:71 x 2
+"RESideMenu" x 2
+    /Users/hanke/.gem/ruby/2.2.0/gems/flounder-1.0.1/lib/flounder/postgres_utils.rb:117 x 2
+"0.3.1.pre.beta2" x 2
+    /Users/hanke/.rubies/ruby-2.2.0-preview1/lib/ruby/2.2.0/rubygems/version.rb:306 x 1
+    /Users/hanke/.rubies/ruby-2.2.0-preview1/lib/ruby/2.2.0/rubygems/version.rb:209 x 1
+"updated_at" x 1
+    /Users/hanke/.gem/ruby/2.2.0/gems/flounder-1.0.1/lib/flounder/connection.rb:43 x 1
+"created_at" x 1
+    /Users/hanke/.gem/ruby/2.2.0/gems/flounder-1.0.1/lib/flounder/connection.rb:43 x 1
+"name" x 1
+    /Users/hanke/.gem/ruby/2.2.0/gems/flounder-1.0.1/lib/flounder/connection.rb:43 x 1
+"id" x 1
+    /Users/hanke/.gem/ruby/2.2.0/gems/flounder-1.0.1/lib/flounder/connection.rb:43 x 1
+"STMN" x 1
+    /Users/hanke/.gem/ruby/2.2.0/gems/picky-4.25.2/lib/picky/extensions/symbol.rb:10 x 1
+"O" x 1
+    /Users/hanke/.gem/ruby/2.2.0/gems/text-1.3.0/lib/text/double_metaphone.rb:51 x 1
+"ef" x 1
+    /Users/hanke/.gem/ruby/2.2.0/gems/picky-4.25.2/lib/picky/extensions/symbol.rb:42 x 1
+"efi" x 1
+    /Users/hanke/.gem/ruby/2.2.0/gems/picky-4.25.2/lib/picky/extensions/symbol.rb:42 x 1
+"efim" x 1
+    /Users/hanke/.gem/ruby/2.2.0/gems/picky-4.25.2/lib/picky/extensions/symbol.rb:42 x 1
+"efimo" x 1
+    /Users/hanke/.gem/ruby/2.2.0/gems/picky-4.25.2/lib/picky/extensions/symbol.rb:42 x 1
+"AFMF" x 1
+    /Users/hanke/.gem/ruby/2.2.0/gems/picky-4.25.2/lib/picky/extensions/symbol.rb:10 x 1
+"3.1.3" x 1
+    /Users/hanke/.gem/ruby/2.2.0/gems/picky-4.25.2/lib/picky/category_realtime.rb:95 x 1
+"3.1.2" x 1
+    /Users/hanke/.gem/ruby/2.2.0/gems/picky-4.25.2/lib/picky/category_realtime.rb:95 x 1
+"3.2.2" x 1
+    /Users/hanke/.gem/ruby/2.2.0/gems/picky-4.25.2/lib/picky/category_realtime.rb:95 x 1
+"3.1.7" x 1
+    /Users/hanke/.gem/ruby/2.2.0/gems/picky-4.25.2/lib/picky/category_realtime.rb:95 x 1
+"4.0.6" x 1
+    /Users/hanke/.gem/ruby/2.2.0/gems/picky-4.25.2/lib/picky/category_realtime.rb:95 x 1
+"4.0.5" x 1
+    /Users/hanke/.gem/ruby/2.2.0/gems/picky-4.25.2/lib/picky/category_realtime.rb:95 x 1
+"3.3.2" x 1
+    /Users/hanke/.gem/ruby/2.2.0/gems/picky-4.25.2/lib/picky/category_realtime.rb:95 x 1
+"3.3." x 1
+    /Users/hanke/.gem/ruby/2.2.0/gems/picky-4.25.2/lib/picky/extensions/symbol.rb:42 x 1
+"effect" x 1
+    /Users/hanke/.gem/ruby/2.2.0/gems/picky-4.25.2/lib/picky/category_realtime.rb:95 x 1
+"parallax" x 1
+    /Users/hanke/.gem/ruby/2.2.0/gems/picky-4.25.2/lib/picky/category_realtime.rb:95 x 1
