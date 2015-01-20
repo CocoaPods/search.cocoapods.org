@@ -48,9 +48,10 @@ describe 'Integration Tests' do
 
   # Similarity on author.
   #
-  ok do
-    first_three_names_for_search('on:ios mettt~', sort: 'name').should == %w(AFIncrementalStore AFNetworking CargoBay)
-  end
+  # Has been removed.
+  # ok do
+  #   first_three_names_for_search('on:ios mettt~', sort: 'name').should == %w(AFIncrementalStore AFNetworking CargoBay)
+  # end
 
   # Partial version search.
   #
