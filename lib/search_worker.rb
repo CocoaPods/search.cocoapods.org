@@ -3,6 +3,9 @@ require_relative 'stats_sender'
 class SearchWorker
   def setup
     setup_stats
+    
+    # TODO Require gems for the search worker only here.
+    
     setup_clean_exit
 
     # Load the DB.
