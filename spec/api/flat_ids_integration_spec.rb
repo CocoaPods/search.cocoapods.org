@@ -59,7 +59,8 @@ describe 'Flat Ids Integration Tests' do
 
   # Similarity on author.
   #
-  ok { first_three_names_for_search('on:ios mettt~', sort: 'name').should == %w(AFIncrementalStore AFNetworking CargoBay) }
+  # Has been removed.
+  # ok { first_three_names_for_search('on:ios mettt~', sort: 'name').should == %w(AFIncrementalStore AFNetworking CargoBay) }
 
   # Partial version search.
   #
