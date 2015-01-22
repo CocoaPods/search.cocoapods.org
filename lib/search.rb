@@ -110,7 +110,8 @@ class Search
                partial: no_partial, # full_partial,
                from: :mapped_summary,
                indexing: default_indexing.merge(
-                 removes_characters: /[^a-z0-9\s\-]/i # We remove special characters.
+                 removes_characters: /[^a-z0-9\s\-]/i, # We remove special characters.
+                 stems_with: Lingua::Stemmer.new
                )
       category :tags,
                weight: boost(+1),
