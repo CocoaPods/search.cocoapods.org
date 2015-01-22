@@ -26,6 +26,7 @@ gem 'flounder'
 #
 gem 'rack_fast_escape', '2009.06.24'
 gem 'yajl-ruby', :require => 'yajl'
+gem 'ruby-stemmer', :require => 'lingua/stemmer'
 
 # API calling
 #
