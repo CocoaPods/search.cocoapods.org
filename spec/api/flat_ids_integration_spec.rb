@@ -110,7 +110,11 @@ describe 'Flat Ids Integration Tests' do
   ok { pods.search('platform:osx', ids: 10_000).size.should == 75 }
   ok { pods.search('on:osx', ids: 10_000).size.should == 75 }
 
-  ok { first_three_names_for_search('summary:networking', sort: 'name').should == %w(AFNetworking CocoaAsyncSocket) }
+  # Stemming.
+  #
+  ok { first_three_names_for_search('networking', sort: 'name').should == %w(AFNetworking CocoaAsyncSocket PonyDebugger) }
+  ok { first_three_names_for_search('summary:network', sort: 'name').should == %w(AFNetworking CocoaAsyncSocket PonyDebugger) }
+  ok { first_three_names_for_search('summary:networking', sort: 'name').should == %w(AFNetworking CocoaAsyncSocket PonyDebugger) }
 
   # No single characters indexed.
   #
