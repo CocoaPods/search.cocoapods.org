@@ -41,7 +41,7 @@ class Pod
       where(Domain.pods[:deleted] => false).
       
       project(
-        *Domain.pods.fields,
+        *Domain.pods.fields(:id, :name),
         'array_agg(pod_versions.name) AS versions',
         <<-EXPR,
         (
