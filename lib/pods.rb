@@ -36,7 +36,8 @@ class Pods
   end
 
   def cache_all
-    each { |pod| self[pod.id] = pod }
+    each { |pod| self[pod.id] = pod; pod.reduce_memory_usage }
+    GC.start
   end
 
   def [](id)
