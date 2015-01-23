@@ -358,6 +358,14 @@ class Pod
   rescue StandardError, SyntaxError
     []
   end
+  
+  def reduce_memory_usage
+    # Render
+    to_h
+    # Throw the row and spec away if this pod has been rendered.
+    @row = nil
+    @specification = nil
+  end
 
   # Throws the row away.
   #
@@ -377,8 +385,6 @@ class Pod
       }
       h[:documentation_url] = row.documentation_url if row.respond_to?(:documentation_url)
       h[:cocoadocs] = true if cocoadocs?
-      # Throw the row away if this pod has been rendered.
-      # TODO Think about: @row = nil
       h
     end
   end
