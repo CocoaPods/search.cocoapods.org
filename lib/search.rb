@@ -211,6 +211,7 @@ class Search
     pods[pod.id] = pod
     @index.replace pod
     @splitting_index.replace pod
+    # pod.reduce_memory_usage # TODO ?
   end
 
   def remove(pod)

@@ -31,7 +31,8 @@ describe 'Integration Tests' do
 
   # Testing the format.
   #
-  ok { pods.search('on:osx afnetworking', sort: 'name').entries.first.should == { id: 'AFNetworking', platforms: %w(ios osx), version: '2.5.0', summary: 'A delightful iOS and OS X networking framework.', authors: { :"Mattt Thompson" => 'm@mattt.me' }, link: 'https://github.com/AFNetworking/AFNetworking', source: { git: 'https://github.com/AFNetworking/AFNetworking.git', tag: '2.5.0', submodules: true }, tags: ['network'], deprecated: false, deprecated_in_favor_of: nil } }
+  # Not symbolized as it is parsed JSON.
+  ok { pods.search('on:osx afnetworking', sort: 'name').entries.first.should == { id: 'AFNetworking', platforms: ['ios', 'osx'], version: '2.5.0', summary: 'A delightful iOS and OS X networking framework.', authors: { :"Mattt Thompson" => 'm@mattt.me' }, link: 'https://github.com/AFNetworking/AFNetworking', source: { git: 'https://github.com/AFNetworking/AFNetworking.git', tag: '2.5.0', submodules: true }, tags: ['network'] } }
 
   # Testing a specific order of result ids.
   #
@@ -84,7 +85,7 @@ describe 'Integration Tests' do
 
   # Rendering.
   #
-  ok { pods.search('afnetworking mattt thompson', sort: 'name').entries.first.should == { id: 'AFNetworking', platforms: %w(ios osx), version: '2.5.0', summary: 'A delightful iOS and OS X networking framework.', authors: { :"Mattt Thompson" => 'm@mattt.me' }, link: 'https://github.com/AFNetworking/AFNetworking', source: { git: 'https://github.com/AFNetworking/AFNetworking.git', tag: '2.5.0', submodules: true }, tags: ['network'], deprecated: false, deprecated_in_favor_of: nil } }
+  ok { pods.search('afnetworking mattt thompson', sort: 'name').entries.first.should == { id: 'AFNetworking', platforms: %w(ios osx), version: '2.5.0', summary: 'A delightful iOS and OS X networking framework.', authors: { :"Mattt Thompson" => 'm@mattt.me' }, link: 'https://github.com/AFNetworking/AFNetworking', source: { git: 'https://github.com/AFNetworking/AFNetworking.git', tag: '2.5.0', submodules: true }, tags: ['network'] } }
 
   # Qualifiers.
   #

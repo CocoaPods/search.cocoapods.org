@@ -17,10 +17,12 @@ describe Pod do
     ok { pod.authors.should == { 'Mattt Thompson' => 'm@mattt.me' } }
     ok { pod.mapped_authors.should == 'Mattt Thompson' }
 
-    ok { pod.platforms.should == %w(ios osx) }
+    ok { pod.platforms.should == [:ios, :osx] }
     ok { pod.mapped_platform.should == 'ios osx' }
 
     ok { pod.dependencies.should == [] }
+    
+    ok { pod.tags.should == [:network] }
 
     ok { pod.mapped_dependencies.should == %(Security SystemConfiguration) }
     ok { pod.frameworks.should == %w(Security SystemConfiguration) }
@@ -37,6 +39,27 @@ describe Pod do
     ok { pod.contributors.should >= 30 }
     ok { pod.subscribers.should >= 1000 }
 
+    ok {
+      pod.to_h.should == {
+        id: "AFNetworking",
+        platforms: [:ios, :osx],
+        version: :"2.5.0",
+        summary: "A delightful iOS and OS X networking framework.",
+        authors: {
+          :"Mattt Thompson" => :"m@mattt.me"
+        },
+        link: "https://github.com/AFNetworking/AFNetworking",
+        source: {
+          git: "https://github.com/AFNetworking/AFNetworking.git",
+          tag: "2.5.0",
+          submodules: true
+        },
+        tags: [:network],
+        # If they are not true, they are not added.
+        # deprecated: false,
+        # deprecated_in_favor_of: nil
+      }
+    }
   end
 
   describe 'KGDiscreetAlertView' do
@@ -45,7 +68,7 @@ describe Pod do
       Pod.all { |pods| pods.where(name: 'KGDiscreetAlertView') }.first
     end
 
-    ok { pod.platforms.should == %w(ios) }
+    ok { pod.platforms.should == [:ios] }
     ok { pod.mapped_platform.should == 'ios' }
 
   end
