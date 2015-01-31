@@ -388,11 +388,7 @@ class Pod
   #
   def to_h
     @h ||= begin
-      # Small memory optimisation.
-      # We could use Symbols, but most URLs are unique.
-      if homepage == source[:git]
-        source[:git] = homepage
-      end
+      rendered_homepage, rendered_source = compress
       
       # Create a rendered hash.
       h = {
@@ -401,17 +397,77 @@ class Pod
         version: last_version,
         summary: mapped_summary[0..139],
         authors: rendered_authors,
-        link: homepage, # TODO Remove https://github.com/ or http://github.com/ from source if it's git. Or reconstitute from Array.
-        source: source, # TODO Remove https://github.com/ or http://github.com/ from source if it's git. Or reconstitute from Array.
+        link: rendered_homepage,
+        source: rendered_source,
         tags: tags,
       }
+      
       if deprecated?
         h[:deprecated] = true
         h[:deprecated_in_favor_of] = deprecated_in_favor_of
       end
       h[:documentation_url] = row.documentation_url if row.respond_to?(:documentation_url)
       h[:cocoadocs] = true if cocoadocs?
+      
       h
     end
+    
+    # Each render, uncompress.
+    #
+    uncompress @h
+  end
+
+  def compress
+    rendered_homepage = homepage
+    if rendered_homepage =~ /github\.com/
+      rendered_homepage = split_github(rendered_homepage)
+    end
+    
+    # Small memory optimisation.
+    # We could use Symbols, but most URLs are unique.
+    rendered_source = source
+    if homepage == rendered_source[:git]
+      rendered_source[:git] = rendered_homepage
+    else
+      if rendered_source[:git] =~ /github\.com/
+        rendered_source[:git] = split_github(rendered_source[:git])
+      end
+    end
+    
+    [rendered_homepage, rendered_source]
+  end
+  def split_github url
+    match = url.match(/(https?|git)/)
+    protocol = match[0]
+    (protocol = protocol.to_sym) if protocol
+    part = url.gsub(%r{^(https?://|git@)github.com/}, '')
+    [protocol, :'github.com', part]
+  end
+  def uncompress hash
+    link = hash[:link]
+    source = hash[:source]
+    if link.respond_to?(:to_ary)
+      hash[:link] = [
+        link[0],
+        (link[0] == :git ? :'@' : :'://'),
+        link[1],
+        :/,
+        link[2]
+      ].join
+    end
+    source_link = source[:git]
+    if source_link.respond_to?(:to_ary)
+      source[:git] = uncompress_link(source_link)
+    end
+    hash
+  end
+  def uncompress_link link
+    [
+      link[0],
+      :'://',
+      link[1],
+      :/,
+      link[2]
+    ].join
   end
 end
