@@ -52,6 +52,9 @@ class SearchWorker
     # Periodically send stats data.
     #
     if every_so_often
+      $stdout.puts
+      $stdout.puts `ps auxm | grep unicorn`
+      $stdout.puts
       send_stats_to_status_page
       garbage_collect
     end
