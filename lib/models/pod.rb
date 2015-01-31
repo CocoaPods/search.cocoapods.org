@@ -110,10 +110,12 @@ class Pod
     versions.gsub(/[\{\}]/, '').split(',')
   end
 
+  # Symbolized as there are likely duplicates.
+  #
   def last_version
     mapped_versions.
       sort_by { |v| Gem::Version.new(v) }.
-      last
+      last.to_sym
   end
 
   def authors
@@ -124,7 +126,7 @@ class Pod
     spec_authors = authors
     if spec_authors
       if spec_authors.respond_to? :to_hash
-        spec_authors.keys.join(' ') || ''
+        spec_authors.keys.join(' ') || :''
       else
         if spec_authors.respond_to? :to_ary
           spec_authors.join(' ')
@@ -141,11 +143,20 @@ class Pod
 
   def rendered_authors
     if authors.respond_to? :to_hash
-      authors
+      symbolize_hash(authors)
     else
       [*authors].inject({}) do |result, name|
-        result.tap { |r| r[name] = '' }
+        if name.respond_to? :to_hash
+          symbolize_hash(name)
+        else
+          result.tap { |r| r[name.to_sym] = '' }
+        end
       end
+    end
+  end
+  def symbolize_hash hash
+    hash.inject({}) do |result, (key, value)|
+      result.tap { |r| r[key.to_sym] = (value && value.to_sym) }
     end
   end
 
@@ -182,7 +193,9 @@ class Pod
   def platforms
     platforms_spec = specification['platforms']
     if platforms_spec.respond_to?(:to_hash)
-      platforms_spec.keys
+      # Symbolized as there are likely duplicates.
+      #
+      platforms_spec.keys.map(&:to_sym)
     else
       DEFAULT_PLATFORMS
     end
@@ -199,7 +212,11 @@ class Pod
   end
 
   def source
-    specification['source'] || {}
+    (specification['source'] || {}).inject({}) do |result, (type, target)|
+      # TODO Strip tag? (and others)
+      # next result if type == 'tag'
+      result.tap { |r| r[type.to_sym] = target }
+    end
   end
 
   def recursive_subspecs
@@ -247,7 +264,7 @@ class Pod
              
              where(
                Domain.pods[:id] => id,
-               Domain.versions[:name] => last_version,
+               Domain.versions[:name] => last_version.to_s, # TODO This is a bit silly.
              ).
              
              limit(1).
@@ -354,7 +371,7 @@ class Pod
       downcase.
       scan(/\b(#{TAGS.join('|')})\w*\b/).
       flatten.
-      uniq
+      uniq.map(&:to_sym)
   rescue StandardError, SyntaxError
     []
   end
@@ -371,18 +388,27 @@ class Pod
   #
   def to_h
     @h ||= begin
+      # Small memory optimisation.
+      # We could use Symbols, but most URLs are unique.
+      if homepage == source[:git]
+        source[:git] = homepage
+      end
+      
+      # Create a rendered hash.
       h = {
         id: name, # We don't hand out ids.
         platforms: platforms,
         version: last_version,
         summary: mapped_summary[0..139],
         authors: rendered_authors,
-        link: homepage.to_s,
-        source: source,
-        tags: tags.to_a,
-        deprecated: deprecated?,
-        deprecated_in_favor_of: deprecated_in_favor_of,
+        link: homepage, # TODO Remove https://github.com/ or http://github.com/ from source if it's git. Or reconstitute from Array.
+        source: source, # TODO Remove https://github.com/ or http://github.com/ from source if it's git. Or reconstitute from Array.
+        tags: tags,
       }
+      if deprecated?
+        h[:deprecated] = true
+        h[:deprecated_in_favor_of] = deprecated_in_favor_of
+      end
       h[:documentation_url] = row.documentation_url if row.respond_to?(:documentation_url)
       h[:cocoadocs] = true if cocoadocs?
       h
