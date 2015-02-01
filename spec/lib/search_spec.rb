@@ -5,6 +5,7 @@ describe Search do
 
   def specification
     @specification ||= Hashie::Mash.new(
+      'id' => 99999999999999999,
       'name' => 'AFNetworking',
       'version' => '2.3.1',
       'license' => 'MIT',
