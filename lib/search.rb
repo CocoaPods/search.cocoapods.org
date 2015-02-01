@@ -43,7 +43,10 @@ class Search
     #
     @index = Index.new :pods do
       id :id
-      # symbol_keys true
+      
+      # We never dump the index to file, so
+      # let Picky optimize.
+      optimize :no_dump
 
       # We use the ids.
       #
