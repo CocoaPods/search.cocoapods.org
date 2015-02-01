@@ -28,7 +28,7 @@ describe 'Facets Integration Tests' do
   ok do
     get '/api/v1/pods.facets.json',  only: 'platform', counts: 'false'
     result = Yajl.load(last_response.body)
-    result.should == { 'platform' => %w(ios osx) }
+    result['platform'].sort.should == %w(ios osx).sort
   end
 
   ok do
