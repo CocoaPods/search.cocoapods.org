@@ -11,8 +11,8 @@ ruby '2.2.0'
 gem 'bundler'
 gem 'sinatra', :require => 'sinatra/base'
 # gem 'cocoapods-core'
-gem 'picky', '~> 4.26.0'
-gem 'picky-client', '~> 4.26.0' # Needed for Picky::Convenience
+gem 'picky', '~> 4.27.0'
+gem 'picky-client', '~> 4.27.0' # Needed for Picky::Convenience
 gem 'cod'
 gem 'hashie'
 
