@@ -4,7 +4,7 @@ class Pods
   end
 
   def reset
-    @cache = GoogleHashSparseLongToRuby.new
+    @cache = Hash.new # GoogleHashSparseLongToRuby.new
   end
 
   def self.instance
