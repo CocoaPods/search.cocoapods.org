@@ -92,5 +92,112 @@ describe Pod do
     ok { pod.mapped_authors.should == 'Kyle Fuller' }
 
   end
-
+  
+  describe 'synthetic case #1' do
+    
+    def pod
+      af = Pod.all { |pods| pods.where(name: 'AFNetworking') }.first
+      class << af
+        def source
+          { http: 'http://parse-ios.s3.amazonaws.com/d9dd1242464f5bb586d9f8d660045c04/parse-library-1.6.2.zip' }
+        end
+      end
+      af
+    end
+    
+    ok do
+      pod.to_h[:source].should == { http: "http://parse-ios.s3.amazonaws.com/d9dd1242464f5bb586d9f8d660045c04/parse-library-1.6.2.zip" }
+    end
+    
+  end
+  
+  describe 'synthetic case #2' do
+    
+    def pod
+      af = Pod.all { |pods| pods.where(name: 'AFNetworking') }.first
+      class << af
+        def source
+          { git: "https://github.com/tibo/BlockRSSParser.git" }
+        end
+      end
+      af
+    end
+    
+    ok do
+      pod.to_h[:source].should == { git: "https://github.com/tibo/BlockRSSParser.git" }
+    end
+    
+  end
+  
+  describe 'synthetic case #3' do
+    
+    def pod
+      af = Pod.all { |pods| pods.where(name: 'AFNetworking') }.first
+      class << af
+        def source
+          { git: "git://github.com/OliverLetterer/GHMarkdownParser.git" }
+        end
+      end
+      af
+    end
+    
+    ok do
+      pod.to_h[:source].should == { git: "git://github.com/OliverLetterer/GHMarkdownParser.git" }
+    end
+    
+  end
+  
+  describe 'synthetic case #4' do
+    
+    def pod
+      af = Pod.all { |pods| pods.where(name: 'AFNetworking') }.first
+      class << af
+        def source
+          { http: "http://sourceforge.net/projects/uriparser/files/Sources/0.7.7/uriparser-0.7.7.zip" }
+        end
+      end
+      af
+    end
+    
+    ok do
+      pod.to_h[:source].should == { http: "http://sourceforge.net/projects/uriparser/files/Sources/0.7.7/uriparser-0.7.7.zip" }
+    end
+    
+  end
+  
+  describe 'synthetic case #5' do
+    
+    def pod
+      af = Pod.all { |pods| pods.where(name: 'AFNetworking') }.first
+      class << af
+        def source
+          { http: "http://sourceforge.net/projects/uriparser/files/Sources/0.7.7/uriparser-0.7.7.zip" }
+        end
+      end
+      af
+    end
+    
+    ok do
+      pod.to_h[:source].should == { http: "http://sourceforge.net/projects/uriparser/files/Sources/0.7.7/uriparser-0.7.7.zip" }
+    end
+    
+  end
+  
+  describe 'synthetic case #5' do
+    
+    def pod
+      af = Pod.all { |pods| pods.where(name: 'AFNetworking') }.first
+      class << af
+        def source
+          nil
+        end
+      end
+      af
+    end
+    
+    ok do
+      pod.to_h[:source].should == nil
+    end
+    
+  end
 end
