@@ -426,11 +426,13 @@ class Pod
     # Small memory optimisation.
     # We could use Symbols, but most URLs are unique.
     rendered_source = source
-    if homepage == rendered_source[:git]
-      rendered_source[:git] = rendered_homepage
-    else
-      if rendered_source[:git] =~ /github\.com/
-        rendered_source[:git] = split_github(rendered_source[:git])
+    if rendered_source
+      if rendered_homepage == rendered_source[:git]
+        rendered_source[:git] = rendered_homepage
+      else
+        if rendered_source[:git] =~ /github\.com/
+          rendered_source[:git] = split_github(rendered_source[:git])
+        end
       end
     end
     
@@ -440,24 +442,26 @@ class Pod
     match = url.match(/(https?|git)/)
     protocol = match[0]
     (protocol = protocol.to_sym) if protocol
-    part = url.gsub(%r{^(https?://|git@)github.com/}, '')
+    part = url.gsub(%r{^((https?|git)://|git@)github.com/}, '')
     [protocol, :'github.com', part]
   end
   def uncompress hash
     link = hash[:link]
     source = hash[:source]
-    if link.respond_to?(:to_ary)
-      hash[:link] = [
-        link[0],
-        (link[0] == :git ? :'@' : :'://'),
-        link[1],
-        :/,
-        link[2]
-      ].join
-    end
-    source_link = source[:git]
-    if source_link.respond_to?(:to_ary)
-      source[:git] = uncompress_link(source_link)
+    if source
+      if link.respond_to?(:to_ary)
+        hash[:link] = [
+          link[0],
+          (link[0] == :git ? :'@' : :'://'),
+          link[1],
+          :/,
+          link[2]
+        ].join
+      end
+      source_link = source[:git]
+      if source_link.respond_to?(:to_ary)
+        source[:git] = uncompress_link(source_link)
+      end
     end
     hash
   end
