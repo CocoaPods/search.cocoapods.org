@@ -215,7 +215,7 @@ describe Pod do
     end
     
     ok do
-      pod.to_h[:link].should == 'https://www.github.com/venmo/VENTouchLock'
+      pod.to_h[:link].should == 'https://github.com/venmo/VENTouchLock'
     end
   end
 end

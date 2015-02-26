@@ -442,7 +442,7 @@ class Pod
     match = url.match(/(https?|git)/)
     protocol = match[0]
     (protocol = protocol.to_sym) if protocol
-    part = url.gsub(%r{^((https?|git)://|git@)github.com/}, '')
+    part = url.gsub(%r{^((https?|git)://|git@)(www\.)?github.com/}, '')
     [protocol, :'github.com', part]
   end
   def uncompress hash
