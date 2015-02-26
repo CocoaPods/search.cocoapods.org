@@ -260,22 +260,39 @@ class Search
     end
   end
   
-  def picky_search(*args)
+  def picky_search(query, amount, offset, options = {})
     if CocoapodSearch.child
-      Channel.instance(:search).call :picky_search, args
+      Channel.instance(:search).call :picky_search, [query, amount, offset, options]
     else
-      if args.last.respond_to?(:to_hash)
-        options = args.last
-        sorting = filter_sort options.delete(:sort)
-        format = options.delete(:format)
-        rendering = options.delete(:rendering)
-      end
-
-      results = interface.search(*args)
-
+      sorting = filter_sort options.delete(:sort)
+      format = options.delete(:format)
+      rendering = options.delete(:rendering)
+      
+      # results = interface.search(query, *args)
+      
+      tokens = interface.tokenized query
+      
+      results = interface.search_with tokens, amount.to_i, offset.to_i, query, options[:unique]
+      
       # Sort results.
       #
       results.sort_by(&sorting) if sorting
+      
+      # Promote exact result to top of allocation if it's a single word.
+      #
+      if tokens.size == 1
+        text = tokens.first.text
+        found = false
+        results.allocations.each do |allocation|
+          # Find the first exact hit and promote it.
+          # Note: slows it down considerably.
+          if found = allocation.ids.find { |id| p [Pods.instance[id].name.downcase] if text == 'ObjectiveRecord'; Pods.instance[id].name.downcase == text }
+            allocation.ids.delete found
+            allocation.ids.unshift found
+            break
+          end
+        end
+      end
       
       if block_given?
         yield results, format, rendering
