@@ -200,4 +200,22 @@ describe Pod do
     end
     
   end
+  
+  describe 'synthetic case #6' do
+      
+      
+    def pod
+      af = Pod.all { |pods| pods.where(name: 'AFNetworking') }.first
+      class << af
+        def homepage
+          'https://www.github.com/venmo/VENTouchLock'
+        end
+      end
+      af
+    end
+    
+    ok do
+      pod.to_h[:link].should == 'https://www.github.com/venmo/VENTouchLock'
+    end
+  end
 end
