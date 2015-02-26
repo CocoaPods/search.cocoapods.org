@@ -24,7 +24,7 @@ describe 'Special Cases' do
   it 'will find AFNetworking at the first position if exact - with name sorting' do
     first_three_names_for_search('AFNetworking', sort: 'name').should == %w(AFNetworking AFIncrementalStore CargoBay)
   end
-
+  
   it 'will find ObjectiveRecord via CoreData' do
     first_three_names_for_search('CoreData', sort: 'name').should == %w(AFIncrementalStore MagicalRecord ObjectiveRecord)
   end
