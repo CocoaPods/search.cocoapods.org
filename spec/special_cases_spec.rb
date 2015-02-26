@@ -15,6 +15,16 @@ describe 'Special Cases' do
     special_cases.search(query, options).first(3)
   end
 
+  it 'will find AFNetworking at the first position if exact - despite negative popularity sorting' do
+    first_three_names_for_search('AFNetworking', sort: '-popularity').should == %w(AFNetworking GroundControl CargoBay)
+  end
+  it 'will find AFNetworking at the first position if exact - with positive popularity sorting' do
+    first_three_names_for_search('AFNetworking', sort: 'popularity').should == %w(AFNetworking RestKit Nimbus)
+  end
+  it 'will find AFNetworking at the first position if exact - with name sorting' do
+    first_three_names_for_search('AFNetworking', sort: 'name').should == %w(AFNetworking AFIncrementalStore CargoBay)
+  end
+
   it 'will find ObjectiveRecord via CoreData' do
     first_three_names_for_search('CoreData', sort: 'name').should == %w(AFIncrementalStore MagicalRecord ObjectiveRecord)
   end
