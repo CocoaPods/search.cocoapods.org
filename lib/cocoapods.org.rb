@@ -8,8 +8,9 @@ require File.expand_path '../platform', __FILE__
 #
 require File.expand_path '../pods', __FILE__
 
-# Load search interface and index.
+# Load search interface and index (and extensions to Picky).
 #
+require File.expand_path '../extensions', __FILE__
 require File.expand_path '../search', __FILE__
 
 # Load search engine process.
