@@ -32,7 +32,7 @@ describe 'Integration Tests' do
   # Testing the format.
   #
   # Not symbolized as it is parsed JSON.
-  ok { pods.search('on:osx afnetworking', sort: 'name').entries.first.should == { id: 'AFNetworking', platforms: ['ios', 'osx'], version: '2.5.0', summary: 'A delightful iOS and OS X networking framework.', authors: { :"Mattt Thompson" => 'm@mattt.me' }, link: 'https://github.com/AFNetworking/AFNetworking', source: { git: 'https://github.com/AFNetworking/AFNetworking.git', tag: '2.5.0', submodules: true }, tags: ['network'] } }
+  ok { pods.search('on:osx afnetworking', sort: 'name').entries.first.should == {:id=>"AFNetworking", :platforms=>["ios", "osx"], :version=>"2.5.2", :summary=>"A delightful iOS and OS X networking framework.", :authors=>{:"Mattt Thompson"=>"m@mattt.me"}, :link=>"https://github.com/AFNetworking/AFNetworking", :source=>{:git=>"https://github.com/AFNetworking/AFNetworking.git", :tag=>"2.5.2", :submodules=>true}, :tags=>["network"], :cocoadocs=>true} }
 
   # Testing a specific order of result ids.
   #
@@ -56,7 +56,7 @@ describe 'Integration Tests' do
 
   # Partial version search.
   #
-  expected = %w(AFNetworking CargoBay GroundControl)
+  expected = %w(AFNetworking)
   ok { first_three_names_for_search('on:osx afnetworking 2', sort: 'name').should == expected }
   ok { first_three_names_for_search('on:osx afnetworking 2.', sort: 'name').should == expected }
   ok { first_three_names_for_search('on:osx afnetworking 2.0', sort: 'name').should == expected }
@@ -65,10 +65,10 @@ describe 'Integration Tests' do
 
   # Platform constrained search (platforms are AND-ed).
   #
-  expected = %w(AFNetworking AFIncrementalStore CargoBay)
+  expected = %w(AFNetworking AFIncrementalStore RestKit)
   ok { first_three_names_for_search('on:osx afnetworking', sort: 'name').should == expected }
   ok { first_three_names_for_search('on:osx on:ios afnetworking', sort: 'name').should == expected }
-  ok { first_three_names_for_search('on:ios afnetworking', sort: 'name').should == expected }
+  ok { first_three_names_for_search('on:ios afnetworking', sort: 'name').should == %w(AFNetworking AFIncrementalStore MRProgress) }
 
   # Category boosting.
   #
@@ -79,13 +79,13 @@ describe 'Integration Tests' do
   #
   # Platform is only found when fully mentioned (i.e. no partial).
   #
-  ok { pods.search('platform:osx').total.should == 75 }
+  ok { pods.search('platform:osx').total.should == 74 }
   ok { pods.search('platform:os').total.should == 0 }
   ok { pods.search('platform:o').total.should == 0 }
 
   # Rendering.
   #
-  ok { pods.search('afnetworking mattt thompson', sort: 'name').entries.first.should == { id: 'AFNetworking', platforms: %w(ios osx), version: '2.5.0', summary: 'A delightful iOS and OS X networking framework.', authors: { :"Mattt Thompson" => 'm@mattt.me' }, link: 'https://github.com/AFNetworking/AFNetworking', source: { git: 'https://github.com/AFNetworking/AFNetworking.git', tag: '2.5.0', submodules: true }, tags: ['network'] } }
+  ok { pods.search('afnetworking mattt thompson', sort: 'name').entries.first.should == {:id=>"AFNetworking", :platforms=>["ios", "osx"], :version=>"2.5.2", :summary=>"A delightful iOS and OS X networking framework.", :authors=>{:"Mattt Thompson"=>"m@mattt.me"}, :link=>"https://github.com/AFNetworking/AFNetworking", :source=>{:git=>"https://github.com/AFNetworking/AFNetworking.git", :tag=>"2.5.2", :submodules=>true}, :tags=>["network"], :cocoadocs=>true} }
 
   # Qualifiers.
   #
@@ -93,16 +93,16 @@ describe 'Integration Tests' do
   ok { first_three_names_for_search('name:afnetworking').should == expected }
   ok { first_three_names_for_search('pod:afnetworking').should == expected }
 
-  expected = %w(AFIncrementalStore AFNetworking CargoBay)
+  expected = %w(AFIncrementalStore AFNetworking Alamofire)
   ok { first_three_names_for_search('author:mattt author:thompson', sort: 'name').should == expected }
   ok { first_three_names_for_search('authors:mattt authors:thompson', sort: 'name').should == expected }
   ok { first_three_names_for_search('written:mattt written:thompson', sort: 'name').should == expected }
   ok { first_three_names_for_search('writer:mattt writer:thompson', sort: 'name').should == expected }
   # ok { first_three_names_for_search('writer:mattt writer:thompson').should == expected }
 
-  ok { first_three_names_for_search('version:1.0.0', sort: 'name').should == %w(Appirater AwesomeMenu BlockAlertsAnd-ActionSheets) }
+  ok { first_three_names_for_search('version:1.0.0', sort: 'name').should == %w(Appirater Atlas AwesomeMenu) }
 
-  expected_dependencies = %w(AFIncrementalStore CargoBay GroundControl)
+  expected_dependencies = %w(AFIncrementalStore MRProgress Nimbus)
   ok { first_three_names_for_search('dependency:AFNetworking', sort: 'name').should == expected_dependencies }
   ok { first_three_names_for_search('dependencies:AFNetworking', sort: 'name').should == expected_dependencies }
   ok { first_three_names_for_search('depends:AFNetworking', sort: 'name').should == expected_dependencies }
@@ -111,10 +111,10 @@ describe 'Integration Tests' do
   ok { first_three_names_for_search('use:AFNetworking', sort: 'name').should == expected_dependencies }
   ok { first_three_names_for_search('needs:AFNetworking', sort: 'name').should == expected_dependencies }
 
-  ok { pods.search('platform:osx').total.should == 75 }
-  ok { pods.search('on:osx').total.should == 75 }
+  ok { pods.search('platform:osx').total.should == 74 }
+  ok { pods.search('on:osx').total.should == 74 }
 
-  ok { first_three_names_for_search('summary:data', sort: 'name').should == %w(AFIncrementalStore FCModel FXForms) }
+  ok { first_three_names_for_search('summary:data', sort: 'name').should == %w(AFIncrementalStore FXForms JSONModel) }
 
   # No single characters indexed.
   #
