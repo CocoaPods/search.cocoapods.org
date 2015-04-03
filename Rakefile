@@ -6,6 +6,12 @@ namespace :db do
     end
 
   end
+  
+  desc "Get a prod dump."
+  task :dump do
+    # `heroku pg:backups capture DATABASE_URL -a cocoapods-trunk-service`
+    `curl -o spec/trunk.dump \`heroku pgbackups:url b008 -a cocoapods-trunk-service\``
+  end
 end
 
 namespace :spec do
