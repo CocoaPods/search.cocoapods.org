@@ -5,6 +5,8 @@ require 'json'
 class Pod
   attr_reader :row
 
+  DEFAULT_QUALITY = 40
+
   extend Forwardable
 
   # Forward entities.
@@ -52,13 +54,13 @@ class Pod
         ) AS popularity
         EXPR
         *Domain.github_metrics.fields(:forks, :stargazers, :contributors, :subscribers),
-        Domain.cocoadocs_pod_metrics[:id]
+        *Domain.cocoadocs_pod_metrics.fields(:id, :quality_estimate)
       ).
       
       group_by(
         Domain.pods[:id],
         *Domain.github_metrics.fields(:forks, :stargazers, :contributors, :subscribers),
-        *Domain.cocoadocs_pod_metrics[:id],
+        *Domain.cocoadocs_pod_metrics.fields(:id, :quality_estimate)
       )
   end
 
@@ -81,6 +83,10 @@ class Pod
 
   def popularity
     row.popularity || 0
+  end
+  
+  def quality
+    cocoadocs_pod_metric.quality_estimate || DEFAULT_QUALITY
   end
 
   def forks
