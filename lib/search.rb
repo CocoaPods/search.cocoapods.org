@@ -338,7 +338,7 @@ class Search
   end
 
   @@default_numeric_sort = ->(sort, desc) do
-    desc = desc ? 1 : -1
+    desc = desc ? -1 : 1
     ->(id) { desc * Pods.instance[id].send(sort) }
   end
 
@@ -346,17 +346,19 @@ class Search
     @sort_map ||= {
       'name'          => @@default_text_sort[:name],
 
-      'popularity'    => @@default_numeric_sort[:popularity, false],
-      '-popularity'   => @@default_numeric_sort[:popularity, true],
+      'popularity'    => @@default_numeric_sort[:popularity, true],
+      '-popularity'   => @@default_numeric_sort[:popularity, false],
+      'quality'       => @@default_numeric_sort[:quality, true],
+      '-quality'      => @@default_numeric_sort[:quality, false],
 
-      'contributors'  => @@default_numeric_sort[:contributors, false],
-      '-contributors' => @@default_numeric_sort[:contributors, true],
-      'forks'         => @@default_numeric_sort[:forks, false],
-      '-forks'        => @@default_numeric_sort[:forks, true],
-      'stars'         => @@default_numeric_sort[:stargazers, false],
-      '-stars'        => @@default_numeric_sort[:stargazers, true],
-      'watchers'      => @@default_numeric_sort[:subscribers, false],
-      '-watchers'     => @@default_numeric_sort[:subscribers, true],
+      'contributors'  => @@default_numeric_sort[:contributors, true],
+      '-contributors' => @@default_numeric_sort[:contributors, false],
+      'forks'         => @@default_numeric_sort[:forks, true],
+      '-forks'        => @@default_numeric_sort[:forks, false],
+      'stars'         => @@default_numeric_sort[:stargazers, true],
+      '-stars'        => @@default_numeric_sort[:stargazers, false],
+      'watchers'      => @@default_numeric_sort[:subscribers, true],
+      '-watchers'     => @@default_numeric_sort[:subscribers, false],
     }
   end
 end
