@@ -38,6 +38,7 @@ group :development do
   gem 'rake'
   gem 'foreman'
   gem 'rubocop'
+  gem 'heroku'
 end
 
 # Pure production gems.
