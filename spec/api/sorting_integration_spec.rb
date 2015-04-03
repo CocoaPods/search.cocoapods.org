@@ -21,6 +21,9 @@ describe 'Sorting Integration Tests' do
 
   ok { first_three_names_for_search('on:osx mattt', sort: 'popularity').should ==  %w(AFNetworking FormatterKit AFIncrementalStore) }
   ok { first_three_names_for_search('on:osx mattt', sort: '-popularity').should == %w(GroundControl CargoBay AFIncrementalStore) }
+  
+  ok { first_three_names_for_search('on:osx mattt', sort: 'quality').should ==  %w(AFNetworking FormatterKit AFIncrementalStore) }
+  ok { first_three_names_for_search('on:osx mattt', sort: '-quality').should == %w(GroundControl CargoBay AFIncrementalStore) }
 
   ok { first_three_names_for_search('on:osx mattt', sort: 'watchers').should ==  %w(AFNetworking AFIncrementalStore FormatterKit) }
   ok { first_three_names_for_search('on:osx mattt', sort: '-watchers').should == %w(CargoBay GroundControl FormatterKit) }
