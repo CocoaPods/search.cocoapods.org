@@ -16,17 +16,17 @@ describe 'Special Cases' do
   end
 
   it 'will find AFNetworking at the first position if exact - despite negative popularity sorting' do
-    first_three_names_for_search('AFNetworking', sort: '-popularity').should == %w(AFNetworking GroundControl CargoBay)
+    first_three_names_for_search('AFNetworking', sort: '-popularity').should == ["AFNetworking", "MRProgress", "AFIncrementalStore"]
   end
   it 'will find AFNetworking at the first position if exact - with positive popularity sorting' do
     first_three_names_for_search('AFNetworking', sort: 'popularity').should == %w(AFNetworking RestKit Nimbus)
   end
   it 'will find AFNetworking at the first position if exact - with name sorting' do
-    first_three_names_for_search('AFNetworking', sort: 'name').should == %w(AFNetworking AFIncrementalStore CargoBay)
+    first_three_names_for_search('AFNetworking', sort: 'name').should == ["AFNetworking", "AFIncrementalStore", "MRProgress"]
   end
   
   it 'will find ObjectiveRecord via CoreData' do
-    first_three_names_for_search('CoreData', sort: 'name').should == %w(AFIncrementalStore MagicalRecord ObjectiveRecord)
+    first_three_names_for_search('CoreData', sort: 'name').should == ["AFIncrementalStore", "MagicalRecord", "PonyDebugger"]
   end
 
   it 'will survive searching ORed' do

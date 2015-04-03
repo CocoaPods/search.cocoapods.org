@@ -31,7 +31,7 @@ describe Pod do
 
     ok { pod.summary.should == 'A delightful iOS and OS X networking framework.' }
 
-    ok { pod.cocoadocs?.should == false }
+    ok { pod.cocoadocs?.should == true }
 
     # This is just a rough sanity check.
     ok { pod.popularity.should >= 70_000 }
@@ -43,7 +43,7 @@ describe Pod do
       pod.to_h.should == {
         id: "AFNetworking",
         platforms: [:ios, :osx],
-        version: :"2.5.0",
+        version: :"2.5.2",
         summary: "A delightful iOS and OS X networking framework.",
         authors: {
           :"Mattt Thompson" => :"m@mattt.me"
@@ -51,10 +51,11 @@ describe Pod do
         link: "https://github.com/AFNetworking/AFNetworking",
         source: {
           git: "https://github.com/AFNetworking/AFNetworking.git",
-          tag: "2.5.0",
+          tag: "2.5.2",
           submodules: true
         },
         tags: [:network],
+        cocoadocs: true
         # If they are not true, they are not added.
         # deprecated: false,
         # deprecated_in_favor_of: nil

@@ -17,24 +17,24 @@ describe 'Sorting Integration Tests' do
     pods.search(query, options).first(3)
   end
 
-  ok { first_three_names_for_search('on:osx mattt', sort: 'name').should == %w(AFIncrementalStore AFNetworking CargoBay) }
+  ok { first_three_names_for_search('on:osx mattt', sort: 'name').should == ["AFIncrementalStore", "AFNetworking", "Alamofire"] }
 
-  ok { first_three_names_for_search('on:osx mattt', sort: 'popularity').should ==  %w(AFNetworking FormatterKit AFIncrementalStore) }
-  ok { first_three_names_for_search('on:osx mattt', sort: '-popularity').should == %w(GroundControl CargoBay AFIncrementalStore) }
+  ok { first_three_names_for_search('on:osx mattt', sort: 'popularity').should ==  ["AFNetworking", "Alamofire", "FormatterKit"] }
+  ok { first_three_names_for_search('on:osx mattt', sort: '-popularity').should == ["AFIncrementalStore", "FormatterKit", "Alamofire"] }
   
-  ok { first_three_names_for_search('on:osx mattt', sort: 'quality').should ==  %w(AFNetworking FormatterKit AFIncrementalStore) }
-  ok { first_three_names_for_search('on:osx mattt', sort: '-quality').should == %w(GroundControl CargoBay AFIncrementalStore) }
+  ok { first_three_names_for_search('on:osx mattt', sort: 'quality').should ==  ["AFNetworking", "FormatterKit", "Alamofire"] }
+  ok { first_three_names_for_search('on:osx mattt', sort: '-quality').should == ["AFIncrementalStore", "Alamofire", "FormatterKit"] }
 
-  ok { first_three_names_for_search('on:osx mattt', sort: 'watchers').should ==  %w(AFNetworking AFIncrementalStore FormatterKit) }
-  ok { first_three_names_for_search('on:osx mattt', sort: '-watchers').should == %w(CargoBay GroundControl FormatterKit) }
+  ok { first_three_names_for_search('on:osx mattt', sort: 'watchers').should ==  ["AFNetworking", "Alamofire", "AFIncrementalStore"] }
+  ok { first_three_names_for_search('on:osx mattt', sort: '-watchers').should == ["FormatterKit", "AFIncrementalStore", "Alamofire"] }
 
-  ok { first_three_names_for_search('on:osx mattt', sort: 'forks').should ==  %w(AFNetworking AFIncrementalStore FormatterKit) }
-  ok { first_three_names_for_search('on:osx mattt', sort: '-forks').should == %w(GroundControl CargoBay FormatterKit) }
+  ok { first_three_names_for_search('on:osx mattt', sort: 'forks').should ==  ["AFNetworking", "Alamofire", "FormatterKit"] }
+  ok { first_three_names_for_search('on:osx mattt', sort: '-forks').should == ["AFIncrementalStore", "FormatterKit", "Alamofire"] }
 
-  ok { first_three_names_for_search('on:osx mattt', sort: 'stars').should ==  %w(AFNetworking FormatterKit AFIncrementalStore) }
-  ok { first_three_names_for_search('on:osx mattt', sort: '-stars').should == %w(CargoBay GroundControl AFIncrementalStore) }
+  ok { first_three_names_for_search('on:osx mattt', sort: 'stars').should ==  ["AFNetworking", "Alamofire", "FormatterKit"] }
+  ok { first_three_names_for_search('on:osx mattt', sort: '-stars').should == ["AFIncrementalStore", "FormatterKit", "Alamofire"] }
 
-  ok { first_three_names_for_search('on:osx mattt', sort: 'contributors').should ==  %w(AFNetworking FormatterKit AFIncrementalStore) }
-  ok { first_three_names_for_search('on:osx mattt', sort: '-contributors').should == %w(GroundControl CargoBay AFIncrementalStore) }
+  ok { first_three_names_for_search('on:osx mattt', sort: 'contributors').should ==  ["AFNetworking", "FormatterKit", "AFIncrementalStore"] }
+  ok { first_three_names_for_search('on:osx mattt', sort: '-contributors').should == ["Alamofire", "AFIncrementalStore", "FormatterKit"] }
 
 end
