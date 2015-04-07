@@ -117,6 +117,8 @@ class SearchWorker
   # Send the stats to the status page,
   # if there are any stats.
   #
+  # TODO Move all this into StatsSender.
+  #
   def send_stats_to_status_page
     time, count = remove_oldest_count_from_stats
     @stats.notify(:send, [time, count]) if time
