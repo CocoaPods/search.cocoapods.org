@@ -19,7 +19,7 @@ class StatsSender
   end
   
   def setup
-    @memory_reporter -> {
+    @memory_reporter = -> {
       `ps ax -o pid,rss | grep -E "^[[:space:]]*#{$$}"`.
         split.
         last.
