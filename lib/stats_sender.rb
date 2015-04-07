@@ -1,8 +1,9 @@
 require 'rest'
 
 class StatsSender
-  URL = ENV['STATUSPAGE_URL']
-  API_KEY = ENV['STATUSPAGE_API_KEY']
+  API_KEY     = ENV['STATUSPAGE_API_KEY']
+  QUERIES_URL = ENV['STATUSPAGE_QUERIES_URL']
+  MEMORY_URL  = ENV['STATUSPAGE_MEMORY_URL']
 
   def self.start
     @channel = Channel.instance(:stats)
@@ -18,6 +19,12 @@ class StatsSender
   end
   
   def setup
+    @memory_reporter -> {
+      `ps ax -o pid,rss | grep -E "^[[:space:]]*#{$$}"`.
+        split.
+        last.
+        to_i * 1024
+    }
     Signal.trap('INT') do
       $stdout.puts "[#{Process.pid}] Stats Sender process going down."
       exit
@@ -26,28 +33,32 @@ class StatsSender
   
   def process _, message
     time, count = message
-    send(time, count)
+    timestamp = time.to_i
+    
+    # Send query stats.
+    send(QUERIES_URL, timestamp, count)
+    
+    # Send memory stats.
+    send(MEMORY_URL,  timestamp, @memory_reporter.call)
   end
   
-  def send(time, count)
-    data = {
-      data: {
-        timestamp: time.to_i,
-        value: count,
-      },
-    }
+  def send(url, timestamp, amount)
     headers = {
       'Content-Type' => 'application/json',
       'Authorization' => "OAuth #{API_KEY}",
     }
-    if URL
+    if url
       begin
-        $stdout.puts "[Stats] Sending #{data}."
-        REST.post(URL, data.to_json, headers) do |http|
+        data = {
+          data: {
+            timestamp: timestamp,
+            value: amount,
+          },
+        }
+        REST.post(url, data.to_json, headers) do |http|
           http.open_timeout = 5
           http.read_timeout = 5
         end
-        $stdout.puts "[Stats] Sent #{data}."
       rescue REST::Error => e
         $stderr.puts "[Warning] Timeout when sending stats with #{data}: #{e.message}."
       end
