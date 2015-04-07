@@ -5,23 +5,70 @@ class StatsSender
   QUERIES_URL = ENV['STATUSPAGE_QUERIES_URL']
   MEMORY_URL  = ENV['STATUSPAGE_MEMORY_URL']
 
-  def self.start
-    @channel = Channel.instance(:stats)
-    @channel.start children: 1, worker: self
-    @channel.choose_channel(0)
-    self
+  class << self
+    
+    attr_reader :per_minute_stats
+    
+    # Start the sender.
+    #
+    def start
+      @per_minute_stats = Hash.new { 0 }
+      @channel = Channel.instance(:stats)
+      @channel.start children: 1, worker: self
+      @channel.choose_channel(0)
+      self
+    end
+  
+    # Send the stats to the status page,
+    # if there are any stats.
+    #
+    # It also sends the current PID (usually the search engine
+    # PID).
+    #
+    def send_to_status_page
+      time, count = remove_oldest_count_from_stats
+      notify(:send, [Process.pid, time, count]) if time
+    end
+  
+    # Returns either nil or [time, count]
+    #
+    def remove_oldest_count_from_stats
+      # Get the oldest statistic.
+      time, count = per_minute_stats.first
+
+      # If the count is not ongoing anymore.
+      unless time == current_time_bucket
+        # Return the count for a time
+        [time, per_minute_stats.delete(time)]
+      end
+    end
+  
+    # Use this method to communicate with it.
+    #
+    def notify action, message
+      @channel.notify(:send, message)
+    end
+  
+    # Add a single query.
+    #
+    def add_one_query
+      per_minute_stats[current_time_bucket] += 1
+    end
+  
+    # Returns the current minute we are writing to.
+    #
+    def current_time_bucket
+      Time.at(Time.now.to_i / 60 * 60)
+    end
+    
   end
   
-  # Use this method to communicate with it.
+  # This method is called once in the child process.
   #
-  def self.notify action, message
-    @channel.notify(:send, message)
-  end
-  
   def setup
-    @memory_reporter = -> {
+    @memory_reporter = -> (search_engine_process_pid) {
       # Return memory usage.
-      `ps -o rss= -p #{Process.pid}`.to_i * 1024
+      `ps -o rss= -p #{search_engine_process_pid}`.to_i * 1024
     }
     Signal.trap('INT') do
       $stdout.puts "[#{Process.pid}] Stats Sender process going down."
@@ -29,17 +76,23 @@ class StatsSender
     end
   end
   
+  # This method is called each time the stats sender is pinged with data.
+  #
+  # First parameter is ignored, as it is always :send.
+  #
   def process _, message
-    time, count = message
+    search_engine_process_pid, time, count = message
     timestamp = time.to_i
     
     # Send query stats.
     send(QUERIES_URL, timestamp, count)
     
     # Send memory stats.
-    send(MEMORY_URL,  timestamp, @memory_reporter.call)
+    send(MEMORY_URL,  timestamp, @memory_reporter.call(search_engine_process_pid))
   end
   
+  # Sends data at a time to a (statuspage) URL.
+  #
   def send(url, timestamp, amount)
     headers = {
       'Content-Type' => 'application/json',
@@ -65,6 +118,8 @@ class StatsSender
     $stderr.puts "[Warning] #{e.inspect}: #{e.backtrace}"
   end
   
+  # Called once.
+  # No, Mr StatsSender, I expect you to die.
   def die
     exit
   end
