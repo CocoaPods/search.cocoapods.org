@@ -1,6 +1,9 @@
 require_relative 'stats_sender'
 
 class SearchWorker
+  
+  attr_reader :stats
+  
   def setup
     setup_stats
     
@@ -22,19 +25,19 @@ class SearchWorker
   def process(action, parameters)
     case action
     when :picky_search
-      add_one_query_to_stats
+      stats.add_one_query
       Search.instance.picky_search(*parameters)
     when :search
-      add_one_query_to_stats
+      stats.add_one_query
       Search.instance.search(*parameters)
     when :search_facets
-      add_one_query_to_stats
+      stats.add_one_query
       Search.instance.search_facets parameters
     when :index_facets
-      add_one_query_to_stats
+      stats.add_one_query
       Search.instance.index_facets parameters
     when :split
-      add_one_query_to_stats
+      stats.add_one_query
       Search.instance.split parameters
     when :reindex
       $stdout.puts "Reindexing #{parameters} in INDEX PROCESS."
@@ -55,7 +58,7 @@ class SearchWorker
       $stdout.puts
       $stdout.puts `ps auxm | grep unicorn`
       $stdout.puts
-      send_stats_to_status_page
+      stats.send_to_status_page
       garbage_collect
     end
 
@@ -65,8 +68,6 @@ class SearchWorker
   end
 
   private
-
-  attr_reader :per_minute_stats
 
   def garbage_collect
     GC.start
@@ -86,42 +87,6 @@ class SearchWorker
   #
   def setup_stats
     @stats = StatsSender.start # Starts a new channel.
-    @per_minute_stats = Hash.new { 0 }
-  end
-
-  # Add a single query.
-  #
-  def add_one_query_to_stats
-    per_minute_stats[current_time_bucket] += 1
-  end
-
-  # Returns the current minute we are writing to.
-  #
-  def current_time_bucket
-    Time.at(Time.now.to_i / 60 * 60)
-  end
-
-  # Returns either nil or [time, count]
-  #
-  def remove_oldest_count_from_stats
-    # Get the oldest statistic.
-    time, count = per_minute_stats.first
-
-    # If the count is not ongoing anymore.
-    unless time == current_time_bucket
-      # Return the count for a time
-      [time, per_minute_stats.delete(time)]
-    end
-  end
-
-  # Send the stats to the status page,
-  # if there are any stats.
-  #
-  # TODO Move all this into StatsSender.
-  #
-  def send_stats_to_status_page
-    time, count = remove_oldest_count_from_stats
-    @stats.notify(:send, [time, count]) if time
   end
 
   def setup_every_so_often
