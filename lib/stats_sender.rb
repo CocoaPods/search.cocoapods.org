@@ -20,10 +20,8 @@ class StatsSender
   
   def setup
     @memory_reporter = -> {
-      `ps ax -o pid,rss | grep -E "^[[:space:]]*#{$$}"`.
-        split.
-        last.
-        to_i * 1024
+      # Return memory usage.
+      `ps -o rss= -p #{Process.pid}`.to_i * 1024
     }
     Signal.trap('INT') do
       $stdout.puts "[#{Process.pid}] Stats Sender process going down."
