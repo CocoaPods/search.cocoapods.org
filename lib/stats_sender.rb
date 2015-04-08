@@ -68,7 +68,7 @@ class StatsSender
   def setup
     @memory_reporter = -> (search_engine_process_pid) {
       # Return memory usage.
-      `ps -o rss= -p #{search_engine_process_pid}`.to_f / 1024.0
+      `ps -o rss= -p #{search_engine_process_pid}`.to_f / 1024.0 # We only send MBs.
     }
     Signal.trap('INT') do
       $stdout.puts "[#{Process.pid}] Stats Sender process going down."
