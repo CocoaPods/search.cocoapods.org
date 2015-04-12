@@ -68,7 +68,13 @@ class StatsSender
   def setup
     @memory_reporter = -> (search_engine_process_pid) {
       # Return memory usage.
-      `pmap -x #{search_engine_process_pid} | tail -1 | awk '{print $3}'`.to_i / 1024.0 # We only send MBs.
+      if Gem.platforms.last.os == 'darwin'
+        # OSX
+        `ps -o rss= -p #{search_engine_process_pid}`.to_f / 1024.0 # We only send MBs.
+      else
+        # Heroku (Linux)
+        `pmap -x #{search_engine_process_pid} | tail -1 | awk '{print $3}'`.to_i / 1024.0 # We only send MBs.
+      end
     }
     Signal.trap('INT') do
       $stdout.puts "[#{Process.pid}] Stats Sender process going down."
