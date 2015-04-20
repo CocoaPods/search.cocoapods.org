@@ -53,14 +53,14 @@ class Pod
           github_pod_metrics.stargazers
         ) AS popularity
         EXPR
-        *Domain.github_metrics.fields(:forks, :stargazers, :contributors, :subscribers),
-        *Domain.cocoadocs_pod_metrics.fields(:id, :quality_estimate)
+        *Domain.github_metrics.fields(:forks, :stargazers, :contributors, :subscribers, :language),
+        *Domain.cocoadocs_pod_metrics.fields(:id, :dominant_language, :quality_estimate)
       ).
       
       group_by(
         Domain.pods[:id],
-        *Domain.github_metrics.fields(:forks, :stargazers, :contributors, :subscribers),
-        *Domain.cocoadocs_pod_metrics.fields(:id, :quality_estimate)
+        *Domain.github_metrics.fields(:forks, :stargazers, :contributors, :subscribers, :language),
+        *Domain.cocoadocs_pod_metrics.fields(:id, :dominant_language, :quality_estimate)
       )
   end
 
@@ -105,6 +105,14 @@ class Pod
     github_metric.subscribers || 0
   end
 
+  def language
+    github_metric.language
+  end
+  
+  def dominant_language
+    cocoadocs_pod_metric.dominant_language
+  end
+
   # Index specific methods.
   #
 
@@ -114,6 +122,19 @@ class Pod
 
   def mapped_versions
     versions.gsub(/[\{\}]/, '').split(',')
+  end
+  
+  # Currently only two languages are available for filtering.
+  #
+  @@objc_lang = ['objc'.freeze]
+  @@swift_lang = ['swift'.freeze]
+  @@language_map = {
+    "Objective C" => @@objc_lang,
+    "Swift" => @@swift_lang
+  }
+  @@language_map.default = @@objc_lang
+  def mapped_language
+    @@language_map[dominant_language || language]
   end
 
   # Symbolized as there are likely duplicates.

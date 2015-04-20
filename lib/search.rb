@@ -126,6 +126,11 @@ class Search
                partial: no_partial,
                qualifiers: %i(subspec subspecs),
                from: :mapped_subspec_names
+      category :language,
+               qualifiers: [:lang, :language],
+               partial: no_partial,
+               from: :mapped_language,
+               tokenize: false
     end
 
     # Define a search over the books index.
