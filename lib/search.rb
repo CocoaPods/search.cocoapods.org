@@ -46,7 +46,7 @@ class Search
       
       # We never dump the index to file, so
       # let Picky optimize.
-      # optimize :no_dump # google_hash caused some Ruby [BUG]s.
+      optimize :no_dump # google_hash caused some Ruby [BUG]s.
 
       # We use the ids.
       #

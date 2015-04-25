@@ -63,3 +63,4 @@ Search.instance.reindex_all every, amount do
   print '.'
 end
 puts
+puts "Memory used after indexing: #{`ps -o rss -p #{Process.pid}`}"

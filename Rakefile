@@ -1,10 +1,8 @@
 namespace :db do
   namespace :test do
-
     task :bootstrap do
       `pg_restore --verbose --clean --no-acl --no-owner -h localhost -d trunk_cocoapods_org_test spec/trunk.dump`
     end
-
   end
   
   desc "Get a prod dump."
