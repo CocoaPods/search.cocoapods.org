@@ -1,3 +1,8 @@
+desc 'Bootstrap the project'
+task :bootstrap do
+  sh 'bundle install'
+end
+
 namespace :spec do
   def specs dir = '**'
     FileList["spec/#{dir}/*_spec.rb"].shuffle.join ' '
