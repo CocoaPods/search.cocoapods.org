@@ -1,14 +1,16 @@
-# Load DB.
-#
-if ENV['LOAD_TEST_DB']
-  `pg_restore --verbose --clean --no-acl --no-owner -h localhost -d trunk_cocoapods_org_test spec/trunk.dump`
-end
-
 ENV['RACK_ENV'] = 'test'
+
+# Load the database state via Humus.
+#
+require File.expand_path('../../../Humus/lib/humus', __FILE__)
+Humus.with_snapshot('b008')
 
 # Load the app.
 #
 require File.expand_path '../../lib/cocoapods.org', __FILE__
+
+# Load the database setup.
+#
 require File.expand_path '../../lib/database', __FILE__
 
 # Install some controller spec helpers.
@@ -55,6 +57,7 @@ Config = RbConfig
 
 # Load and prepare everything for the spec(s).
 #
+puts "Caching all pods."
 Pods.instance.cache_all
 every = 5
 amount = 200 # We only use 200 pods.
