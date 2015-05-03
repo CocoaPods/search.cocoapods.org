@@ -46,7 +46,11 @@ class Search
       
       # We never dump the index to file, so
       # let Picky optimize.
-      optimize :no_dump # google_hash caused some Ruby [BUG]s.
+      #
+      # When running GC.start in search worker:
+      #   [BUG] object allocation during garbage collection phase
+      #
+      #optimize :no_dump # google_hash caused some Ruby [BUG]s.
 
       # We use the ids.
       #
