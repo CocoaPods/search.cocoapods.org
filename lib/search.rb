@@ -50,6 +50,8 @@ class Search
       # When running GC.start in search worker:
       #   [BUG] object allocation during garbage collection phase
       #
+      # Could be google_hash or https://bugs.ruby-lang.org/issues/10933.
+      #
       #optimize :no_dump # google_hash caused some Ruby [BUG]s.
 
       # We use the ids.
