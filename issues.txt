@@ -1,0 +1,32 @@
+Exhibit 1:
+May 06 01:49:47 search-cocoapods-org app/web.1:  u27425       3  0.0  0.1 179684 36772 ?        -    08:58   0:02 unicorn master -p 37905 -c unicorn.rb                                 
+May 06 01:49:47 search-cocoapods-org app/web.1:  u27425       6 14.2  1.5 691232 539456 ?       -    08:58 127:08 ruby /app/vendor/bundle/ruby/2.2.0/bin/unicorn -p 37905 -c unicorn.rb 
+May 06 01:49:47 search-cocoapods-org app/web.1:  u27425      12  0.2  0.1 253128 42524 ?        -    08:58   1:54 ruby /app/vendor/bundle/ruby/2.2.0/bin/unicorn -p 37905 -c unicorn.rb 
+May 06 01:49:47 search-cocoapods-org app/web.1:  u27425      55  0.0  0.1 183244 41676 ?        -    09:00   0:25 unicorn worker[0] -p 37905 -c unicorn.rb                              
+May 06 01:49:47 search-cocoapods-org app/web.1:  u27425      58  0.0  0.1 183224 41692 ?        -    09:00   0:26 unicorn worker[1] -p 37905 -c unicorn.rb                              
+May 06 01:49:47 search-cocoapods-org app/web.1:  u27425   12687  0.0  0.0   4172   572 ?        -    23:49   0:00 sh -c ps auxm | grep unicorn 
+May 06 01:49:47 search-cocoapods-org app/web.1:  u27425   12689  0.0  0.0   7700   836 ?        -    23:49   0:00 grep unicorn 
+May 06 01:50:04 search-cocoapods-org heroku/web.1:  source=web.1 dyno=heroku.1758361.5ffb5e40-4ae2-401e-913a-a772a84e4e28 sample#memory_total=640.02MB sample#memory_rss=634.71MB sample#memory_cache=0.55MB sample#memory_swap=4.75MB sample#memory_pgpgin=597172pages sample#memory_pgpgout=434545pages 
+May 06 01:50:12 search-cocoapods-org heroku/router:  at=error code=H13 desc="Connection closed without response" method=GET path="/api/v1/pods.picky.hash.json?query=name%3Ab*&ids=1000&offset=0" host=search.cocoapods.org request_id=867fab67-6153-4059-ab3d-c3054901be09 fwd="115.28.171.233,199.27.129.59" dyno=web.1 connect=3ms service=11328ms status=503 bytes=0 
+May 06 01:50:13 search-cocoapods-org app/web.1:  E, [2015-05-05T23:50:12.779983 #3] ERROR -- : worker=1 PID:58 timeout (11s > 10s), killing 
+May 06 01:50:13 search-cocoapods-org app/web.1:  E, [2015-05-05T23:50:12.862619 #3] ERROR -- : reaped #<Process::Status: pid 58 SIGKILL (signal 9)> worker=1 
+May 06 01:50:13 search-cocoapods-org app/web.1:  Child [12690] chose channel 1 using to: #<Cod::Pipe:0x007fe4ccc6f850> and from: #<Cod::Pipe:0x007fe4ccc6f558>. 
+May 06 01:50:14 search-cocoapods-org app/web.1:  I, [2015-05-05T23:50:14.162298 #12690]  INFO -- : worker=1 ready 
+May 06 01:50:26 search-cocoapods-org heroku/web.1:  source=web.1 dyno=heroku.1758361.5ffb5e40-4ae2-401e-913a-a772a84e4e28 sample#memory_total=633.53MB sample#memory_rss=628.27MB sample#memory_cache=3.05MB sample#memory_swap=2.21MB sample#memory_pgpgin=603305pages sample#memory_pgpgout=441688pages 
+May 06 01:50:30 search-cocoapods-org heroku/router:  at=error code=H13 desc="Connection closed without response" method=GET path="/api/v1/pods.picky.hash.json?query=name%3Ad*&ids=1000&offset=0" host=search.cocoapods.org request_id=d0bb608d-7e2d-483f-96fe-197f79fb87c5 fwd="115.28.171.233,199.27.128.99" dyno=web.1 connect=0ms service=16397ms status=503 bytes=0 
+May 06 01:50:30 search-cocoapods-org app/web.1:  E, [2015-05-05T23:50:29.990764 #3] ERROR -- : reaped #<Process::Status: pid 12690 SIGKILL (signal 9)> worker=1 
+May 06 01:50:30 search-cocoapods-org app/web.1:  E, [2015-05-05T23:50:29.982457 #3] ERROR -- : worker=1 PID:12690 timeout (11s > 10s), killing 
+May 06 01:50:30 search-cocoapods-org app/web.1:  I, [2015-05-05T23:50:30.019906 #12693]  INFO -- : worker=1 ready 
+May 06 01:50:30 search-cocoapods-org app/web.1:  Child [12693] chose channel 1 using to: #<Cod::Pipe:0x007fe4ccc6f850> and from: #<Cod::Pipe:0x007fe4ccc6f558>. 
+May 06 01:50:47 search-cocoapods-org heroku/web.1:  source=web.1 dyno=heroku.1758361.5ffb5e40-4ae2-401e-913a-a772a84e4e28 sample#memory_total=672.61MB sample#memory_rss=667.47MB sample#memory_cache=3.05MB sample#memory_swap=2.08MB sample#memory_pgpgin=617395pages sample#memory_pgpgout=445740pages 
+May 06 01:51:00 search-cocoapods-org app/web.1:  u27425       3  0.0  0.1 179684 36964 ?        -    08:58   0:02 unicorn master -p 37905 -c unicorn.rb                                 
+May 06 01:51:00 search-cocoapods-org app/web.1:  u27425       6 14.2  1.7 760992 608820 ?       -    08:58 127:19 ruby /app/vendor/bundle/ruby/2.2.0/bin/unicorn -p 37905 -c unicorn.rb 
+May 06 01:51:00 search-cocoapods-org app/web.1:  u27425      12  0.2  0.1 253128 42524 ?        -    08:58   1:54 ruby /app/vendor/bundle/ruby/2.2.0/bin/unicorn -p 37905 -c unicorn.rb 
+May 06 01:51:00 search-cocoapods-org app/web.1:  u27425      55  0.0  0.1 186764 44896 ?        -    09:00   0:26 unicorn worker[0] -p 37905 -c unicorn.rb                              
+May 06 01:51:00 search-cocoapods-org app/web.1:  u27425   12693  0.9  0.1 184544 42748 ?        -    23:50   0:00 unicorn worker[1] -p 37905 -c unicorn.rb                              
+May 06 01:51:00 search-cocoapods-org app/web.1:  u27425   12696  0.0  0.0   4172   572 ?        -    23:50   0:00 sh -c ps auxm | grep unicorn 
+May 06 01:51:00 search-cocoapods-org app/web.1:  u27425   12698  0.0  0.0   7700   840 ?        -    23:50   0:00 grep unicorn 
+May 06 01:51:02 search-cocoapods-org app/web.1:  [2015-05-05 23:51:02 +0000] Start indexing. 
+May 06 01:51:10 search-cocoapods-org heroku/web.1:  source=web.1 dyno=heroku.1758361.5ffb5e40-4ae2-401e-913a-a772a84e4e28 sample#memory_total=715.02MB sample#memory_rss=709.95MB sample#memory_cache=3.05MB sample#memory_swap=2.01MB sample#memory_pgpgin=628718pages sample#memory_pgpgout=446188pages 
+May 06 01:51:33 search-cocoapods-org heroku/web.1:  source=web.1 dyno=heroku.1758361.5ffb5e40-4ae2-401e-913a-a772a84e4e28 sample#memory_total=742.98MB sample#memory_rss=737.96MB sample#memory_cache=3.05MB sample#memory_swap=1.96MB sample#memory_pgpgin=635980pages sample#memory_pgpgout=446280pages 
+May 06 01:51:54 search-cocoapods-org heroku/web.1:  source=web.1 dyno=heroku.1758361.5ffb5e40-4ae2-401e-913a-a772a84e4e28 sample#memory_total=747.58MB sample#memory_rss=742.56MB sample#memory_cache=3.05MB sample#memory_swap=1.96MB sample#memory_pgpgin=637157pages sample#memory_pgpgout=446280pages 
