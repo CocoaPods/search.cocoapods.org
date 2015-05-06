@@ -15,14 +15,19 @@ describe 'Special Cases' do
     special_cases.search(query, options).first(3)
   end
 
+  # TODO These tests are useless (and fail) - it should use a pod's name which is found in another pod.
+  #
   it 'will find AFNetworking at the first position if exact - despite negative popularity sorting' do
-    first_three_names_for_search('AFNetworking', sort: '-popularity').should == ["AFNetworking", "MRProgress", "AFIncrementalStore"]
+    first_three_names_for_search('name:AFnetworking', sort: '-popularity').should == ["AFNetworking", "MRProgress", "AFIncrementalStore"]
   end
   it 'will find AFNetworking at the first position if exact - with positive popularity sorting' do
-    first_three_names_for_search('AFNetworking', sort: 'popularity').should == %w(AFNetworking RestKit Nimbus)
+    first_three_names_for_search('name:AFNetworking', sort: 'popularity').should == %w(AFNetworking RestKit Nimbus)
   end
   it 'will find AFNetworking at the first position if exact - with name sorting' do
-    first_three_names_for_search('AFNetworking', sort: 'name').should == ["AFNetworking", "AFIncrementalStore", "MRProgress"]
+    first_three_names_for_search('name:AFNetworking', sort: 'name').should == ["AFNetworking", "AFIncrementalStore", "MRProgress"]
+  end
+  it 'will find AFNetworking even if searched in a strange way' do
+    first_three_names_for_search('name:AfNeTwOrKiNg', sort: '-popularity').should == ["AFNetworking", "MRProgress", "AFIncrementalStore"]
   end
   
   it 'will find ObjectiveRecord via CoreData' do
