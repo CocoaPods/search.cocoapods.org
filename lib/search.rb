@@ -301,8 +301,10 @@ class Search
           # only those with combinations "name". 
           #
           results.allocations.each do |allocation|
-            pods = Pods.instance
             ids = allocation.ids
+            # next if ids.size == 1
+            
+            pods = Pods.instance
             
             # Find the first exact hit and promote it.
             # Note: slows the search engine down considerably.
