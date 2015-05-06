@@ -309,6 +309,8 @@ class Search
             # Find the first exact hit and promote it.
             # Note: slows the search engine down considerably.
             #
+            # TODO This currently only finds the pod if it's in the first 20 results.
+            #
             if found = ids.find { |id| pods[id].name.downcase == text }
               ids.delete found
               ids.unshift found
