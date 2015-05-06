@@ -2,8 +2,10 @@ ENV['RACK_ENV'] = 'test'
 
 # Load the database state via Humus.
 #
-require File.expand_path('../../../Humus/lib/humus', __FILE__)
-Humus.with_snapshot('b008')
+unless ENV['NO_DUMP']
+  require File.expand_path('../../../Humus/lib/humus', __FILE__)
+  Humus.with_snapshot('b008')
+end
 
 # Load the app.
 #
