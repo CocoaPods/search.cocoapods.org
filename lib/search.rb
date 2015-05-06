@@ -293,14 +293,25 @@ class Search
       #
       if tokens.size == 1
         text = tokens.first.text
-        found = false
-        results.allocations.each do |allocation|
-          # Find the first exact hit and promote it.
-          # Note: slows it down considerably.
-          if found = allocation.ids.find { |id| p [Pods.instance[id].name.downcase] if text == 'ObjectiveRecord'; Pods.instance[id].name.downcase == text }
-            allocation.ids.delete found
-            allocation.ids.unshift found
-            break
+        if text
+          text = text.downcase
+          found = false
+          
+          # TODO We don't need to look through all allocations,
+          # only those with combinations "name". 
+          #
+          results.allocations.each do |allocation|
+            pods = Pods.instance
+            ids = allocation.ids
+            
+            # Find the first exact hit and promote it.
+            # Note: slows the search engine down considerably.
+            #
+            if found = ids.find { |id| pods[id].name.downcase == text }
+              ids.delete found
+              ids.unshift found
+              break
+            end
           end
         end
       end
