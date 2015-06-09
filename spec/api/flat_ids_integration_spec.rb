@@ -22,7 +22,7 @@ describe 'Flat Ids Integration Tests' do
 
   # Testing the format.
   #
-  ok { pod_hash.search('on:osx afnetworking', sort: 'name').first.should == {:id=>"AFNetworking", :platforms=>["ios", "osx"], :version=>"2.5.2", :summary=>"A delightful iOS and OS X networking framework.", :authors=>{:"Mattt Thompson"=>"m@mattt.me"}, :link=>"https://github.com/AFNetworking/AFNetworking", :source=>{:git=>"https://github.com/AFNetworking/AFNetworking.git", :tag=>"2.5.2", :submodules=>true}, :tags=>["network"], :cocoadocs=>true} }
+  ok { pod_hash.search('on:osx afnetworking', sort: 'name').first.should == {:id=>"AFNetworking", :platforms=>["ios", "osx"], :version=>"2.5.4", :summary=>"A delightful iOS and OS X networking framework.", :authors=>{:"Mattt Thompson"=>"m@mattt.me"}, :link=>"https://github.com/AFNetworking/AFNetworking", :source=>{:git=>"https://github.com/AFNetworking/AFNetworking.git", :tag=>"2.5.4", :submodules=>true}, :tags=>["network"], :cocoadocs=>true} }
 
   def pods
     @pods ||= Picky::TestClient.new CocoapodSearch, path: '/api/v1/pods.flat.ids.json'
@@ -44,7 +44,7 @@ describe 'Flat Ids Integration Tests' do
 
   # Testing a count of results.
   #
-  ok { pods.search('on:ios 1.0.0', ids: 10_000).size.should == 51 }
+  ok { pods.search('on:ios 1.0.0', ids: 10_000).size.should == 53 }
 
   # Speed.
   #
@@ -82,7 +82,7 @@ describe 'Flat Ids Integration Tests' do
   #
   # Platform is only found when fully mentioned (i.e. no partial).
   #
-  ok { pods.search('platform:osx', ids: 10_000).size.should == 74 }
+  ok { pods.search('platform:osx', ids: 10_000).size.should == 73 }
   ok { pods.search('platform:os').size.should == 0 }
   ok { pods.search('platform:o').size.should == 0 }
 
@@ -107,8 +107,8 @@ describe 'Flat Ids Integration Tests' do
   ok { first_three_names_for_search('use:AFNetworking', sort: 'name').should == expected_dependencies }
   ok { first_three_names_for_search('needs:AFNetworking', sort: 'name').should == expected_dependencies }
 
-  ok { pods.search('platform:osx', ids: 10_000).size.should == 74 }
-  ok { pods.search('on:osx', ids: 10_000).size.should == 74 }
+  ok { pods.search('platform:osx', ids: 10_000).size.should == 73 }
+  ok { pods.search('on:osx', ids: 10_000).size.should == 73 }
 
   # Stemming.
   #

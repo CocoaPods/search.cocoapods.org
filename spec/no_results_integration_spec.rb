@@ -21,7 +21,7 @@ describe 'Integration Tests' do
     Yajl.load(no_results.send_search(query: 'afnetworking'))['split'].should == [["networking"], 5]
   end
   it 'will return a correctly split query' do
-    Yajl.load(no_results.send_search(query: 'groundcontrol'))['split'].should == [["control"], 24]
+    Yajl.load(no_results.send_search(query: 'groundcontrol'))['split'].should == [["control"], 23]
   end
 
 end

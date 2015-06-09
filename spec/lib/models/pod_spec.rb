@@ -43,7 +43,7 @@ describe Pod do
       pod.to_h.should == {
         id: "AFNetworking",
         platforms: [:ios, :osx],
-        version: :"2.5.2",
+        version: :"2.5.4",
         summary: "A delightful iOS and OS X networking framework.",
         authors: {
           :"Mattt Thompson" => :"m@mattt.me"
@@ -51,7 +51,7 @@ describe Pod do
         link: "https://github.com/AFNetworking/AFNetworking",
         source: {
           git: "https://github.com/AFNetworking/AFNetworking.git",
-          tag: "2.5.2",
+          tag: "2.5.4",
           submodules: true
         },
         tags: [:network],

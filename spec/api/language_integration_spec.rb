@@ -18,10 +18,10 @@ describe 'Language Filtering Integration Tests' do
   end
 
   # Control.
-  ok { first_five_names_for_search('name:a', sort: 'name').should == ["AFIncrementalStore", "AFNetworking", "AMScrollingNavbar", "AQGridView", "ARAnalytics"] }
+  ok { first_five_names_for_search('name:a', sort: 'name').should == ["AFIncrementalStore", "AFNetworking", "AMScrollingNavbar", "AQGridView", "ASIHTTPRequest"] }
   
   # Language filters.
-  ok { first_five_names_for_search('language:swift', sort: 'name').should == ["Alamofire", "Cent", "Dollar", "ExSwift", "LTMorphingLabel"] }
-  ok { first_five_names_for_search('language:objc', sort: 'name').should == ["AFIncrementalStore", "AFNetworking", "AMScrollingNavbar", "AQGridView", "ARAnalytics"] }
+  ok { first_five_names_for_search('language:swift', sort: 'name').should == ["Alamofire", "Cent", "Charts", "Dollar", "ExSwift"] }
+  ok { first_five_names_for_search('language:objc', sort: 'name').should == ["AFIncrementalStore", "AFNetworking", "AMScrollingNavbar", "AQGridView", "ASIHTTPRequest"] }
 
 end

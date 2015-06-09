@@ -27,12 +27,12 @@ describe 'Integration Tests' do
 
   # Testing a count of results.
   #
-  ok { pods.search('on:ios 1.0.0').total.should == 51 }
+  ok { pods.search('on:ios 1.0.0').total.should == 53 }
 
   # Testing the format.
   #
   # Not symbolized as it is parsed JSON.
-  ok { pods.search('on:osx afnetworking', sort: 'name').entries.first.should == {:id=>"AFNetworking", :platforms=>["ios", "osx"], :version=>"2.5.2", :summary=>"A delightful iOS and OS X networking framework.", :authors=>{:"Mattt Thompson"=>"m@mattt.me"}, :link=>"https://github.com/AFNetworking/AFNetworking", :source=>{:git=>"https://github.com/AFNetworking/AFNetworking.git", :tag=>"2.5.2", :submodules=>true}, :tags=>["network"], :cocoadocs=>true} }
+  ok { pods.search('on:osx afnetworking', sort: 'name').entries.first.should == {:id=>"AFNetworking", :platforms=>["ios", "osx"], :version=>"2.5.4", :summary=>"A delightful iOS and OS X networking framework.", :authors=>{:"Mattt Thompson"=>"m@mattt.me"}, :link=>"https://github.com/AFNetworking/AFNetworking", :source=>{:git=>"https://github.com/AFNetworking/AFNetworking.git", :tag=>"2.5.4", :submodules=>true}, :tags=>["network"], :cocoadocs=>true} }
 
   # Testing a specific order of result ids.
   #
@@ -79,13 +79,13 @@ describe 'Integration Tests' do
   #
   # Platform is only found when fully mentioned (i.e. no partial).
   #
-  ok { pods.search('platform:osx').total.should == 74 }
+  ok { pods.search('platform:osx').total.should == 73 }
   ok { pods.search('platform:os').total.should == 0 }
   ok { pods.search('platform:o').total.should == 0 }
 
   # Rendering.
   #
-  ok { pods.search('afnetworking mattt thompson', sort: 'name').entries.first.should == {:id=>"AFNetworking", :platforms=>["ios", "osx"], :version=>"2.5.2", :summary=>"A delightful iOS and OS X networking framework.", :authors=>{:"Mattt Thompson"=>"m@mattt.me"}, :link=>"https://github.com/AFNetworking/AFNetworking", :source=>{:git=>"https://github.com/AFNetworking/AFNetworking.git", :tag=>"2.5.2", :submodules=>true}, :tags=>["network"], :cocoadocs=>true} }
+  ok { pods.search('afnetworking mattt thompson', sort: 'name').entries.first.should == {:id=>"AFNetworking", :platforms=>["ios", "osx"], :version=>"2.5.4", :summary=>"A delightful iOS and OS X networking framework.", :authors=>{:"Mattt Thompson"=>"m@mattt.me"}, :link=>"https://github.com/AFNetworking/AFNetworking", :source=>{:git=>"https://github.com/AFNetworking/AFNetworking.git", :tag=>"2.5.4", :submodules=>true}, :tags=>["network"], :cocoadocs=>true} }
 
   # Qualifiers.
   #
@@ -111,8 +111,8 @@ describe 'Integration Tests' do
   ok { first_three_names_for_search('use:AFNetworking', sort: 'name').should == expected_dependencies }
   ok { first_three_names_for_search('needs:AFNetworking', sort: 'name').should == expected_dependencies }
 
-  ok { pods.search('platform:osx').total.should == 74 }
-  ok { pods.search('on:osx').total.should == 74 }
+  ok { pods.search('platform:osx').total.should == 73 }
+  ok { pods.search('on:osx').total.should == 73 }
 
   ok { first_three_names_for_search('summary:data', sort: 'name').should == %w(AFIncrementalStore FXForms JSONModel) }
 

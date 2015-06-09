@@ -22,8 +22,8 @@ describe 'Sorting Integration Tests' do
   ok { first_three_names_for_search('on:osx mattt', sort: 'popularity').should ==  ["AFNetworking", "Alamofire", "FormatterKit"] }
   ok { first_three_names_for_search('on:osx mattt', sort: '-popularity').should == ["AFIncrementalStore", "FormatterKit", "Alamofire"] }
   
-  ok { first_three_names_for_search('on:osx mattt', sort: 'quality').should ==  ["AFNetworking", "FormatterKit", "Alamofire"] }
-  ok { first_three_names_for_search('on:osx mattt', sort: '-quality').should == ["AFIncrementalStore", "Alamofire", "FormatterKit"] }
+  ok { first_three_names_for_search('on:osx mattt', sort: 'quality').should ==  ["Alamofire", "AFNetworking", "FormatterKit"] }
+  ok { first_three_names_for_search('on:osx mattt', sort: '-quality').should == ["AFIncrementalStore", "FormatterKit", "AFNetworking"] }
 
   ok { first_three_names_for_search('on:osx mattt', sort: 'watchers').should ==  ["AFNetworking", "Alamofire", "AFIncrementalStore"] }
   ok { first_three_names_for_search('on:osx mattt', sort: '-watchers').should == ["FormatterKit", "AFIncrementalStore", "Alamofire"] }
@@ -34,7 +34,7 @@ describe 'Sorting Integration Tests' do
   ok { first_three_names_for_search('on:osx mattt', sort: 'stars').should ==  ["AFNetworking", "Alamofire", "FormatterKit"] }
   ok { first_three_names_for_search('on:osx mattt', sort: '-stars').should == ["AFIncrementalStore", "FormatterKit", "Alamofire"] }
 
-  ok { first_three_names_for_search('on:osx mattt', sort: 'contributors').should ==  ["AFNetworking", "FormatterKit", "AFIncrementalStore"] }
-  ok { first_three_names_for_search('on:osx mattt', sort: '-contributors').should == ["Alamofire", "AFIncrementalStore", "FormatterKit"] }
+  ok { first_three_names_for_search('on:osx mattt', sort: 'contributors').should ==  ["AFNetworking", "FormatterKit", "Alamofire"] }
+  ok { first_three_names_for_search('on:osx mattt', sort: '-contributors').should == ["AFIncrementalStore", "Alamofire", "FormatterKit"] }
 
 end
