@@ -102,7 +102,7 @@ class Search
       category :version,
                # weight: boost(+0),
                partial: full_partial,
-               from: :mapped_versions
+               from: :versions
       category :dependencies,
                weight: boost(-4),
                partial: full_partial,

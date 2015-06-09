@@ -3,7 +3,7 @@ require 'json'
 # Only for reading purposes.
 #
 class Pod
-  attr_reader :row
+  attr_reader :row, :versions
 
   DEFAULT_QUALITY = 40
   
@@ -16,13 +16,20 @@ class Pod
   def_delegators :row,
                  :id,
                  :name,
-                 :versions,
+                 # :versions,
                  :commits,
                  :github_metric,
                  :cocoadocs_pod_metric
 
   def initialize(row)
-    @row = row
+    preprocess row
+    @row = row # TODO Keeping the row is memory intensive. Or can be.
+  end
+  # Specifically extract some row data.
+  #
+  def preprocess row
+    versions = row.versions
+    @versions = versions ? versions.gsub(/[\{\}]/, '').split(',').map(&:freeze) : []
   end
 
   def self.entity
@@ -122,10 +129,6 @@ class Pod
     split_name.join(' ')
   end
 
-  def mapped_versions
-    versions.gsub(/[\{\}]/, '').split(',').map(&:freeze)
-  end
-  
   # Currently only two languages are available for filtering.
   #
   @@objc_lang = ['objc'.freeze]
@@ -142,7 +145,7 @@ class Pod
   # Symbolized as there are likely duplicates.
   #
   def last_version
-    mapped_versions.
+    versions.
       sort_by { |v| Gem::Version.new(v) }.
       last.to_sym
   end
@@ -309,14 +312,7 @@ class Pod
   # Caching the specification speeds up indexing considerably.
   #
   def specification
-    @specification ||= begin
-      spec = JSON.parse(specification_json || '{}', symbolize_names: true)
-      traverse_and_freeze spec
-      spec
-    end
-  end
-  def traverse_and_freeze spec
-    # TODO
+    @specification ||= JSON.parse(specification_json || '{}', symbolize_names: true)
   end
   # Use to GC e.g. the specification after having used it.
   #
