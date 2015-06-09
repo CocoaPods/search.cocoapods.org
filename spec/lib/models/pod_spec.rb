@@ -14,7 +14,7 @@ describe Pod do
     ok { pod.split_name.should == %w(afnetworking af networking) }
     ok { pod.split_name_for_automatic_splitting.should == ['networking'] }
 
-    ok { pod.authors.should == { 'Mattt Thompson' => 'm@mattt.me' } }
+    ok { pod.authors.should == { :'Mattt Thompson' => 'm@mattt.me' } }
     ok { pod.mapped_authors.should == 'Mattt Thompson' }
 
     ok { pod.platforms.should == [:ios, :osx] }

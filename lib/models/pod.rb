@@ -6,6 +6,8 @@ class Pod
   attr_reader :row
 
   DEFAULT_QUALITY = 40
+  
+  EMPTY_STRING = ''.freeze
 
   extend Forwardable
 
@@ -121,7 +123,7 @@ class Pod
   end
 
   def mapped_versions
-    versions.gsub(/[\{\}]/, '').split(',')
+    versions.gsub(/[\{\}]/, '').split(',').map(&:freeze)
   end
   
   # Currently only two languages are available for filtering.
@@ -146,7 +148,7 @@ class Pod
   end
 
   def authors
-    specification['authors'] || {}
+    specification[:authors] || {}
   end
 
   def mapped_authors
@@ -176,7 +178,7 @@ class Pod
         if name.respond_to? :to_hash
           symbolize_hash(name)
         else
-          result.tap { |r| r[name.to_sym] = '' }
+          result.tap { |r| r[name.to_sym] = EMPTY_STRING }
         end
       end
     end
@@ -189,15 +191,15 @@ class Pod
 
   def dependencies
     [*recursive_subspecs, specification].
-      map { |spec| spec['dependencies'] }.compact.
+      map { |spec| spec[:dependencies] }.compact.
       flat_map { |deps| deps.respond_to?(:keys) ? deps.keys : deps }.
-      map { |dependency| dependency.split('/', 2).first }.  # Strips subspec (QueryKit/Attribute)
-      uniq.reject { |dependency| dependency == specification['name'] } # Remove current spec, might be used to depend on subspecs
+      map { |dependency| dependency.to_s.split('/', 2).first }.  # Strips subspec (QueryKit/Attribute)
+      uniq.reject { |dependency| dependency == specification[:name] } # Remove current spec, might be used to depend on subspecs
   end
 
   def frameworks
     [*recursive_subspecs, specification].
-      flat_map { |spec| spec['frameworks'] }.
+      flat_map { |spec| spec[:frameworks] }.
       compact.uniq
   end
 
@@ -208,17 +210,17 @@ class Pod
   end
 
   def mapped_subspec_names
-    recursive_subspecs.map { |ss| ss['name'] }.join(' ')
+    recursive_subspecs.map { |ss| ss[:name] }.join(' ')
   end
 
   def homepage
-    specification['homepage']
+    specification[:homepage]
   rescue StandardError, SyntaxError
   end
 
   DEFAULT_PLATFORMS = [:osx, :ios]
   def platforms
-    platforms_spec = specification['platforms']
+    platforms_spec = specification[:platforms]
     if platforms_spec.respond_to?(:to_hash)
       # Symbolized as there are likely duplicates.
       #
@@ -235,11 +237,11 @@ class Pod
   end
 
   def summary
-    (specification['summary'] || [])[0..139]
+    (specification[:summary] || [])[0..139]
   end
 
   def source
-    (specification['source'] || {}).inject({}) do |result, (type, target)|
+    (specification[:source] || {}).inject({}) do |result, (type, target)|
       # TODO Strip tag? (and others)
       # next result if type == 'tag'
       result.tap { |r| r[type.to_sym] = target }
@@ -248,9 +250,9 @@ class Pod
 
   def recursive_subspecs
     mapper = lambda do |spec|
-      spec['subspecs'].flat_map do |subspec|
+      spec[:subspecs].flat_map do |subspec|
         [subspec, *mapper.call(subspec)]
-      end if spec['subspecs']
+      end if spec[:subspecs]
     end
 
     mapper.call(specification) || []
@@ -267,7 +269,7 @@ class Pod
   end
 
   def documentation_url
-    specification['documentation_url']
+    specification[:documentation_url]
   end
   
   def cocoadocs?
@@ -307,7 +309,14 @@ class Pod
   # Caching the specification speeds up indexing considerably.
   #
   def specification
-    @specification ||= JSON.parse(specification_json || '{}')
+    @specification ||= begin
+      spec = JSON.parse(specification_json || '{}', symbolize_names: true)
+      traverse_and_freeze spec
+      spec
+    end
+  end
+  def traverse_and_freeze spec
+    # TODO
   end
   # Use to GC e.g. the specification after having used it.
   #
@@ -394,7 +403,7 @@ class Pod
     xml
   ).freeze
   def tags
-    specification['summary'].
+    specification[:summary].
       downcase.
       scan(/\b(#{TAGS.join('|')})\w*\b/).
       flatten.
