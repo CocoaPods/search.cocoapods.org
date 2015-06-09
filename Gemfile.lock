@@ -62,6 +62,7 @@ GEM
       rb-fsevent (>= 0.9.3)
       rb-inotify (>= 0.9)
       rb-kqueue (>= 0.2)
+    memory_profiler (0.9.4)
     metaclass (0.0.4)
     minitest (5.5.1)
     mocha (0.11.4)
@@ -140,6 +141,7 @@ DEPENDENCIES
   foreman
   hashie
   kicker
+  memory_profiler
   mocha (~> 0.11.4)
   mocha-on-bacon
   nap (~> 0.8.0)

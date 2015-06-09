@@ -49,6 +49,7 @@ end
 # Pure test gems.
 #
 group :test do
+  gem 'memory_profiler'
   gem 'rack-test'
   gem 'kicker'
   gem 'mocha', '~> 0.11.4'
