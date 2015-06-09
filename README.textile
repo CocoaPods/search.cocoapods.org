@@ -72,38 +72,3 @@ h3. Current Heroku Labs Features
 [ ] preboot              Provide seamless web dyno deploys
 [ ] user-env-compile     Add user config vars to the environment during slug compilation
 [ ] websockets           Experimental websockets support on herokuapp.com and custom domains
-
-h3. Analytics
-
-We use Google analytics to track API accesses.
-
-h4. Identity
-
-Property ID: UA-29866548-5
-
-h4. Anatomy
-
-Event tracking is structured as follows (https://developers.google.com/analytics/devguides/collection/gajs/eventTrackerGuide#Anatomy):
-
-* categories
-* actions
-* labels
-* values (int)
-* implicit count
-
-h5. API content
-
-Tracks events related to API content.
-
-pods/search/query/total
-pods/facets/query_string/-
-
-h5. API structure
-
-Tracks events related to which API is used.
-
-pods/search-format/data&format/-
-
-h5. Note
-
-Currently we use Gabba, a synchronous GA tracker (https://github.com/hybridgroup/gabba/issues/12).
