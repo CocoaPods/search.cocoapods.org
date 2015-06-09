@@ -23,7 +23,7 @@ class Pod
 
   def initialize(row)
     preprocess row
-    @row = row # TODO Keeping the row is memory intensive. Or can be.
+    @row = row # Note: We explicitly nil-ify the row after we have used it.
   end
   # Specifically extract some row data.
   #
@@ -413,6 +413,7 @@ class Pod
     to_h
     # Throw the row and spec away if this pod has been rendered.
     @row = nil
+    @versions = nil
     @specification = nil
   end
 
