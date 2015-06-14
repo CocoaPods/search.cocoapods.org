@@ -173,6 +173,9 @@ class Pod
     spec_authors
   end
 
+  # We could optimise by not sending out the email addres,
+  # or by splitting it into an array of ["a", "b.com"].
+  #
   def rendered_authors
     if authors.respond_to? :to_hash
       symbolize_hash(authors)
