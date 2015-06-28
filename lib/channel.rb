@@ -126,11 +126,10 @@ class Channel
   # If not, discard the response.
   #
   def call(action, message)
-    # We send a numeric timestamp as a String.
-    timestamp = Time.now.to_i.to_s
+    timestamp = Time.now
     @to_process.put [timestamp, action, message, @from_process] if @to_process
     if @from_process
-      response_timestamp = nil
+      response_timestamp = 0
       # The response timestamp can never be larger than the timestamp.
       # Therefore we can discard until we get "our" answer.
       # We assume that the search process will eventually answer.
