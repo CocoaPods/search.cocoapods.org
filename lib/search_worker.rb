@@ -80,7 +80,10 @@ class SearchWorker
     end
   rescue StopIteration
     $stdout.puts "[#{Time.now}] Indexing finished."
+    require 'objspace'
+    $stdout.puts "[#{Time.now}] Optimizing index memory usage: #{ObjectSpace.memsize_of_all(Array)}."
     optimize_memory
+    $stdout.puts "[#{Time.now}] Optimized index memory usage: #{ObjectSpace.memsize_of_all(Array)}."
     @not_loaded_yet = false
   end
   
