@@ -9,7 +9,7 @@ GIT
 GEM
   remote: http://rubygems.org/
   specs:
-    activesupport (4.2.0)
+    activesupport (4.2.3)
       i18n (~> 0.7)
       json (~> 1.7, >= 1.7.7)
       minitest (~> 5.1)
@@ -49,11 +49,11 @@ GEM
     foreman (0.75.0)
       dotenv (~> 0.11.1)
       thor (~> 0.19.1)
-    google_hash (0.8.5)
+    google_hash (0.8.8)
       sane (~> 0)
     hashie (3.3.2)
     i18n (0.7.0)
-    json (1.8.2)
+    json (1.8.3)
     kgio (2.9.2)
     kicker (3.0.0)
       listen (~> 1.3.0)
@@ -64,25 +64,25 @@ GEM
       rb-kqueue (>= 0.2)
     memory_profiler (0.9.4)
     metaclass (0.0.4)
-    minitest (5.5.1)
+    minitest (5.7.0)
     mocha (0.11.4)
       metaclass (~> 0.0.1)
     mocha-on-bacon (0.2.1)
       mocha (>= 0.9.8)
-    multi_json (1.10.1)
+    multi_json (1.11.1)
     nap (0.8.0)
-    notify (0.5.2
+    notify (0.5.2)
     os (0.9.6)
     parser (2.2.0.pre.7)
       ast (>= 1.1, < 3.0)
       slop (~> 3.4, >= 3.4.5)
     pg (0.18.1)
     pg-hstore (1.2.0)
-    picky (4.27.0)
+    picky (4.28.1)
       activesupport
       multi_json (~> 1.3)
       rack_fast_escape (~> 2009.0)
-    picky-client (4.27.0)
+    picky-client (4.28.1)
       activesupport
       yajl-ruby (~> 1.2)
     powerpack (0.0.9)
@@ -117,7 +117,7 @@ GEM
       tilt (~> 1.3, >= 1.3.4)
     slop (3.6.0)
     thor (0.19.1)
-    thread_safe (0.3.4)
+    thread_safe (0.3.5)
     tilt (1.4.1)
     tzinfo (1.2.2)
       thread_safe (~> 0.1)
@@ -138,6 +138,7 @@ DEPENDENCIES
   dm-postgres-adapter
   flounder
   foreman
+  google_hash
   hashie
   kicker
   memory_profiler
@@ -158,4 +159,4 @@ DEPENDENCIES
   yajl-ruby
 
 BUNDLED WITH
-   1.10.1
+   1.10.5

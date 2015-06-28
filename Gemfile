@@ -15,6 +15,7 @@ gem 'picky', '~> 4.28.0'
 gem 'picky-client', '~> 4.28.0' # Needed for Picky::Convenience
 gem 'cod'
 gem 'hashie'
+gem 'google_hash'
 
 # Database.
 #
