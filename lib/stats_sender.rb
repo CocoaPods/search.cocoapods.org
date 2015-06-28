@@ -27,7 +27,7 @@ class StatsSender
     #
     def send_to_status_page
       time, count = remove_oldest_count_from_stats
-      notify(:send, [Process.pid, time.to_i.to_s, count]) if time
+      notify(:send, [Process.pid, time, count]) if time
     end
   
     # Returns either nil or [time, count]
@@ -87,7 +87,8 @@ class StatsSender
   # First parameter is ignored, as it is always :send.
   #
   def process _, message
-    search_engine_process_pid, timestamp, count = message
+    search_engine_process_pid, time, count = message
+    timestamp = time.to_i
     
     # Send query stats.
     send(QUERIES_URL, timestamp, count)
