@@ -80,7 +80,17 @@ class SearchWorker
     end
   rescue StopIteration
     $stdout.puts "[#{Time.now}] Indexing finished."
+    optimize_memory
     @not_loaded_yet = false
+  end
+  
+  # Tells Picky to try recovering some memory.
+  #
+  # Note: If it takes too long, split up into smaller units.
+  #
+  def optimize_memory
+    Picky::Indexes.optimize_memory
+    GC.start
   end
 
   # Setup the stats counter hash.
