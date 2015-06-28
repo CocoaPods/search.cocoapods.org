@@ -11,8 +11,8 @@ ruby '2.2.0' if ENV['RACK_ENV'] == 'production' || ENV['CI'] == 'true'
 gem 'bundler'
 gem 'sinatra', :require => 'sinatra/base'
 # gem 'cocoapods-core'
-gem 'picky', '~> 4.28.0'
-gem 'picky-client', '~> 4.28.0' # Needed for Picky::Convenience
+gem 'picky', '~> 4.29.0'
+gem 'picky-client', '~> 4.29.0' # Needed for Picky::Convenience
 gem 'cod'
 gem 'hashie'
 gem 'google_hash'
