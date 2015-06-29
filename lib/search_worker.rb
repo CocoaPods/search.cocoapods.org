@@ -118,11 +118,11 @@ class SearchWorker
   def setup_rarely
     @rarely = 0
   end
-  # Returns true roughly every 20 minutes.
+  # Returns true roughly every 40 minutes.
   #
   def rarely
     @rarely += 1
-    if @rarely % 12_000 == 0
+    if @rarely % 24_000 == 0
       @rarely = 0
       true
     end
