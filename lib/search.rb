@@ -223,8 +223,10 @@ class Search
 
   def replace(pod, pods) # TODO: Redesign.
     pods[pod.id] = pod
-    @index.replace pod
-    @splitting_index.replace pod
+    # "Adding" pods to the index will not replace index data that
+    # is already in there (but add new index data).
+    @index.add pod
+    @splitting_index.add pod
     # pod.reduce_memory_usage # TODO ?
   end
 
