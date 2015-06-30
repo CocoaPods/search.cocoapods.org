@@ -53,10 +53,14 @@ class Search
       # Could be google_hash or https://bugs.ruby-lang.org/issues/10933.
       #
       #optimize :no_dump # google_hash caused some Ruby [BUG]s.
-
+      
       # We use the ids.
       #
       key_format :to_i
+      
+      # We use Symbol keys.
+      #
+      symbol_keys true
 
       # The default indexing. Override in category options.
       #
@@ -165,15 +169,13 @@ class Search
     end
 
     @splitting_index = Index.new :splitting do
-      # symbol_keys
-      
       # We use the ids.
       #
-      key_format :to_i
-
-      # We use the pod names as ids (as strings).
-      #
       key_format :to_s
+
+      # We'd like to use Symbol keys (but Splitters::Automatic can't).
+      #
+      # symbol_keys true
 
       # TODO: We need to work on this. This is still the Picky standard.
       #
