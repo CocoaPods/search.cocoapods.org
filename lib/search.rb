@@ -173,9 +173,9 @@ class Search
       #
       key_format :to_s
 
-      # We'd like to use Symbol keys (but Splitters::Automatic can't).
+      # We use Symbol keys.
       #
-      # symbol_keys true
+      symbol_keys true
 
       # TODO: We need to work on this. This is still the Picky standard.
       #
