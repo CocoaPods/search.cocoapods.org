@@ -10,18 +10,11 @@ ruby '2.2.0' if ENV['RACK_ENV'] == 'production' || ENV['CI'] == 'true'
 #
 gem 'bundler'
 gem 'sinatra', :require => 'sinatra/base'
-# gem 'cocoapods-core'
-gem 'picky', '~> 4.29.0'
-gem 'picky-client', '~> 4.29.0' # Needed for Picky::Convenience
+gem 'picky', '~> 4.30.0'
+gem 'picky-client', '~> 4.30.0' # Needed for Picky::Convenience
 gem 'cod'
 gem 'hashie'
 gem 'google_hash'
-
-# Database.
-#
-gem 'pg'
-gem 'dm-postgres-adapter', require: true
-gem 'flounder'
 
 # Auxiliary gems to make Picky faster/better.
 #
@@ -29,7 +22,13 @@ gem 'rack_fast_escape', '2009.06.24'
 gem 'yajl-ruby', :require => 'yajl'
 gem 'ruby-stemmer', :require => 'lingua/stemmer'
 
-# API calling
+# Database.
+#
+gem 'pg'
+gem 'dm-postgres-adapter', require: true
+gem 'flounder'
+
+# API calling.
 #
 gem 'nap', '~> 0.8.0'
 
