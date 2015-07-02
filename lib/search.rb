@@ -36,7 +36,7 @@ class Search
       removes_characters: /[^a-z0-9\s\/\-\_\:\"\&\.]/i,
       stopwords:          stopwords,
       splits_text_on:     %r{[\s/\-\_\:\"\&/]},
-      rejects_token_if:   lambda { |token| token.size < 2 },
+      rejects_token_if:   lambda { |token| token.size < 2 }
     }
 
     # Define an index.
@@ -146,7 +146,8 @@ class Search
     # Define a search over the books index.
     #
     @interface = Search.new index do
-      # symbol_keys
+      # max_allocations 10
+      
       searching substitutes_characters_with:
                   CharacterSubstituters::WestEuropean.new,
                 removes_characters: false,
@@ -158,7 +159,6 @@ class Search
     end
 
     @facets_interface = Search.new index do
-      # symbol_keys
       searching substitutes_characters_with:
                   # Normalizes special user input, Ä -> Ae, ñ -> n etc.
                   CharacterSubstituters::WestEuropean.new,

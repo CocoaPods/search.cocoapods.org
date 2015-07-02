@@ -119,6 +119,8 @@ class CocoapodSearch < Sinatra::Application
     }
 
     if query
+      # Limit no results queries hard to avoid issues with huge queries.
+      query = query[0..50]
       split = search.split query
       results = search.picky_search split.join(' '), 0, 0
       results.extend Picky::Convenience
