@@ -1,6 +1,6 @@
 source 'http://rubygems.org'
 
-ruby '2.2.0' if ENV['RACK_ENV'] == 'production' || ENV['CI'] == 'true'
+ruby '2.2.2' if ENV['RACK_ENV'] == 'production' || ENV['CI'] == 'true'
 
 # Debug.
 #
