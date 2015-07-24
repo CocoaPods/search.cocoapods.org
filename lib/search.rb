@@ -283,11 +283,15 @@ class Search
       format = options.delete(:format)
       rendering = options.delete(:rendering)
       
-      # results = interface.search(query, *args)
-      
       tokens = interface.tokenized query
       
-      results = interface.search_with tokens, amount.to_i, offset.to_i, query, options[:unique]
+      # Max amount is 100.
+      amount = amount.to_i
+      if amount > 100
+        amount = 100
+      end
+      
+      results = interface.search_with tokens, amount, offset.to_i, query, options[:unique]
       
       # Sort results.
       #
