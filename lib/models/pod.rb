@@ -328,7 +328,7 @@ class Pod
   end
 
   def deprecated?
-    specification[:deprecated] == true
+    specification[:deprecated] == true || !deprecated_in_favor_of.nil?
   end
 
   # Returns not just the name, but also:
