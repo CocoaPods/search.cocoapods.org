@@ -329,6 +329,9 @@ class Pod
     specification[:deprecated_in_favor_of]
   end
 
+  # A pod is either explicitly deprecated or
+  # implicitly, in favor of another pod.
+  #
   def deprecated?
     specification[:deprecated] == true || !!deprecated_in_favor_of
   end
