@@ -49,13 +49,3 @@ end
 #
 Object.send :remove_const, :Config if defined?(::Config)
 Config = RbConfig
-
-def memory_profiled enabled = true, &block
-  if enabled
-    require 'memory_profiler'
-    report = MemoryProfiler.report &block
-    report.pretty_print
-  else
-    yield
-  end
-end

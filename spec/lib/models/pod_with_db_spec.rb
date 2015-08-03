@@ -218,21 +218,4 @@ describe Pod do
       pod.to_h[:link].should == 'https://github.com/venmo/VENTouchLock'
     end
   end
-  
-  describe 'synthetic case #7' do
-      
-    def pod
-      af = Pod.new({})
-      class << af
-        def specification
-          { :deprecated_in_favor_of => 'SomethingElse' } 
-        end
-      end
-      af
-    end
-    
-    ok do
-      pod.deprecated?.should == false
-    end
-  end
 end

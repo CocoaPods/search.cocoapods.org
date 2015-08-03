@@ -5,6 +5,18 @@ unless ENV['NO_DUMP']
   Humus.with_snapshot('b008')
 end
 
+# With a possible memory profile ... do.
+#
+def memory_profiled enabled = true, &block
+  if enabled
+    require 'memory_profiler'
+    report = MemoryProfiler.report &block
+    report.pretty_print
+  else
+    yield
+  end
+end
+
 # Load and prepare everything for the spec(s).
 #
 puts "Memory used before indexing (kB): #{`ps -o rss -p #{Process.pid}`}"
