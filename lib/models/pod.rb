@@ -28,6 +28,8 @@ class Pod
   # Specifically extract some row data.
   #
   def preprocess row
+    return unless row.respond_to?(:versions)
+    
     versions = row.versions
     @versions = versions ? versions.gsub(/[\{\}]/, '').split(',').map(&:freeze) : []
   end
@@ -328,7 +330,7 @@ class Pod
   end
 
   def deprecated?
-    specification[:deprecated] == true || !deprecated_in_favor_of.nil?
+    specification[:deprecated] == true || !!deprecated_in_favor_of
   end
 
   # Returns not just the name, but also:
