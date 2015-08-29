@@ -291,6 +291,7 @@ class Search
         amount = 100
       end
       
+      # TODO Timeout here.
       results = interface.search_with tokens, amount, offset.to_i, query, options[:unique]
       
       # Sort results.
