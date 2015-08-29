@@ -2,7 +2,7 @@ require_relative 'stats_sender'
 
 class SearchWorker
   
-  attr_reader :stats
+  attr_reader :stats, :amount_indexed
   
   def setup
     setup_stats
@@ -29,7 +29,7 @@ class SearchWorker
       Search.instance.picky_search(*parameters)
     when :search
       stats.add_one_query
-      Search.instance.search(*parameters)
+      Search.instance.search(*parameters, indexing_progress)
     when :search_facets
       stats.add_one_query
       Search.instance.search_facets parameters
@@ -72,11 +72,16 @@ class SearchWorker
   def garbage_collect
     GC.start
   end
+  
+  def indexing_progress
+    (amount_indexed.to_f / Pods.instance.count).round(2)
+  end
 
   def index_some_pods
     2.times do
       pod = @pods_to_index.next
       Search.instance.reindex pod.name
+      @amount_indexed += 1
     end
   rescue StopIteration
     $stdout.puts "[#{Time.now}] Indexing finished."
@@ -132,6 +137,7 @@ class SearchWorker
     unless @not_loaded_yet
       @not_loaded_yet = true
       @pods_to_index = Pods.instance.each
+      @amount_indexed = 0
       $stdout.puts "[#{Time.now}] Start indexing."
     end
   end
