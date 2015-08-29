@@ -5,10 +5,15 @@ class Pods
 
   def reset
     @cache = Hash.new # GoogleHashSparseLongToRuby.new
+    @count = nil
   end
 
   def self.instance
     @instance ||= new
+  end
+  
+  def count
+    @count ||= Pod.count
   end
 
   # Pods are ordered by popularity initially.
