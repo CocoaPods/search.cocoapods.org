@@ -38,6 +38,10 @@ class Pod
     Domain.pods
   end
 
+  def self.count
+    entity.count
+  end
+
   # Use e.g. Pod.find.where(…).all
   #
   def self.find
