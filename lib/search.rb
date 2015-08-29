@@ -341,7 +341,7 @@ class Search
     if CocoapodSearch.child
       Channel.instance(:search).call :search, args
     else
-      indexing_progress = args.pop
+      indexing_progress = args.pop if args.size > 4
       picky_search(*args) do |results, format, rendering|
         # Render.
         #
@@ -356,10 +356,10 @@ class Search
             results = Pods.instance.for(results.ids).map(&render_block)
           when :picky
             results = results.to_hash
+            results[:indexing_progress] = indexing_progress if indexing_progress
             results.extend Picky::Convenience
             results.amend_ids_with Pods.instance.for(results.ids).map(&render_block)
             results.clear_ids
-            results[:indexing_progress] = indexing_progress
             results
         end
         results
