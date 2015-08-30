@@ -2,7 +2,7 @@ require_relative 'stats_sender'
 
 class SearchWorker
   
-  attr_reader :stats, :amount_indexed
+  attr_reader :stats
   
   def setup
     setup_stats
@@ -74,14 +74,13 @@ class SearchWorker
   end
   
   def indexing_progress
-    (amount_indexed.to_f / Pods.instance.count).round(2)
+    (Search.instance.count.to_f / Pods.instance.count).round(2)
   end
 
   def index_some_pods
     2.times do
       pod = @pods_to_index.next
       Search.instance.reindex pod.name
-      @amount_indexed += 1
     end
   rescue StopIteration
     $stdout.puts "[#{Time.now}] Indexing finished."
@@ -137,7 +136,6 @@ class SearchWorker
     unless @not_loaded_yet
       @not_loaded_yet = true
       @pods_to_index = Pods.instance.each
-      @amount_indexed = 0
       $stdout.puts "[#{Time.now}] Start indexing."
     end
   end
