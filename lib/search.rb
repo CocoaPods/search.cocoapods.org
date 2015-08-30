@@ -196,6 +196,12 @@ class Search
                                                         :dependencies, :subspecs]
   end
 
+  # Naïve indexed pods count.
+  #
+  def count
+    index[:name].exact.realtime.size
+  end
+
   # Reindex all pods.
   # Calls a block every n pods.
   #
