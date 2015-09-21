@@ -65,12 +65,6 @@ We have enabled memory logging using the instructions from:
 
 h3. Current Heroku Labs Features
 
-=== User Features (florian.hanke@gmail.com)
-[ ] github-enterprise  Heroku Buttons for GitHub Enterprise
-[+] metrics-beta       App Metrics Beta Features
-[ ] pipelines          Pipelines adds experimental support for deploying changes between applications with a shared code base.
-[ ] pipelines-v2       Pipelines adds support for deploying changes between applications with a shared code base.
-
 === App Features (search-cocoapods-org)
 [ ] http-end-to-end-continue  Send 100-continue headers to the backend
 [ ] http-session-affinity     Enable session affinity for all requests
