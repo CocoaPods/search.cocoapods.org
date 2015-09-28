@@ -376,7 +376,7 @@ class Pod
   #
   # Note: http://search.cocoapods.org/api/v1/pods.facets.json?include=name&only=name&at-least=30
   #
-  TAGS = %w(
+  tags = %w(
     alert
     analytics
     api
@@ -403,6 +403,7 @@ class Pod
     progress
     rest
     serialization
+    ssh
     table
     test
     text
@@ -410,10 +411,11 @@ class Pod
     widget
     xml
   ).freeze
+  TAGS_REGEX = /\b(#{tags.join('|')})\w*\b/
   def tags
     specification[:summary].
       downcase.
-      scan(/\b(#{TAGS.join('|')})\w*\b/).
+      scan(TAGS_REGEX).
       flatten.
       uniq.map(&:to_sym)
   rescue StandardError, SyntaxError
