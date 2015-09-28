@@ -17,13 +17,6 @@ class Bacon::Context
     singleton_class.send(:define_method, :app) { app }
     singleton_class.send(:define_method, :response_doc) { Nokogiri::HTML(last_response.body) }
   end
-
-  alias_method :run_requirement_before_sequel, :run_requirement
-  def run_requirement(description, spec)
-    Domain.transaction do
-      run_requirement_before_sequel(description, spec)
-    end
-  end
 end
 
 Picky::Loader.load_application
