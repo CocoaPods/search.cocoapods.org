@@ -123,7 +123,10 @@ class Search
                partial: no_partial, # full_partial,
                from: :mapped_summary,
                indexing: default_indexing.merge(
-                 removes_characters: /[^a-z0-9\s\-]/i, # We remove special characters.
+                 # We remove special characters - and numbers.
+                 # Note that removing numbers will cause queries which
+                 # include numbers not find anything in the summary.
+                 removes_characters: /[^a-z\s\-]/i,
                  stems_with: Lingua::Stemmer.new
                )
       category :tags,
