@@ -1,7 +1,7 @@
 h1. Search Engine Notes
 
 * Running on Ruby 2.1.3.
-* Using "Picky":http://florianhanke.com/picky.
+* Using "Picky":http://pickyrb.com.
 * Runs on Heroku (http://search.cocoapods.org).
 
 h2. Developing
@@ -48,8 +48,8 @@ We tune some GC variables.
 
 h4. HOOK_PATH
 
-We use one ENV variable (@HOOK_PATH@) to set the hook path we use in the Specs repo's post-receive-hook to update the search engine's index: @heroku config:add HOOK_PATH=some_garbled_hook_path@.
-This calls an URL on the app which causes it to update the search engine index by downloading the Specs zip file and indexing from the unzipped content, replacing the old index.
+We use one ENV variable (@HOOK_PATH@) to set the hook path we use in Trunk's post-receive-hook to update the search engine's index: @heroku config:add HOOK_PATH=some_garbled_hook_path@.
+This calls an URL on the app which causes it to update the search engine index for the updated pod from the Trunk database.
 (Note: It's not secure against brute force, man-in-the-middle etc., but a simple security to discourage DoS)
 
 To change HOOK_PATH:
