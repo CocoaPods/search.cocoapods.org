@@ -346,7 +346,13 @@ class Pod
   #
   def split_name
     first, *rest = name.split(/\b/)
-    initials, after_initials = first.split(/(?=[A-Z][a-z])/, 2)
+    # If the whole name is uppercase characters, split off the first 2.
+    # initials, after_initials = first.split(/(?=[A-Z][a-z])/, 2)
+    initials, after_initials = if first.match(/\A[A-Z]+\z/)
+      first.split(/\A([A-Z]{2})([A-Z]+)/)[1..2]
+    else
+      first.split(/(?=[A-Z][a-z])/, 2)
+    end
     [
       name,
       initials,

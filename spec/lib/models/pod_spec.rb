@@ -42,5 +42,29 @@ describe Pod do
       end
     end
     
+    describe '#split_name' do
+      def pod
+        @pod ||= Pod.new({})
+      end
+
+      def ok_split pod_name, *expected
+        pod.class.send(:define_method, :name) do
+          pod_name
+        end
+        should "split #{pod_name} into #{expected}" do
+          pod.split_name.should == expected
+        end
+      end
+
+      ok_split 'NMSSH', 'nmssh', 'nm', 'ssh'
+      ok_split 'WJHXCTest', 'wjhxctest', 'wjhxc', 'test'
+      ok_split 'SSHTTPClient', 'sshttpclient', 'sshttp', 'client'
+      ok_split 'AFNetworking', 'afnetworking', 'af', 'networking'
+      ok_split 'CCLDefaults', 'ccldefaults', 'ccl', 'defaults'
+      # Dirty characters will be removed in the indexing step.
+      ok_split 'isUnitTesting', 'isunittesting', 'is', 'unittesting', '', 'unit', 'testing'
+      ok_split 'JSON-Schema-Test-Suite', 'json-schema-test-suite', 'js', 'on', 'json', "-", 'schema', 'test', 'suite', 'json-'
+    end
+    
   end
 end
