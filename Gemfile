@@ -49,7 +49,7 @@ end
 # Pure test gems.
 #
 group :test do
-  gem 'cocoapods-humus'
+  gem 'cocoapods-humus', :require => false
   gem 'memory_profiler'
   gem 'rack-test'
   gem 'kicker'
