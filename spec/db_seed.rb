@@ -1,8 +1,8 @@
 # Load the database state via Humus.
 #
 unless ENV['NO_DUMP']
-  require File.expand_path('../../../Humus/lib/humus', __FILE__)
-  Humus.with_snapshot('b008')
+  require 'cocoapods-humus'
+  Humus.with_snapshot('201510021730-b154')
 end
 
 # With a possible memory profile ... do.
