@@ -21,20 +21,20 @@ describe 'Facets Integration Tests' do
   ok do
     get '/api/v1/pods.facets.json',  only: 'platform'
     result = Yajl.load(last_response.body)
-    result['platform'].keys.sort.should == %w(ios osx)
+    result['platform'].keys.sort.should == %w(ios osx watchos)
     result['tags'].should.nil?
   end
 
   ok do
     get '/api/v1/pods.facets.json',  only: 'platform', counts: 'false'
     result = Yajl.load(last_response.body)
-    result['platform'].sort.should == %w(ios osx).sort
+    result['platform'].sort.should == %w(ios osx watchos).sort
   end
 
   ok do
     get '/api/v1/pods.facets.json',  except: 'tags'
     result = Yajl.load(last_response.body)
-    result['platform'].keys.sort.should == %w(ios osx)
+    result['platform'].keys.sort.should == %w(ios osx watchos)
     result['tags'].should.nil?
   end
 

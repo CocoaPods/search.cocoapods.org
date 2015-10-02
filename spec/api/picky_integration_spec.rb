@@ -79,7 +79,7 @@ describe 'Integration Tests' do
   #
   # Platform is only found when fully mentioned (i.e. no partial).
   #
-  ok { pods.search('platform:osx').total.should == 73 }
+  ok { pods.search('platform:osx').total.should == 76 }
   ok { pods.search('platform:os').total.should == 0 }
   ok { pods.search('platform:o').total.should == 0 }
 
@@ -111,8 +111,8 @@ describe 'Integration Tests' do
   ok { first_three_names_for_search('use:AFNetworking', sort: 'name').should == expected_dependencies }
   ok { first_three_names_for_search('needs:AFNetworking', sort: 'name').should == expected_dependencies }
 
-  ok { pods.search('platform:osx').total.should == 73 }
-  ok { pods.search('on:osx').total.should == 73 }
+  ok { pods.search('platform:osx').total.should == 76 }
+  ok { pods.search('on:osx').total.should == 76 }
 
   ok { first_three_names_for_search('summary:data', sort: 'name').should == %w(AFIncrementalStore FXForms JSONModel) }
 
