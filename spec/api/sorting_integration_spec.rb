@@ -17,24 +17,24 @@ describe 'Sorting Integration Tests' do
     pods.search(query, options).first(3)
   end
 
-  ok { first_three_names_for_search('on:osx mattt', sort: 'name').should == ["AFIncrementalStore", "AFNetworking", "Alamofire"] }
+  ok { first_three_names_for_search('on:osx mattt', sort: 'name').should == ["AFIncrementalStore", "AFNetworking", "FormatterKit"] }
 
-  ok { first_three_names_for_search('on:osx mattt', sort: 'popularity').should ==  ["AFNetworking", "Alamofire", "FormatterKit"] }
-  ok { first_three_names_for_search('on:osx mattt', sort: '-popularity').should == ["AFIncrementalStore", "FormatterKit", "Alamofire"] }
+  ok { first_three_names_for_search('on:osx mattt', sort: 'popularity').should ==  ["AFNetworking", "FormatterKit", "AFIncrementalStore"] }
+  ok { first_three_names_for_search('on:osx mattt', sort: '-popularity').should == ["AFIncrementalStore", "FormatterKit", "AFNetworking"] }
   
-  ok { first_three_names_for_search('on:osx mattt', sort: 'quality').should ==  ["Alamofire", "AFNetworking", "FormatterKit"] }
+  ok { first_three_names_for_search('on:osx mattt', sort: 'quality').should ==  ["AFNetworking", "FormatterKit", "AFIncrementalStore"] }
   ok { first_three_names_for_search('on:osx mattt', sort: '-quality').should == ["AFIncrementalStore", "FormatterKit", "AFNetworking"] }
 
-  ok { first_three_names_for_search('on:osx mattt', sort: 'watchers').should ==  ["AFNetworking", "Alamofire", "AFIncrementalStore"] }
-  ok { first_three_names_for_search('on:osx mattt', sort: '-watchers').should == ["FormatterKit", "AFIncrementalStore", "Alamofire"] }
+  ok { first_three_names_for_search('on:osx mattt', sort: 'watchers').should ==  ["AFNetworking", "FormatterKit", "AFIncrementalStore"] }
+  ok { first_three_names_for_search('on:osx mattt', sort: '-watchers').should == ["AFIncrementalStore", "FormatterKit", "AFNetworking"] }
 
-  ok { first_three_names_for_search('on:osx mattt', sort: 'forks').should ==  ["AFNetworking", "Alamofire", "FormatterKit"] }
-  ok { first_three_names_for_search('on:osx mattt', sort: '-forks').should == ["AFIncrementalStore", "FormatterKit", "Alamofire"] }
+  ok { first_three_names_for_search('on:osx mattt', sort: 'forks').should ==  ["AFNetworking", "FormatterKit", "AFIncrementalStore"] }
+  ok { first_three_names_for_search('on:osx mattt', sort: '-forks').should == ["AFIncrementalStore", "FormatterKit", "AFNetworking"] }
 
-  ok { first_three_names_for_search('on:osx mattt', sort: 'stars').should ==  ["AFNetworking", "Alamofire", "FormatterKit"] }
-  ok { first_three_names_for_search('on:osx mattt', sort: '-stars').should == ["AFIncrementalStore", "FormatterKit", "Alamofire"] }
+  ok { first_three_names_for_search('on:osx mattt', sort: 'stars').should ==  ["AFNetworking", "FormatterKit", "AFIncrementalStore"] }
+  ok { first_three_names_for_search('on:osx mattt', sort: '-stars').should == ["AFIncrementalStore", "FormatterKit", "AFNetworking"] }
 
-  ok { first_three_names_for_search('on:osx mattt', sort: 'contributors').should ==  ["AFNetworking", "FormatterKit", "Alamofire"] }
-  ok { first_three_names_for_search('on:osx mattt', sort: '-contributors').should == ["AFIncrementalStore", "Alamofire", "FormatterKit"] }
+  ok { first_three_names_for_search('on:osx mattt', sort: 'contributors').should ==  ["AFNetworking", "FormatterKit", "AFIncrementalStore"] }
+  ok { first_three_names_for_search('on:osx mattt', sort: '-contributors').should == ["AFIncrementalStore", "FormatterKit", "AFNetworking"] }
 
 end
