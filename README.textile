@@ -19,6 +19,12 @@ h3. Run locally with foreman
 
 h3. Run tests
 
+Disclaimer:
+Currently, the integration tests depend on a specific production DB dump. 
+To download these, you currently need id/secret keys for an S3 instance, which only the CP team has access to.
+However, you can run specific specs which only require @spec_helper_without_db@.
+For example: @bundle exec bacon spec/lib/models/pod_spec.rb@
+
 * All tests: @bundle exec rake@
 * A single test: @LOAD_TEST_DB=absolutely bundle exec bacon spec/...../.._spec.rb@
 
