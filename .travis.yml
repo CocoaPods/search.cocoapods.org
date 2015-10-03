@@ -8,5 +8,4 @@ addons:
     packages:
     - postgresql-server-dev-9.4
 env:
-- secure: "KKy6Cp0IS1yho4i10P1NV9/pFxfCK3B1v9hWLJjyAV9lFpzyWj8/PWt0T1G3Lt1KFpPHgZrKvu9oBO9HkMNU38jOaVA3FdsQYG3JIKZY44ZylGj/SUPMY92Qr3KFiDBJLJIMqbYLieREyczr0n4QU+CrjREVk3xvfz7IxJd9TOY="
-- secure: "Viajau9o/Uxzstax0K01bD6Um+EA8VvIrYPOVK0UE5ZsANS4EhLRWz9/Nv3AxykOuS5uprTqqeWvS4c1TvO300y9ehz0g/50Xl9LnKN9jdJHwrYMLL1jlz6PAMdOrbJLxn9sTgmAM8nFxK8DaZ0wsMJZdg2wmIjsq5HewfmUjWY="
+  secure: "MeyjQ3gyQBQhvTxHC/HQSUG2LmvGdeD9aizM+pNxF8ae+0Rf4yPXKhJdQW8iNnl1QnQdNEHv/6y4mitR2UJ4wllSW/kvk6SBPQShXSmvrQIAX//R8hR4vZzRnLkEZmfL8al1ZazPABOeinQg6vEL1+AYjOLk2UAfHvcyUlUTcpM="
