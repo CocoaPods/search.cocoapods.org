@@ -15,7 +15,7 @@ describe 'Facets Integration Tests' do
     get '/api/v1/pods.facets.json', {}
     result = Yajl.load(last_response.body)
     result['platform'].keys.sort.should == %w(ios osx watchos)
-    result['tags'].keys.sort.should == ["analytics", "api", "button", "client", "communication", "controller", "http", "image", "json", "kit", "layout", "logging", "manager", "navigation", "network", "notification", "parser", "progress", "rest", "serialization", "table", "test", "text", "view", "xml"]
+    result['tags'].keys.sort.should == ["alert", "analytics", "api", "button", "client", "communication", "controller", "http", "image", "json", "kit", "layout", "logging", "navigation", "network", "notification", "parser", "progress", "rest", "table", "test", "text", "view", "xml"]
   end
 
   ok do
@@ -55,7 +55,7 @@ describe 'Facets Integration Tests' do
     get '/api/v1/pods.facets.json',  only: %w(platform name), include: 'name', filter: 'author:mattt'
     result = Yajl.load(last_response.body)
     result['platform'].keys.sort.should == %w(ios osx watchos)
-    result['name'].keys.sort.should == ["af", "afincrementalstore", "afnetworking", "alamofire", "attributed", "attributedlabel", "formatter", "formatterkit", "incremental", "incrementalstore", "kit", "label", "networking", "store", "ttt", "tttattributedlabel"]
+    result['name'].keys.sort.should == ["af", "afincrementalstore", "afnetworking", "attributed", "attributedlabel", "formatter", "formatterkit", "incremental", "incrementalstore", "kit", "label", "networking", "store", "ttt", "tttattributedlabel"]
     result['tags'].should.nil?
   end
 

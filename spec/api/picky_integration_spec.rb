@@ -68,7 +68,7 @@ describe 'Integration Tests' do
   expected = %w(AFNetworking AFIncrementalStore RestKit)
   ok { first_three_names_for_search('on:osx afnetworking', sort: 'name').should == expected }
   ok { first_three_names_for_search('on:osx on:ios afnetworking', sort: 'name').should == expected }
-  ok { first_three_names_for_search('on:ios afnetworking', sort: 'name').should == %w(AFNetworking AFIncrementalStore MRProgress) }
+  ok { first_three_names_for_search('on:ios afnetworking', sort: 'name').should == %w(AFNetworking AFIncrementalStore Nimbus) }
 
   # Category boosting.
   #
@@ -93,16 +93,16 @@ describe 'Integration Tests' do
   ok { first_three_names_for_search('name:afnetworking').should == expected }
   ok { first_three_names_for_search('pod:afnetworking').should == expected }
 
-  expected = %w(AFIncrementalStore AFNetworking Alamofire)
+  expected = %w(AFIncrementalStore AFNetworking FormatterKit)
   ok { first_three_names_for_search('author:mattt author:thompson', sort: 'name').should == expected }
   ok { first_three_names_for_search('authors:mattt authors:thompson', sort: 'name').should == expected }
   ok { first_three_names_for_search('written:mattt written:thompson', sort: 'name').should == expected }
   ok { first_three_names_for_search('writer:mattt writer:thompson', sort: 'name').should == expected }
   # ok { first_three_names_for_search('writer:mattt writer:thompson').should == expected }
 
-  ok { first_three_names_for_search('version:1.0.0', sort: 'name').should == %w(Appirater Atlas AwesomeMenu) }
+  ok { first_three_names_for_search('version:1.0.0', sort: 'name').should == %w(Appirater Aspects Atlas) }
 
-  expected_dependencies = %w(AFIncrementalStore MRProgress Nimbus)
+  expected_dependencies = %w(AFIncrementalStore Nimbus RestKit)
   ok { first_three_names_for_search('dependency:AFNetworking', sort: 'name').should == expected_dependencies }
   ok { first_three_names_for_search('dependencies:AFNetworking', sort: 'name').should == expected_dependencies }
   ok { first_three_names_for_search('depends:AFNetworking', sort: 'name').should == expected_dependencies }
