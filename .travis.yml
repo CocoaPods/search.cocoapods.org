@@ -4,5 +4,6 @@ rvm: 2.2.2
 cache: bundle
 addons:
   postgresql: "9.4"
-before_install:
- - sudo apt-get install -y postgresql-server-dev-9.4
+  apt:
+    packages:
+    - postgresql-server-dev-9.4
