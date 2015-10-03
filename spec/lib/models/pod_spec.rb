@@ -48,7 +48,7 @@ describe Pod do
       end
 
       def ok_split pod_name, *expected
-        pod.class.send(:define_method, :name) do
+        pod.singleton_class.send(:define_method, :name) do
           pod_name
         end
         should "split #{pod_name} into #{expected}" do
