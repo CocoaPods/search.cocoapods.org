@@ -2,5 +2,5 @@ sudo: false
 language: ruby
 rvm: 2.2.2
 cache: bundle
-before_install:
-  - git submodule update --init
+addons:
+  postgresql: "9.4"
