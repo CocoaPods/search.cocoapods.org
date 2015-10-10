@@ -54,6 +54,13 @@ class Search
       #
       #optimize :no_dump # google_hash caused some Ruby [BUG]s.
       
+      # Use Rust.
+      #
+      # TODO Use the gem at some point.
+      #
+      require File.expand_path '../../../../../picky/indexes/lib/picky-indexes', __FILE__
+      backend Picky::Backends::Rust.new
+      
       # We use the ids.
       #
       key_format :to_i

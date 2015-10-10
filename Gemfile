@@ -10,7 +10,7 @@ ruby '2.2.3' if ENV['RACK_ENV'] == 'production' || ENV['CI'] == 'true'
 #
 gem 'bundler'
 gem 'sinatra', :require => 'sinatra/base'
-gem 'picky', '~> 4.31.0'
+gem 'picky', :path => '../../../picky/server'
 gem 'picky-client', '~> 4.31.0' # Needed for Picky::Convenience
 gem 'cod'
 gem 'hashie'
