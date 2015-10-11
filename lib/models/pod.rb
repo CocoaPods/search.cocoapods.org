@@ -345,20 +345,19 @@ class Pod
   #  * Name without initials.
   #
   def split_name
-    first, *rest = name.split(/\b/)
-    # If the whole name is uppercase characters, split off the first 2.
-    # initials, after_initials = first.split(/(?=[A-Z][a-z])/, 2)
-    initials, after_initials = if first.match(/\A[A-Z]+\z/)
-      first.split(/\A([A-Z]{2})([A-Z]+)/)[1..2]
-    else
-      first.split(/(?=[A-Z][a-z])/, 2)
+    head, *tail = name.split(/\b/)
+    # If 5 or more are uppercase characters, split off the first 2.
+    if head.match(/\A[A-Z]{5,}.*?\z/)
+      initials1, head = head.split(/\A([A-Z]{2})(.+)/)[1..2]
     end
+    initials2, after_initials = head.split(/(?=[A-Z][a-z])/, 2)
     [
       name,
-      initials,
+      initials1,
+      initials2,
       after_initials,
-      first,
-      *rest,
+      head,
+      *tail,
       *name.split(/([A-Z]?[a-z]+)/),
     ].compact.map(&:downcase).uniq.map(&:freeze)
   end

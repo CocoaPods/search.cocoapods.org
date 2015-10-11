@@ -57,13 +57,14 @@ describe Pod do
       end
 
       ok_split 'NMSSH', 'nmssh', 'nm', 'ssh'
-      ok_split 'WJHXCTest', 'wjhxctest', 'wjhxc', 'test'
-      ok_split 'SSHTTPClient', 'sshttpclient', 'sshttp', 'client'
+      ok_split 'WJHXCTest', 'wjhxctest', 'wj', 'hxc', 'test', 'hxctest', 'wjhxc' # Unsure about this one.
+      ok_split 'SSHTTPClient', 'sshttpclient', 'ss', 'http', 'client', 'httpclient', 'sshttp'
       ok_split 'AFNetworking', 'afnetworking', 'af', 'networking'
       ok_split 'CCLDefaults', 'ccldefaults', 'ccl', 'defaults'
       # Dirty characters will be removed in the indexing step.
       ok_split 'isUnitTesting', 'isunittesting', 'is', 'unittesting', '', 'unit', 'testing'
-      ok_split 'JSON-Schema-Test-Suite', 'json-schema-test-suite', 'js', 'on', 'json', "-", 'schema', 'test', 'suite', 'json-'
+      ok_split 'JSON-Schema-Test-Suite', 'json-schema-test-suite', 'json', '-', 'schema', 'test', 'suite', 'json-'
+      ok_split 'OHPDFImage', 'ohpdfimage', 'oh', 'pdf', 'image', 'pdfimage', 'ohpdf'
     end
     
   end
