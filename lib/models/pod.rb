@@ -31,7 +31,11 @@ class Pod
     return unless row.respond_to?(:versions)
     
     versions = row.versions
-    @versions = versions ? versions.gsub(/[\{\}]/, '').split(',').map(&:freeze) : []
+    @versions = if versions
+      versions.gsub(/[\{\}]/, '').split(',').map(&:freeze)
+    else
+      []
+    end
   end
 
   def self.entity
@@ -45,7 +49,7 @@ class Pod
   # Use e.g. Pod.find.where(…).all
   #
   def self.find
-    entity.
+    pods = entity.
       join(Domain.versions).
       on(Domain.pods[:id] => Domain.versions[:pod_id]).
       
@@ -77,6 +81,15 @@ class Pod
         *Domain.github_metrics.fields(:forks, :stargazers, :contributors, :subscribers, :language),
         *Domain.cocoadocs_pod_metrics.fields(:id, :dominant_language, :quality_estimate)
       )
+    
+    # Possibly filter prerelease pods & prerelease versions.
+    pods.where("pod_versions.name !~ E'[a-zA-Z]'") if released_only?
+
+    pods
+  end
+  
+  def self.released_only?
+    @released_only ||= !ENV['RELEASED_PODS_ONLY'].nil?
   end
 
   #
