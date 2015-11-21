@@ -88,8 +88,10 @@ class Pod
     pods
   end
   
+  # Returns true if only released pods are to be shown, false otherwise.
+  #
   def self.released_only?
-    @released_only ||= !ENV['RELEASED_PODS_ONLY'].nil?
+    ENV['RELEASED_PODS_ONLY']
   end
 
   #
