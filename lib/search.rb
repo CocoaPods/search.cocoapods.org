@@ -43,7 +43,7 @@ class Search
     #
     @index = Index.new :pods do
       id :id
-      
+
       # We never dump the index to file, so
       # let Picky optimize.
       #
@@ -53,11 +53,11 @@ class Search
       # Could be google_hash or https://bugs.ruby-lang.org/issues/10933.
       #
       #optimize :no_dump # google_hash caused some Ruby [BUG]s.
-      
+
       # We use the ids.
       #
       key_format :to_i
-      
+
       # We use Symbol keys.
       #
       symbol_keys true
@@ -76,11 +76,11 @@ class Search
       #            removes_characters: false,
       #            splits_text_on: /\./
       #          )
-      
+
       def boost(amount)
         Weights::Logarithmic.new(amount)
       end
-      
+
       category :name,
                weight: boost(+2),
                # similarity: few_similars,
@@ -144,13 +144,18 @@ class Search
                partial: no_partial,
                from: :mapped_language,
                tokenize: false
+      category :spm_support,
+               # weight: boost(+0),
+               partial: no_partial,
+               qualifiers: [:spm, :supports_spm],
+               from: :spm_support
     end
 
     # Define a search over the books index.
     #
     @interface = Search.new index do
       # max_allocations 10
-      
+
       searching substitutes_characters_with:
                   CharacterSubstituters::WestEuropean.new,
                 removes_characters: false,
@@ -214,7 +219,7 @@ class Search
       replace pod, Pods.instance
     end
   end
-  
+
   # Try indexing a new pod.
   #
   def reindex(name)
@@ -283,7 +288,7 @@ class Search
       end
     end
   end
-  
+
   def picky_search(query, amount, offset, options = {})
     if CocoapodSearch.child
       Channel.instance(:search).call :picky_search, [query, amount, offset, options]
@@ -291,22 +296,22 @@ class Search
       sorting = filter_sort options.delete(:sort)
       format = options.delete(:format)
       rendering = options.delete(:rendering)
-      
+
       tokens = interface.tokenized query
-      
+
       # Max amount is 100.
       amount = amount.to_i
       if amount > 100
         amount = 100
       end
-      
+
       # TODO Timeout here.
       results = interface.search_with tokens, amount, offset.to_i, query, options[:unique]
-      
+
       # Sort results.
       #
       results.sort_by(&sorting) if sorting
-      
+
       # Promote exact result to top of allocation if it's a single word.
       #
       if tokens.size == 1
@@ -314,16 +319,16 @@ class Search
         if text
           text = text.downcase
           found = false
-          
+
           # TODO We don't need to look through all allocations,
-          # only those with combinations "name". 
+          # only those with combinations "name".
           #
           results.allocations.each do |allocation|
             ids = allocation.ids
             # next if ids.size == 1
-            
+
             pods = Pods.instance
-            
+
             # Find the first exact hit and promote it.
             # Note: slows the search engine down considerably.
             #
@@ -337,7 +342,7 @@ class Search
           end
         end
       end
-      
+
       if block_given?
         yield results, format, rendering
       else
