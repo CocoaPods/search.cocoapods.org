@@ -1,4 +1,4 @@
-source 'http://rubygems.org'
+source 'https://rubygems.org'
 
 if ENV['RACK_ENV'] == 'production' || ENV['CI'] == 'true'
   ruby File.read(File.expand_path('../.ruby-version', __FILE__)).strip
