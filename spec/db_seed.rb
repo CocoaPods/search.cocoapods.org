@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 # Load the database state via Humus.
 #
 unless ENV['NO_DUMP']

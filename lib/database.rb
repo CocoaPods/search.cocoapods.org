@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 # Load the DB after forking.
 #
 load File.expand_path '../database/db.rb', __FILE__

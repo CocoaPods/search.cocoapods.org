@@ -13,3 +13,7 @@ AllCops:
 FileName:
   Exclude:
     - lib/cocoapods-core.rb
+
+Style/FrozenStringLiteralComment:
+  Enabled: true
+  EnforcedStyle: always

@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 require File.expand_path('../../../spec_helper_without_db', __FILE__)
 require File.expand_path('../../../../lib/models/pod', __FILE__)
 
