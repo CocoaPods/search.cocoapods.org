@@ -60,7 +60,6 @@ class Pod
       on(Domain.pods[:id] => Domain.cocoadocs_pod_metrics[:pod_id]).
       
       where(Domain.pods[:deleted] => false).
-      where(Domain.versions[:deleted] => false).
       
       project(
         *Domain.pods.fields(:id, :name),
