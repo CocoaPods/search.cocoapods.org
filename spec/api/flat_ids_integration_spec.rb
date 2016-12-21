@@ -51,7 +51,7 @@ describe 'Flat Ids Integration Tests' do
   #
   it 'is fast enough' do
     require 'benchmark'
-    Benchmark.realtime { pods.search('on:osx k* a') }.should < 0.02 # seconds
+    Benchmark.realtime { 100.times { pods.search('on:osx k* a') } }.should < 2.0 # seconds
   end
 
   # Multiple results and uniqueness.
