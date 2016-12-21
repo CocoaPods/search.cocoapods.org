@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 number_of_worker_processes = 2
 
 pid 'tmp/pids/unicorn.pid'

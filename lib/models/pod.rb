@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 require 'json'
 
 # Only for reading purposes.
@@ -6,8 +7,8 @@ class Pod
   attr_reader :row, :versions
 
   DEFAULT_QUALITY = 40
-  
-  EMPTY_STRING = ''.freeze
+
+  EMPTY_STRING = ''
 
   extend Forwardable
 
@@ -29,7 +30,7 @@ class Pod
   #
   def preprocess row
     return unless row.respond_to?(:versions)
-    
+
     versions = row.versions
     @versions = if versions
       versions.gsub(/[\{\}]/, '').split(',').map(&:freeze)
@@ -52,15 +53,15 @@ class Pod
     pods = entity.
       join(Domain.versions).
       on(Domain.pods[:id] => Domain.versions[:pod_id]).
-      
+
       join(Domain.github_metrics).
       on(Domain.pods[:id] => Domain.github_metrics[:pod_id]).
-      
+
       outer_join(Domain.cocoadocs_pod_metrics).
       on(Domain.pods[:id] => Domain.cocoadocs_pod_metrics[:pod_id]).
-      
+
       where(Domain.pods[:deleted] => false).
-      
+
       project(
         *Domain.pods.fields(:id, :name),
         'array_agg(pod_versions.name) AS versions',
@@ -75,19 +76,19 @@ class Pod
         *Domain.github_metrics.fields(:forks, :stargazers, :contributors, :subscribers, :language),
         *Domain.cocoadocs_pod_metrics.fields(:id, :dominant_language, :quality_estimate)
       ).
-      
+
       group_by(
         Domain.pods[:id],
         *Domain.github_metrics.fields(:forks, :stargazers, :contributors, :subscribers, :language),
         *Domain.cocoadocs_pod_metrics.fields(:id, :dominant_language, :quality_estimate)
       )
-    
+
     # Possibly filter prerelease pods & prerelease versions.
     pods.where("pod_versions.name !~ E'[a-zA-Z]'") if released_only?
 
     pods
   end
-  
+
   # Returns true if only released pods are to be shown, false otherwise.
   #
   def self.released_only?
@@ -114,7 +115,7 @@ class Pod
   def popularity
     row.popularity || 0
   end
-  
+
   def quality
     cocoadocs_pod_metric.quality_estimate || DEFAULT_QUALITY
   end
@@ -138,7 +139,7 @@ class Pod
   def language
     github_metric.language
   end
-  
+
   def dominant_language
     cocoadocs_pod_metric.dominant_language
   end
@@ -152,8 +153,8 @@ class Pod
 
   # Currently only two languages are available for filtering.
   #
-  @@objc_lang = ['objc'.freeze]
-  @@swift_lang = ['swift'.freeze]
+  @@objc_lang = ['objc']
+  @@swift_lang = ['swift']
   @@language_map = {
     "Objective C" => @@objc_lang,
     "Swift" => @@swift_lang
@@ -298,7 +299,7 @@ class Pod
   def documentation_url
     specification[:documentation_url]
   end
-  
+
   def cocoadocs?
     !!cocoadocs_pod_metric.id
   end
@@ -307,28 +308,28 @@ class Pod
   #
   def specification_json
     result = Domain.commits.
-             
+
              join(Domain.versions).
              on(Domain.commits[:pod_version_id] => Domain.versions[:id]).
              anchor.
-             
+
              join(Domain.pods).
              on(Domain.versions[:pod_id] => Domain.pods[:id]).
              hoist.
-             
+
              project(*Domain.commits[:specification_data]).
-             
+
              where(
                Domain.pods[:id] => id,
                Domain.versions[:name] => last_version.to_s, # TODO This is a bit silly.
              ).
-             
+
              limit(1).
-             
+
              order_by(
                Domain.commits[:created_at].desc,
              ).
-             
+
              first
     result.commit.specification_data if result
   end
@@ -362,7 +363,7 @@ class Pod
   def split_name
     head, *tail = name.split(/\b/)
     # If 5 or more are uppercase characters, split off the first 2.
-    if head.match(/\A[A-Z]{5,}.*?\z/)
+    if head =~ /\A[A-Z]{5,}.*?\z/
       initials1, head = head.split(/\A([A-Z]{2})(.+)/)[1..2]
     end
     initials2, after_initials = head.split(/(?=[A-Z][a-z])/, 2)
@@ -382,7 +383,7 @@ class Pod
   def split_name_for_automatic_splitting
     temp = name
     if temp
-      if temp.match(/\A[A-Z]{3}[a-z]/)
+      if temp =~ /\A[A-Z]{3}[a-z]/
         temp = temp[2..-1]
       end
       parts = temp && temp.split(/([A-Z]?[a-z]+)/).map(&:downcase) || []
@@ -430,7 +431,7 @@ class Pod
     view
     widget
     xml
-  ).freeze
+  ).map(&:freeze).freeze
   TAGS_REGEX = /\b(#{tags.join('|')})\w*\b/
   def tags
     specification[:summary].
@@ -441,7 +442,7 @@ class Pod
   rescue StandardError, SyntaxError
     []
   end
-  
+
   def reduce_memory_usage
     # Render
     to_h
@@ -456,7 +457,7 @@ class Pod
   def to_h
     @h ||= begin
       rendered_homepage, rendered_source = compress
-      
+
       # Create a rendered hash.
       h = {
         id: name, # We don't hand out ids.
@@ -468,17 +469,17 @@ class Pod
         source: rendered_source,
         tags: tags,
       }
-      
+
       if deprecated?
         h[:deprecated] = true
         h[:deprecated_in_favor_of] = deprecated_in_favor_of
       end
       h[:documentation_url] = row.documentation_url if row.respond_to?(:documentation_url)
       h[:cocoadocs] = true if cocoadocs?
-      
+
       h
     end
-    
+
     # Each render, uncompress.
     #
     uncompress @h
@@ -489,7 +490,7 @@ class Pod
     if rendered_homepage =~ /github\.com/
       rendered_homepage = split_github(rendered_homepage)
     end
-    
+
     # Small memory optimisation.
     # We could use Symbols, but most URLs are unique.
     rendered_source = source
@@ -502,7 +503,7 @@ class Pod
         end
       end
     end
-    
+
     [rendered_homepage, rendered_source]
   end
   def split_github url

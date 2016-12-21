@@ -1,6 +1,8 @@
-source 'http://rubygems.org'
+source 'https://rubygems.org'
 
-ruby '2.2.3' if ENV['RACK_ENV'] == 'production' || ENV['CI'] == 'true'
+if ENV['RACK_ENV'] == 'production' || ENV['CI'] == 'true'
+  ruby File.read(File.expand_path('../.ruby-version', __FILE__)).strip
+end
 
 # Debug.
 #
