@@ -5,6 +5,8 @@ AllCops:
     - ./*.gemspec
   Exclude:
     - ./spec/fixtures/**/*
+    - ./vendor/bundle/**/*
+    - ./tmp/**/*
 
 # At the moment not ready to be used
 # https://github.com/bbatsov/rubocop/issues/947
@@ -12,6 +14,9 @@ Documentation:
   Enabled: false
 
 #- CocoaPods -----------------------------------------------------------------#
+
+ParameterLists:
+  CountKeywordArgs: false
 
 # We adopted raise instead of fail.
 SignalException:
@@ -39,8 +44,14 @@ Encoding:
 
 # Having these make it easier to *not* forget to add one when adding a new
 # value and you can simply copy the previous line.
-TrailingComma:
+Style/TrailingCommaInArguments:
   EnforcedStyleForMultiline: comma
+
+Style/TrailingCommaInLiteral:
+  EnforcedStyleForMultiline: comma
+
+Style/MultilineOperationIndentation:
+  EnforcedStyle: indented
 
 # Clashes with CLAide Command#validate!
 GuardClause:
@@ -50,10 +61,49 @@ GuardClause:
 Next:
   Enabled: false
 
+# Autocorrect makes this cop much more useful, taking away needless guessing
+Lint/EndAlignment:
+  AutoCorrect: true
+
+
+# Arbitrary max lengths for classes simply do not work and enabling this will
+# lead to a never ending stream of annoyance and changes.
+Metrics/ClassLength:
+  Enabled: false
+
+# Arbitrary max lengths for modules simply do not work and enabling this will
+# lead to a never ending stream of annoyance and changes.
+Metrics/ModuleLength:
+  Enabled: false
+
+# Arbitrary max lengths for methods simply do not work and enabling this will
+# lead to a never ending stream of annoyance and changes.
+Metrics/MethodLength:
+  Enabled: false
+
+# No enforced convention here.
+Metrics/BlockNesting:
+  Enabled: false
+
+# It will be obvious which code is complex, Rubocop should only lint simple
+# rules for us.
+Metrics/AbcSize:
+  Enabled: false
+
+# It will be obvious which code is complex, Rubocop should only lint simple
+# rules for us.
+Metrics/CyclomaticComplexity:
+  Enabled: false
+
+# It will be obvious which code is complex, Rubocop should only lint simple
+# rules for us.
+Metrics/PerceivedComplexity:
+  Enabled: false
+
 #- CocoaPods support for Ruby 1.8.7 ------------------------------------------#
 
 HashSyntax:
-  EnforcedStyle: ruby19
+  EnforcedStyle: hash_rockets
 
 Lambda:
   Enabled: false
@@ -74,6 +124,10 @@ AmbiguousRegexpLiteral:
   Exclude:
     - spec/**/*
 
+Performance/RedundantMatch:
+  Exclude:
+    - spec/**/*
+
 # Allow `object.should == object` syntax.
 Void:
   Exclude:
@@ -86,4 +140,3 @@ ClassAndModuleChildren:
 UselessComparison:
   Exclude:
     - spec/**/*
-
