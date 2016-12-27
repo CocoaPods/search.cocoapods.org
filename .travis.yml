@@ -1,6 +1,6 @@
 sudo: false
 language: ruby
-rvm: 2.3.3
+rvm: 2.4.0
 cache: bundle
 addons:
   postgresql: "9.4"
