@@ -212,6 +212,7 @@ class Search
   def reindex_all(every = 100, amount = nil)
     Pods.instance.each(amount).with_index do |pod, i|
       yield i if block_given? && (i % every == 0)
+      pod.reduce_memory_usage
       replace pod, Pods.instance
     end
   end
@@ -220,6 +221,7 @@ class Search
   #
   def reindex(name)
     pod = Pod.all { |pods| pods.where(name: name) }.first
+    pod.reduce_memory_usage
     replace pod, Pods.instance
     pod.release_indexing_memory
     $stdout.print ?✓
@@ -239,7 +241,6 @@ class Search
     # is already in there (but add new index data).
     @index.add pod
     @splitting_index.add pod
-    # pod.reduce_memory_usage # TODO ?
   end
 
   def remove(pod)
