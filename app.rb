@@ -131,6 +131,11 @@ class CocoapodSearch < Sinatra::Application
     Yajl::Encoder.encode suggestions
   end
 
+  # Returns a 200 OK to show the server is healthy.
+  get '/ping' do
+    halt 200
+  end
+
   # Experimental APIs.
   #
   get '/api/v1/pods.facets.json' do
