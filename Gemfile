@@ -1,6 +1,8 @@
-source 'http://rubygems.org'
+source 'https://rubygems.org'
 
-ruby '2.2.3' if ENV['RACK_ENV'] == 'production' || ENV['CI'] == 'true'
+if ENV['RACK_ENV'] == 'production' || ENV['CI'] == 'true'
+  ruby File.read(File.expand_path('../.ruby-version', __FILE__)).strip
+end
 
 # Debug.
 #
@@ -9,12 +11,12 @@ ruby '2.2.3' if ENV['RACK_ENV'] == 'production' || ENV['CI'] == 'true'
 # Main gems used in all the application.
 #
 gem 'bundler'
-gem 'sinatra', :require => 'sinatra/base'
+gem 'sinatra', '1.4.5', :require => 'sinatra/base'
 gem 'picky', '~> 4.31.0'
 gem 'picky-client', '~> 4.31.0' # Needed for Picky::Convenience
-gem 'cod'
-gem 'hashie'
-gem 'google_hash'
+gem 'cod', '0.6.0'
+gem 'hashie', '3.3.2'
+# gem 'google_hash', '0.8.8'
 
 # Auxiliary gems to make Picky faster/better.
 #
@@ -24,9 +26,9 @@ gem 'ruby-stemmer', :require => 'lingua/stemmer'
 
 # Database.
 #
-gem 'pg'
-gem 'dm-postgres-adapter', require: true
-gem 'flounder'
+gem 'pg', '0.18.1'
+gem 'dm-postgres-adapter', '1.2.0', require: true
+gem 'flounder', '1.0.1'
 
 # API calling.
 #
@@ -43,7 +45,7 @@ end
 # Pure production gems.
 #
 group :production do
-  gem 'unicorn'
+  gem 'unicorn', '4.8.3'
 end
 
 # Pure test gems.

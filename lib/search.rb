@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 # TODO: Split this class into a client and a server part.
 #
 class Search
@@ -22,10 +23,10 @@ class Search
     # "it" is a prefix but we still stopword it.
     # We do not stop "on" as it is used for qualifying the platform.
     #
-    words = %w(a an are as at be by for from) +
-            %w(has he in is it its of that the) +
-            %w(to was were will with)
-    stopwords = /\b(#{words.join('|')})\b/i
+    words = %w(a an are as at be by for from
+               has he in is it its of that the
+               to was were will with).map(&:freeze).freeze
+    stopwords = /\b(#{words.join('|')})\b/io
 
     # Set up partial configurations.
     #

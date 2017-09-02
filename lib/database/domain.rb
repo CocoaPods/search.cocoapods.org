@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 # Defines the domain.
 #
 Object.send :remove_const, :Domain if defined? Domain

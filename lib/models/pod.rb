@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 require 'json'
 
 # Only for reading purposes.
@@ -152,8 +153,8 @@ class Pod
 
   # Currently only two languages are available for filtering.
   #
-  @@objc_lang = ['objc'.freeze]
-  @@swift_lang = ['swift'.freeze]
+  @@objc_lang = ['objc']
+  @@swift_lang = ['swift']
   @@language_map = {
     "Objective C" => @@objc_lang,
     "Swift" => @@swift_lang
@@ -366,7 +367,7 @@ class Pod
   def split_name
     head, *tail = name.split(/\b/)
     # If 5 or more are uppercase characters, split off the first 2.
-    if head.match(/\A[A-Z]{5,}.*?\z/)
+    if head =~ /\A[A-Z]{5,}.*?\z/
       initials1, head = head.split(/\A([A-Z]{2})(.+)/)[1..2]
     end
     initials2, after_initials = head.split(/(?=[A-Z][a-z])/, 2)
@@ -386,7 +387,7 @@ class Pod
   def split_name_for_automatic_splitting
     temp = name
     if temp
-      if temp.match(/\A[A-Z]{3}[a-z]/)
+      if temp =~ /\A[A-Z]{3}[a-z]/
         temp = temp[2..-1]
       end
       parts = temp && temp.split(/([A-Z]?[a-z]+)/).map(&:downcase) || []
@@ -434,7 +435,7 @@ class Pod
     view
     widget
     xml
-  ).freeze
+  ).map(&:freeze).freeze
   TAGS_REGEX = /\b(#{tags.join('|')})\w*\b/
   def tags
     specification[:summary].

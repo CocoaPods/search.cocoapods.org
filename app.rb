@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 require File.expand_path '../lib/cocoapods.org', __FILE__
 
 # Store the indexes in tmp.
@@ -128,6 +129,11 @@ class CocoapodSearch < Sinatra::Application
     end
 
     Yajl::Encoder.encode suggestions
+  end
+
+  # Returns a 200 OK to show the server is healthy.
+  get '/ping' do
+    halt 200
   end
 
   # Experimental APIs.
