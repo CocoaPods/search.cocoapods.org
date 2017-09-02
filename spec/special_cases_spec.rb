@@ -32,15 +32,15 @@ describe 'Special Cases' do
   # end
   
   it 'will find ObjectiveRecord via CoreData' do
-    first_three_names_for_search('CoreData', sort: 'name').should == ["AFIncrementalStore", "MagicalRecord", "PonyDebugger"]
+    first_three_names_for_search('CoreData', sort: 'name').should == ["MagicalRecord", "PonyDebugger", "RestKit"]
   end
 
   it 'will survive searching ORed' do
-    first_three_names_for_search('ios|osx', sort: 'name').should == %w(AFIncrementalStore AFNetworking AMScrollingNavbar)
+    first_three_names_for_search('ios|osx', sort: 'name').should == %w(AFNetworking ASIHTTPRequest ActionSheetPicker)
   end
 
   it 'will default to popularity with unrecognized sort orders' do
-    first_three_names_for_search('a', sort: 'quack').should == %w(AFNetworking TYPFontAwesome Alamofire)
+    first_three_names_for_search('a', sort: 'quack').should == %w(AFNetworking TYPFontAwesome MiddleAlignedButton)
   end
 
   # This case is removed as there are two versions: 0.1 and 0.1.0 – and they are different.

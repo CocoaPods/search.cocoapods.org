@@ -74,7 +74,7 @@ class Pod
         ) AS popularity
         EXPR
         *Domain.github_metrics.fields(:forks, :stargazers, :contributors, :subscribers, :language),
-        *Domain.cocoadocs_pod_metrics.fields(:id, :dominant_language, :quality_estimate,  :spm_support)
+        *Domain.cocoadocs_pod_metrics.fields(:id, :dominant_language, :quality_estimate, :spm_support)
       ).
 
       group_by(

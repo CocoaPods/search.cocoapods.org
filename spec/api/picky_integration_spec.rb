@@ -28,17 +28,17 @@ describe 'Integration Tests' do
 
   # Testing a count of results.
   #
-  ok { pods.search('on:ios 1.0.0').total.should == 53 }
+  ok { pods.search('on:ios 1.0.0').total.should == 63 }
 
   # Testing the format.
   #
   # Not symbolized as it is parsed JSON.
-  ok { pods.search('on:osx afnetworking', sort: 'name').entries.first.should == {:id=>"AFNetworking", :platforms=>["ios", "osx", "watchos"], :version=>"2.6.0", :summary=>"A delightful iOS and OS X networking framework.", :authors=>{:"Mattt Thompson"=>"m@mattt.me"}, :link=>"https://github.com/AFNetworking/AFNetworking", :source=>{:git=>"https://github.com/AFNetworking/AFNetworking.git", :tag=>"2.6.0", :submodules=>true}, :tags=>["network"], :cocoadocs=>true} }
+  ok { pods.search('on:osx afnetworking', sort: 'name').entries.first.should == {:id=>"AFNetworking", :platforms=>["ios", "osx", "watchos", "tvos"], :version=>"3.1.0", :summary=>"A delightful iOS and OS X networking framework.", :authors=>{:"Mattt Thompson"=>"m@mattt.me"}, :link=>"https://github.com/AFNetworking/AFNetworking", :source=>{:git=>"https://github.com/AFNetworking/AFNetworking.git", :tag=>"3.1.0", :submodules=>true}, :tags=>["network"], :cocoadocs=>true} }
 
   # Testing a specific order of result ids.
   #
   ok do
-    first_three_names_for_search('on:osx ki', sort: 'name').should == %w(BlocksKit FormatterKit JSONKit)
+    first_three_names_for_search('on:osx ki', sort: 'name').should == %w(BlocksKit FormatterKit IGListKit)
   end
 
   # Speed.
@@ -57,7 +57,7 @@ describe 'Integration Tests' do
 
   # Partial version search.
   #
-  expected = %w(AFNetworking)
+  expected = %w(AFNetworking YTKNetwork YTKNetwork)
   ok { first_three_names_for_search('on:osx afnetworking 2', sort: 'name').should == expected }
   ok { first_three_names_for_search('on:osx afnetworking 2.', sort: 'name').should == expected }
   ok { first_three_names_for_search('on:osx afnetworking 2.0', sort: 'name').should == expected }
@@ -66,10 +66,10 @@ describe 'Integration Tests' do
 
   # Platform constrained search (platforms are AND-ed).
   #
-  expected = %w(AFNetworking AFIncrementalStore RestKit)
+  expected = %w(AFNetworking YTKNetwork YTKNetwork)
   ok { first_three_names_for_search('on:osx afnetworking', sort: 'name').should == expected }
   ok { first_three_names_for_search('on:osx on:ios afnetworking', sort: 'name').should == expected }
-  ok { first_three_names_for_search('on:ios afnetworking', sort: 'name').should == %w(AFNetworking AFIncrementalStore Nimbus) }
+  ok { first_three_names_for_search('on:ios afnetworking', sort: 'name').should == %w(AFNetworking YTKNetwork Nimbus) }
 
   # Category boosting.
   #
@@ -80,13 +80,13 @@ describe 'Integration Tests' do
   #
   # Platform is only found when fully mentioned (i.e. no partial).
   #
-  ok { pods.search('platform:osx').total.should == 76 }
+  ok { pods.search('platform:osx').total.should == 87 }
   ok { pods.search('platform:os').total.should == 0 }
   ok { pods.search('platform:o').total.should == 0 }
 
   # Rendering.
   #
-  ok { pods.search('afnetworking mattt thompson', sort: 'name').entries.first.should == {:id=>"AFNetworking", :platforms=>["ios", "osx", "watchos"], :version=>"2.6.0", :summary=>"A delightful iOS and OS X networking framework.", :authors=>{:"Mattt Thompson"=>"m@mattt.me"}, :link=>"https://github.com/AFNetworking/AFNetworking", :source=>{:git=>"https://github.com/AFNetworking/AFNetworking.git", :tag=>"2.6.0", :submodules=>true}, :tags=>["network"], :cocoadocs=>true} }
+  ok { pods.search('afnetworking mattt thompson', sort: 'name').entries.first.should == { :id=>"AFNetworking", :platforms=>["ios", "osx", "watchos", "tvos"], :version=>"3.1.0", :summary=>"A delightful iOS and OS X networking framework.", :authors=>{:"Mattt Thompson"=>"m@mattt.me"}, :link=>"https://github.com/AFNetworking/AFNetworking", :source=>{:git=>"https://github.com/AFNetworking/AFNetworking.git", :tag=>"3.1.0", :submodules=>true}, :tags=>["network"], :cocoadocs=>true} }
 
   # Qualifiers.
   #
@@ -94,7 +94,7 @@ describe 'Integration Tests' do
   ok { first_three_names_for_search('name:afnetworking').should == expected }
   ok { first_three_names_for_search('pod:afnetworking').should == expected }
 
-  expected = %w(AFIncrementalStore AFNetworking FormatterKit)
+  expected = %w(AFNetworking FormatterKit TTTAttributedLabel)
   ok { first_three_names_for_search('author:mattt author:thompson', sort: 'name').should == expected }
   ok { first_three_names_for_search('authors:mattt authors:thompson', sort: 'name').should == expected }
   ok { first_three_names_for_search('written:mattt written:thompson', sort: 'name').should == expected }
@@ -103,7 +103,7 @@ describe 'Integration Tests' do
 
   ok { first_three_names_for_search('version:1.0.0', sort: 'name').should == %w(Appirater Aspects Atlas) }
 
-  expected_dependencies = %w(AFIncrementalStore Nimbus RestKit)
+  expected_dependencies = %w(Nimbus YTKNetwork)
   ok { first_three_names_for_search('dependency:AFNetworking', sort: 'name').should == expected_dependencies }
   ok { first_three_names_for_search('dependencies:AFNetworking', sort: 'name').should == expected_dependencies }
   ok { first_three_names_for_search('depends:AFNetworking', sort: 'name').should == expected_dependencies }
@@ -112,10 +112,10 @@ describe 'Integration Tests' do
   ok { first_three_names_for_search('use:AFNetworking', sort: 'name').should == expected_dependencies }
   ok { first_three_names_for_search('needs:AFNetworking', sort: 'name').should == expected_dependencies }
 
-  ok { pods.search('platform:osx').total.should == 76 }
-  ok { pods.search('on:osx').total.should == 76 }
+  ok { pods.search('platform:osx').total.should == 87 }
+  ok { pods.search('on:osx').total.should == 87 }
 
-  ok { first_three_names_for_search('summary:data', sort: 'name').should == %w(AFIncrementalStore FXForms JSONModel) }
+  ok { first_three_names_for_search('summary:data', sort: 'name').should == %w(IGListKit JSONModel MagicalRecord) }
 
   # No single characters indexed.
   #
