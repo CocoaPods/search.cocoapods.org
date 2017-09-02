@@ -3,7 +3,7 @@
 #
 unless ENV['NO_DUMP']
   require 'cocoapods-humus'
-  Humus.with_snapshot('201510021730-b154')
+  Humus.with_snapshot('201709-11349-a857')
 end
 
 # With a possible memory profile ... do.
