@@ -32,7 +32,7 @@ jobs:
 
       - run:
           name: Push Image
-          command: docker push $AWS_ECR_URL/cocoapods-search-repository:latest .
+          command: docker push $AWS_ECR_URL/cocoapods-search-repository:latest
       - run:
           name: Wait for consistency
           command: sleep 60
