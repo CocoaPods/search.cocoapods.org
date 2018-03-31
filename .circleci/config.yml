@@ -17,16 +17,11 @@ jobs:
       - run: echo "Skipping - bundle exec rake spec"
   deploy_image:
     docker:
-      - image: circleci/buildpack-deps:latest
+      - image: circleci/python:2.7
     steps:
       - checkout
       - setup_remote_docker
-      - run:
-          name: install aws
-          command: |
-            curl "https://s3.amazonaws.com/aws-cli/awscli-bundle.zip" -o "awscli-bundle.zip"
-            unzip awscli-bundle.zip
-            sudo ./awscli-bundle/install -i /usr/local/aws -b /usr/local/bin/aws
+      - run: pip install awscli --upgrade --user
       - run:
           name: Log in to AWS ECR
           command: eval $(aws ecr get-login)
@@ -49,9 +44,9 @@ workflows:
   build_test_deploy:
     jobs:
       - test
-      - deploy_image:
-          requires:
-            - test
+      - deploy_image #:
+          # requires:
+          #   - test
           # filters:
           #   branches:
           #     only:
