@@ -15,27 +15,27 @@ describe 'Facets Integration Tests' do
   ok do
     get '/api/v1/pods.facets.json', {}
     result = Yajl.load(last_response.body)
-    result['platform'].keys.sort.should == %w(ios osx watchos)
-    result['tags'].keys.sort.should == ["alert", "analytics", "api", "button", "client", "communication", "controller", "http", "image", "json", "kit", "layout", "logging", "navigation", "network", "notification", "parser", "progress", "rest", "table", "test", "text", "view", "xml"]
+    result['platform'].keys.sort.should == %w(ios osx tvos watchos)
+    result['tags'].keys.sort.should == ["alert", "api", "button", "client", "communication", "controller", "gesture", "http", "image", "json", "layout", "logging", "navigation", "network", "notification", "parser", "progress", "rest", "table", "test", "text", "view", "xml"]
   end
 
   ok do
     get '/api/v1/pods.facets.json',  only: 'platform'
     result = Yajl.load(last_response.body)
-    result['platform'].keys.sort.should == %w(ios osx watchos)
+    result['platform'].keys.sort.should == %w(ios osx tvos watchos)
     result['tags'].should.nil?
   end
 
   ok do
     get '/api/v1/pods.facets.json',  only: 'platform', counts: 'false'
     result = Yajl.load(last_response.body)
-    result['platform'].sort.should == %w(ios osx watchos).sort
+    result['platform'].sort.should == %w(ios osx tvos watchos).sort
   end
 
   ok do
     get '/api/v1/pods.facets.json',  except: 'tags'
     result = Yajl.load(last_response.body)
-    result['platform'].keys.sort.should == %w(ios osx watchos)
+    result['platform'].keys.sort.should == %w(ios osx tvos watchos)
     result['tags'].should.nil?
   end
 
@@ -55,15 +55,15 @@ describe 'Facets Integration Tests' do
   ok do
     get '/api/v1/pods.facets.json',  only: %w(platform name), include: 'name', filter: 'author:mattt'
     result = Yajl.load(last_response.body)
-    result['platform'].keys.sort.should == %w(ios osx watchos)
-    result['name'].keys.sort.should == ["af", "afincrementalstore", "afnetworking", "attributed", "attributedlabel", "formatter", "formatterkit", "incremental", "incrementalstore", "kit", "label", "networking", "store", "ttt", "tttattributedlabel"]
+    result['platform'].keys.sort.should == %w(ios osx tvos watchos)
+    result['name'].keys.sort.should == ["af", "afnetworking", "attributed", "attributedlabel", "formatter", "formatterkit", "kit", "label", "networking", "ttt", "tttattributedlabel"]
     result['tags'].should.nil?
   end
 
   ok do
     get '/api/v1/pods.facets.json',  include: 'version', filter: 'mattt'
     result = Yajl.load(last_response.body)
-    result['version'].keys.sort.first(3).should == ["0.1.0", "0.10.0", "0.10.1"]
+    result['version'].keys.sort.first(3).should == ["0.10.0", "0.10.1", "0.5.1"]
   end
 
   # ok do

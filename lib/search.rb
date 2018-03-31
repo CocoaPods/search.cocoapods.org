@@ -145,6 +145,11 @@ class Search
                partial: no_partial,
                from: :mapped_language,
                tokenize: false
+      category :spm_support,
+               # weight: boost(+0),
+               partial: no_partial,
+               qualifiers: [:spm, :supports_spm],
+               from: :spm_support
     end
 
     # Define a search over the books index.

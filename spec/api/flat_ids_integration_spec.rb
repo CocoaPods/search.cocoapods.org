@@ -23,7 +23,7 @@ describe 'Flat Ids Integration Tests' do
 
   # Testing the format.
   #
-  ok { pod_hash.search('on:osx afnetworking', sort: 'name').first.should == {:id=>"AFNetworking", :platforms=>["ios", "osx", "watchos"], :version=>"2.6.0", :summary=>"A delightful iOS and OS X networking framework.", :authors=>{:"Mattt Thompson"=>"m@mattt.me"}, :link=>"https://github.com/AFNetworking/AFNetworking", :source=>{:git=>"https://github.com/AFNetworking/AFNetworking.git", :tag=>"2.6.0", :submodules=>true}, :tags=>["network"], :cocoadocs=>true} }
+  ok { pod_hash.search('on:osx afnetworking', sort: 'name').first.should == {:id=>"AFNetworking", :platforms=>["ios", "osx", "watchos", "tvos"], :version=>"3.1.0", :summary=>"A delightful iOS and OS X networking framework.", :authors=>{:"Mattt Thompson"=>"m@mattt.me"}, :link=>"https://github.com/AFNetworking/AFNetworking", :source=>{:git=>"https://github.com/AFNetworking/AFNetworking.git", :tag=>"3.1.0", :submodules=>true}, :tags=>["network"], :cocoadocs=>true} }
 
   def pods
     @pods ||= Picky::TestClient.new CocoapodSearch, path: '/api/v1/pods.flat.ids.json'
@@ -31,7 +31,7 @@ describe 'Flat Ids Integration Tests' do
 
   # Testing the format.
   #
-  ok { first_three_names_for_search('on:osx afnetworking', sort: 'name').should == ["AFNetworking", "AFIncrementalStore", "RestKit"] }
+  ok { first_three_names_for_search('on:osx afnetworking', sort: 'name').should == ["AFNetworking", "YTKNetwork"] }
 
   # Error cases.
   #
@@ -45,7 +45,7 @@ describe 'Flat Ids Integration Tests' do
 
   # Testing a count of results.
   #
-  ok { pods.search('on:ios 1.0.0', ids: 10_000).size.should == 53 }
+  ok { pods.search('on:ios 1.0.0', ids: 10_000).size.should == 63 }
 
   # Speed.
   #
@@ -56,7 +56,7 @@ describe 'Flat Ids Integration Tests' do
 
   # Multiple results and uniqueness.
   #
-  ok { first_three_names_for_search('afnetworking', sort: 'name').should == ["AFNetworking", "AFIncrementalStore", "Nimbus"] }
+  ok { first_three_names_for_search('afnetworking', sort: 'name').should == ["AFNetworking", "YTKNetwork", "Nimbus"] }
 
   # Similarity on author.
   #
@@ -65,25 +65,25 @@ describe 'Flat Ids Integration Tests' do
 
   # Partial version search.
   #
-  expected_results_pre_1_0_0 = %w(AFNetworking)
+  expected_results_pre_1_0_0 = %w(AFNetworking YTKNetwork)
   ok { first_three_names_for_search('on:osx afnetworking 1', sort: 'name').should == expected_results_pre_1_0_0 }
   ok { first_three_names_for_search('on:osx afnetworking 1.', sort: 'name').should == expected_results_pre_1_0_0 }
   ok { first_three_names_for_search('on:osx afnetworking 1.0', sort: 'name').should == expected_results_pre_1_0_0 }
   ok { first_three_names_for_search('on:osx afnetworking 1.0.', sort: 'name').should == expected_results_pre_1_0_0 }
-  ok { first_three_names_for_search('on:osx afnetworking 1.0.0', sort: 'name').should == [] } # TODO Why?
+  ok { first_three_names_for_search('on:osx afnetworking 1.0.0', sort: 'name').should == ["YTKNetwork"] } # TODO Why?
 
   # Platform constrained search (platforms are AND-ed).
   #
-  expected = %w(AFIncrementalStore AFNetworking FormatterKit)
+  expected = %w(AFNetworking FormatterKit)
   ok { first_three_names_for_search('on:osx mattt', sort: 'name').should == expected }
-  ok { first_three_names_for_search('on:ios mattt', sort: 'name').should == expected }
+  ok { first_three_names_for_search('on:ios mattt', sort: 'name').should == ["AFNetworking", "FormatterKit", "TTTAttributedLabel"] }
   ok { first_three_names_for_search('on:osx on:ios mattt', sort: 'name').should == expected }
 
   # Partial.
   #
   # Platform is only found when fully mentioned (i.e. no partial).
   #
-  ok { pods.search('platform:osx', ids: 10_000).size.should == 76 }
+  ok { pods.search('platform:osx', ids: 10_000).size.should == 87 }
   ok { pods.search('platform:os').size.should == 0 }
   ok { pods.search('platform:o').size.should == 0 }
 
@@ -92,14 +92,14 @@ describe 'Flat Ids Integration Tests' do
   ok { first_three_names_for_search('name:afnetworking mattt thompson').should == ['AFNetworking'] }
   ok { first_three_names_for_search('pod:afnetworking mattt thompson').should == ['AFNetworking'] }
 
-  expected = %w(AFNetworking AFIncrementalStore)
+  expected = %w(AFNetworking)
   ok { first_three_names_for_search('afnetworking author:mattt author:thompson', sort: 'name').should == expected }
   ok { first_three_names_for_search('afnetworking authors:mattt authors:thompson', sort: 'name').should == expected }
   ok { first_three_names_for_search('afnetworking written:mattt written:thompson', sort: 'name').should == expected }
   ok { first_three_names_for_search('afnetworking writer:mattt writer:thompson', sort: 'name').should == expected }
   # ok { pods.search('kiwi by:allen by:ding').should == ['Kiwi'] } # by is removed by stopwords.
 
-  expected_dependencies = %w(AFIncrementalStore Nimbus RestKit)
+  expected_dependencies = %w(Nimbus YTKNetwork)
   ok { first_three_names_for_search('dependency:AFNetworking', sort: 'name').should == expected_dependencies }
   ok { first_three_names_for_search('dependencies:AFNetworking', sort: 'name').should == expected_dependencies }
   ok { first_three_names_for_search('depends:AFNetworking', sort: 'name').should == expected_dependencies }
@@ -108,8 +108,8 @@ describe 'Flat Ids Integration Tests' do
   ok { first_three_names_for_search('use:AFNetworking', sort: 'name').should == expected_dependencies }
   ok { first_three_names_for_search('needs:AFNetworking', sort: 'name').should == expected_dependencies }
 
-  ok { pods.search('platform:osx', ids: 10_000).size.should == 76 }
-  ok { pods.search('on:osx', ids: 10_000).size.should == 76 }
+  ok { pods.search('platform:osx', ids: 10_000).size.should == 87 }
+  ok { pods.search('on:osx', ids: 10_000).size.should == 87 }
 
   # Stemming.
   #

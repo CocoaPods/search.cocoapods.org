@@ -8,7 +8,7 @@ class Pod
 
   DEFAULT_QUALITY = 40
 
-  EMPTY_STRING = ''
+  EMPTY_STRING = ''.freeze
 
   extend Forwardable
 
@@ -74,13 +74,13 @@ class Pod
         ) AS popularity
         EXPR
         *Domain.github_metrics.fields(:forks, :stargazers, :contributors, :subscribers, :language),
-        *Domain.cocoadocs_pod_metrics.fields(:id, :dominant_language, :quality_estimate)
+        *Domain.cocoadocs_pod_metrics.fields(:id, :dominant_language, :quality_estimate, :spm_support)
       ).
 
       group_by(
         Domain.pods[:id],
         *Domain.github_metrics.fields(:forks, :stargazers, :contributors, :subscribers, :language),
-        *Domain.cocoadocs_pod_metrics.fields(:id, :dominant_language, :quality_estimate)
+        *Domain.cocoadocs_pod_metrics.fields(:id, :dominant_language, :quality_estimate, :spm_support)
       )
 
     # Possibly filter prerelease pods & prerelease versions.
@@ -302,6 +302,10 @@ class Pod
 
   def cocoadocs?
     !!cocoadocs_pod_metric.id
+  end
+
+  def spm_support
+    cocoadocs_pod_metric.spm_support
   end
 
   # Just load the latest specification data.

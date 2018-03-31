@@ -18,8 +18,8 @@ describe Pod do
     ok { pod.authors.should == { :'Mattt Thompson' => 'm@mattt.me' } }
     ok { pod.mapped_authors.should == 'Mattt Thompson' }
 
-    ok { pod.platforms.should == [:ios, :osx, :watchos] }
-    ok { pod.mapped_platform.should == 'ios osx watchos' }
+    ok { pod.platforms.should == [:ios, :osx, :watchos, :tvos] }
+    ok { pod.mapped_platform.should == 'ios osx watchos tvos' }
 
     ok { pod.dependencies.should == [] }
     
@@ -28,7 +28,7 @@ describe Pod do
     ok { pod.mapped_dependencies.should == %(Security SystemConfiguration) }
     ok { pod.frameworks.should == %w(Security SystemConfiguration) }
 
-    ok { pod.mapped_subspec_names.should == %(Serialization Security Reachability NSURLConnection NSURLSession UIKit) }
+    ok { pod.mapped_subspec_names.should == %(Serialization Security Reachability NSURLSession UIKit) }
 
     ok { pod.summary.should == 'A delightful iOS and OS X networking framework.' }
 
@@ -43,8 +43,8 @@ describe Pod do
     ok {
       pod.to_h.should == {
         id: "AFNetworking",
-        platforms: [:ios, :osx, :watchos],
-        version: :"2.6.0",
+        platforms: [:ios, :osx, :watchos, :tvos],
+        version: :"3.1.0",
         summary: "A delightful iOS and OS X networking framework.",
         authors: {
           :"Mattt Thompson" => :"m@mattt.me"
@@ -52,7 +52,7 @@ describe Pod do
         link: "https://github.com/AFNetworking/AFNetworking",
         source: {
           git: "https://github.com/AFNetworking/AFNetworking.git",
-          tag: "2.6.0",
+          tag: "3.1.0",
           submodules: true
         },
         tags: [:network],
