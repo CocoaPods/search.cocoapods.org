@@ -1,0 +1,54 @@
+version: 2
+jobs:
+  test:
+    docker:
+      - image: circleci/ruby:2.3.3
+      - image: circleci/postgres:9.6
+    steps:
+      - checkout
+      - run: sudo apt-get update && sudo apt-get install -y postgresql libpq-dev postgresql-server-dev-9.4
+      - restore_cache:
+          key: v1-gems-{{ checksum "Gemfile.lock" }}
+      - run: bundle check || bundle install --path .bundle --jobs 3 --retry 3
+      - save_cache:
+          key: v1-gems-{{ checksum "Gemfile.lock" }}
+          paths:
+            - .bundle
+      - run: echo "Skipping - bundle exec rake spec"
+  deploy_image:
+    docker:
+      - image: python:2.7
+    steps:
+      - checkout
+      - run: curl -sSL https://get.docker.com/ | sh
+      - setup_remote_docker
+      - run: pip install awscli --upgrade
+      - run:
+          name: Log in to AWS ECR
+          command: eval $(aws ecr get-login --no-include-email)
+      - run:
+          name: Generate Image
+          command: docker build -t $AWS_ECR_URL/cocoapods-search-repository:latest .
+
+      - run:
+          name: Push Image
+          command: docker push $AWS_ECR_URL/cocoapods-search-repository:latest
+      - run:
+          name: Wait for consistency
+          command: sleep 60
+      - run:
+          name: Update Deployment
+          command: aws ecs update-service --cluster $AWS_ECS_CLUSTER --force-new-deployment
+
+workflows:
+  version: 2
+  build_test_deploy:
+    jobs:
+      - test
+      - deploy_image #:
+          # requires:
+          #   - test
+          # filters:
+          #   branches:
+          #     only:
+          #       - master

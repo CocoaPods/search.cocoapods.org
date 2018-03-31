@@ -213,7 +213,12 @@ class Pod
   end
   def symbolize_hash hash
     hash.inject({}) do |result, (key, value)|
-      result.tap { |r| r[key.to_sym] = (value && value.to_sym) }
+      if value.kind_of?(Array) || value.kind_of?(Hash) || key.kind_of?(Array)
+        puts "Issue with: #{key} - #{value}"
+        result
+      else
+        result.tap { |r| r[key.to_sym] = (value && value.to_sym) }
+      end
     end
   end
 

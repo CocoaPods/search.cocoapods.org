@@ -22,4 +22,19 @@ end
 desc "Run all specs"
 task :spec => 'spec:all'
 
+namespace :docker do
+  def tag
+    label = `git rev-parse HEAD`.strip
+    "dantoml/cocoapods-search-api:#{label}"
+  end
+
+  task :build do
+    system('docker', 'build', '-t', tag, '.')
+  end
+
+  task :push, :build do
+    system('docker', 'push', tag)
+  end
+end
+
 task :default => :spec
