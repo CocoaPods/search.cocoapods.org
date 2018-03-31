@@ -17,14 +17,15 @@ jobs:
       - run: echo "Skipping - bundle exec rake spec"
   deploy_image:
     docker:
-      - image: circleci/python:2.7
+      - image: python:2.7
     steps:
       - checkout
+      - run: curl -sSL https://get.docker.com/ | sh
       - setup_remote_docker
-      - run: pip install awscli --upgrade --user
+      - run: pip install awscli --upgrade
       - run:
           name: Log in to AWS ECR
-          command: eval $(aws ecr get-login)
+          command: eval $(aws ecr get-login --no-include-email)
       - run:
           name: Generate Image
           command: docker build -t $AWS_ECR_URL/cocoapods-search-repository:latest .
