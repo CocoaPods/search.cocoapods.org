@@ -224,7 +224,7 @@ class Search
   # Try indexing a new pod.
   #
   def reindex(name)
-    pod = Pod.all { |pods| pods.where(name: name) }.first
+    pod = SearchPod.all { |pods| pods.where(name: name) }.first
     replace pod, Pods.instance
     pod.release_indexing_memory
     $stdout.print ?✓

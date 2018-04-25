@@ -1,9 +1,10 @@
 # frozen_string_literal: true
 require 'json'
+require 'cocoapods-core'
 
 # Only for reading purposes.
 #
-class Pod
+class SearchPod
   attr_reader :row, :versions
 
   DEFAULT_QUALITY = 40
@@ -47,7 +48,7 @@ class Pod
     entity.count
   end
 
-  # Use e.g. Pod.find.where(…).all
+  # Use e.g. SearchPod.find.where(…).all
   #
   def self.find
     pods = entity.
@@ -168,7 +169,7 @@ class Pod
   #
   def last_version
     versions.
-      sort_by { |v| Gem::Version.new(v) }.
+      sort_by { |v| Pod::Version.new(v) }.
       last.to_sym
   end
 
@@ -213,7 +214,7 @@ class Pod
   end
   def symbolize_hash hash
     hash.inject({}) do |result, (key, value)|
-      result.tap { |r| r[key.to_sym] = (value && value.to_sym) }
+      result.tap { |r| r[key.to_sym] = (value && !value.is_a?(Array) && value.to_sym) }
     end
   end
 

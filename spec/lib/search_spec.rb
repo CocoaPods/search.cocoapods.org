@@ -97,11 +97,11 @@ describe Search do
       pods = Pods.new
       search = Search.new
 
-      old_pod = Pod.new(specification)
+      old_pod = SearchPod.new(specification)
 
       pods[old_pod.id].should.nil?
 
-      new_pod = Pod.new(specification)
+      new_pod = SearchPod.new(specification)
 
       search.replace(new_pod, pods) rescue nil
 

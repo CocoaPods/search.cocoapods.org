@@ -74,7 +74,7 @@ describe 'Special Cases' do
   end
 
   def with_pod_added(name, &block)
-    pod = Pod.all { |pods| pods.where(name: name) }.first
+    pod = SearchPod.all { |pods| pods.where(name: name) }.first
     Search.instance.replace(pod, Pods.instance)
 
     block.call(pod)
