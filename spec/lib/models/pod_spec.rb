@@ -8,7 +8,7 @@ describe Pod do
     
     describe 'deprecated_in_favor_of set' do
       def pod
-        af = Pod.new({})
+        af = SearchPod.new({})
         class << af
           def specification
             {
@@ -27,7 +27,7 @@ describe Pod do
     
     describe 'deprecated_in_favor_of not set' do
       def pod
-        af = Pod.new({})
+        af = SearchPod.new({})
         class << af
           def specification
             {
@@ -45,7 +45,7 @@ describe Pod do
     
     describe '#split_name' do
       def pod
-        @pod ||= Pod.new({})
+        @pod ||= SearchPod.new({})
       end
 
       def ok_split pod_name, *expected

@@ -7,7 +7,7 @@ describe Pod do
   describe 'AFNetworking' do
 
     def pod
-      Pod.all { |pods| pods.where(name: 'AFNetworking') }.first
+      SearchPod.all { |pods| pods.where(name: 'AFNetworking') }.first
     end
 
     ok { pod.name.should == 'AFNetworking' }
@@ -67,7 +67,7 @@ describe Pod do
   describe 'KGDiscreetAlertView' do
 
     def pod
-      Pod.all { |pods| pods.where(name: 'KGDiscreetAlertView') }.first
+      SearchPod.all { |pods| pods.where(name: 'KGDiscreetAlertView') }.first
     end
 
     ok { pod.platforms.should == [:ios] }
@@ -78,7 +78,7 @@ describe Pod do
   describe 'CCLDefaults' do
 
     def pod
-      Pod.all { |pods| pods.where(name: 'CCLDefaults') }.first
+      SearchPod.all { |pods| pods.where(name: 'CCLDefaults') }.first
     end
 
     ok { pod.mapped_authors.should == 'Kyle Fuller' }
@@ -88,7 +88,7 @@ describe Pod do
   describe 'QueryKit' do
 
     def pod
-      Pod.all { |pods| pods.where(name: 'QueryKit') }.first
+      SearchPod.all { |pods| pods.where(name: 'QueryKit') }.first
     end
 
     ok { pod.mapped_authors.should == 'Kyle Fuller' }
@@ -98,7 +98,7 @@ describe Pod do
   describe 'synthetic case #1' do
     
     def pod
-      af = Pod.all { |pods| pods.where(name: 'AFNetworking') }.first
+      af = SearchPod.all { |pods| pods.where(name: 'AFNetworking') }.first
       class << af
         def source
           { http: 'http://parse-ios.s3.amazonaws.com/d9dd1242464f5bb586d9f8d660045c04/parse-library-1.6.2.zip' }
@@ -116,7 +116,7 @@ describe Pod do
   describe 'synthetic case #2' do
     
     def pod
-      af = Pod.all { |pods| pods.where(name: 'AFNetworking') }.first
+      af = SearchPod.all { |pods| pods.where(name: 'AFNetworking') }.first
       class << af
         def source
           { git: "https://github.com/tibo/BlockRSSParser.git" }
@@ -134,7 +134,7 @@ describe Pod do
   describe 'synthetic case #3' do
     
     def pod
-      af = Pod.all { |pods| pods.where(name: 'AFNetworking') }.first
+      af = SearchPod.all { |pods| pods.where(name: 'AFNetworking') }.first
       class << af
         def source
           { git: "git://github.com/OliverLetterer/GHMarkdownParser.git" }
@@ -152,7 +152,7 @@ describe Pod do
   describe 'synthetic case #4' do
     
     def pod
-      af = Pod.all { |pods| pods.where(name: 'AFNetworking') }.first
+      af = SearchPod.all { |pods| pods.where(name: 'AFNetworking') }.first
       class << af
         def source
           { http: "http://sourceforge.net/projects/uriparser/files/Sources/0.7.7/uriparser-0.7.7.zip" }
@@ -170,7 +170,7 @@ describe Pod do
   describe 'synthetic case #5' do
     
     def pod
-      af = Pod.all { |pods| pods.where(name: 'AFNetworking') }.first
+      af = SearchPod.all { |pods| pods.where(name: 'AFNetworking') }.first
       class << af
         def source
           { http: "http://sourceforge.net/projects/uriparser/files/Sources/0.7.7/uriparser-0.7.7.zip" }
@@ -188,7 +188,7 @@ describe Pod do
   describe 'synthetic case #5' do
     
     def pod
-      af = Pod.all { |pods| pods.where(name: 'AFNetworking') }.first
+      af = SearchPod.all { |pods| pods.where(name: 'AFNetworking') }.first
       class << af
         def source
           nil
@@ -206,7 +206,7 @@ describe Pod do
   describe 'synthetic case #6' do
       
     def pod
-      af = Pod.all { |pods| pods.where(name: 'AFNetworking') }.first
+      af = SearchPod.all { |pods| pods.where(name: 'AFNetworking') }.first
       class << af
         def homepage
           'https://www.github.com/venmo/VENTouchLock'

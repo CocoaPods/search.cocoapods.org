@@ -14,7 +14,7 @@ class Pods
   end
   
   def count
-    @count ||= Pod.count
+    @count ||= SearchPod.count
   end
 
   # Pods are ordered by popularity initially.
@@ -29,7 +29,7 @@ class Pods
       )
     EXPR
 
-    pods = Pod.all do |all_pods|
+    pods = SearchPod.all do |all_pods|
       all_pods.order_by(order_by_popularity)
       all_pods.limit(amount) if amount
       all_pods
@@ -61,7 +61,7 @@ class Pods
   #
   def for(all_ids)
     uncached_ids = all_ids.reject { |id| @cache[id] }
-    loaded_pods = Pod.all do |pods|
+    loaded_pods = SearchPod.all do |pods|
       pods.where(Domain.pods[:id].in => uncached_ids)
     end
     loaded_pods.each { |pod| @cache[pod.id] = pod }

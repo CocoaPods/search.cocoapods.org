@@ -17,6 +17,7 @@ gem 'picky-client', '~> 4.31.0' # Needed for Picky::Convenience
 gem 'cod', '0.6.0'
 gem 'hashie', '3.3.2'
 # gem 'google_hash', '0.8.8'
+gem 'cocoapods-core', "~> 1.0"
 
 # Auxiliary gems to make Picky faster/better.
 #
@@ -32,7 +33,7 @@ gem 'flounder', '1.0.1'
 
 # API calling.
 #
-gem 'nap', '~> 0.8.0'
+gem 'nap', '~> 1.0'
 
 # Pure development gems.
 #
@@ -47,6 +48,7 @@ end
 group :production do
   gem 'unicorn', '4.8.3'
 end
+
 
 # Pure test gems.
 #
